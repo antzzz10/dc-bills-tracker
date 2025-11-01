@@ -1,0 +1,140 @@
+.download-container {
+  position: relative;
+}
+
+.download-button {
+  background-color: #DC143C;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.download-button:hover {
+  background-color: #A00000;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(220, 20, 60, 0.3);
+}
+
+.download-icon {
+  font-size: 1rem;
+}
+
+.download-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  z-index: 999;
+}
+
+.download-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 320px;
+  overflow: hidden;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.download-menu-header {
+  background: linear-gradient(135deg, #DC143C 0%, #A00000 100%);
+  color: white;
+  padding: 1rem 1.25rem;
+}
+
+.download-menu-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.download-section {
+  padding: 1.25rem;
+}
+
+.download-section h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.download-description {
+  margin: 0 0 1rem 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.download-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.download-option {
+  flex: 1;
+  background-color: #f5f5f5;
+  border: 2px solid #e0e0e0;
+  color: #333;
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.download-option:hover {
+  background-color: #DC143C;
+  border-color: #DC143C;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(220, 20, 60, 0.2);
+}
+
+.download-divider {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 0 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .download-menu {
+    min-width: 280px;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .download-buttons {
+    flex-direction: column;
+  }
+
+  .download-option {
+    width: 100%;
+  }
+}
