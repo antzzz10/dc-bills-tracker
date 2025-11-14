@@ -171,7 +171,8 @@
       "title": "CLEAN DC Act",
       "sponsors": ["Rep Andrew Clyde", "Sen Ted Cruz"],
       "description": "Would repeal the Comprehensive Policing and Justice Reform Amendment Act of 2022",
-      "category": "crime"
+      "category": "crime",
+      "highlight": "floor-vote"
     },
     {
       "id": "hr5207",
@@ -187,7 +188,8 @@
       "title": "District of Columbia Cash Bail Reform Act",
       "sponsors": ["Rep Elise Stefanik"],
       "description": "Would require pretrial detention and a secured appearance bond for certain crimes",
-      "category": "crime"
+      "category": "crime",
+      "highlight": "floor-vote"
     },
     {
       "id": "hr5172",

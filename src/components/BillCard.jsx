@@ -3,7 +3,8 @@ import './BillCard.css'
 import billsData from '../data/bills.json'
 
 function BillCard({ bill }) {
-  const [isExpanded, setIsExpanded] = useState(false)
+  // Auto-expand bills with floor-vote highlight
+  const [isExpanded, setIsExpanded] = useState(bill.highlight === 'floor-vote')
   const category = billsData.categories.find(cat => cat.id === bill.category)
 
   const getCongressLink = (billNumber) => {
@@ -30,7 +31,7 @@ function BillCard({ bill }) {
 
   return (
     <div
-      className={`bill-card ${isExpanded ? 'expanded' : 'collapsed'}`}
+      className={`bill-card ${isExpanded ? 'expanded' : 'collapsed'} ${bill.highlight ? 'highlighted-' + bill.highlight : ''}`}
       data-category={bill.category}
       onClick={() => setIsExpanded(!isExpanded)}
     >
@@ -59,6 +60,9 @@ function BillCard({ bill }) {
           })}
         </div>
         <div className="bill-header-right">
+          {bill.highlight === 'floor-vote' && (
+            <span className="floor-vote-badge">FLOOR VOTE</span>
+          )}
           <span className="expand-icon">{isExpanded ? '−' : '+'}</span>
         </div>
       </div>

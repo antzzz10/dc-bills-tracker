@@ -11,8 +11,7 @@ function UpdateBanner() {
       <div className="update-banner-content">
         <span className="update-icon">📢</span>
         <p className="update-text">
-          <strong>Updated November 14, 2025:</strong> Site launched with 96 anti-DC bills tracked.
-          Now featuring collapsible categories and downloadable reports.
+          <strong>November 14, 2025:</strong> Two bills expected on House floor - H.R. 5214 (Cash Bail) & H.R. 5107 (CLEAN DC Act)
         </p>
         <button
           className="update-banner-close"

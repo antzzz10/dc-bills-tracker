@@ -23,6 +23,41 @@
   border-left-width: 4px;
 }
 
+/* Floor vote highlighting */
+.bill-card.highlighted-floor-vote {
+  background: linear-gradient(to right, #fffbea 0%, #ffffff 100%);
+  border-left-color: #ff6b00;
+  border-left-width: 4px;
+  box-shadow: 0 2px 12px rgba(255, 107, 0, 0.15);
+}
+
+.bill-card.highlighted-floor-vote:hover {
+  box-shadow: 0 4px 16px rgba(255, 107, 0, 0.25);
+  border-left-width: 5px;
+}
+
+.floor-vote-badge {
+  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+  color: white;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 2px 10px rgba(255, 107, 0, 0.5);
+  }
+}
+
 .bill-header {
   display: flex;
   justify-content: space-between;
