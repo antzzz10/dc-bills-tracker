@@ -1,0 +1,88 @@
+.update-banner {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.update-banner-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.update-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.update-text {
+  margin: 0;
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.update-text strong {
+  color: #ffd700;
+  margin-right: 0.5rem;
+}
+
+.update-banner-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.update-banner-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .update-banner {
+    padding: 0.75rem 1rem;
+  }
+
+  .update-banner-content {
+    gap: 0.75rem;
+  }
+
+  .update-icon {
+    font-size: 1.2rem;
+  }
+
+  .update-text {
+    font-size: 0.85rem;
+  }
+
+  .update-banner-close {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+  }
+}

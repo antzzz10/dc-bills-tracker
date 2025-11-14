@@ -5,6 +5,7 @@ import CategoryFilter from './components/CategoryFilter'
 import CategoryGroup from './components/CategoryGroup'
 import SearchBar from './components/SearchBar'
 import DownloadButton from './components/DownloadButton'
+import UpdateBanner from './components/UpdateBanner'
 
 function App() {
   const [selectedCategories, setSelectedCategories] = useState([])
@@ -55,6 +56,7 @@ function App() {
 
   return (
     <div className="app">
+      <UpdateBanner />
       <header className="header">
         <h1>Anti-DC Bills Tracker</h1>
         <p className="subtitle">
