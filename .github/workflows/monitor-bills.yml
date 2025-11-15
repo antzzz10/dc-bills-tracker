@@ -59,24 +59,3 @@
             git add bill-status-history.json
             git commit -m "Update bill status history - ${{ steps.check_changes.outputs.timestamp }}" || echo "No changes to commit"
             git push || echo "No changes to push"
-
-        - name: Send email notification
-          if: steps.check_changes.outputs.has_changes == 'true' && steps.check_changes.outputs.changes_count > 0
-          uses: dawidd6/action-send-mail@v3
-          with:
-            server_address: smtp.gmail.com
-            server_port: 587
-            username: ${{ secrets.EMAIL_USERNAME }}
-            password: ${{ secrets.EMAIL_PASSWORD }}
-            subject: "DC Bills Status Update - ${{ steps.check_changes.outputs.changes_count }} bills checked"
-            to: ${{ secrets.NOTIFICATION_EMAIL }}
-            from: DC Bills Monitor
-            body: |
-              Bill monitoring completed at ${{ steps.check_changes.outputs.timestamp }}
-
-              Checked ${{ steps.check_changes.outputs.changes_count }} bills for status updates.
-
-              See the attached artifact in GitHub Actions for the full report:
-              https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-              View the bill tracker: https://billtracker.representdc.org
