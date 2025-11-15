@@ -27,8 +27,8 @@
           run: node scripts/monitor-bills.js > monitoring-report.txt
 
         - name: Check for changes
-            id: check_changes
-            run: |
+          id: check_changes
+          run: |
               if [ -f bill-status-history.json ]; then
                 LATEST=$(cat bill-status-history.json | jq -r '.[-1].timestamp')
                 CHANGES_COUNT=$(cat bill-status-history.json | jq -r '.[-1].changes | length')
@@ -41,10 +41,10 @@
                 echo "has_changes=false" >> $GITHUB_OUTPUT
               fi
 
-          - name: Upload monitoring report
-            if: steps.check_changes.outputs.has_changes == 'true'
-            uses: actions/upload-artifact@v4
-            with:
+        - name: Upload monitoring report
+          if: steps.check_changes.outputs.has_changes == 'true'
+          uses: actions/upload-artifact@v4
+          with:
               name: monitoring-report-${{ steps.check_changes.outputs.safe_timestamp }}
               path: |
                 monitoring-report.txt
