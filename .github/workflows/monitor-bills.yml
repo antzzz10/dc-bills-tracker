@@ -2,9 +2,8 @@ name: Monitor DC Bills
 
   on:
     schedule:
-      # Run daily at 9 AM EST (2 PM UTC)
       - cron: '0 14 * * *'
-    workflow_dispatch: # Allow manual triggering
+    workflow_dispatch:
 
   jobs:
     monitor:
@@ -31,7 +30,6 @@ name: Monitor DC Bills
           id: check_changes
           run: |
             if [ -f bill-status-history.json ]; then
-              # Get the latest entry from history
               LATEST=$(cat bill-status-history.json | jq -r '.[-1].timestamp')
               CHANGES_COUNT=$(cat bill-status-history.json | jq -r '.[-1].changes | length')
               echo "timestamp=$LATEST" >> $GITHUB_OUTPUT
