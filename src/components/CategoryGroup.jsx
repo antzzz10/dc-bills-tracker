@@ -3,7 +3,7 @@ import './CategoryGroup.css'
 import BillCard from './BillCard'
 
 function CategoryGroup({ category, bills }) {
-  const [isExpanded, setIsExpanded] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(false)
 
   return (
     <div className="category-group">
