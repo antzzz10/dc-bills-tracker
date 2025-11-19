@@ -1,26 +1,44 @@
 .bill-card {
   background: white;
   border-radius: 8px;
-  padding: 1rem 1.25rem;
+  padding: 0.7rem 0.9rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease;
-  border-left: 3px solid #DC143C;
+  border-left: 3px solid #ccc;
   cursor: pointer;
   user-select: none;
 }
 
 .bill-card.collapsed {
-  padding: 0.85rem 1.25rem;
+  padding: 0.6rem 0.9rem;
 }
 
 .bill-card.expanded {
-  padding: 1.25rem 1.5rem;
+  padding: 0.9rem 1.1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .bill-card:hover {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
   border-left-width: 4px;
+}
+
+/* Priority-based border colors */
+.bill-card.priority-high {
+  border-left-color: #DC143C;
+}
+
+.bill-card.priority-medium {
+  border-left-color: #FF8C00;
+}
+
+.bill-card.priority-low,
+.bill-card.priority-watching {
+  border-left-color: #ccc;
+}
+
+.bill-card.type-rider {
+  border-left-color: #FF8C00;
 }
 
 /* Floor vote highlighting */
@@ -73,21 +91,31 @@
 }
 
 .expand-icon {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 300;
-  color: #DC143C;
-  width: 28px;
-  height: 28px;
+  color: #666;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(220, 20, 60, 0.1);
+  background-color: rgba(0, 0, 0, 0.05);
   border-radius: 50%;
   transition: all 0.2s ease;
   flex-shrink: 0;
 }
 
 .bill-card:hover .expand-icon {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Priority-specific expand icon colors */
+.bill-card.priority-high .expand-icon {
+  color: #DC143C;
+  background-color: rgba(220, 20, 60, 0.1);
+}
+
+.bill-card.priority-high:hover .expand-icon {
   background-color: rgba(220, 20, 60, 0.2);
 }
 
@@ -101,8 +129,8 @@
 .bill-number,
 .bill-number-link {
   font-weight: 600;
-  color: #DC143C;
-  font-size: 0.9rem;
+  color: #333;
+  font-size: 0.85rem;
   font-family: 'Courier New', monospace;
   text-decoration: none;
 }
@@ -114,9 +142,19 @@
 }
 
 .bill-number-link:hover {
-  background-color: #DC143C;
+  background-color: #333;
   color: white;
   text-decoration: none;
+}
+
+/* High priority bills get red bill numbers */
+.bill-card.priority-high .bill-number,
+.bill-card.priority-high .bill-number-link {
+  color: #DC143C;
+}
+
+.bill-card.priority-high .bill-number-link:hover {
+  background-color: #DC143C;
 }
 
 .category-badge {
@@ -130,22 +168,22 @@
 }
 
 .bill-title {
-  margin: 0.25rem 0;
-  font-size: 1.1rem;
+  margin: 0.2rem 0;
+  font-size: 0.95rem;
   color: #222;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.3;
   transition: all 0.2s ease;
 }
 
 .bill-card.expanded .bill-title {
-  font-size: 1.25rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
 }
 
 .bill-details {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
   border-top: 1px solid #f0f0f0;
   animation: slideDown 0.2s ease;
 }
@@ -162,8 +200,8 @@
 }
 
 .bill-sponsors {
-  margin: 0.75rem 0;
-  font-size: 0.95rem;
+  margin: 0.5rem 0;
+  font-size: 0.85rem;
   color: #555;
 }
 
@@ -172,36 +210,36 @@
 }
 
 .bill-description {
-  margin: 0.75rem 0 0 0;
-  font-size: 1rem;
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
   color: #444;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 @media (max-width: 768px) {
   .bill-card.collapsed {
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.75rem;
   }
 
   .bill-card.expanded {
-    padding: 1rem 1.25rem;
+    padding: 0.7rem 0.9rem;
   }
 
   .bill-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .bill-card.expanded .bill-title {
-    font-size: 1.15rem;
+    font-size: 1rem;
   }
 
   .bill-description {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
   }
 
   .expand-icon {
-    width: 24px;
-    height: 24px;
-    font-size: 1.1rem;
+    width: 22px;
+    height: 22px;
+    font-size: 1rem;
   }
 }
