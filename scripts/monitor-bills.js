@@ -64,10 +64,13 @@ async function fetchBillStatus(billNumber) {
   }
 
   const { billType, number } = parsed;
-  const url = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}?api_key=${CONGRESS_API_KEY}`;
+  const billUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}?api_key=${CONGRESS_API_KEY}`;
+  const actionsUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}/actions?api_key=${CONGRESS_API_KEY}`;
+  const cosponsorsUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}/cosponsors?api_key=${CONGRESS_API_KEY}`;
 
   try {
-    const response = await fetch(url);
+    // Fetch basic bill info
+    const response = await fetch(billUrl);
     if (!response.ok) {
       if (response.status === 404) {
         console.log(`❌ Bill not found in API: ${billNumber}`);
@@ -79,6 +82,57 @@ async function fetchBillStatus(billNumber) {
     const data = await response.json();
     const bill = data.bill;
 
+    // Fetch detailed actions
+    let actions = [];
+    let hasCommitteeHearing = false;
+    let hasCommitteeMarkup = false;
+    let hasFloorVote = false;
+    let committees = [];
+
+    try {
+      const actionsResponse = await fetch(actionsUrl);
+      if (actionsResponse.ok) {
+        const actionsData = await actionsResponse.json();
+        actions = actionsData.actions || [];
+
+        // Analyze actions for significant events
+        actions.forEach(action => {
+          const actionText = action.text?.toLowerCase() || '';
+          const actionType = action.type?.toLowerCase() || '';
+
+          if (actionText.includes('hearing') || actionType.includes('hearing')) {
+            hasCommitteeHearing = true;
+          }
+          if (actionText.includes('markup') || actionText.includes('ordered to be reported')) {
+            hasCommitteeMarkup = true;
+          }
+          if (actionText.includes('floor') || actionText.includes('vote') ||
+              actionText.includes('passed') || actionText.includes('failed')) {
+            hasFloorVote = true;
+          }
+        });
+      }
+    } catch (e) {
+      console.log(`  ⚠️  Could not fetch actions for ${billNumber}`);
+    }
+
+    // Fetch cosponsors count
+    let cosponsorsCount = 0;
+    try {
+      const cosponsorsResponse = await fetch(cosponsorsUrl);
+      if (cosponsorsResponse.ok) {
+        const cosponsorsData = await cosponsorsResponse.json();
+        cosponsorsCount = cosponsorsData.pagination?.count || 0;
+      }
+    } catch (e) {
+      console.log(`  ⚠️  Could not fetch cosponsors for ${billNumber}`);
+    }
+
+    // Extract committee info
+    if (bill.committees) {
+      committees = bill.committees.map(c => c.name);
+    }
+
     return {
       billNumber,
       title: bill.title,
@@ -86,7 +140,14 @@ async function fetchBillStatus(billNumber) {
       latestActionDate: bill.latestAction?.actionDate || null,
       status: getSimplifiedStatus(bill),
       sponsors: bill.sponsors?.map(s => s.fullName).join(', ') || 'Unknown',
-      url: `https://www.congress.gov/bill/${CONGRESS_NUMBER}th-congress/${billType}/${number}`
+      url: `https://www.congress.gov/bill/${CONGRESS_NUMBER}th-congress/${billType}/${number}`,
+      // New fields
+      cosponsorsCount,
+      hasCommitteeHearing,
+      hasCommitteeMarkup,
+      hasFloorVote,
+      committees,
+      introducedDate: bill.introducedDate || null
     };
   } catch (error) {
     console.error(`Error fetching ${billNumber}:`, error.message);
@@ -118,6 +179,52 @@ function getSimplifiedStatus(bill) {
   return 'UNKNOWN';
 }
 
+// Determine priority based on legislative activity
+function calculatePriority(billStatus, billData) {
+  // Check if bill is manually marked as high priority in bills.json
+  if (billData.priority === 'high' && billData.prioritySource === 'manual') {
+    return { priority: 'high', source: 'manual', reason: 'Manually flagged' };
+  }
+
+  // Check if listed on FreeDC (you can set this in bills.json)
+  if (billData.prioritySource === 'freedc') {
+    return { priority: 'high', source: 'freedc', reason: 'Listed on FreeDC' };
+  }
+
+  // Auto-detect HIGH priority based on legislative activity
+  if (billStatus.hasFloorVote) {
+    return { priority: 'high', source: 'legislative', reason: 'Floor vote occurred' };
+  }
+
+  if (billStatus.hasCommitteeMarkup) {
+    return { priority: 'high', source: 'legislative', reason: 'Committee markup held' };
+  }
+
+  if (billStatus.hasCommitteeHearing) {
+    return { priority: 'high', source: 'legislative', reason: 'Committee hearing held' };
+  }
+
+  if (billStatus.cosponsorsCount >= 20) {
+    return { priority: 'high', source: 'legislative', reason: `${billStatus.cosponsorsCount} cosponsors` };
+  }
+
+  // MEDIUM priority
+  if (billStatus.cosponsorsCount >= 5) {
+    return { priority: 'medium', source: 'legislative', reason: `${billStatus.cosponsorsCount} cosponsors` };
+  }
+
+  if (billStatus.status === 'IN_COMMITTEE') {
+    return { priority: 'medium', source: 'legislative', reason: 'In committee' };
+  }
+
+  // LOW/WATCHING priority - recently introduced, no activity
+  if (billStatus.status === 'INTRODUCED') {
+    return { priority: 'watching', source: 'legislative', reason: 'Recently introduced' };
+  }
+
+  return { priority: 'low', source: 'legislative', reason: 'No significant activity' };
+}
+
 // Main monitoring function
 async function monitorBills() {
   console.log('🔍 Starting bill monitoring...\n');
@@ -145,21 +252,40 @@ async function monitorBills() {
     const status = await fetchBillStatus(billNumber);
 
     if (status) {
+      // Calculate priority
+      const priorityInfo = calculatePriority(status, bill);
+
       // Check if status has changed (you'll need to track previous state)
       changes.push({
+        id: bill.id,
         bill: bill.title,
         billNumber: status.billNumber,
         status: status.status,
         latestAction: status.latestAction,
         latestActionDate: status.latestActionDate,
-        url: status.url
+        url: status.url,
+        // New fields
+        priority: priorityInfo.priority,
+        prioritySource: priorityInfo.source,
+        priorityReason: priorityInfo.reason,
+        cosponsorsCount: status.cosponsorsCount,
+        hasCommitteeHearing: status.hasCommitteeHearing,
+        hasCommitteeMarkup: status.hasCommitteeMarkup,
+        hasFloorVote: status.hasFloorVote,
+        committees: status.committees,
+        introducedDate: status.introducedDate
       });
+
+      // Show priority in output
+      const priorityBadge = priorityInfo.priority === 'high' ? '🔴' :
+                           priorityInfo.priority === 'medium' ? '🟡' : '⚪';
+      console.log(`  ${priorityBadge} Priority: ${priorityInfo.priority} (${priorityInfo.reason})`);
     } else {
       errors.push(billNumber);
     }
 
-    // Rate limiting: wait 100ms between requests to be nice to the API
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Rate limiting: wait 200ms between requests (3 requests per bill = actions + cosponsors)
+    await new Promise(resolve => setTimeout(resolve, 200));
   }
 
   console.log('\n✅ Monitoring complete!\n');
@@ -176,26 +302,51 @@ function generateReport(changes, errors) {
   console.log(`Successful checks: ${changes.length}`);
   console.log(`Errors: ${errors.length}\n`);
 
-  // Group by status
-  const byStatus = {};
+  // Group by priority
+  const byPriority = {
+    high: [],
+    medium: [],
+    watching: [],
+    low: []
+  };
+
   changes.forEach(change => {
-    if (!byStatus[change.status]) {
-      byStatus[change.status] = [];
+    const priority = change.priority || 'low';
+    if (byPriority[priority]) {
+      byPriority[priority].push(change);
     }
-    byStatus[change.status].push(change);
   });
 
-  // Print grouped results
-  Object.keys(byStatus).sort().forEach(status => {
-    console.log(`\n${status} (${byStatus[status].length} bills)`);
-    console.log('-'.repeat(80));
+  // Print HIGH priority bills first
+  console.log('\n🔴 HIGH PRIORITY BILLS (' + byPriority.high.length + ')');
+  console.log('='.repeat(80));
+  byPriority.high.forEach(change => {
+    console.log(`\n  ${change.billNumber}: ${change.bill}`);
+    console.log(`  Status: ${change.status}`);
+    console.log(`  Priority reason: ${change.priorityReason}`);
+    console.log(`  Latest: ${change.latestAction}`);
+    console.log(`  Date: ${change.latestActionDate || 'Unknown'}`);
+    console.log(`  Cosponsors: ${change.cosponsorsCount}`);
+    if (change.hasCommitteeHearing) console.log(`  ✓ Committee hearing held`);
+    if (change.hasCommitteeMarkup) console.log(`  ✓ Committee markup held`);
+    if (change.hasFloorVote) console.log(`  ✓ Floor vote occurred`);
+    console.log(`  URL: ${change.url}`);
+  });
 
-    byStatus[status].forEach(change => {
-      console.log(`\n  ${change.billNumber}: ${change.bill}`);
-      console.log(`  Latest: ${change.latestAction}`);
-      console.log(`  Date: ${change.latestActionDate || 'Unknown'}`);
-      console.log(`  URL: ${change.url}`);
-    });
+  // Print MEDIUM priority bills
+  console.log('\n\n🟡 MEDIUM PRIORITY BILLS (' + byPriority.medium.length + ')');
+  console.log('='.repeat(80));
+  byPriority.medium.forEach(change => {
+    console.log(`\n  ${change.billNumber}: ${change.bill}`);
+    console.log(`  Status: ${change.status} | Cosponsors: ${change.cosponsorsCount}`);
+    console.log(`  Latest: ${change.latestAction} (${change.latestActionDate || 'Unknown'})`);
+  });
+
+  // Print WATCHING bills
+  console.log('\n\n⚪ WATCHING (' + byPriority.watching.length + ')');
+  console.log('='.repeat(80));
+  byPriority.watching.forEach(change => {
+    console.log(`  ${change.billNumber}: ${change.bill}`);
   });
 
   if (errors.length > 0) {

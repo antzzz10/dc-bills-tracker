@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "November 14, 2025",
+  "lastUpdated": "2025-11-19",
   "categories": [
     {
       "id": "abolishing",
@@ -55,573 +55,1731 @@
   "bills": [
     {
       "id": "s440-hr1089",
-      "billNumbers": ["S. 440", "H.R. 1089"],
+      "billNumbers": [
+        "S. 440",
+        "H.R. 1089"
+      ],
       "title": "BOWSER Act",
-      "sponsors": ["Sen Mike Lee", "Rep Andrew Ogles"],
+      "sponsors": [
+        "Sen Mike Lee",
+        "Rep Andrew Ogles"
+      ],
       "description": "Would repeal the Home Rule Act",
-      "category": "abolishing"
+      "category": "abolishing",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr3877",
-      "billNumbers": ["H.R. 3877"],
+      "billNumbers": [
+        "H.R. 3877"
+      ],
       "title": "Washington, D.C. Residents Voting Act",
-      "sponsors": ["Rep Morgan Griffith"],
+      "sponsors": [
+        "Rep Morgan Griffith"
+      ],
       "description": "Would retrocede D.C. to Maryland",
-      "category": "abolishing"
+      "category": "abolishing",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr277",
-      "billNumbers": ["H.R. 277"],
+      "billNumbers": [
+        "H.R. 277"
+      ],
       "title": "Matthew Lawrence Perna Act of 2025",
-      "sponsors": ["Rep Marjorie Taylor Greene"],
+      "sponsors": [
+        "Rep Marjorie Taylor Greene"
+      ],
       "description": "Would, among other things, allow an individual charged with committing a crime in D.C. to move the trial to the individual's home state",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr2096",
-      "billNumbers": ["H.R. 2096"],
+      "billNumbers": [
+        "H.R. 2096"
+      ],
       "title": "Protecting Our Nation's Capital Emergency Act of 2025",
-      "sponsors": ["Rep Andrew Garbarino"],
+      "sponsors": [
+        "Rep Andrew Garbarino"
+      ],
       "description": "Would repeal police discipline provisions of the Comprehensive Policing and Justice Reform Amendment Act of 2022",
-      "category": "crime"
-    },
-    {
-      "id": "hr5166-police",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Police Reform",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to carry out the Comprehensive Policing and Justice Reform Amendment Act of 2022",
-      "category": "crime"
-    },
-    {
-      "id": "hr5166-youth",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Youth Rehabilitation",
-      "sponsors": ["House"],
-      "description": "Would repeal provisions of the Youth Rehabilitation Amendment Act of 2018",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr2056-s1522",
-      "billNumbers": ["H.R. 2056", "S. 1522"],
+      "billNumbers": [
+        "H.R. 2056",
+        "S. 1522"
+      ],
       "title": "District of Columbia Federal Immigration Compliance Act",
-      "sponsors": ["Rep Clay Higgins", "Sen Bill Hagerty"],
+      "sponsors": [
+        "Rep Clay Higgins",
+        "Sen Bill Hagerty"
+      ],
       "description": "Would require D.C. to cooperate with federal immigration agencies",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr4922-s2686",
-      "billNumbers": ["H.R. 4922", "S. 2686"],
+      "billNumbers": [
+        "H.R. 4922",
+        "S. 2686"
+      ],
       "title": "DC CRIMES Act of 2025",
-      "sponsors": ["Rep Byron Donalds", "Sen Jim Banks"],
+      "sponsors": [
+        "Rep Byron Donalds",
+        "Sen Jim Banks"
+      ],
       "description": "Would prohibit the D.C. Council from changing criminal penalties, amend the Youth Rehabilitation Amendment Act of 2018 and require D.C. to publicly post information about juvenile crime",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hjres114",
-      "billNumbers": ["H.J.Res. 114"],
+      "billNumbers": [
+        "H.J.Res. 114"
+      ],
       "title": "Crime Emergency Extension Resolution",
-      "sponsors": ["Rep Anna Paulina Luna"],
+      "sponsors": [
+        "Rep Anna Paulina Luna"
+      ],
       "description": "To extend the emergency determined by the President on August 11, 2025, in the Executive Order titled \"Declaring a crime emergency in the District of Columbia\"",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5015",
-      "billNumbers": ["H.R. 5015"],
+      "billNumbers": [
+        "H.R. 5015"
+      ],
       "title": "Presidential Emergency Extension Amendment",
-      "sponsors": ["Rep Andy Biggs"],
+      "sponsors": [
+        "Rep Andy Biggs"
+      ],
       "description": "Would amend Section 740 of the Home Rule Act to permit the president to declare an emergency for 180 days, and the amendment would be retroactive to an emergency declared before enactment",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5016",
-      "billNumbers": ["H.R. 5016"],
+      "billNumbers": [
+        "H.R. 5016"
+      ],
       "title": "Keep Offenders Off Our Streets Act",
-      "sponsors": ["Rep Andy Biggs"],
+      "sponsors": [
+        "Rep Andy Biggs"
+      ],
       "description": "Would prohibit the Council from enacting, and the mayor from enforcing, a law that permits a defendant to be released pretrial without a secured appearance bond, and prohibits the Council from ever enacting such a law",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s2706",
-      "billNumbers": ["S. 2706"],
+      "billNumbers": [
+        "S. 2706"
+      ],
       "title": "Ending Cashless Bail in Our Nation's Capital Act",
-      "sponsors": ["Sen Marsha Blackburn"],
+      "sponsors": [
+        "Sen Marsha Blackburn"
+      ],
       "description": "Would require D.C. to allow cash bail, as well as require D.C. to have an automatic presumption of pretrial detention, for certain crimes",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5140",
-      "billNumbers": ["H.R. 5140"],
+      "billNumbers": [
+        "H.R. 5140"
+      ],
       "title": "Juvenile Charging Age Reduction",
-      "sponsors": ["Rep Brandon Gill"],
+      "sponsors": [
+        "Rep Brandon Gill"
+      ],
       "description": "Would lower the age at which a minor may be charged as an adult",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5143",
-      "billNumbers": ["H.R. 5143"],
+      "billNumbers": [
+        "H.R. 5143"
+      ],
       "title": "District of Columbia Policing Protection Act",
-      "sponsors": ["Rep Clay Higgins"],
+      "sponsors": [
+        "Rep Clay Higgins"
+      ],
       "description": "Would weaken limitations on vehicular pursuits by police officers",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5107-s2687",
-      "billNumbers": ["H.R. 5107", "S. 2687"],
+      "billNumbers": [
+        "H.R. 5107",
+        "S. 2687"
+      ],
       "title": "CLEAN DC Act",
-      "sponsors": ["Rep Andrew Clyde", "Sen Ted Cruz"],
+      "sponsors": [
+        "Rep Andrew Clyde",
+        "Sen Ted Cruz"
+      ],
       "description": "Would repeal the Comprehensive Policing and Justice Reform Amendment Act of 2022",
       "category": "crime",
-      "highlight": "floor-vote"
+      "highlight": "floor-vote",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5207",
-      "billNumbers": ["H.R. 5207"],
+      "billNumbers": [
+        "H.R. 5207"
+      ],
       "title": "Capital Emergency Control Act of 2025",
-      "sponsors": ["Rep Andrew Ogles"],
+      "sponsors": [
+        "Rep Andrew Ogles"
+      ],
       "description": "Would amend section 740 of the Home Rule Act to allow the president to extend emergency control of the D.C. police department for additional 30-day periods indefinitely",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5214",
-      "billNumbers": ["H.R. 5214"],
+      "billNumbers": [
+        "H.R. 5214"
+      ],
       "title": "District of Columbia Cash Bail Reform Act",
-      "sponsors": ["Rep Elise Stefanik"],
+      "sponsors": [
+        "Rep Elise Stefanik"
+      ],
       "description": "Would require pretrial detention and a secured appearance bond for certain crimes",
       "category": "crime",
-      "highlight": "floor-vote"
+      "highlight": "floor-vote",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5172",
-      "billNumbers": ["H.R. 5172"],
+      "billNumbers": [
+        "H.R. 5172"
+      ],
       "title": "Strong Sentences for Safer D.C. Streets Act",
-      "sponsors": ["Rep Andy Biggs"],
+      "sponsors": [
+        "Rep Andy Biggs"
+      ],
       "description": "Would increase existing and establish new mandatory minimums",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5242-secondchance",
-      "billNumbers": ["H.R. 5242"],
+      "billNumbers": [
+        "H.R. 5242"
+      ],
       "title": "Second Chance and Incarceration Reduction Repeal",
-      "sponsors": ["Rep David Kustoff"],
+      "sponsors": [
+        "Rep David Kustoff"
+      ],
       "description": "Would repeal the Second Chance Amendment Act of 2022 and the Incarceration Reduction Amendment Act of 2016",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5163",
-      "billNumbers": ["H.R. 5163"],
+      "billNumbers": [
+        "H.R. 5163"
+      ],
       "title": "Clean and Managed Public Spaces Act",
-      "sponsors": ["Rep William Timmons"],
+      "sponsors": [
+        "Rep William Timmons"
+      ],
       "description": "Would impose criminal penalties for camping on public property",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s2517",
-      "billNumbers": ["S. 2517"],
+      "billNumbers": [
+        "S. 2517"
+      ],
       "title": "Public Property Camping Penalties",
-      "sponsors": ["Sen Tom Cotton"],
+      "sponsors": [
+        "Sen Tom Cotton"
+      ],
       "description": "Would impose criminal penalties for camping on public property",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s2815",
-      "billNumbers": ["S. 2815"],
+      "billNumbers": [
+        "S. 2815"
+      ],
       "title": "JUSTICE in D.C. Act",
-      "sponsors": ["Sen John Cornyn"],
+      "sponsors": [
+        "Sen John Cornyn"
+      ],
       "description": "Would repeal the Second Look Amendment Act of 2022 and the Incarceration Reduction Amendment Act of 2016 and provide funding for victim services",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5125-s2854",
-      "billNumbers": ["H.R. 5125", "S. 2854"],
+      "billNumbers": [
+        "H.R. 5125",
+        "S. 2854"
+      ],
       "title": "District of Columbia Judicial Nominations Reform Act",
-      "sponsors": ["Rep Pete Sessions", "Sen John Kennedy"],
+      "sponsors": [
+        "Rep Pete Sessions",
+        "Sen John Kennedy"
+      ],
       "description": "Would abolish the Judicial Nomination Commission",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5179",
-      "billNumbers": ["H.R. 5179"],
+      "billNumbers": [
+        "H.R. 5179"
+      ],
       "title": "District of Columbia Attorney General Appointment Reform Act",
-      "sponsors": ["Rep Pat Fallon"],
+      "sponsors": [
+        "Rep Pat Fallon"
+      ],
       "description": "Would grant the president authority to appoint the Attorney General",
-      "category": "crime"
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr884-s2636",
-      "billNumbers": ["H.R. 884", "S. 2636"],
+      "billNumbers": [
+        "H.R. 884",
+        "S. 2636"
+      ],
       "title": "Noncitizen Voting Prohibition",
-      "sponsors": ["Rep August Pfluger", "Sen Katie Britt"],
+      "sponsors": [
+        "Rep August Pfluger",
+        "Sen Katie Britt"
+      ],
       "description": "Would prohibit noncitizens from voting in D.C. and repeal the Local Resident Voting Rights Amendment Act of 2022",
-      "category": "elections"
+      "category": "elections",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr2562",
-      "billNumbers": ["H.R. 2562"],
+      "billNumbers": [
+        "H.R. 2562"
+      ],
       "title": "District of Columbia One Vote One Choice Act",
-      "sponsors": ["Rep Michael Lawler"],
+      "sponsors": [
+        "Rep Michael Lawler"
+      ],
       "description": "Would prohibit ranked choice voting",
-      "category": "elections"
+      "category": "elections",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hconres14-cruz",
-      "billNumbers": ["H.Con.Res. 14"],
+      "billNumbers": [
+        "H.Con.Res. 14"
+      ],
       "title": "Noncitizen Voting Budget Amendment",
-      "sponsors": ["Sen Ted Cruz"],
+      "sponsors": [
+        "Sen Ted Cruz"
+      ],
       "description": "Amendment to fiscal year 2025 budget resolution that would establish a deficit-neutral reserve fund relating to prohibiting or limiting noncitizen voting",
-      "category": "elections"
-    },
-    {
-      "id": "hr5166-noncitizen",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Noncitizen Voting",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to implement the Local Resident Voting Rights Amendment Act of 2022 or any activities related to enrolling or registering noncitizens into voter rolls for local elections",
-      "category": "elections"
+      "category": "elections",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr4851",
-      "billNumbers": ["H.R. 4851"],
+      "billNumbers": [
+        "H.R. 4851"
+      ],
       "title": "Proving Residency for Overseas Voter Eligibility Act",
-      "sponsors": ["Rep Abraham Hamadeh"],
+      "sponsors": [
+        "Rep Abraham Hamadeh"
+      ],
       "description": "Would deem as D.C. residents for purposes of federal elections in D.C. nonmilitary overseas voters who can't prove residency in the state in which they are seeking to vote in a federal election",
-      "category": "elections"
-    },
-    {
-      "id": "hr5166-emissions",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Vehicle Emissions",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to enforce the rule relating to 'Adoption of California Vehicle Emission Standards'",
-      "category": "environment"
-    },
-    {
-      "id": "hr5166-oilgas",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Oil & Gas Protection",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to implement or enforce provisions of the Consumer Protection Act against oil and gas companies for environmental claims",
-      "category": "environment"
+      "category": "elections",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr7-s186",
-      "billNumbers": ["H.R. 7", "S. 186"],
+      "billNumbers": [
+        "H.R. 7",
+        "S. 186"
+      ],
       "title": "No Taxpayer Funding for Abortion and Abortion Insurance Full Disclosure Act of 2025",
-      "sponsors": ["Rep Christopher Smith", "Sen Roger Wicker"],
+      "sponsors": [
+        "Rep Christopher Smith",
+        "Sen Roger Wicker"
+      ],
       "description": "Would, among other things, permanently prohibit D.C. funds approved by Congress from being used for abortion, prohibit D.C. employees from providing an abortion and prohibit abortion in D.C. facilities",
-      "category": "healthcare"
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr1968-abortion",
-      "billNumbers": ["H.R. 1968"],
+      "billNumbers": [
+        "H.R. 1968"
+      ],
       "title": "Full-Year Continuing Appropriations 2025 - Abortion",
-      "sponsors": ["House"],
+      "sponsors": [
+        "House"
+      ],
       "description": "Prohibited use of funds on abortion",
-      "category": "healthcare"
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hjres82",
-      "billNumbers": ["H.J.Res. 82"],
+      "billNumbers": [
+        "H.J.Res. 82"
+      ],
       "title": "Insurance Regulation Disapproval Resolution",
-      "sponsors": ["Rep Christopher Smith"],
+      "sponsors": [
+        "Rep Christopher Smith"
+      ],
       "description": "Disapproval resolution on the Insurance Regulation Amendment Act of 2024 (reproductive health care and gender-affirming care)",
-      "category": "healthcare"
-    },
-    {
-      "id": "hr5166-abortion",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Abortion",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds for abortion",
-      "category": "healthcare"
-    },
-    {
-      "id": "hr5166-reprohealth",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Reproductive Health Non-Discrimination",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to carry out the Reproductive Health Non-Discrimination Amendment Act of 2014",
-      "category": "healthcare"
-    },
-    {
-      "id": "hr5166-deathwithdignity",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Death with Dignity",
-      "sponsors": ["House"],
-      "description": "Would repeal the Death with Dignity Act of 2016 and purports to prohibit enactment of a similar law",
-      "category": "healthcare"
-    },
-    {
-      "id": "hr5166-covid",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - COVID Mandates",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to implement, administer or enforce any COVID–19 mask or vaccine mandate",
-      "category": "healthcare"
-    },
-    {
-      "id": "hr5166-insurance",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Insurance Regulation",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to implement the Insurance Regulation Amendment Act of 2024 (reproductive health care and gender-affirming care)",
-      "category": "healthcare"
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s2907-hr5483",
-      "billNumbers": ["S. 2907", "H.R. 5483"],
+      "billNumbers": [
+        "S. 2907",
+        "H.R. 5483"
+      ],
       "title": "Chloe Cole Act",
-      "sponsors": ["Sen Blackburn", "Rep Onder"],
+      "sponsors": [
+        "Sen Blackburn",
+        "Rep Onder"
+      ],
       "description": "Would, among other things, prohibit gender affirming care for children within D.C.",
-      "category": "healthcare"
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr1016",
-      "billNumbers": ["H.R. 1016"],
+      "billNumbers": [
+        "H.R. 1016"
+      ],
       "title": "Protecting Women's Private Spaces Act",
-      "sponsors": ["Rep Nancy Mace"],
+      "sponsors": [
+        "Rep Nancy Mace"
+      ],
       "description": "Would prohibit an individual from accessing or using a single-sex facility on government property other than those corresponding to the biological sex of such individual",
-      "category": "lgbtq"
+      "category": "lgbtq",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr1968-marijuana",
-      "billNumbers": ["H.R. 1968"],
+      "billNumbers": [
+        "H.R. 1968"
+      ],
       "title": "Full-Year Continuing Appropriations 2025 - Marijuana",
-      "sponsors": ["House"],
+      "sponsors": [
+        "House"
+      ],
       "description": "Prohibited using of funds on commercializing recreational marijuana",
-      "category": "marijuana"
-    },
-    {
-      "id": "hr5166-marijuana",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Marijuana",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to commercialize recreational marijuana",
-      "category": "marijuana"
+      "category": "marijuana",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s1450",
-      "billNumbers": ["S. 1450"],
+      "billNumbers": [
+        "S. 1450"
+      ],
       "title": "Open Meetings Clarification Repeal",
-      "sponsors": ["Sen Mike Lee"],
+      "sponsors": [
+        "Sen Mike Lee"
+      ],
       "description": "Would repeal the Open Meetings Clarification Emergency Amendment Act of 2025",
-      "category": "meetings"
+      "category": "meetings",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "sjres68-hjres109",
-      "billNumbers": ["S.J.Res. 68", "H.J.Res. 109"],
+      "billNumbers": [
+        "S.J.Res. 68",
+        "H.J.Res. 109"
+      ],
       "title": "Open Meetings Clarification Disapproval Resolution",
-      "sponsors": ["Sen Mike Lee", "Rep Harriet Hageman"],
+      "sponsors": [
+        "Sen Mike Lee",
+        "Rep Harriet Hageman"
+      ],
       "description": "Disapproval resolution on the Open Meetings Clarification Temporary Amendment Act of 2025",
-      "category": "meetings"
+      "category": "meetings",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s218-hr4558",
-      "billNumbers": ["S. 218", "H.R. 4558"],
+      "billNumbers": [
+        "S. 218",
+        "H.R. 4558"
+      ],
       "title": "Oswaldo Paya Way Designation",
-      "sponsors": ["Sen Ted Cruz", "Rep Mario Diaz-Balart"],
+      "sponsors": [
+        "Sen Ted Cruz",
+        "Rep Mario Diaz-Balart"
+      ],
       "description": "Would designate the area between the intersections of 16th Street, Northwest and Fuller Street, Northwest and 16th Street, Northwest and Euclid Street, Northwest as \"Oswaldo Paya Way\"",
-      "category": "transportation"
+      "category": "transportation",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s614-hr1738",
-      "billNumbers": ["S. 614", "H.R. 1738"],
+      "billNumbers": [
+        "S. 614",
+        "H.R. 1738"
+      ],
       "title": "Alexi Navalny Way Designation",
-      "sponsors": ["Sen Richard Durbin", "Rep Mike Quigley"],
+      "sponsors": [
+        "Sen Richard Durbin",
+        "Rep Mike Quigley"
+      ],
       "description": "Would designate the area of Sumner Row between 16th Street Northwest and L Street Northwest as \"Alexi Navalny Way\"",
-      "category": "transportation"
+      "category": "transportation",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr1774",
-      "billNumbers": ["H.R. 1774"],
+      "billNumbers": [
+        "H.R. 1774"
+      ],
       "title": "Black Lives Matter Plaza Removal",
-      "sponsors": ["Rep Andrew Clyde"],
+      "sponsors": [
+        "Rep Andrew Clyde"
+      ],
       "description": "Would withhold 50 percent of federal highway funds unless the mayor removes the phrase Black Lives Matter from the street symbolically designated as Black Lives Matter Plaza, redesignates such street as Liberty Plaza, and removes such phrase from each website, document, and other material",
-      "category": "transportation"
+      "category": "transportation",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr2522",
-      "billNumbers": ["H.R. 2522"],
+      "billNumbers": [
+        "H.R. 2522"
+      ],
       "title": "Jimmy Lai Way Designation",
-      "sponsors": ["Rep Christopher Smith"],
+      "sponsors": [
+        "Rep Christopher Smith"
+      ],
       "description": "To designate the area between the intersections of 18th Street Northwest and Church Street Northwest, and 18th Street Northwest and P Street Northwest as \"Jimmy Lai Way\"",
-      "category": "transportation"
-    },
-    {
-      "id": "hr5166-rightturn",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Right Turn on Red",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to enact or carry out any law that prohibits motorists from making right turns on red, including the Safer Streets Amendment Act of 2022",
-      "category": "transportation"
-    },
-    {
-      "id": "hr5166-cameras",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Traffic Cameras",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to carry the automated traffic enforcement law",
-      "category": "transportation"
+      "category": "transportation",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5242-perry-cameras",
-      "billNumbers": ["H.R. 5242"],
+      "billNumbers": [
+        "H.R. 5242"
+      ],
       "title": "Traffic Camera Repeal Amendment",
-      "sponsors": ["Rep Scott Perry"],
+      "sponsors": [
+        "Rep Scott Perry"
+      ],
       "description": "Amendment that would repeal the automated traffic enforcement law",
-      "category": "transportation"
+      "category": "transportation",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5242-perry-rightturn",
-      "billNumbers": ["H.R. 5242"],
+      "billNumbers": [
+        "H.R. 5242"
+      ],
       "title": "Right Turn Prohibition Repeal Amendment",
-      "sponsors": ["Rep Scott Perry"],
+      "sponsors": [
+        "Rep Scott Perry"
+      ],
       "description": "Amendment that would repeal the law that prohibits right turns on red",
-      "category": "transportation"
+      "category": "transportation",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5525",
-      "billNumbers": ["H.R. 5525"],
+      "billNumbers": [
+        "H.R. 5525"
+      ],
       "title": "Stop DC CAMERA Act",
-      "sponsors": ["Rep Scott Perry"],
+      "sponsors": [
+        "Rep Scott Perry"
+      ],
       "description": "Would repeal the automated traffic enforcement law and the law prohibiting right turns on red",
-      "category": "transportation"
+      "category": "transportation",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s2998",
-      "billNumbers": ["S. 2998"],
+      "billNumbers": [
+        "S. 2998"
+      ],
       "title": "Charlie Kirk Patriot Way Designation",
-      "sponsors": ["Sen Rick Scott"],
+      "sponsors": [
+        "Sen Rick Scott"
+      ],
       "description": "To designate the area of H Street Northwest between Connecticut Avenue Northwest and Vermont Avenue Northwest in Washington, District of Columbia, as \"Charlie Kirk Patriot Way\"",
-      "category": "transportation"
+      "category": "transportation",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr69",
-      "billNumbers": ["H.R. 69"],
+      "billNumbers": [
+        "H.R. 69"
+      ],
       "title": "Freedom to Petition the Government Act",
-      "sponsors": ["Rep Andy Biggs"],
+      "sponsors": [
+        "Rep Andy Biggs"
+      ],
       "description": "Would treat meetings nonprofits hold with federal officials in D.C. as activities not constituting doing business in D.C. for purposes of determining whether organizations are required to register with D.C.",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s204-hr650",
-      "billNumbers": ["S. 204", "H.R. 650"],
+      "billNumbers": [
+        "S. 204",
+        "H.R. 650"
+      ],
       "title": "Families' Rights and Responsibilities Act",
-      "sponsors": ["Sen Tim Scott", "Rep Virginia Foxx"],
+      "sponsors": [
+        "Sen Tim Scott",
+        "Rep Virginia Foxx"
+      ],
       "description": "Would prohibit the government from substantially burdening the fundamental right of parents to direct the upbringing, education and health care of their children without demonstrating that the infringement is required by a compelling governmental interest of the highest order as applied to the parent and the child and is the least restrictive means of furthering that compelling governmental interest",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "sconres7-lee",
-      "billNumbers": ["S.Con.Res. 7"],
+      "billNumbers": [
+        "S.Con.Res. 7"
+      ],
       "title": "Legislative Authority Budget Amendment",
-      "sponsors": ["Sen Mike Lee"],
+      "sponsors": [
+        "Sen Mike Lee"
+      ],
       "description": "Amendment to fiscal year 2025 budget resolution that would establish a deficit-neutral reserve fund \"relating to Congress reasserting legislative authority over the District of Columbia\"",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr1968-budget",
-      "billNumbers": ["H.R. 1968"],
+      "billNumbers": [
+        "H.R. 1968"
+      ],
       "title": "Full-Year Continuing Appropriations 2025 - Budget Cut",
-      "sponsors": ["House"],
+      "sponsors": [
+        "House"
+      ],
       "description": "Cut the fiscal year 2025 local budget by more than $1 billion",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s900",
-      "billNumbers": ["S. 900"],
+      "billNumbers": [
+        "S. 900"
+      ],
       "title": "Make American Flags in America Act of 2025",
-      "sponsors": ["Sen Ted Cruz"],
+      "sponsors": [
+        "Sen Ted Cruz"
+      ],
       "description": "Would prohibit the purchase or display of U.S. flags not made in America",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr3766",
-      "billNumbers": ["H.R. 3766"],
+      "billNumbers": [
+        "H.R. 3766"
+      ],
       "title": "Agency Interpretation Deference Prohibition",
-      "sponsors": ["Rep Harriet Hageman"],
+      "sponsors": [
+        "Rep Harriet Hageman"
+      ],
       "description": "Would prohibit requiring tribunals in court or administrative proceedings to defer to the mayor's interpretation of statutes and regulations and repeal the Review of Agency Action Clarification Temporary Amendment Act of 2024",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s1991-hr4311",
-      "billNumbers": ["S. 1991", "H.R. 4311"],
+      "billNumbers": [
+        "S. 1991",
+        "H.R. 4311"
+      ],
       "title": "Delivering On Government Efficiency in Spending Act",
-      "sponsors": ["Sen Joni Ernst", "Rep Aaron Bean"],
+      "sponsors": [
+        "Sen Joni Ernst",
+        "Rep Aaron Bean"
+      ],
       "description": "Would treat D.C. as a federal agency for purposes of the Treasury disbursement system",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr4519-s2565",
-      "billNumbers": ["H.R. 4519", "S. 2565"],
+      "billNumbers": [
+        "H.R. 4519",
+        "S. 2565"
+      ],
       "title": "District of Columbia Sister City Integrity Act",
-      "sponsors": ["Rep John Moolenaar", "Sen Marsha Blackburn"],
+      "sponsors": [
+        "Rep John Moolenaar",
+        "Sen Marsha Blackburn"
+      ],
       "description": "Would prohibit entering into or maintaining a sister city relationship with a jurisdiction located in a foreign adversary country",
-      "category": "other"
-    },
-    {
-      "id": "hr5166-slapp",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Anti-SLAPP",
-      "sponsors": ["House"],
-      "description": "Would repeal Section 5 of the Corrections Oversight Improvement Omnibus Amendment Act of 2022 (exemptions to anti-Strategic Lawsuits Against Public Participation law)",
-      "category": "other"
-    },
-    {
-      "id": "hr5166-guns",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Concealed Carry",
-      "sponsors": ["House"],
-      "description": "Would provide that an individual who has a valid weapons carry permit from any state or territory may possess and carry a concealed handgun, magazine and ammunition in an area governed by D.C. or the Washington Metropolitan Area Transit Authority",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "s2404-hr4670",
-      "billNumbers": ["S. 2404", "H.R. 4670"],
+      "billNumbers": [
+        "S. 2404",
+        "H.R. 4670"
+      ],
       "title": "Emergency Bill Disapproval Resolution Act",
-      "sponsors": ["Sen Mike Lee", "Rep Harriet Hageman"],
+      "sponsors": [
+        "Sen Mike Lee",
+        "Rep Harriet Hageman"
+      ],
       "description": "Would make emergency bills subject to disapproval resolutions",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr4788",
-      "billNumbers": ["H.R. 4788"],
+      "billNumbers": [
+        "H.R. 4788"
+      ],
       "title": "Congressional Concealed Carry in D.C.",
-      "sponsors": ["Rep Andrew Clyde"],
+      "sponsors": [
+        "Rep Andrew Clyde"
+      ],
       "description": "Would permit members of Congress who are authorized to carry a concealed gun in their state to carry in D.C.",
-      "category": "other"
-    },
-    {
-      "id": "hr5166-sistercity",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Sister Cities China",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to plan, support, or implement a sister city relationship with a city in China",
-      "category": "other"
-    },
-    {
-      "id": "hr5166-shield",
-      "billNumbers": ["H.R. 5166"],
-      "title": "FY 2026 D.C. Appropriations - Shield Law",
-      "sponsors": ["House"],
-      "description": "Would prohibit the use of funds to carry out title I or title II of the Human Rights Sanctuary Amendment Act of 2022 (shield law)",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5183",
-      "billNumbers": ["H.R. 5183"],
+      "billNumbers": [
+        "H.R. 5183"
+      ],
       "title": "District of Columbia Home Rule Improvement Act",
-      "sponsors": ["Rep Paul Gosar"],
+      "sponsors": [
+        "Rep Paul Gosar"
+      ],
       "description": "Would make both civil and criminal bills enacted by D.C. subject to a 60-legislative-day review period, permit a disapproval resolution to disapprove individual provisions of a bill enacted by D.C., prohibit D.C. from enacting a bill that is substantially the same as a bill that has been subject to an enacted disapproval resolution, prohibit D.C. from withdrawing a bill that is undergoing the congressional review period, subject successive emergency bills to a congressional review period and subject executive orders and regulations issued by the mayor and executive branch agencies, respectively, to a congressional review period, and require the mayor and Council chair to testify annually before House and Senate committees",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     },
     {
       "id": "hr5474",
-      "billNumbers": ["H.R. 5474"],
+      "billNumbers": [
+        "H.R. 5474"
+      ],
       "title": "No DEI in DC Act",
-      "sponsors": ["Rep Nancy Mace"],
+      "sponsors": [
+        "Rep Nancy Mace"
+      ],
       "description": "Repeals, amends and blocks D.C. from using funds to carry out laws, policies, offices and commissions related to diversity, equity and inclusion",
-      "category": "other"
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     }
-  ]
+  ],
+  "riders": [
+    {
+      "id": "hr5166-police",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Police Reform",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to carry out the Comprehensive Policing and Justice Reform Amendment Act of 2022",
+      "category": "crime",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-youth",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Youth Rehabilitation",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would repeal provisions of the Youth Rehabilitation Amendment Act of 2018",
+      "category": "crime",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-noncitizen",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Noncitizen Voting",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to implement the Local Resident Voting Rights Amendment Act of 2022 or any activities related to enrolling or registering noncitizens into voter rolls for local elections",
+      "category": "elections",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-emissions",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Vehicle Emissions",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to enforce the rule relating to 'Adoption of California Vehicle Emission Standards'",
+      "category": "environment",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-oilgas",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Oil & Gas Protection",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to implement or enforce provisions of the Consumer Protection Act against oil and gas companies for environmental claims",
+      "category": "environment",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-abortion",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Abortion",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds for abortion",
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-reprohealth",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Reproductive Health Non-Discrimination",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to carry out the Reproductive Health Non-Discrimination Amendment Act of 2014",
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-deathwithdignity",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Death with Dignity",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would repeal the Death with Dignity Act of 2016 and purports to prohibit enactment of a similar law",
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-covid",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - COVID Mandates",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to implement, administer or enforce any COVID–19 mask or vaccine mandate",
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-insurance",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Insurance Regulation",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to implement the Insurance Regulation Amendment Act of 2024 (reproductive health care and gender-affirming care)",
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-marijuana",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Marijuana",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to commercialize recreational marijuana",
+      "category": "marijuana",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-rightturn",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Right Turn on Red",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to enact or carry out any law that prohibits motorists from making right turns on red, including the Safer Streets Amendment Act of 2022",
+      "category": "transportation",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-cameras",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Traffic Cameras",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to carry the automated traffic enforcement law",
+      "category": "transportation",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-slapp",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Anti-SLAPP",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would repeal Section 5 of the Corrections Oversight Improvement Omnibus Amendment Act of 2022 (exemptions to anti-Strategic Lawsuits Against Public Participation law)",
+      "category": "other",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-guns",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Concealed Carry",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would provide that an individual who has a valid weapons carry permit from any state or territory may possess and carry a concealed handgun, magazine and ammunition in an area governed by D.C. or the Washington Metropolitan Area Transit Authority",
+      "category": "other",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-sistercity",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Sister Cities China",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to plan, support, or implement a sister city relationship with a city in China",
+      "category": "other",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    },
+    {
+      "id": "hr5166-shield",
+      "billNumbers": [
+        "H.R. 5166"
+      ],
+      "title": "FY 2026 D.C. Appropriations - Shield Law",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to carry out title I or title II of the Human Rights Sanctuary Amendment Act of 2022 (shield law)",
+      "category": "other",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "freedc",
+      "fiscalYear": "2026"
+    }
+  ],
+  "supportBills": []
 }

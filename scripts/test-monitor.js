@@ -80,31 +80,46 @@ sampleBills.forEach(billNumber => {
 console.log('\n' + '='.repeat(80));
 console.log('📊 BILLS DATA ANALYSIS\n');
 
-console.log(`Total bills to monitor: ${billsData.bills.length}`);
+console.log(`Total bills to oppose: ${billsData.bills?.length || 0}`);
+console.log(`Total riders: ${billsData.riders?.length || 0}`);
+console.log(`Total support bills: ${billsData.supportBills?.length || 0}`);
 console.log(`Categories: ${billsData.categories.length}`);
 console.log(`Last updated: ${billsData.lastUpdated}\n`);
 
-// Group by category
-const byCategory = {};
+// Group bills by priority
+const byPriority = {
+  high: [],
+  medium: [],
+  low: [],
+  watching: []
+};
+
 billsData.bills.forEach(bill => {
-  const category = bill.category;
-  if (!byCategory[category]) {
-    byCategory[category] = [];
+  const priority = bill.priority || 'low';
+  if (byPriority[priority]) {
+    byPriority[priority].push(bill);
   }
-  byCategory[category].push(bill);
 });
 
-console.log('Bills by category:');
-Object.keys(byCategory).sort().forEach(category => {
-  console.log(`  ${category}: ${byCategory[category].length} bills`);
-});
+console.log('Bills by priority:');
+console.log(`  🔴 High: ${byPriority.high.length}`);
+console.log(`  🟡 Medium: ${byPriority.medium.length}`);
+console.log(`  ⚪ Low: ${byPriority.low.length}`);
+console.log(`  👀 Watching: ${byPriority.watching.length}`);
 
-// Find highlighted bills
-const highlightedBills = billsData.bills.filter(b => b.highlight === 'floor-vote');
-console.log(`\nHighlighted floor vote bills: ${highlightedBills.length}`);
-highlightedBills.forEach(bill => {
+console.log('\nHigh priority bills:');
+byPriority.high.forEach(bill => {
   console.log(`  - ${bill.billNumbers[0]}: ${bill.title}`);
+  console.log(`    Priority source: ${bill.prioritySource}`);
 });
+
+console.log('\nRiders (H.R. 5166 provisions):');
+billsData.riders.slice(0, 5).forEach(rider => {
+  console.log(`  - ${rider.title} (${rider.category})`);
+});
+if (billsData.riders.length > 5) {
+  console.log(`  ... and ${billsData.riders.length - 5} more`);
+}
 
 // Test bill number parsing for all bills
 console.log('\n' + '='.repeat(80));

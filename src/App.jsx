@@ -10,35 +10,71 @@ import UpdateBanner from './components/UpdateBanner'
 function App() {
   const [selectedCategories, setSelectedCategories] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [showOtherBills, setShowOtherBills] = useState(false)
 
-  const { filteredBills, groupedByCategory } = useMemo(() => {
-    let filtered = billsData.bills
+  const { filteredBills, filteredRiders, highPriorityGroups, otherBillsGroups, riderGroups, totalCount } = useMemo(() => {
+    const allBills = billsData.bills || []
+    const allRiders = billsData.riders || []
+
+    // Filter bills
+    let filtered = allBills
+    let filteredRiders = allRiders
 
     // Filter by selected categories
     if (selectedCategories.length > 0) {
       filtered = filtered.filter(bill =>
         selectedCategories.includes(bill.category)
       )
+      filteredRiders = filteredRiders.filter(rider =>
+        selectedCategories.includes(rider.category)
+      )
     }
 
     // Filter by search term
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase()
-      filtered = filtered.filter(bill =>
-        bill.title.toLowerCase().includes(term) ||
-        bill.description.toLowerCase().includes(term) ||
-        bill.sponsors.some(sponsor => sponsor.toLowerCase().includes(term)) ||
-        bill.billNumbers.some(num => num.toLowerCase().includes(term))
-      )
+      const searchFilter = item =>
+        item.title.toLowerCase().includes(term) ||
+        item.description.toLowerCase().includes(term) ||
+        item.sponsors.some(sponsor => sponsor.toLowerCase().includes(term)) ||
+        item.billNumbers.some(num => num.toLowerCase().includes(term))
+
+      filtered = filtered.filter(searchFilter)
+      filteredRiders = filteredRiders.filter(searchFilter)
     }
 
-    // Group bills by category
-    const grouped = billsData.categories.map(category => ({
+    // Separate high priority from other bills
+    const highPriorityBills = filtered.filter(bill => bill.priority === 'high')
+    const otherBills = filtered.filter(bill => bill.priority !== 'high')
+
+    // Group high priority bills by category
+    const highPriorityGroups = billsData.categories.map(category => ({
       category,
-      bills: filtered.filter(bill => bill.category === category.id)
+      bills: highPriorityBills.filter(bill => bill.category === category.id)
     })).filter(group => group.bills.length > 0)
 
-    return { filteredBills: filtered, groupedByCategory: grouped }
+    // Group other bills by category
+    const otherBillsGroups = billsData.categories.map(category => ({
+      category,
+      bills: otherBills.filter(bill => bill.category === category.id)
+    })).filter(group => group.bills.length > 0)
+
+    // Group riders by category
+    const riderGroups = billsData.categories.map(category => ({
+      category,
+      bills: filteredRiders.filter(rider => rider.category === category.id)
+    })).filter(group => group.bills.length > 0)
+
+    const totalCount = filtered.length + filteredRiders.length
+
+    return {
+      filteredBills: filtered,
+      filteredRiders,
+      highPriorityGroups,
+      otherBillsGroups,
+      riderGroups,
+      totalCount
+    }
   }, [selectedCategories, searchTerm])
 
   const toggleCategory = (categoryId) => {
@@ -81,7 +117,7 @@ function App() {
 
         <div className="results-header">
           <h2>
-            {filteredBills.length} {filteredBills.length === 1 ? 'Bill' : 'Bills'} Found
+            {totalCount} {totalCount === 1 ? 'Item' : 'Items'} Found
           </h2>
           <div className="results-actions">
             {(selectedCategories.length > 0 || searchTerm) && (
@@ -89,23 +125,85 @@ function App() {
                 Clear All Filters
               </button>
             )}
-            <DownloadButton filteredBills={filteredBills} />
+            <DownloadButton
+              filteredBills={filteredBills}
+              filteredRiders={filteredRiders}
+            />
           </div>
         </div>
 
         <div className="bills-list">
-          {filteredBills.length === 0 ? (
+          {totalCount === 0 ? (
             <div className="no-results">
               <p>No bills found matching your criteria.</p>
             </div>
           ) : (
-            groupedByCategory.map(group => (
-              <CategoryGroup
-                key={group.category.id}
-                category={group.category}
-                bills={group.bills}
-              />
-            ))
+            <>
+              {/* High Priority Bills Section */}
+              {highPriorityGroups.length > 0 && (
+                <div className="priority-section">
+                  <div className="section-header high-priority-header">
+                    <h2>🔴 High Priority Bills ({highPriorityGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
+                    <p className="section-description">
+                      Bills with significant legislative activity or identified as high-priority threats by FreeDC
+                    </p>
+                  </div>
+                  {highPriorityGroups.map(group => (
+                    <CategoryGroup
+                      key={`high-${group.category.id}`}
+                      category={group.category}
+                      bills={group.bills}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* Budget Riders Section */}
+              {riderGroups.length > 0 && (
+                <div className="priority-section">
+                  <div className="section-header riders-header">
+                    <h2>📋 Budget Riders ({riderGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
+                    <p className="section-description">
+                      Policy restrictions attached to appropriations bills (H.R. 5166)
+                    </p>
+                  </div>
+                  {riderGroups.map(group => (
+                    <CategoryGroup
+                      key={`rider-${group.category.id}`}
+                      category={group.category}
+                      bills={group.bills}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* Other Bills Section (Collapsible) */}
+              {otherBillsGroups.length > 0 && (
+                <div className="priority-section other-bills-section">
+                  <div
+                    className="section-header other-bills-header collapsible"
+                    onClick={() => setShowOtherBills(!showOtherBills)}
+                  >
+                    <div>
+                      <h2>
+                        ⚪ Other Introduced Bills ({otherBillsGroups.reduce((sum, g) => sum + g.bills.length, 0)})
+                        <span className="expand-icon-section">{showOtherBills ? '−' : '+'}</span>
+                      </h2>
+                      <p className="section-description">
+                        Bills introduced but with no significant activity yet
+                      </p>
+                    </div>
+                  </div>
+                  {showOtherBills && otherBillsGroups.map(group => (
+                    <CategoryGroup
+                      key={`other-${group.category.id}`}
+                      category={group.category}
+                      bills={group.bills}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
