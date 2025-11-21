@@ -75,8 +75,14 @@ jobs:
             # Commit our changes
             git commit -m "Update bill statuses - ${{ steps.check_changes.outputs.timestamp }}"
 
+            # Stash any other changes (like package-lock.json from npm install)
+            git stash --include-untracked || echo "Nothing to stash"
+
             # Pull latest changes and rebase our commit on top
             git pull --rebase origin main
+
+            # Drop the stash (we don't need package-lock changes)
+            git stash drop || echo "No stash to drop"
 
             # Push to remote
             git push origin main
