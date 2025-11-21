@@ -115,7 +115,7 @@ function App() {
           Tracking bills in Congress that threaten D.C. home rule and autonomy
         </p>
         <p className="last-updated">
-          Last checked: {billsData.lastUpdated} • Monitoring runs daily
+          Last checked: {new Date(billsData.lastUpdated).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} • Monitoring runs daily
         </p>
       </header>
 
