@@ -51,11 +51,51 @@
                 bill-status-history.json
               retention-days: 90
 
-        - name: Commit and push history updates
-          if: steps.check_changes.outputs.has_changes == 'true'
-          run: |
-            git config --global user.name 'DC Bills Monitor'
-            git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-            git add bill-status-history.json
-            git commit -m "Update bill status history - ${{ steps.check_changes.outputs.timestamp }}" || echo "No changes to commit"
-            git push || echo "No changes to push"
+        - name: Commit and push updates
+            if: steps.check_changes.outputs.has_changes == 'true'
+            run: |
+              git config --global user.name 'DC Bills Monitor'
+              git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+              git add bill-status-history.json src/data/bills.json
+              if git diff --staged --quiet; then
+                echo "No changes to commit"
+              else
+                git commit -m "Update bill statuses - ${{ steps.check_changes.outputs.timestamp }}"
+                git push
+              fi
+
+          - name: Rebuild and deploy if bills.json changed
+            if: steps.check_changes.outputs.has_changes == 'true'
+            run: |
+              if git diff HEAD~1 HEAD --name-only | grep -q "src/data/bills.json"; then
+                echo "bills.json changed - rebuilding and deploying..."
+                npm run build
+                npm run deploy
+              else
+                echo "No changes to bills.json - skipping deploy"
+              fi
+
+          - name: Send email notification
+            if: steps.check_changes.outputs.has_changes == 'true'
+            uses: dawidd6/action-send-mail@v3
+            with:
+              server_address: smtp.gmail.com
+              server_port: 465
+              secure: true
+              username: ${{ secrets.EMAIL_USERNAME }}
+              password: ${{ secrets.EMAIL_PASSWORD }}
+              subject: "DC Bills Monitoring Report - ${{ steps.check_changes.outputs.timestamp }}"
+              to: ${{ secrets.NOTIFICATION_EMAIL }}
+              from: DC Bills Monitor <noreply@representdc.org>
+              body: |
+                DC Bills Monitoring completed at ${{ steps.check_changes.outputs.timestamp }}
+
+                ✅ Checked ${{ steps.check_changes.outputs.changes_count }} bills
+
+                Full monitoring report is attached.
+
+                View details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+              attachments: monitoring-report.txt
+              ignore_cert: false
+              convert_markdown: true
+              
