@@ -1,25 +1,12 @@
 {
-  "lastUpdated": "2025-11-19",
+  "lastUpdated": "2025-11-21",
   "totalBills": 71,
-  "pendingBills": 69,
-  "passedBills": 2,
+  "pendingBills": 71,
+  "passedBills": 0,
   "breakdown": {
     "bills": 54,
     "riders": 17,
     "supportBills": 0
   },
-  "passed": [
-    {
-      "id": "hr5107-s2687",
-      "number": "H.R. 5107",
-      "title": "CLEAN DC Act",
-      "stage": "passed-house"
-    },
-    {
-      "id": "hr5214",
-      "number": "H.R. 5214",
-      "title": "District of Columbia Cash Bail Reform Act",
-      "stage": "passed-house"
-    }
-  ]
+  "passed": []
 }
