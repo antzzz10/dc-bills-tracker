@@ -64,28 +64,20 @@ jobs:
           git config --global user.name 'DC Bills Monitor'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-          # Ensure we're on main branch and tracking origin/main
-          git checkout main
-          git branch --set-upstream-to=origin/main main
+          # Only commit the files we care about, ignore everything else
+          git add -f bill-status-history.json src/data/bills.json
 
-          git add bill-status-history.json src/data/bills.json
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            # Commit our changes
             git commit -m "Update bill statuses - ${{ steps.check_changes.outputs.timestamp }}"
 
-            # Stash any other changes (like package-lock.json from npm install)
-            git stash --include-untracked || echo "Nothing to stash"
-
-            # Pull latest changes and rebase our commit on top
-            git pull --rebase origin main
-
-            # Drop the stash (we don't need package-lock changes)
-            git stash drop || echo "No stash to drop"
-
-            # Push to remote
-            git push origin main
+            # Try to push, if it fails due to remote changes, pull and retry
+            git push origin main || {
+              echo "Push failed, pulling latest changes..."
+              git pull --rebase origin main
+              git push origin main
+            }
           fi
 
       - name: Rebuild and deploy if bills.json changed
