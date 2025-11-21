@@ -75,6 +75,8 @@ jobs:
             # Try to push, if it fails due to remote changes, pull and retry
             git push origin main || {
               echo "Push failed, pulling latest changes..."
+              # Discard any uncommitted changes (like package-lock.json) before rebasing
+              git checkout -- .
               git pull --rebase origin main
               git push origin main
             }
