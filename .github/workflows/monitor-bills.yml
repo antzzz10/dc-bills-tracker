@@ -94,7 +94,8 @@ jobs:
           fi
 
       - name: Send email notification
-        if: steps.check_changes.outputs.has_changes == 'true' && secrets.NOTIFICATION_EMAIL != ''
+        if: steps.check_changes.outputs.has_changes == 'true'
+        continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
