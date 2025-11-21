@@ -68,6 +68,7 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Update bill statuses - ${{ steps.check_changes.outputs.timestamp }}"
+            git pull --rebase origin main
             git push
           fi
 
