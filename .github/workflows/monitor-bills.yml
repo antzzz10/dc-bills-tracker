@@ -82,16 +82,12 @@ jobs:
             }
           fi
 
-      - name: Rebuild and deploy if bills.json changed
+      - name: Rebuild and deploy site
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
-          if git diff HEAD~1 HEAD --name-only | grep -q "src/data/bills.json"; then
-            echo "bills.json changed - rebuilding and deploying..."
-            npm run build
-            npm run deploy
-          else
-            echo "No changes to bills.json - skipping deploy"
-          fi
+          echo "Rebuilding and deploying site..."
+          npm run build
+          npm run deploy
 
       - name: Send email notification
         if: steps.check_changes.outputs.has_changes == 'true'
