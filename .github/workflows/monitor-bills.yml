@@ -84,9 +84,15 @@ jobs:
 
       - name: Rebuild and deploy site
         if: steps.check_changes.outputs.has_changes == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Rebuilding and deploying site..."
           npm run build
+
+          # Configure git for gh-pages to use GITHUB_TOKEN
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+
           npm run deploy
 
       - name: Send email notification
