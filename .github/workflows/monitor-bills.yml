@@ -63,13 +63,23 @@ jobs:
         run: |
           git config --global user.name 'DC Bills Monitor'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+          # Ensure we're on main branch and tracking origin/main
+          git checkout main
+          git branch --set-upstream-to=origin/main main
+
           git add bill-status-history.json src/data/bills.json
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
+            # Commit our changes
             git commit -m "Update bill statuses - ${{ steps.check_changes.outputs.timestamp }}"
+
+            # Pull latest changes and rebase our commit on top
             git pull --rebase origin main
-            git push
+
+            # Push to remote
+            git push origin main
           fi
 
       - name: Rebuild and deploy if bills.json changed
