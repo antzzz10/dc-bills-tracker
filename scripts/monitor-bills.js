@@ -517,10 +517,11 @@ async function monitorBills() {
 
   console.log('\n✅ Monitoring complete!\n');
 
-  // Always update lastUpdated timestamp to show when monitoring last ran
-  billsData.lastUpdated = new Date().toISOString().split('T')[0];
+  // Always update lastUpdated timestamp to show when monitoring last ran (EST timezone for DC)
+  const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+  billsData.lastUpdated = new Date(estDate).toISOString().split('T')[0];
   writeFileSync(billsPath, JSON.stringify(billsData, null, 2));
-  console.log(`💾 Updated lastUpdated to: ${billsData.lastUpdated}\n`);
+  console.log(`💾 Updated lastUpdated to: ${billsData.lastUpdated} (EST)\n`);
 
   // Show passage summary if any bills passed
   if (passedBills.length > 0) {
