@@ -6,18 +6,30 @@ import CategoryGroup from './components/CategoryGroup'
 import SearchBar from './components/SearchBar'
 import DownloadButton from './components/DownloadButton'
 import UpdateBanner from './components/UpdateBanner'
+import PassedBillsSection from './components/PassedBillsSection'
+// import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
 
 function App() {
   const [selectedCategories, setSelectedCategories] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [showOtherBills, setShowOtherBills] = useState(false)
 
-  const { filteredBills, filteredRiders, highPriorityGroups, otherBillsGroups, riderGroups, totalCount } = useMemo(() => {
+  const { filteredBills, filteredRiders, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, totalCount } = useMemo(() => {
     const allBills = billsData.bills || []
     const allRiders = billsData.riders || []
 
+    // Separate passed bills from pending bills
+    const passedBills = allBills.filter(bill =>
+      bill.status?.stage &&
+      (bill.status.stage.startsWith('passed-') || bill.status.stage === 'enacted')
+    )
+    const pendingBills = allBills.filter(bill =>
+      !bill.status?.stage ||
+      (!bill.status.stage.startsWith('passed-') && bill.status.stage !== 'enacted')
+    )
+
     // Filter bills
-    let filtered = allBills
+    let filtered = pendingBills
     let filteredRiders = allRiders
 
     // Filter by selected categories
@@ -43,7 +55,7 @@ function App() {
       filteredRiders = filteredRiders.filter(searchFilter)
     }
 
-    // Separate high priority from other bills
+    // Separate high priority from other bills (only pending bills)
     const highPriorityBills = filtered.filter(bill => bill.priority === 'high')
     const otherBills = filtered.filter(bill => bill.priority !== 'high')
 
@@ -70,6 +82,7 @@ function App() {
     return {
       filteredBills: filtered,
       filteredRiders,
+      passedBills,
       highPriorityGroups,
       otherBillsGroups,
       riderGroups,
@@ -92,14 +105,17 @@ function App() {
 
   return (
     <div className="app">
-      <UpdateBanner />
+      <UpdateBanner
+        passedBills={passedBills}
+        upcomingFloorVotes={filteredBills.filter(b => b.highlight === 'floor-vote')}
+      />
       <header className="header">
         <h1>Anti-DC Bills Tracker</h1>
         <p className="subtitle">
-          Bills pending in Congress that threaten D.C. home rule and autonomy
+          Tracking bills in Congress that threaten D.C. home rule and autonomy
         </p>
         <p className="last-updated">
-          Last updated: {billsData.lastUpdated}
+          Last checked: {billsData.lastUpdated} • Monitoring runs daily
         </p>
       </header>
 
@@ -133,6 +149,9 @@ function App() {
         </div>
 
         <div className="bills-list">
+          {/* Passed Bills Section - Always visible when there are passed bills */}
+          <PassedBillsSection passedBills={passedBills} />
+
           {totalCount === 0 ? (
             <div className="no-results">
               <p>No bills found matching your criteria.</p>
@@ -206,12 +225,29 @@ function App() {
             </>
           )}
         </div>
+
+        {/* <ContactSection /> */}
+        {/* Contact section hidden until Google Form is set up - see FEEDBACK-SETUP.md */}
       </div>
 
       <footer className="footer">
-        <p>
-          D.C. statehood is a civil rights issue. These bills undermine the democratic rights of D.C. residents.
-        </p>
+        <div className="footer-content">
+          <p className="footer-statement">
+            D.C. statehood is a civil rights issue. These bills undermine the democratic rights of D.C. residents.
+          </p>
+
+          <div className="footer-about">
+            <h3>About This Site</h3>
+            <p>
+              This is an independent, volunteer-run project created by a proud DC resident
+              to track anti-DC legislation. Not affiliated with any organization.
+            </p>
+          </div>
+
+          <p className="footer-copyright">
+            Copyright © 2025 Represent DC
+          </p>
+        </div>
       </footer>
     </div>
   )
