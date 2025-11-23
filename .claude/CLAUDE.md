@@ -18,13 +18,16 @@ dc-bills-tracker/
 │   │   ├── SearchBar.jsx
 │   │   ├── CategoryGroup.jsx
 │   │   ├── DownloadButton.jsx
-│   │   └── UpdateBanner.jsx
+│   │   ├── UpdateBanner.jsx
+│   │   ├── PassedBillsSection.jsx  # Display bills that passed
+│   │   └── ContactSection.jsx      # Feedback form section
 │   ├── data/                # Bill data storage
 │   └── assets/              # Static assets
 ├── public/                  # Public assets
 ├── dist/                    # Build output (not in git)
 ├── scripts/                 # Deployment & utility scripts
-└── deploy-staging.js        # Staging deployment script
+├── deploy-staging.js        # Staging deployment script
+└── FEEDBACK-SETUP.md        # Guide for setting up automated feedback
 ```
 
 ## Common Commands
@@ -105,6 +108,11 @@ Each bill/rider includes:
 - `priority`: "high" | "medium" | "low" | "watching"
 - `prioritySource`: "freedc" | "legislative" | "manual"
 - `status`: Object with stage, actions, hearing/markup flags, cosponsors
+  - `stage`: null | "passed-house" | "passed-senate" | "enacted"
+- `passage`: (Optional) Detailed vote data when bill passes
+  - `house`: { date, vote: { yeas, nays, byParty: { republican, democrat } } }
+  - `senate`: (Same structure as house)
+- `fullTitle`: (Optional) Full bill title for display
 
 ### Priority System
 
@@ -122,21 +130,72 @@ Each bill/rider includes:
 
 **Watching/Low** - Recently introduced, no activity
 
+### Passed Bills Tracking
+
+The site now separates passed bills from pending bills:
+
+**Display Logic:**
+- Bills with `status.stage` starting with "passed-" or "enacted" appear in the **PassedBillsSection** at the top
+- All other bills (pending) appear in the regular High Priority / Riders / Other Bills sections
+
+**PassedBillsSection Features:**
+- Collapsed by default (expandable)
+- Red border and styling to indicate urgency
+- Shows vote breakdown: Total (Yeas-Nays) and by party (R/D)
+- Displays passage date
+- Links to Congress.gov for details
+- Alert icon with pulse animation
+
+**UpdateBanner (Automatic Updates):**
+The banner at the top of the page automatically updates based on bills.json data:
+- Shows recently passed bills (within last 30 days) with vote counts
+- Shows upcoming floor votes if no recent passages
+- Auto-generates message: "H.R. XXXX passed the House (XXX-XXX). Now headed to Senate."
+- Hides automatically if no important updates
+- Updates every time bills.json changes (no manual editing needed!)
+
+The banner prioritizes:
+1. Recently passed bills (most urgent)
+2. Upcoming floor votes (if no recent passages)
+3. Hides if nothing important to show
+
+**Recent Passed Bills (as of 2025-11-19):**
+- H.R. 5214 - District of Columbia Cash Bail Reform Act of 2025 (237-179)
+- H.R. 5107 - Common-Sense Law Enforcement and Accountability Now in D.C. Act (233-190)
+
+Both passed the House and are now headed to the Senate.
+
 ### Automated Monitoring
 
 Use `scripts/monitor-bills.js` to:
 - Fetch latest bill status from Congress.gov API
+- **Auto-detect when bills pass** House or Senate
+- **Fetch detailed vote data** including party breakdown
+- **Automatically update bills.json** with passage information
 - Auto-detect priority based on legislative activity
 - Generate reports grouped by priority
 - Track changes over time
+
+**New Features (Enhanced Passage Detection):**
+- Detects passage in House/Senate from bill actions
+- Extracts roll call vote numbers
+- Fetches vote totals and party breakdowns (R/D)
+- Updates bills.json with `passage` field and `status.stage`
+- Displays passage summary at end of run
 
 **Setup:**
 1. Get API key: https://api.congress.gov/sign-up/
 2. Set environment variable: `export CONGRESS_API_KEY=your_key`
 3. Run: `node scripts/monitor-bills.js`
-4. Test without API: `node scripts/test-monitor.js`
+4. See detailed docs: `scripts/README-MONITORING.md`
 
 **GitHub Actions:** Monitoring runs daily at 2 PM UTC via `.github/workflows/monitor-bills.yml`
+
+When the script detects passage, it automatically:
+- Updates `status.stage` to "passed-house" or "passed-senate"
+- Adds `passage.house` or `passage.senate` with vote data
+- Shows alert: 🚨 BILLS THAT HAVE PASSED 🚨
+- Saves changes to bills.json
 
 ### Updating Data Structure
 
@@ -146,6 +205,36 @@ node scripts/update-bill-structure.js
 ```
 
 This script reorganizes bills.json, separates riders, and applies FreeDC priority flags.
+
+## Automated Feedback System
+
+The site includes an automated feedback collection system that uses AI to analyze and categorize submissions.
+
+**How it works:**
+1. Users submit feedback via embedded Google Form (ContactSection component)
+2. Submissions auto-save to Google Sheets
+3. Apps Script triggers on submission
+4. OpenAI API analyzes feedback and adds:
+   - Category (Bug, Feature Request, Question, Feedback, etc.)
+   - Sentiment (Positive, Neutral, Negative)
+   - Priority (High, Medium, Low)
+   - AI-generated summary
+   - Response draft for quick replies
+5. All feedback stored in one spreadsheet for easy review
+
+**Setup Instructions:**
+- See `FEEDBACK-SETUP.md` for complete setup guide
+- Requires: Google Form, Google Sheets, Apps Script, OpenAI API key
+- Cost: ~$0.01-0.05 per submission for AI analysis
+
+**To activate the form on the site:**
+1. Follow setup in `FEEDBACK-SETUP.md` to create Google Form and Apps Script
+2. Copy your Google Form ID
+3. Edit `src/components/ContactSection.jsx` - replace `REPLACE_WITH_YOUR_FORM_ID`
+4. Edit `src/App.jsx` - uncomment the ContactSection import and usage (lines 10 and 229-230)
+5. Rebuild and deploy: `npm run build && npm run deploy`
+
+**Current status:** ContactSection component is built but commented out (hidden) in App.jsx until Google Form is configured
 
 ## Known Constraints
 

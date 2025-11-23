@@ -7,19 +7,20 @@
 }
 
 .category-group-header {
-  background: linear-gradient(135deg, #DC143C 0%, #A00000 100%);
-  color: white;
-  padding: 0.8rem 1.1rem;
+  background: #f5f5f5;
+  color: #555;
+  padding: 0.65rem 1rem;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 0.2s ease;
   user-select: none;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .category-group-header:hover {
-  background: linear-gradient(135deg, #C11234 0%, #900000 100%);
+  background: #ebebeb;
 }
 
 .category-group-title {
@@ -30,34 +31,36 @@
 
 .category-group-title h2 {
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .bill-count {
-  background-color: rgba(255, 255, 255, 0.25);
-  padding: 0.3rem 0.6rem;
+  background-color: #e0e0e0;
+  color: #666;
+  padding: 0.25rem 0.5rem;
   border-radius: 12px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 500;
 }
 
 .expand-icon-large {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 300;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.08);
+  color: #666;
   border-radius: 50%;
   transition: all 0.2s ease;
 }
 
 .category-group-header:hover .expand-icon-large {
-  background-color: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.12);
+  transform: scale(1.05);
 }
 
 .category-group-content {
@@ -69,7 +72,7 @@
 
 @media (max-width: 768px) {
   .category-group-header {
-    padding: 0.7rem 0.9rem;
+    padding: 0.6rem 0.85rem;
   }
 
   .category-group-title {
@@ -79,7 +82,7 @@
   }
 
   .category-group-title h2 {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .category-group-content {

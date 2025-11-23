@@ -378,6 +378,7 @@
         "S. 2687"
       ],
       "title": "CLEAN DC Act",
+      "fullTitle": "Common-Sense Law Enforcement and Accountability Now in D.C. Act",
       "sponsors": [
         "Rep Andrew Clyde",
         "Sen Ted Cruz"
@@ -390,14 +391,33 @@
       "priority": "high",
       "prioritySource": "freedc",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-19",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 0,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-11-19",
+          "vote": {
+            "yeas": 233,
+            "nays": 190,
+            "byParty": {
+              "republican": {
+                "yeas": 213,
+                "nays": 0
+              },
+              "democrat": {
+                "yeas": 20,
+                "nays": 190
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -432,6 +452,7 @@
         "H.R. 5214"
       ],
       "title": "District of Columbia Cash Bail Reform Act",
+      "fullTitle": "District of Columbia Cash Bail Reform Act of 2025",
       "sponsors": [
         "Rep Elise Stefanik"
       ],
@@ -443,14 +464,33 @@
       "priority": "high",
       "prioritySource": "freedc",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-19",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 0,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-11-19",
+          "vote": {
+            "yeas": 237,
+            "nays": 179,
+            "byParty": {
+              "republican": {
+                "yeas": 209,
+                "nays": 0
+              },
+              "democrat": {
+                "yeas": 28,
+                "nays": 179
+              }
+            }
+          }
+        }
       }
     },
     {

@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist --dotfiles",
-    "deploy:staging": "node deploy-staging.js"
+    "deploy:staging": "node deploy-staging.js",
+    "stats": "node scripts/generate-stats.js"
   },
   "dependencies": {
     "jspdf": "^3.0.3",
