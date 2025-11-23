@@ -58,7 +58,12 @@ function parseBillNumber(billNumber) {
 // Fetch roll call vote details
 async function fetchRollCallVote(chamber, year, rollCallNumber) {
   try {
-    const voteUrl = `${API_BASE_URL}/vote/${CONGRESS_NUMBER}/${chamber}/${rollCallNumber}?api_key=${CONGRESS_API_KEY}`;
+    // Determine session (session 1 for 119th Congress in 2025)
+    const session = 1; // 119th Congress, 1st session (2025)
+
+    // Use new house-vote/senate-vote endpoints (2025 API format)
+    const chamberEndpoint = chamber === 'house' ? 'house-vote' : 'senate-vote';
+    const voteUrl = `${API_BASE_URL}/${chamberEndpoint}/${CONGRESS_NUMBER}/${session}/${rollCallNumber}?api_key=${CONGRESS_API_KEY}`;
     const response = await fetch(voteUrl);
 
     if (!response.ok) {
@@ -67,39 +72,42 @@ async function fetchRollCallVote(chamber, year, rollCallNumber) {
     }
 
     const data = await response.json();
-    const vote = data.vote;
+    // New API format uses houseRollCallVote or senateRollCallVote
+    const vote = data.houseRollCallVote || data.senateRollCallVote;
 
-    // Parse party breakdown
-    const totals = vote.totals || {};
-    const yeas = totals.yea || totals.Yea || 0;
-    const nays = totals.nay || totals.Nay || 0;
+    // Parse party breakdown from new API format (2025)
+    // New format has votePartyTotal array instead of members
+    const votePartyTotal = vote.votePartyTotal || [];
 
-    // Party breakdown
+    let totalYeas = 0;
+    let totalNays = 0;
     const partyVotes = {};
-    if (vote.members && Array.isArray(vote.members)) {
-      vote.members.forEach(member => {
-        const party = member.party || 'Unknown';
-        const voteValue = member.vote || member.voteValue;
 
-        if (!partyVotes[party]) {
-          partyVotes[party] = { yeas: 0, nays: 0 };
-        }
+    votePartyTotal.forEach(partyData => {
+      const party = partyData.voteParty || partyData.party?.type;
+      totalYeas += partyData.yeaTotal || 0;
+      totalNays += partyData.nayTotal || 0;
 
-        if (voteValue === 'Yea' || voteValue === 'Aye') {
-          partyVotes[party].yeas++;
-        } else if (voteValue === 'Nay' || voteValue === 'No') {
-          partyVotes[party].nays++;
-        }
-      });
-    }
+      if (party === 'R' || party === 'Republican') {
+        partyVotes.republican = {
+          yeas: partyData.yeaTotal || 0,
+          nays: partyData.nayTotal || 0
+        };
+      } else if (party === 'D' || party === 'Democrat') {
+        partyVotes.democrat = {
+          yeas: partyData.yeaTotal || 0,
+          nays: partyData.nayTotal || 0
+        };
+      }
+    });
 
     return {
-      date: vote.date || vote.actionDate,
-      yeas,
-      nays,
+      date: vote.startDate || vote.actionDate,
+      yeas: totalYeas,
+      nays: totalNays,
       byParty: {
-        republican: partyVotes.R || partyVotes.Republican || { yeas: 0, nays: 0 },
-        democrat: partyVotes.D || partyVotes.Democrat || { yeas: 0, nays: 0 }
+        republican: partyVotes.republican || { yeas: 0, nays: 0 },
+        democrat: partyVotes.democrat || { yeas: 0, nays: 0 }
       }
     };
   } catch (error) {
