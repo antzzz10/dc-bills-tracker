@@ -1,9 +1,9 @@
 name: Monitor DC Bills
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 14 * * *'
+  workflow_dispatch:  # Manual trigger only during active development
+  # schedule:
+  #   - cron: '0 14 * * *'  # Disabled to avoid conflicts during development
 
 permissions:
   contents: write
