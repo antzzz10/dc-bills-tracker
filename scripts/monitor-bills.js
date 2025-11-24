@@ -276,7 +276,8 @@ async function fetchBillStatus(billNumber) {
       committees = bill.committees.map(c => c.name);
     }
 
-    return {
+    // Build return object
+    const result = {
       billNumber,
       title: bill.title,
       latestAction: bill.latestAction?.text || 'No recent action',
@@ -294,8 +295,12 @@ async function fetchBillStatus(billNumber) {
       // Passage information
       passageInfo
     };
+
+    console.log(`  ✓ Successfully fetched ${billNumber}`);
+    return result;
   } catch (error) {
-    console.error(`Error fetching ${billNumber}:`, error.message);
+    console.error(`  ❌ Error in fetchBillStatus for ${billNumber}:`, error.message);
+    console.error(`  Stack: ${error.stack}`);
     return null;
   }
 }
@@ -469,53 +474,59 @@ async function monitorBills() {
 
     console.log(`[${i + 1}/${billsData.bills.length}] Checking ${billNumber}...`);
 
-    const status = await fetchBillStatus(billNumber);
+    try {
+      const status = await fetchBillStatus(billNumber);
 
-    if (status) {
-      // Calculate priority
-      const priorityInfo = calculatePriority(status, bill);
+      if (status) {
+        // Calculate priority
+        const priorityInfo = calculatePriority(status, bill);
 
-      // Check for passage and update bills.json
-      if (status.passageInfo && status.passageInfo.stage) {
-        const wasUpdated = updateBillsJson(bill.id, status.passageInfo, status);
-        if (wasUpdated) {
-          passedBills.push({
-            billNumber: status.billNumber,
-            title: bill.title,
-            stage: status.passageInfo.stage,
-            houseVote: status.passageInfo.houseVote,
-            senateVote: status.passageInfo.senateVote
-          });
+        // Check for passage and update bills.json
+        if (status.passageInfo && status.passageInfo.stage) {
+          const wasUpdated = updateBillsJson(bill.id, status.passageInfo, status);
+          if (wasUpdated) {
+            passedBills.push({
+              billNumber: status.billNumber,
+              title: bill.title,
+              stage: status.passageInfo.stage,
+              houseVote: status.passageInfo.houseVote,
+              senateVote: status.passageInfo.senateVote
+            });
+          }
         }
+
+        // Check if status has changed (you'll need to track previous state)
+        changes.push({
+          id: bill.id,
+          bill: bill.title,
+          billNumber: status.billNumber,
+          status: status.status,
+          latestAction: status.latestAction,
+          latestActionDate: status.latestActionDate,
+          url: status.url,
+          // New fields
+          priority: priorityInfo.priority,
+          prioritySource: priorityInfo.source,
+          priorityReason: priorityInfo.reason,
+          cosponsorsCount: status.cosponsorsCount,
+          hasCommitteeHearing: status.hasCommitteeHearing,
+          hasCommitteeMarkup: status.hasCommitteeMarkup,
+          hasFloorVote: status.hasFloorVote,
+          committees: status.committees,
+          introducedDate: status.introducedDate,
+          passageInfo: status.passageInfo
+        });
+
+        // Show priority in output
+        const priorityBadge = priorityInfo.priority === 'high' ? '🔴' :
+                             priorityInfo.priority === 'medium' ? '🟡' : '⚪';
+        console.log(`  ${priorityBadge} Priority: ${priorityInfo.priority} (${priorityInfo.reason})`);
+      } else {
+        console.log(`  ❌ No status returned for ${billNumber}`);
+        errors.push(billNumber);
       }
-
-      // Check if status has changed (you'll need to track previous state)
-      changes.push({
-        id: bill.id,
-        bill: bill.title,
-        billNumber: status.billNumber,
-        status: status.status,
-        latestAction: status.latestAction,
-        latestActionDate: status.latestActionDate,
-        url: status.url,
-        // New fields
-        priority: priorityInfo.priority,
-        prioritySource: priorityInfo.source,
-        priorityReason: priorityInfo.reason,
-        cosponsorsCount: status.cosponsorsCount,
-        hasCommitteeHearing: status.hasCommitteeHearing,
-        hasCommitteeMarkup: status.hasCommitteeMarkup,
-        hasFloorVote: status.hasFloorVote,
-        committees: status.committees,
-        introducedDate: status.introducedDate,
-        passageInfo: status.passageInfo
-      });
-
-      // Show priority in output
-      const priorityBadge = priorityInfo.priority === 'high' ? '🔴' :
-                           priorityInfo.priority === 'medium' ? '🟡' : '⚪';
-      console.log(`  ${priorityBadge} Priority: ${priorityInfo.priority} (${priorityInfo.reason})`);
-    } else {
+    } catch (error) {
+      console.error(`  ❌ Error processing ${billNumber}:`, error.message);
       errors.push(billNumber);
     }
 
