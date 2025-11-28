@@ -144,10 +144,20 @@ async function detectPassage(actions, chamber) {
 
       passageInfo.hasPassedHouse = true;
 
-      // Extract roll call number
-      const rollMatch = actionText.match(/Roll no\.\s*(\d+)|recorded vote:\s*(\d+)|Yeas and Nays:\s*(\d+)/i);
+      // Extract roll call number - prioritize "Roll no." as it's the authoritative source
+      let rollNumber = null;
+      let rollMatch = actionText.match(/Roll no\.\s*(\d+)/i);
       if (rollMatch) {
-        const rollNumber = rollMatch[1] || rollMatch[2] || rollMatch[3];
+        rollNumber = rollMatch[1];
+      } else {
+        // Fallback to other formats if "Roll no." not found
+        rollMatch = actionText.match(/recorded vote:\s*(\d+)/i);
+        if (rollMatch) {
+          rollNumber = rollMatch[1];
+        }
+      }
+
+      if (rollNumber) {
         console.log(`  🗳️  Detected House passage with roll call ${rollNumber}`);
 
         // Fetch vote details
@@ -167,9 +177,18 @@ async function detectPassage(actions, chamber) {
       passageInfo.hasPassedSenate = true;
 
       // Extract roll call number
-      const rollMatch = actionText.match(/Roll Call Vote No\.\s*(\d+)|Vote Number:\s*(\d+)/i);
+      let rollNumber = null;
+      let rollMatch = actionText.match(/Roll Call Vote No\.\s*(\d+)/i);
       if (rollMatch) {
-        const rollNumber = rollMatch[1] || rollMatch[2];
+        rollNumber = rollMatch[1];
+      } else {
+        rollMatch = actionText.match(/Vote Number:\s*(\d+)/i);
+        if (rollMatch) {
+          rollNumber = rollMatch[1];
+        }
+      }
+
+      if (rollNumber) {
         console.log(`  🗳️  Detected Senate passage with roll call ${rollNumber}`);
 
         // Fetch vote details
