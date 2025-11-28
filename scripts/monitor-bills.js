@@ -237,7 +237,6 @@ async function fetchBillStatus(billNumber) {
 
         // Detect passage and fetch vote data
         passageInfo = await detectPassage(actions, chamber);
-        console.log(`  [DEBUG] After detectPassage for ${billNumber}`);
 
         // Analyze actions for significant events
         actions.forEach(action => {
@@ -276,8 +275,6 @@ async function fetchBillStatus(billNumber) {
     if (bill.committees && Array.isArray(bill.committees)) {
       committees = bill.committees.map(c => c.name);
     }
-
-    console.log(`  [DEBUG] About to build result object for ${billNumber}`);
 
     // Build return object
     const result = {
