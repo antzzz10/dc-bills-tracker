@@ -302,8 +302,8 @@ async function fetchBillStatus(billNumber) {
     console.log(`  ✓ Successfully fetched ${billNumber}`);
     return result;
   } catch (error) {
-    console.error(`  ❌ Error in fetchBillStatus for ${billNumber}:`, error.message);
-    console.error(`  Stack: ${error.stack}`);
+    console.log(`  ❌ Error in fetchBillStatus for ${billNumber}:`, error.message);
+    console.log(`  Stack: ${error.stack}`);
     return null;
   }
 }
@@ -447,7 +447,7 @@ function updateBillsJson(billId, passageInfo, status) {
 
     return false;
   } catch (error) {
-    console.error(`  ❌ Error updating bills.json:`, error.message);
+    console.log(`  ❌ Error updating bills.json:`, error.message);
     return false;
   }
 }
@@ -529,7 +529,7 @@ async function monitorBills() {
         errors.push(billNumber);
       }
     } catch (error) {
-      console.error(`  ❌ Error processing ${billNumber}:`, error.message);
+      console.log(`  ❌ Error processing ${billNumber}:`, error.message);
       errors.push(billNumber);
     }
 
