@@ -102,7 +102,7 @@ async function fetchRollCallVote(chamber, year, rollCallNumber) {
     });
 
     return {
-      date: vote.startDate || vote.actionDate,
+      date: (vote.startDate || vote.actionDate).split('T')[0],
       yeas: totalYeas,
       nays: totalNays,
       byParty: {
