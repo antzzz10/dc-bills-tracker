@@ -1,14 +1,44 @@
 {
   "lastUpdated": "2025-11-27",
   "totalBills": 71,
-  "pendingBills": 69,
-  "passedBills": 2,
+  "pendingBills": 59,
+  "passedBills": 12,
   "breakdown": {
     "bills": 54,
     "riders": 17,
     "supportBills": 0
   },
   "passed": [
+    {
+      "id": "hr2096",
+      "number": "H.R. 2096",
+      "title": "Protecting Our Nation's Capital Emergency Act of 2025",
+      "stage": "passed-house"
+    },
+    {
+      "id": "hr2056-s1522",
+      "number": "H.R. 2056",
+      "title": "District of Columbia Federal Immigration Compliance Act",
+      "stage": "passed-house"
+    },
+    {
+      "id": "hr4922-s2686",
+      "number": "H.R. 4922",
+      "title": "DC CRIMES Act of 2025",
+      "stage": "passed-house"
+    },
+    {
+      "id": "hr5140",
+      "number": "H.R. 5140",
+      "title": "Juvenile Charging Age Reduction",
+      "stage": "passed-house"
+    },
+    {
+      "id": "hr5143",
+      "number": "H.R. 5143",
+      "title": "District of Columbia Policing Protection Act",
+      "stage": "passed-house"
+    },
     {
       "id": "hr5107-s2687",
       "number": "H.R. 5107",
@@ -20,6 +50,36 @@
       "number": "H.R. 5214",
       "title": "District of Columbia Cash Bail Reform Act",
       "stage": "passed-house"
+    },
+    {
+      "id": "hr5125-s2854",
+      "number": "H.R. 5125",
+      "title": "District of Columbia Judicial Nominations Reform Act",
+      "stage": "passed-house"
+    },
+    {
+      "id": "hr884-s2636",
+      "number": "H.R. 884",
+      "title": "Noncitizen Voting Prohibition",
+      "stage": "passed-house"
+    },
+    {
+      "id": "hr1968-abortion",
+      "number": "H.R. 1968",
+      "title": "Full-Year Continuing Appropriations 2025 - Abortion",
+      "stage": "passed-both"
+    },
+    {
+      "id": "hr1968-marijuana",
+      "number": "H.R. 1968",
+      "title": "Full-Year Continuing Appropriations 2025 - Marijuana",
+      "stage": "passed-both"
+    },
+    {
+      "id": "hr1968-budget",
+      "number": "H.R. 1968",
+      "title": "Full-Year Continuing Appropriations 2025 - Budget Cut",
+      "stage": "passed-both"
     }
   ]
 }
