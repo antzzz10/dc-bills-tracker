@@ -149,14 +149,33 @@
       "priority": "high",
       "prioritySource": "freedc",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-28",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "cosponsors": 3,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-09-04T10:21:00-04:00",
+          "vote": {
+            "yeas": 120,
+            "nays": 302,
+            "byParty": {
+              "republican": {
+                "yeas": 120,
+                "nays": 95
+              },
+              "democrat": {
+                "yeas": 0,
+                "nays": 207
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -177,14 +196,33 @@
       "priority": "high",
       "prioritySource": "freedc",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-28",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "cosponsors": 1,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-09-03T21:26:00-04:00",
+          "vote": {
+            "yeas": 211,
+            "nays": 208,
+            "byParty": {
+              "republican": {
+                "yeas": 211,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 0,
+                "nays": 207
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -205,14 +243,33 @@
       "priority": "high",
       "prioritySource": "freedc",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-28",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "cosponsors": 8,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-09-08T18:56:00-04:00",
+          "vote": {
+            "yeas": 397,
+            "nays": 1,
+            "byParty": {
+              "republican": {
+                "yeas": 202,
+                "nays": 0
+              },
+              "democrat": {
+                "yeas": 195,
+                "nays": 1
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -335,14 +392,33 @@
       "priority": "high",
       "prioritySource": "freedc",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-28",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "cosponsors": 6,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-09-03T21:32:00-04:00",
+          "vote": {
+            "yeas": 215,
+            "nays": 210,
+            "byParty": {
+              "republican": {
+                "yeas": 215,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 0,
+                "nays": 209
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -361,14 +437,33 @@
       "priority": "high",
       "prioritySource": "freedc",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-28",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "cosponsors": 2,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-09-10T16:50:00-04:00",
+          "vote": {
+            "yeas": 221,
+            "nays": 210,
+            "byParty": {
+              "republican": {
+                "yeas": 217,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 4,
+                "nays": 209
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -395,9 +490,9 @@
         "lastAction": "Passed House",
         "lastActionDate": "2025-11-19",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": true,
-        "cosponsors": 0,
+        "cosponsors": 29,
         "committees": []
       },
       "passage": {
@@ -468,9 +563,9 @@
         "lastAction": "Passed House",
         "lastActionDate": "2025-11-19",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": true,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "passage": {
@@ -641,14 +736,33 @@
       "priority": "high",
       "prioritySource": "freedc",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-28",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "cosponsors": 2,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-07-23T16:08:00-04:00",
+          "vote": {
+            "yeas": 399,
+            "nays": 12,
+            "byParty": {
+              "republican": {
+                "yeas": 197,
+                "nays": 12
+              },
+              "democrat": {
+                "yeas": 202,
+                "nays": 0
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -695,14 +809,33 @@
       "priority": "high",
       "prioritySource": "freedc",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-28",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "cosponsors": 14,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-09-15T19:03:00-04:00",
+          "vote": {
+            "yeas": 371,
+            "nays": 21,
+            "byParty": {
+              "republican": {
+                "yeas": 176,
+                "nays": 21
+              },
+              "democrat": {
+                "yeas": 195,
+                "nays": 0
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -827,14 +960,33 @@
       "priority": "low",
       "prioritySource": "manual",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-both",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-28",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 0,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-07-23T15:58:00-04:00",
+          "vote": {
+            "yeas": 381,
+            "nays": 31,
+            "byParty": {
+              "republican": {
+                "yeas": 176,
+                "nays": 31
+              },
+              "democrat": {
+                "yeas": 205,
+                "nays": 0
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -933,14 +1085,33 @@
       "priority": "low",
       "prioritySource": "manual",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-both",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-28",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 0,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-07-23T15:58:00-04:00",
+          "vote": {
+            "yeas": 381,
+            "nays": 31,
+            "byParty": {
+              "republican": {
+                "yeas": 176,
+                "nays": 31
+              },
+              "democrat": {
+                "yeas": 205,
+                "nays": 0
+              }
+            }
+          }
+        }
       }
     },
     {
@@ -1305,14 +1476,33 @@
       "priority": "low",
       "prioritySource": "manual",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-both",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-11-28",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 0,
         "committees": []
+      },
+      "passage": {
+        "house": {
+          "date": "2025-07-23T15:58:00-04:00",
+          "vote": {
+            "yeas": 381,
+            "nays": 31,
+            "byParty": {
+              "republican": {
+                "yeas": 176,
+                "nays": 31
+              },
+              "democrat": {
+                "yeas": 205,
+                "nays": 0
+              }
+            }
+          }
+        }
       }
     },
     {
