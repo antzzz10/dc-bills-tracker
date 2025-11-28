@@ -416,35 +416,53 @@ function updateBillsJson(billId, passageInfo, status) {
       console.log(`  ✓ Updated stage to: ${passageInfo.stage}`);
     }
 
-    // Add passage data
+    // Add or update passage data
     if (!bill.passage) {
       bill.passage = {};
     }
 
-    if (passageInfo.houseVote && !bill.passage.house) {
-      bill.passage.house = {
-        date: passageInfo.houseVote.date,
-        vote: {
-          yeas: passageInfo.houseVote.yeas,
-          nays: passageInfo.houseVote.nays,
-          byParty: passageInfo.houseVote.byParty
-        }
-      };
-      updated = true;
-      console.log(`  ✓ Added House vote data: ${passageInfo.houseVote.yeas}-${passageInfo.houseVote.nays}`);
+    if (passageInfo.houseVote) {
+      const existingVote = bill.passage.house;
+      const needsUpdate = !existingVote ||
+                          existingVote.vote.yeas !== passageInfo.houseVote.yeas ||
+                          existingVote.vote.nays !== passageInfo.houseVote.nays ||
+                          existingVote.date !== passageInfo.houseVote.date;
+
+      if (needsUpdate) {
+        bill.passage.house = {
+          date: passageInfo.houseVote.date,
+          vote: {
+            yeas: passageInfo.houseVote.yeas,
+            nays: passageInfo.houseVote.nays,
+            byParty: passageInfo.houseVote.byParty
+          }
+        };
+        updated = true;
+        const action = existingVote ? 'Updated' : 'Added';
+        console.log(`  ✓ ${action} House vote data: ${passageInfo.houseVote.yeas}-${passageInfo.houseVote.nays}`);
+      }
     }
 
-    if (passageInfo.senateVote && !bill.passage.senate) {
-      bill.passage.senate = {
-        date: passageInfo.senateVote.date,
-        vote: {
-          yeas: passageInfo.senateVote.yeas,
-          nays: passageInfo.senateVote.nays,
-          byParty: passageInfo.senateVote.byParty
-        }
-      };
-      updated = true;
-      console.log(`  ✓ Added Senate vote data: ${passageInfo.senateVote.yeas}-${passageInfo.senateVote.nays}`);
+    if (passageInfo.senateVote) {
+      const existingVote = bill.passage.senate;
+      const needsUpdate = !existingVote ||
+                          existingVote.vote.yeas !== passageInfo.senateVote.yeas ||
+                          existingVote.vote.nays !== passageInfo.senateVote.nays ||
+                          existingVote.date !== passageInfo.senateVote.date;
+
+      if (needsUpdate) {
+        bill.passage.senate = {
+          date: passageInfo.senateVote.date,
+          vote: {
+            yeas: passageInfo.senateVote.yeas,
+            nays: passageInfo.senateVote.nays,
+            byParty: passageInfo.senateVote.byParty
+          }
+        };
+        updated = true;
+        const action = existingVote ? 'Updated' : 'Added';
+        console.log(`  ✓ ${action} Senate vote data: ${passageInfo.senateVote.yeas}-${passageInfo.senateVote.nays}`);
+      }
     }
 
     // Update status flags

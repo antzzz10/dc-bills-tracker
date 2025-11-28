@@ -160,18 +160,18 @@
       },
       "passage": {
         "house": {
-          "date": "2025-09-04",
+          "date": "2025-06-10",
           "vote": {
-            "yeas": 120,
-            "nays": 302,
+            "yeas": 235,
+            "nays": 178,
             "byParty": {
               "republican": {
-                "yeas": 120,
-                "nays": 95
+                "yeas": 205,
+                "nays": 4
               },
               "democrat": {
-                "yeas": 0,
-                "nays": 207
+                "yeas": 30,
+                "nays": 174
               }
             }
           }
@@ -207,18 +207,18 @@
       },
       "passage": {
         "house": {
-          "date": "2025-09-03",
+          "date": "2025-06-12",
           "vote": {
-            "yeas": 211,
-            "nays": 208,
+            "yeas": 224,
+            "nays": 194,
             "byParty": {
               "republican": {
-                "yeas": 211,
-                "nays": 1
+                "yeas": 213,
+                "nays": 0
               },
               "democrat": {
-                "yeas": 0,
-                "nays": 207
+                "yeas": 11,
+                "nays": 194
               }
             }
           }
@@ -254,18 +254,18 @@
       },
       "passage": {
         "house": {
-          "date": "2025-09-08",
+          "date": "2025-09-16",
           "vote": {
-            "yeas": 397,
-            "nays": 1,
+            "yeas": 240,
+            "nays": 179,
             "byParty": {
               "republican": {
-                "yeas": 202,
-                "nays": 0
+                "yeas": 209,
+                "nays": 1
               },
               "democrat": {
-                "yeas": 195,
-                "nays": 1
+                "yeas": 31,
+                "nays": 178
               }
             }
           }
@@ -403,18 +403,18 @@
       },
       "passage": {
         "house": {
-          "date": "2025-09-03",
+          "date": "2025-09-16",
           "vote": {
-            "yeas": 215,
-            "nays": 210,
+            "yeas": 225,
+            "nays": 203,
             "byParty": {
               "republican": {
-                "yeas": 215,
+                "yeas": 217,
                 "nays": 1
               },
               "democrat": {
-                "yeas": 0,
-                "nays": 209
+                "yeas": 8,
+                "nays": 202
               }
             }
           }
@@ -448,18 +448,18 @@
       },
       "passage": {
         "house": {
-          "date": "2025-09-10",
+          "date": "2025-09-17",
           "vote": {
-            "yeas": 221,
-            "nays": 210,
+            "yeas": 245,
+            "nays": 182,
             "byParty": {
               "republican": {
-                "yeas": 217,
-                "nays": 1
+                "yeas": 216,
+                "nays": 0
               },
               "democrat": {
-                "yeas": 4,
-                "nays": 209
+                "yeas": 29,
+                "nays": 182
               }
             }
           }
@@ -747,18 +747,18 @@
       },
       "passage": {
         "house": {
-          "date": "2025-07-23",
+          "date": "2025-09-17",
           "vote": {
-            "yeas": 399,
-            "nays": 12,
+            "yeas": 218,
+            "nays": 211,
             "byParty": {
               "republican": {
-                "yeas": 197,
-                "nays": 12
+                "yeas": 218,
+                "nays": 0
               },
               "democrat": {
-                "yeas": 202,
-                "nays": 0
+                "yeas": 0,
+                "nays": 211
               }
             }
           }
@@ -820,18 +820,18 @@
       },
       "passage": {
         "house": {
-          "date": "2025-09-15",
+          "date": "2025-06-10",
           "vote": {
-            "yeas": 371,
-            "nays": 21,
+            "yeas": 266,
+            "nays": 148,
             "byParty": {
               "republican": {
-                "yeas": 176,
-                "nays": 21
+                "yeas": 210,
+                "nays": 0
               },
               "democrat": {
-                "yeas": 195,
-                "nays": 0
+                "yeas": 56,
+                "nays": 148
               }
             }
           }
@@ -971,18 +971,18 @@
       },
       "passage": {
         "house": {
-          "date": "2025-07-23",
+          "date": "2025-03-11",
           "vote": {
-            "yeas": 381,
-            "nays": 31,
+            "yeas": 217,
+            "nays": 213,
             "byParty": {
               "republican": {
-                "yeas": 176,
-                "nays": 31
+                "yeas": 216,
+                "nays": 1
               },
               "democrat": {
-                "yeas": 205,
-                "nays": 0
+                "yeas": 1,
+                "nays": 212
               }
             }
           }
@@ -1096,18 +1096,18 @@
       },
       "passage": {
         "house": {
-          "date": "2025-07-23",
+          "date": "2025-03-11",
           "vote": {
-            "yeas": 381,
-            "nays": 31,
+            "yeas": 217,
+            "nays": 213,
             "byParty": {
               "republican": {
-                "yeas": 176,
-                "nays": 31
+                "yeas": 216,
+                "nays": 1
               },
               "democrat": {
-                "yeas": 205,
-                "nays": 0
+                "yeas": 1,
+                "nays": 212
               }
             }
           }
@@ -1487,18 +1487,18 @@
       },
       "passage": {
         "house": {
-          "date": "2025-07-23",
+          "date": "2025-03-11",
           "vote": {
-            "yeas": 381,
-            "nays": 31,
+            "yeas": 217,
+            "nays": 213,
             "byParty": {
               "republican": {
-                "yeas": 176,
-                "nays": 31
+                "yeas": 216,
+                "nays": 1
               },
               "democrat": {
-                "yeas": 205,
-                "nays": 0
+                "yeas": 1,
+                "nays": 212
               }
             }
           }
