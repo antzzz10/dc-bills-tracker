@@ -273,7 +273,7 @@ async function fetchBillStatus(billNumber) {
     }
 
     // Extract committee info
-    if (bill.committees) {
+    if (bill.committees && Array.isArray(bill.committees)) {
       committees = bill.committees.map(c => c.name);
     }
 
