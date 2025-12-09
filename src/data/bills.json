@@ -1718,6 +1718,34 @@
         "cosponsors": 0,
         "committees": []
       }
+    },
+    {
+      "id": "hr6372-s3327",
+      "billNumbers": [
+        "H.R. 6372",
+        "S. 3327"
+      ],
+      "title": "D.C. Shield Law Repeal Act",
+      "sponsors": [
+        "Rep Andrew Clyde",
+        "Sen Mike Lee"
+      ],
+      "description": "Would repeal D.C.'s Human Rights Sanctuary Amendment Act of 2022, removing protections for abortion and gender-affirming care providers from out-of-state investigations and prosecutions",
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": null,
+        "lastActionDate": null,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
     }
   ],
   "riders": [
