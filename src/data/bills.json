@@ -1738,8 +1738,8 @@
       "prioritySource": "manual",
       "status": {
         "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform",
+        "lastActionDate": "2025-12-04",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,

@@ -1,11 +1,46 @@
 import { useState } from 'react'
 import './UpdateBanner.css'
 
-function UpdateBanner({ passedBills = [], upcomingFloorVotes = [] }) {
+function UpdateBanner({ passedBills = [], upcomingFloorVotes = [], allBills = [] }) {
   const [isVisible, setIsVisible] = useState(true)
 
   // Generate banner message based on current data
   const getBannerMessage = () => {
+    // Check for newly introduced bills (within last 7 days)
+    const recentlyIntroduced = allBills.filter(bill => {
+      if (!bill.status?.lastActionDate) return false
+
+      const actionDate = new Date(bill.status.lastActionDate)
+      const daysSince = Math.floor((Date.now() - actionDate) / (1000 * 60 * 60 * 24))
+
+      // Check if it's a new introduction and within 7 days
+      const isIntroduction = bill.status.lastAction &&
+        (bill.status.lastAction.includes('Referred to') ||
+         bill.status.lastAction.includes('Introduced'))
+
+      return isIntroduction && daysSince <= 7
+    }).sort((a, b) => {
+      // Sort by date descending (most recent first)
+      return new Date(b.status.lastActionDate) - new Date(a.status.lastActionDate)
+    })
+
+    // Prioritize showing newly introduced bills
+    if (recentlyIntroduced.length > 0) {
+      const newest = recentlyIntroduced[0]
+      const actionDate = new Date(newest.status.lastActionDate)
+      const formattedDate = actionDate.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      })
+
+      return {
+        icon: '🆕',
+        date: formattedDate,
+        message: `${newest.billNumbers.join('/')} just introduced: ${newest.title}. ${newest.description}`
+      }
+    }
+
     // Check for recently passed bills (within last 30 days)
     const recentlyPassed = passedBills.filter(bill => {
       if (!bill.passage?.house?.date && !bill.passage?.senate?.date) return false

@@ -108,6 +108,7 @@ function App() {
       <UpdateBanner
         passedBills={passedBills}
         upcomingFloorVotes={filteredBills.filter(b => b.highlight === 'floor-vote')}
+        allBills={billsData.bills}
       />
       <header className="header">
         <h1>Anti-DC Bills Tracker</h1>
