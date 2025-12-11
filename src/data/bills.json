@@ -60,7 +60,9 @@
   "bills": [
     {
       "id": "mace-kirk-plaza-pending",
-      "billNumbers": ["Pending"],
+      "billNumbers": [
+        "Pending"
+      ],
       "title": "Charlie Kirk Freedom of Speech Plaza Act",
       "sponsors": [
         "Rep Nancy Mace"
