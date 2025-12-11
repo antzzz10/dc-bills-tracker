@@ -207,6 +207,52 @@
 
 .bill-sponsors strong {
   color: #333;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.sponsors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sponsor-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sponsor-name {
+  color: #333;
+  font-weight: 500;
+}
+
+.sponsor-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.sponsor-badge.party-r {
+  background-color: #dc3545;
+  color: white;
+}
+
+.sponsor-badge.party-d {
+  background-color: #0066cc;
+  color: white;
+}
+
+.sponsor-badge.party-i {
+  background-color: #6c757d;
+  color: white;
 }
 
 .bill-description {

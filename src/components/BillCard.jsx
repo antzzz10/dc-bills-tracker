@@ -1,11 +1,17 @@
 import { useState } from 'react'
 import './BillCard.css'
 import billsData from '../data/bills.json'
+import sponsorsData from '../data/sponsors.json'
 
 function BillCard({ bill }) {
   // Start with all bills collapsed for better scanning
   const [isExpanded, setIsExpanded] = useState(false)
   const category = billsData.categories.find(cat => cat.id === bill.category)
+
+  // Look up sponsor info from sponsors.json
+  const getSponsorInfo = (sponsorName) => {
+    return sponsorsData[sponsorName] || null
+  }
 
   const getCongressLink = (billNumber) => {
     // Parse bill number like "H.R. 1089" or "S. 440"
@@ -75,9 +81,25 @@ function BillCard({ bill }) {
 
       {isExpanded && (
         <div className="bill-details">
-          <p className="bill-sponsors">
-            <strong>Sponsor{bill.sponsors.length > 1 ? 's' : ''}:</strong> {bill.sponsors.join(', ')}
-          </p>
+          <div className="bill-sponsors">
+            <strong>Sponsor{bill.sponsors.length > 1 ? 's' : ''}:</strong>
+            <div className="sponsors-list">
+              {bill.sponsors.map((sponsorName, index) => {
+                const sponsorInfo = getSponsorInfo(sponsorName)
+                return (
+                  <div key={index} className="sponsor-item">
+                    <span className="sponsor-name">{sponsorName}</span>
+                    {sponsorInfo && (
+                      <span className={`sponsor-badge party-${sponsorInfo.party.toLowerCase()}`}>
+                        {sponsorInfo.party}-{sponsorInfo.state.substring(0, 2).toUpperCase()}
+                        {sponsorInfo.district && ` ${sponsorInfo.district}`}
+                      </span>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
 
           <p className="bill-description">{bill.description}</p>
         </div>

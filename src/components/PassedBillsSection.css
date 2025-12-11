@@ -127,6 +127,62 @@
   line-height: 1.4;
 }
 
+.passed-bill-sponsors {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.passed-bill-sponsors strong {
+  color: #333;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.passed-bill-sponsors .sponsors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.passed-bill-sponsors .sponsor-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.passed-bill-sponsors .sponsor-name {
+  color: #333;
+  font-weight: 500;
+}
+
+.passed-bill-sponsors .sponsor-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.passed-bill-sponsors .sponsor-badge.party-r {
+  background-color: #dc3545;
+  color: white;
+}
+
+.passed-bill-sponsors .sponsor-badge.party-d {
+  background-color: #0066cc;
+  color: white;
+}
+
+.passed-bill-sponsors .sponsor-badge.party-i {
+  background-color: #6c757d;
+  color: white;
+}
+
 .vote-info {
   display: flex;
   flex-direction: column;

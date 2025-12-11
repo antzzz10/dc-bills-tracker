@@ -1,8 +1,14 @@
 import { useState } from 'react'
 import './PassedBillsSection.css'
+import sponsorsData from '../data/sponsors.json'
 
 function PassedBillsSection({ passedBills }) {
   const [isExpanded, setIsExpanded] = useState(false)
+
+  // Look up sponsor info from sponsors.json
+  const getSponsorInfo = (sponsorName) => {
+    return sponsorsData[sponsorName] || null
+  }
 
   // Helper to parse date strings as local dates (avoiding timezone issues)
   const parseLocalDate = (dateString) => {
@@ -86,6 +92,25 @@ function PassedBillsSection({ passedBills }) {
                       {bill.fullTitle || bill.title}
                     </h3>
                     <p className="passed-bill-description">{bill.description}</p>
+                    <div className="passed-bill-sponsors">
+                      <strong>Sponsor{bill.sponsors.length > 1 ? 's' : ''}:</strong>
+                      <div className="sponsors-list">
+                        {bill.sponsors.map((sponsorName, idx) => {
+                          const sponsorInfo = getSponsorInfo(sponsorName)
+                          return (
+                            <div key={idx} className="sponsor-item">
+                              <span className="sponsor-name">{sponsorName}</span>
+                              {sponsorInfo && (
+                                <span className={`sponsor-badge party-${sponsorInfo.party.toLowerCase()}`}>
+                                  {sponsorInfo.party}-{sponsorInfo.state.substring(0, 2).toUpperCase()}
+                                  {sponsorInfo.district && ` ${sponsorInfo.district}`}
+                                </span>
+                              )}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </div>
                   </div>
 
                   {bill.passage?.house && (
