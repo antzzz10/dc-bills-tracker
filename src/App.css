@@ -74,6 +74,13 @@ body {
   color: #333;
 }
 
+.count-breakdown {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
 .results-actions {
   display: flex;
   gap: 0.75rem;

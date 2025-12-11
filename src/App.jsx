@@ -14,7 +14,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [showOtherBills, setShowOtherBills] = useState(false)
 
-  const { filteredBills, filteredRiders, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, totalCount } = useMemo(() => {
+  const { filteredBills, filteredRiders, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, totalCount, pendingCount, passedCount } = useMemo(() => {
     const allBills = billsData.bills || []
     const allRiders = billsData.riders || []
 
@@ -77,7 +77,9 @@ function App() {
       bills: filteredRiders.filter(rider => rider.category === category.id)
     })).filter(group => group.bills.length > 0)
 
-    const totalCount = filtered.length + filteredRiders.length
+    const pendingCount = filtered.length + filteredRiders.length
+    const passedCount = passedBills.length
+    const totalCount = pendingCount + passedCount
 
     return {
       filteredBills: filtered,
@@ -86,7 +88,9 @@ function App() {
       highPriorityGroups,
       otherBillsGroups,
       riderGroups,
-      totalCount
+      totalCount,
+      pendingCount,
+      passedCount
     }
   }, [selectedCategories, searchTerm])
 
@@ -135,6 +139,9 @@ function App() {
         <div className="results-header">
           <h2>
             {totalCount} {totalCount === 1 ? 'Item' : 'Items'} Found
+            {passedCount > 0 && (
+              <span className="count-breakdown"> ({pendingCount} pending, {passedCount} passed)</span>
+            )}
           </h2>
           <div className="results-actions">
             {(selectedCategories.length > 0 || searchTerm) && (
