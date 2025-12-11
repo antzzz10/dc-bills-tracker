@@ -166,8 +166,23 @@ function App() {
             </div>
           ) : (
             <>
-              {/* High Priority Bills Section */}
-              {highPriorityGroups.length > 0 && (
+              {/* Pending Bills Section - Non-collapsible header */}
+              <div className="pending-bills-section">
+                <div className="pending-bills-header">
+                  <div className="pending-bills-title">
+                    <span className="alert-icon">📋</span>
+                    <h2>Pending Bills</h2>
+                    <span className="bill-count-pending">{pendingCount}</span>
+                  </div>
+                </div>
+
+                <div className="pending-bills-content">
+                  <p className="pending-bills-intro">
+                    These bills are currently under consideration in Congress and have not yet passed either chamber.
+                  </p>
+
+                  {/* High Priority Bills Section */}
+                  {highPriorityGroups.length > 0 && (
                 <div className="priority-section">
                   <div className="section-header high-priority-header">
                     <h2>🔴 High Priority Bills ({highPriorityGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
@@ -230,6 +245,8 @@ function App() {
                   ))}
                 </div>
               )}
+                </div>
+              </div>
             </>
           )}
         </div>
