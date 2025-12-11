@@ -34,10 +34,15 @@ function UpdateBanner({ passedBills = [], upcomingFloorVotes = [], allBills = []
         year: 'numeric'
       })
 
+      // Handle provisional bills without bill numbers yet
+      const billNumberText = newest.provisional
+        ? 'New bill (number pending)'
+        : newest.billNumbers.join('/')
+
       return {
         icon: '🆕',
         date: formattedDate,
-        message: `${newest.billNumbers.join('/')} just introduced: ${newest.title}. ${newest.description}`
+        message: `${billNumberText} just introduced: ${newest.title}. ${newest.description}`
       }
     }
 

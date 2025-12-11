@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-10",
+  "lastUpdated": "2025-12-11",
   "categories": [
     {
       "id": "abolishing",
@@ -47,12 +47,43 @@
       "color": "#DC143C"
     },
     {
+      "id": "civic-spaces",
+      "name": "Civic Spaces & Local Autonomy",
+      "color": "#DC143C"
+    },
+    {
       "id": "other",
       "name": "Other",
       "color": "#DC143C"
     }
   ],
   "bills": [
+    {
+      "id": "mace-kirk-plaza-pending",
+      "billNumbers": ["Pending"],
+      "title": "Charlie Kirk Freedom of Speech Plaza Act",
+      "sponsors": [
+        "Rep Nancy Mace"
+      ],
+      "description": "Would redesignate Black Lives Matter Plaza (16th Street NW between H Street and K Street) as 'Charlie Kirk Freedom of Speech Plaza' and require installation of street signage",
+      "category": "civic-spaces",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "manual",
+      "provisional": true,
+      "provisionalDate": "2025-12-10",
+      "status": {
+        "stage": null,
+        "lastAction": "Introduced",
+        "lastActionDate": "2025-12-10",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      }
+    },
     {
       "id": "s440-hr1089",
       "billNumbers": [
