@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './BillCard.css'
 import billsData from '../data/bills.json'
 import sponsorsData from '../data/sponsors.json'
+import { stateAbbreviations } from '../data/stateAbbreviations'
 
 function BillCard({ bill }) {
   // Start with all bills collapsed for better scanning
@@ -11,6 +12,11 @@ function BillCard({ bill }) {
   // Look up sponsor info from sponsors.json
   const getSponsorInfo = (sponsorName) => {
     return sponsorsData[sponsorName] || null
+  }
+
+  // Get state abbreviation
+  const getStateAbbr = (stateName) => {
+    return stateAbbreviations[stateName] || stateName
   }
 
   const getCongressLink = (billNumber) => {
@@ -91,7 +97,7 @@ function BillCard({ bill }) {
                     <span className="sponsor-name">{sponsorName}</span>
                     {sponsorInfo && (
                       <span className={`sponsor-badge party-${sponsorInfo.party.toLowerCase()}`}>
-                        {sponsorInfo.party}-{sponsorInfo.state.substring(0, 2).toUpperCase()}
+                        {sponsorInfo.party}-{getStateAbbr(sponsorInfo.state)}
                         {sponsorInfo.district && ` ${sponsorInfo.district}`}
                       </span>
                     )}

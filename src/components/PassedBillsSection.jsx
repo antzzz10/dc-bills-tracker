@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './PassedBillsSection.css'
 import sponsorsData from '../data/sponsors.json'
+import { stateAbbreviations } from '../data/stateAbbreviations'
 
 function PassedBillsSection({ passedBills }) {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -8,6 +9,11 @@ function PassedBillsSection({ passedBills }) {
   // Look up sponsor info from sponsors.json
   const getSponsorInfo = (sponsorName) => {
     return sponsorsData[sponsorName] || null
+  }
+
+  // Get state abbreviation
+  const getStateAbbr = (stateName) => {
+    return stateAbbreviations[stateName] || stateName
   }
 
   // Helper to parse date strings as local dates (avoiding timezone issues)
@@ -102,7 +108,7 @@ function PassedBillsSection({ passedBills }) {
                               <span className="sponsor-name">{sponsorName}</span>
                               {sponsorInfo && (
                                 <span className={`sponsor-badge party-${sponsorInfo.party.toLowerCase()}`}>
-                                  {sponsorInfo.party}-{sponsorInfo.state.substring(0, 2).toUpperCase()}
+                                  {sponsorInfo.party}-{getStateAbbr(sponsorInfo.state)}
                                   {sponsorInfo.district && ` ${sponsorInfo.district}`}
                                 </span>
                               )}
