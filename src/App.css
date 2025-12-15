@@ -290,6 +290,24 @@ body {
   line-height: 1.5;
 }
 
+.footer-feedback {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-feedback a {
+  color: #FFD700;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+
+.footer-feedback a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
 .footer-copyright {
   margin: 2rem 0 0;
   font-size: 0.85rem;

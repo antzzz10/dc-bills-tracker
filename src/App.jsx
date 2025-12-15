@@ -267,6 +267,15 @@ function App() {
               This is an independent, volunteer-run project created by a proud DC resident
               to track anti-DC legislation. Not affiliated with any organization.
             </p>
+            <p className="footer-feedback">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScoQfgfU-vHBN0EXqGp51Vv79oT2iS-1_uPTzoPtpmFlQ58kQ/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Send Feedback →
+              </a>
+            </p>
           </div>
 
           <p className="footer-copyright">
