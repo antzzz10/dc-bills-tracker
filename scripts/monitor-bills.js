@@ -511,6 +511,13 @@ async function monitorBills() {
 
     console.log(`[${i + 1}/${billsData.bills.length}] Checking ${billNumber}...`);
 
+    // Skip bills with invalid/pending bill numbers
+    const parsed = parseBillNumber(billNumber);
+    if (!parsed) {
+      console.log(`  ⏭️  Skipping: Bill number not yet assigned (${billNumber})`);
+      continue;
+    }
+
     try {
       const status = await fetchBillStatus(billNumber);
 
