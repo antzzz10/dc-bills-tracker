@@ -1,1556 +1,5 @@
 [
   {
-    "timestamp": "2025-12-15T14:20:30.889Z",
-    "changes": [
-      {
-        "id": "s440-hr1089",
-        "bill": "BOWSER Act",
-        "billNumber": "S. 440",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-02-06",
-        "url": "https://www.congress.gov/bill/119th-congress/s/440",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 2,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-02-06",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr3877",
-        "bill": "Washington, D.C. Residents Voting Act",
-        "billNumber": "H.R. 3877",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the Committee on the Judiciary, and in addition to the Committees on Oversight and Government Reform, and Armed Services, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
-        "latestActionDate": "2025-06-10",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/3877",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-06-10",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr277",
-        "bill": "Matthew Lawrence Perna Act of 2025",
-        "billNumber": "H.R. 277",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the Committee on the Judiciary, and in addition to the Committee on Intelligence (Permanent Select), for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
-        "latestActionDate": "2025-01-09",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/277",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 1,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-01-09",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr2096",
-        "bill": "Protecting Our Nation's Capital Emergency Act of 2025",
-        "billNumber": "H.R. 2096",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Received in the Senate and Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-06-11",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/2096",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 3,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-03-14",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": false,
-          "houseVote": {
-            "date": "2025-06-10",
-            "yeas": 235,
-            "nays": 178,
-            "byParty": {
-              "republican": {
-                "yeas": 205,
-                "nays": 4
-              },
-              "democrat": {
-                "yeas": 30,
-                "nays": 174
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-house"
-        }
-      },
-      {
-        "id": "hr2056-s1522",
-        "bill": "District of Columbia Federal Immigration Compliance Act",
-        "billNumber": "H.R. 2056",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Received in the Senate and Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-06-12",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/2056",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 1,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-03-11",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": false,
-          "houseVote": {
-            "date": "2025-06-12",
-            "yeas": 224,
-            "nays": 194,
-            "byParty": {
-              "republican": {
-                "yeas": 213,
-                "nays": 0
-              },
-              "democrat": {
-                "yeas": 11,
-                "nays": 194
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-house"
-        }
-      },
-      {
-        "id": "hr4922-s2686",
-        "bill": "DC CRIMES Act of 2025",
-        "billNumber": "H.R. 4922",
-        "status": "UNKNOWN",
-        "latestAction": "Received in the Senate.",
-        "latestActionDate": "2025-09-17",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/4922",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 8,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-08-08",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": false,
-          "houseVote": {
-            "date": "2025-09-16",
-            "yeas": 240,
-            "nays": 179,
-            "byParty": {
-              "republican": {
-                "yeas": 209,
-                "nays": 1
-              },
-              "democrat": {
-                "yeas": 31,
-                "nays": 178
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-house"
-        }
-      },
-      {
-        "id": "hjres114",
-        "bill": "Crime Emergency Extension Resolution",
-        "billNumber": "H.J.Res. 114",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-08-15",
-        "url": "https://www.congress.gov/bill/119th-congress/hjres/114",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 1,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-08-15",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5015",
-        "bill": "Presidential Emergency Extension Amendment",
-        "billNumber": "H.R. 5015",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-08-22",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5015",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "5 cosponsors",
-        "cosponsorsCount": 5,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-08-22",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5016",
-        "bill": "Keep Offenders Off Our Streets Act",
-        "billNumber": "H.R. 5016",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-08-22",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5016",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "5 cosponsors",
-        "cosponsorsCount": 5,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-08-22",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "s2706",
-        "bill": "Ending Cashless Bail in Our Nation's Capital Act",
-        "billNumber": "S. 2706",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-09-04",
-        "url": "https://www.congress.gov/bill/119th-congress/s/2706",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 3,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-04",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5140",
-        "bill": "Juvenile Charging Age Reduction",
-        "billNumber": "H.R. 5140",
-        "status": "UNKNOWN",
-        "latestAction": "Received in the Senate.",
-        "latestActionDate": "2025-09-17",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5140",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 6,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-09-04",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": false,
-          "houseVote": {
-            "date": "2025-09-16",
-            "yeas": 225,
-            "nays": 203,
-            "byParty": {
-              "republican": {
-                "yeas": 217,
-                "nays": 1
-              },
-              "democrat": {
-                "yeas": 8,
-                "nays": 202
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-house"
-        }
-      },
-      {
-        "id": "hr5143",
-        "bill": "District of Columbia Policing Protection Act",
-        "billNumber": "H.R. 5143",
-        "status": "UNKNOWN",
-        "latestAction": "Received in the Senate.",
-        "latestActionDate": "2025-09-18",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5143",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 2,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-09-04",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": false,
-          "houseVote": {
-            "date": "2025-09-17",
-            "yeas": 245,
-            "nays": 182,
-            "byParty": {
-              "republican": {
-                "yeas": 216,
-                "nays": 0
-              },
-              "democrat": {
-                "yeas": 29,
-                "nays": 182
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-house"
-        }
-      },
-      {
-        "id": "hr5107-s2687",
-        "bill": "CLEAN DC Act",
-        "billNumber": "H.R. 5107",
-        "status": "UNKNOWN",
-        "latestAction": "Received in the Senate.",
-        "latestActionDate": "2025-11-20",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5107",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 29,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-09-03",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": false,
-          "houseVote": {
-            "date": "2025-11-19",
-            "yeas": 233,
-            "nays": 190,
-            "byParty": {
-              "republican": {
-                "yeas": 213,
-                "nays": 0
-              },
-              "democrat": {
-                "yeas": 20,
-                "nays": 190
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-house"
-        }
-      },
-      {
-        "id": "hr5207",
-        "bill": "Capital Emergency Control Act of 2025",
-        "billNumber": "H.R. 5207",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-09-08",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5207",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-08",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5214",
-        "bill": "District of Columbia Cash Bail Reform Act",
-        "billNumber": "H.R. 5214",
-        "status": "UNKNOWN",
-        "latestAction": "Received in the Senate.",
-        "latestActionDate": "2025-11-20",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5214",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 3,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-09-08",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": false,
-          "houseVote": {
-            "date": "2025-11-19",
-            "yeas": 237,
-            "nays": 179,
-            "byParty": {
-              "republican": {
-                "yeas": 209,
-                "nays": 0
-              },
-              "democrat": {
-                "yeas": 28,
-                "nays": 179
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-house"
-        }
-      },
-      {
-        "id": "hr5172",
-        "bill": "Strong Sentences for Safer D.C. Streets Act",
-        "billNumber": "H.R. 5172",
-        "status": "UNKNOWN",
-        "latestAction": "Placed on the Union Calendar, Calendar No. 279.",
-        "latestActionDate": "2025-10-03",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5172",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 2,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-08",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5242-secondchance",
-        "bill": "Second Chance and Incarceration Reduction Repeal",
-        "billNumber": "H.R. 5242",
-        "status": "UNKNOWN",
-        "latestAction": "Placed on the Union Calendar, Calendar No. 293.",
-        "latestActionDate": "2025-10-14",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5242",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 1,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-10",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5163",
-        "bill": "Clean and Managed Public Spaces Act",
-        "billNumber": "H.R. 5163",
-        "status": "UNKNOWN",
-        "latestAction": "Placed on the Union Calendar, Calendar No. 294.",
-        "latestActionDate": "2025-10-14",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5163",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-04",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "s2517",
-        "bill": "Public Property Camping Penalties",
-        "billNumber": "S. 2517",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-07-29",
-        "url": "https://www.congress.gov/bill/119th-congress/s/2517",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-07-29",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "s2815",
-        "bill": "JUSTICE in D.C. Act",
-        "billNumber": "S. 2815",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-09-16",
-        "url": "https://www.congress.gov/bill/119th-congress/s/2815",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 3,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-16",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5125-s2854",
-        "bill": "District of Columbia Judicial Nominations Reform Act",
-        "billNumber": "H.R. 5125",
-        "status": "UNKNOWN",
-        "latestAction": "Received in the Senate.",
-        "latestActionDate": "2025-09-18",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5125",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 2,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-09-04",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": false,
-          "houseVote": {
-            "date": "2025-09-17",
-            "yeas": 218,
-            "nays": 211,
-            "byParty": {
-              "republican": {
-                "yeas": 218,
-                "nays": 0
-              },
-              "democrat": {
-                "yeas": 0,
-                "nays": 211
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-house"
-        }
-      },
-      {
-        "id": "hr5179",
-        "bill": "District of Columbia Attorney General Appointment Reform Act",
-        "billNumber": "H.R. 5179",
-        "status": "UNKNOWN",
-        "latestAction": "Placed on the Union Calendar, Calendar No. 270.",
-        "latestActionDate": "2025-09-30",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5179",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 1,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-08",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr884-s2636",
-        "bill": "Noncitizen Voting Prohibition",
-        "billNumber": "H.R. 884",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Received in the Senate and Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-06-11",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/884",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 14,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-01-31",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": false,
-          "houseVote": {
-            "date": "2025-06-10",
-            "yeas": 266,
-            "nays": 148,
-            "byParty": {
-              "republican": {
-                "yeas": 210,
-                "nays": 0
-              },
-              "democrat": {
-                "yeas": 56,
-                "nays": 148
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-house"
-        }
-      },
-      {
-        "id": "hr2562",
-        "bill": "District of Columbia One Vote One Choice Act",
-        "billNumber": "H.R. 2562",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on House Administration.",
-        "latestActionDate": "2025-04-01",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/2562",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 2,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-04-01",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hconres14-cruz",
-        "bill": "Noncitizen Voting Budget Amendment",
-        "billNumber": "H.Con.Res. 14",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Star Print ordered on the reported concurrent resolution.",
-        "latestActionDate": "2025-05-20",
-        "url": "https://www.congress.gov/bill/119th-congress/hconres/14",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "Floor vote occurred",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-02-18",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr4851",
-        "bill": "Proving Residency for Overseas Voter Eligibility Act",
-        "billNumber": "H.R. 4851",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on House Administration.",
-        "latestActionDate": "2025-08-01",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/4851",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 4,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-08-01",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr7-s186",
-        "bill": "No Taxpayer Funding for Abortion and Abortion Insurance Full Disclosure Act of 2025",
-        "billNumber": "H.R. 7",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the Committee on Energy and Commerce, and in addition to the Committees on the Judiciary, and Ways and Means, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
-        "latestActionDate": "2025-01-22",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/7",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "88 cosponsors",
-        "cosponsorsCount": 88,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-01-22",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr1968-abortion",
-        "bill": "Full-Year Continuing Appropriations 2025 - Abortion",
-        "billNumber": "H.R. 1968",
-        "status": "ENACTED",
-        "latestAction": "Became Public Law No: 119-4.",
-        "latestActionDate": "2025-03-15",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/1968",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "Floor vote occurred",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-03-10",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": true,
-          "houseVote": {
-            "date": "2025-03-11",
-            "yeas": 217,
-            "nays": 213,
-            "byParty": {
-              "republican": {
-                "yeas": 216,
-                "nays": 1
-              },
-              "democrat": {
-                "yeas": 1,
-                "nays": 212
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-both"
-        }
-      },
-      {
-        "id": "hjres82",
-        "bill": "Insurance Regulation Disapproval Resolution",
-        "billNumber": "H.J.Res. 82",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-03-27",
-        "url": "https://www.congress.gov/bill/119th-congress/hjres/82",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "13 cosponsors",
-        "cosponsorsCount": 13,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-03-27",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "s2907-hr5483",
-        "bill": "Chloe Cole Act",
-        "billNumber": "S. 2907",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
-        "latestActionDate": "2025-09-18",
-        "url": "https://www.congress.gov/bill/119th-congress/s/2907",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "10 cosponsors",
-        "cosponsorsCount": 10,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-18",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr1016",
-        "bill": "Protecting Women's Private Spaces Act",
-        "billNumber": "H.R. 1016",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-02-05",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/1016",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "9 cosponsors",
-        "cosponsorsCount": 9,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-02-05",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr1968-marijuana",
-        "bill": "Full-Year Continuing Appropriations 2025 - Marijuana",
-        "billNumber": "H.R. 1968",
-        "status": "ENACTED",
-        "latestAction": "Became Public Law No: 119-4.",
-        "latestActionDate": "2025-03-15",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/1968",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "Floor vote occurred",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-03-10",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": true,
-          "houseVote": {
-            "date": "2025-03-11",
-            "yeas": 217,
-            "nays": 213,
-            "byParty": {
-              "republican": {
-                "yeas": 216,
-                "nays": 1
-              },
-              "democrat": {
-                "yeas": 1,
-                "nays": 212
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-both"
-        }
-      },
-      {
-        "id": "s1450",
-        "bill": "Open Meetings Clarification Repeal",
-        "billNumber": "S. 1450",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-04-10",
-        "url": "https://www.congress.gov/bill/119th-congress/s/1450",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-04-10",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "sjres68-hjres109",
-        "bill": "Open Meetings Clarification Disapproval Resolution",
-        "billNumber": "S.J.Res. 68",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-07-23",
-        "url": "https://www.congress.gov/bill/119th-congress/sjres/68",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-07-23",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "s218-hr4558",
-        "bill": "Oswaldo Paya Way Designation",
-        "billNumber": "S. 218",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-01-23",
-        "url": "https://www.congress.gov/bill/119th-congress/s/218",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 3,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-01-23",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "s614-hr1738",
-        "bill": "Alexi Navalny Way Designation",
-        "billNumber": "S. 614",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs. (text: CR S1010-1011)",
-        "latestActionDate": "2025-02-18",
-        "url": "https://www.congress.gov/bill/119th-congress/s/614",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "9 cosponsors",
-        "cosponsorsCount": 9,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-02-18",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr1774",
-        "bill": "Black Lives Matter Plaza Removal",
-        "billNumber": "H.R. 1774",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the Subcommittee on Highways and Transit.",
-        "latestActionDate": "2025-03-03",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/1774",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-03-03",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr2522",
-        "bill": "Jimmy Lai Way Designation",
-        "billNumber": "H.R. 2522",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committee on Foreign Affairs, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
-        "latestActionDate": "2025-03-31",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/2522",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 3,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-03-31",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5242-perry-cameras",
-        "bill": "Traffic Camera Repeal Amendment",
-        "billNumber": "H.R. 5242",
-        "status": "UNKNOWN",
-        "latestAction": "Placed on the Union Calendar, Calendar No. 293.",
-        "latestActionDate": "2025-10-14",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5242",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "Committee markup held",
-        "cosponsorsCount": 1,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-10",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5242-perry-rightturn",
-        "bill": "Right Turn Prohibition Repeal Amendment",
-        "billNumber": "H.R. 5242",
-        "status": "UNKNOWN",
-        "latestAction": "Placed on the Union Calendar, Calendar No. 293.",
-        "latestActionDate": "2025-10-14",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5242",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "Committee markup held",
-        "cosponsorsCount": 1,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-10",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5525",
-        "bill": "Stop DC CAMERA Act",
-        "billNumber": "H.R. 5525",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-09-19",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5525",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-19",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "s2998",
-        "bill": "Charlie Kirk Patriot Way Designation",
-        "billNumber": "S. 2998",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-10-09",
-        "url": "https://www.congress.gov/bill/119th-congress/s/2998",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "5 cosponsors",
-        "cosponsorsCount": 5,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-10-09",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr69",
-        "bill": "Freedom to Petition the Government Act",
-        "billNumber": "H.R. 69",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-01-03",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/69",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 2,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-01-03",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "s204-hr650",
-        "bill": "Families' Rights and Responsibilities Act",
-        "billNumber": "S. 204",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on the Judiciary.",
-        "latestActionDate": "2025-01-23",
-        "url": "https://www.congress.gov/bill/119th-congress/s/204",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "5 cosponsors",
-        "cosponsorsCount": 5,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-01-23",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "sconres7-lee",
-        "bill": "Legislative Authority Budget Amendment",
-        "billNumber": "S.Con.Res. 7",
-        "status": "UNKNOWN",
-        "latestAction": "Resolution agreed to in Senate with amendments by Yea-Nay Vote. 52 - 48. Record Vote Number: 87. (text: CR S1119-1125)",
-        "latestActionDate": "2025-02-21",
-        "url": "https://www.congress.gov/bill/119th-congress/sconres/7",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "Floor vote occurred",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-02-13",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr1968-budget",
-        "bill": "Full-Year Continuing Appropriations 2025 - Budget Cut",
-        "billNumber": "H.R. 1968",
-        "status": "ENACTED",
-        "latestAction": "Became Public Law No: 119-4.",
-        "latestActionDate": "2025-03-15",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/1968",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "Floor vote occurred",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": true,
-        "committees": [],
-        "introducedDate": "2025-03-10",
-        "passageInfo": {
-          "hasPassedHouse": true,
-          "hasPassedSenate": true,
-          "houseVote": {
-            "date": "2025-03-11",
-            "yeas": 217,
-            "nays": 213,
-            "byParty": {
-              "republican": {
-                "yeas": 216,
-                "nays": 1
-              },
-              "democrat": {
-                "yeas": 1,
-                "nays": 212
-              }
-            }
-          },
-          "senateVote": null,
-          "stage": "passed-both"
-        }
-      },
-      {
-        "id": "s900",
-        "bill": "Make American Flags in America Act of 2025",
-        "billNumber": "S. 900",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-03-06",
-        "url": "https://www.congress.gov/bill/119th-congress/s/900",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "6 cosponsors",
-        "cosponsorsCount": 6,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-03-06",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr3766",
-        "bill": "Agency Interpretation Deference Prohibition",
-        "billNumber": "H.R. 3766",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Ordered to be Reported (Amended) by the Yeas and Nays: 24 - 19.",
-        "latestActionDate": "2025-12-02",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/3766",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "Committee markup held",
-        "cosponsorsCount": 1,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-06-05",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "s1991-hr4311",
-        "bill": "Delivering On Government Efficiency in Spending Act",
-        "billNumber": "S. 1991",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Committee on Small Business and Entrepreneurship. Hearings held.",
-        "latestActionDate": "2025-12-10",
-        "url": "https://www.congress.gov/bill/119th-congress/s/1991",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "Committee hearing held",
-        "cosponsorsCount": 15,
-        "hasCommitteeHearing": true,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-06-09",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr4519-s2565",
-        "bill": "District of Columbia Sister City Integrity Act",
-        "billNumber": "H.R. 4519",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-07-17",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/4519",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "11 cosponsors",
-        "cosponsorsCount": 11,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-07-17",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "s2404-hr4670",
-        "bill": "Emergency Bill Disapproval Resolution Act",
-        "billNumber": "S. 2404",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "latestActionDate": "2025-07-23",
-        "url": "https://www.congress.gov/bill/119th-congress/s/2404",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 0,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-07-23",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr4788",
-        "bill": "Congressional Concealed Carry in D.C.",
-        "billNumber": "H.R. 4788",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-07-29",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/4788",
-        "priority": "high",
-        "prioritySource": "legislative",
-        "priorityReason": "36 cosponsors",
-        "cosponsorsCount": 36,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-07-29",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5183",
-        "bill": "District of Columbia Home Rule Improvement Act",
-        "billNumber": "H.R. 5183",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Ordered to be Reported (Amended) by the Yeas and Nays: 22 - 18.",
-        "latestActionDate": "2025-09-10",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5183",
-        "priority": "high",
-        "prioritySource": "freedc",
-        "priorityReason": "Listed on FreeDC",
-        "cosponsorsCount": 3,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-08",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr5474",
-        "bill": "No DEI in DC Act",
-        "billNumber": "H.R. 5474",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-09-18",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/5474",
-        "priority": "medium",
-        "prioritySource": "legislative",
-        "priorityReason": "In committee",
-        "cosponsorsCount": 3,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-09-18",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      },
-      {
-        "id": "hr6372-s3327",
-        "bill": "D.C. Shield Law Repeal Act",
-        "billNumber": "H.R. 6372",
-        "status": "IN_COMMITTEE",
-        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "latestActionDate": "2025-12-03",
-        "url": "https://www.congress.gov/bill/119th-congress/hr/6372",
-        "priority": "high",
-        "prioritySource": "manual",
-        "priorityReason": "Manually flagged",
-        "cosponsorsCount": 26,
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "committees": [],
-        "introducedDate": "2025-12-03",
-        "passageInfo": {
-          "hasPassedHouse": false,
-          "hasPassedSenate": false,
-          "houseVote": null,
-          "senateVote": null,
-          "stage": null
-        }
-      }
-    ],
-    "errors": [
-      "Pending"
-    ]
-  },
-  {
     "timestamp": "2025-12-15T14:29:18.765Z",
     "changes": [
       {
@@ -44942,6 +43391,1555 @@
   },
   {
     "timestamp": "2026-01-11T14:23:04.287Z",
+    "changes": [
+      {
+        "id": "s440-hr1089",
+        "bill": "BOWSER Act",
+        "billNumber": "S. 440",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-02-06",
+        "url": "https://www.congress.gov/bill/119th-congress/s/440",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 2,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-02-06",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr3877",
+        "bill": "Washington, D.C. Residents Voting Act",
+        "billNumber": "H.R. 3877",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the Committee on the Judiciary, and in addition to the Committees on Oversight and Government Reform, and Armed Services, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "latestActionDate": "2025-06-10",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/3877",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-06-10",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr277",
+        "bill": "Matthew Lawrence Perna Act of 2025",
+        "billNumber": "H.R. 277",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the Committee on the Judiciary, and in addition to the Committee on Intelligence (Permanent Select), for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "latestActionDate": "2025-01-09",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/277",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 1,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-01-09",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr2096",
+        "bill": "Protecting Our Nation's Capital Emergency Act of 2025",
+        "billNumber": "H.R. 2096",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Received in the Senate and Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-06-11",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/2096",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 3,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-03-14",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": false,
+          "houseVote": {
+            "date": "2025-06-10",
+            "yeas": 235,
+            "nays": 178,
+            "byParty": {
+              "republican": {
+                "yeas": 205,
+                "nays": 4
+              },
+              "democrat": {
+                "yeas": 30,
+                "nays": 174
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-house"
+        }
+      },
+      {
+        "id": "hr2056-s1522",
+        "bill": "District of Columbia Federal Immigration Compliance Act",
+        "billNumber": "H.R. 2056",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Received in the Senate and Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-06-12",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/2056",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 1,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-03-11",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": false,
+          "houseVote": {
+            "date": "2025-06-12",
+            "yeas": 224,
+            "nays": 194,
+            "byParty": {
+              "republican": {
+                "yeas": 213,
+                "nays": 0
+              },
+              "democrat": {
+                "yeas": 11,
+                "nays": 194
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-house"
+        }
+      },
+      {
+        "id": "hr4922-s2686",
+        "bill": "DC CRIMES Act of 2025",
+        "billNumber": "H.R. 4922",
+        "status": "UNKNOWN",
+        "latestAction": "Received in the Senate.",
+        "latestActionDate": "2025-09-17",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/4922",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 8,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-08-08",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": false,
+          "houseVote": {
+            "date": "2025-09-16",
+            "yeas": 240,
+            "nays": 179,
+            "byParty": {
+              "republican": {
+                "yeas": 209,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 31,
+                "nays": 178
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-house"
+        }
+      },
+      {
+        "id": "hjres114",
+        "bill": "Crime Emergency Extension Resolution",
+        "billNumber": "H.J.Res. 114",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-08-15",
+        "url": "https://www.congress.gov/bill/119th-congress/hjres/114",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 1,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-08-15",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5015",
+        "bill": "Presidential Emergency Extension Amendment",
+        "billNumber": "H.R. 5015",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-08-22",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5015",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "5 cosponsors",
+        "cosponsorsCount": 5,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-08-22",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5016",
+        "bill": "Keep Offenders Off Our Streets Act",
+        "billNumber": "H.R. 5016",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-08-22",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5016",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "5 cosponsors",
+        "cosponsorsCount": 5,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-08-22",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "s2706",
+        "bill": "Ending Cashless Bail in Our Nation's Capital Act",
+        "billNumber": "S. 2706",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-09-04",
+        "url": "https://www.congress.gov/bill/119th-congress/s/2706",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 3,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-04",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5140",
+        "bill": "Juvenile Charging Age Reduction",
+        "billNumber": "H.R. 5140",
+        "status": "UNKNOWN",
+        "latestAction": "Received in the Senate.",
+        "latestActionDate": "2025-09-17",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5140",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 6,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-09-04",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": false,
+          "houseVote": {
+            "date": "2025-09-16",
+            "yeas": 225,
+            "nays": 203,
+            "byParty": {
+              "republican": {
+                "yeas": 217,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 8,
+                "nays": 202
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-house"
+        }
+      },
+      {
+        "id": "hr5143",
+        "bill": "District of Columbia Policing Protection Act",
+        "billNumber": "H.R. 5143",
+        "status": "UNKNOWN",
+        "latestAction": "Received in the Senate.",
+        "latestActionDate": "2025-09-18",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5143",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 2,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-09-04",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": false,
+          "houseVote": {
+            "date": "2025-09-17",
+            "yeas": 245,
+            "nays": 182,
+            "byParty": {
+              "republican": {
+                "yeas": 216,
+                "nays": 0
+              },
+              "democrat": {
+                "yeas": 29,
+                "nays": 182
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-house"
+        }
+      },
+      {
+        "id": "hr5107-s2687",
+        "bill": "CLEAN DC Act",
+        "billNumber": "H.R. 5107",
+        "status": "UNKNOWN",
+        "latestAction": "Received in the Senate.",
+        "latestActionDate": "2025-11-20",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5107",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 29,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-09-03",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": false,
+          "houseVote": {
+            "date": "2025-11-19",
+            "yeas": 233,
+            "nays": 190,
+            "byParty": {
+              "republican": {
+                "yeas": 213,
+                "nays": 0
+              },
+              "democrat": {
+                "yeas": 20,
+                "nays": 190
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-house"
+        }
+      },
+      {
+        "id": "hr5207",
+        "bill": "Capital Emergency Control Act of 2025",
+        "billNumber": "H.R. 5207",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-09-08",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5207",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-08",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5214",
+        "bill": "District of Columbia Cash Bail Reform Act",
+        "billNumber": "H.R. 5214",
+        "status": "UNKNOWN",
+        "latestAction": "Received in the Senate.",
+        "latestActionDate": "2025-11-20",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5214",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 3,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-09-08",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": false,
+          "houseVote": {
+            "date": "2025-11-19",
+            "yeas": 237,
+            "nays": 179,
+            "byParty": {
+              "republican": {
+                "yeas": 209,
+                "nays": 0
+              },
+              "democrat": {
+                "yeas": 28,
+                "nays": 179
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-house"
+        }
+      },
+      {
+        "id": "hr5172",
+        "bill": "Strong Sentences for Safer D.C. Streets Act",
+        "billNumber": "H.R. 5172",
+        "status": "UNKNOWN",
+        "latestAction": "Placed on the Union Calendar, Calendar No. 279.",
+        "latestActionDate": "2025-10-03",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5172",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 2,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-08",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5242-secondchance",
+        "bill": "Second Chance and Incarceration Reduction Repeal",
+        "billNumber": "H.R. 5242",
+        "status": "UNKNOWN",
+        "latestAction": "Placed on the Union Calendar, Calendar No. 293.",
+        "latestActionDate": "2025-10-14",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5242",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 1,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-10",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5163",
+        "bill": "Clean and Managed Public Spaces Act",
+        "billNumber": "H.R. 5163",
+        "status": "UNKNOWN",
+        "latestAction": "Placed on the Union Calendar, Calendar No. 294.",
+        "latestActionDate": "2025-10-14",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5163",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-04",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "s2517",
+        "bill": "Public Property Camping Penalties",
+        "billNumber": "S. 2517",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-07-29",
+        "url": "https://www.congress.gov/bill/119th-congress/s/2517",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-07-29",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "s2815",
+        "bill": "JUSTICE in D.C. Act",
+        "billNumber": "S. 2815",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-09-16",
+        "url": "https://www.congress.gov/bill/119th-congress/s/2815",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 3,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-16",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5125-s2854",
+        "bill": "District of Columbia Judicial Nominations Reform Act",
+        "billNumber": "H.R. 5125",
+        "status": "UNKNOWN",
+        "latestAction": "Received in the Senate.",
+        "latestActionDate": "2025-09-18",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5125",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 2,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-09-04",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": false,
+          "houseVote": {
+            "date": "2025-09-17",
+            "yeas": 218,
+            "nays": 211,
+            "byParty": {
+              "republican": {
+                "yeas": 218,
+                "nays": 0
+              },
+              "democrat": {
+                "yeas": 0,
+                "nays": 211
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-house"
+        }
+      },
+      {
+        "id": "hr5179",
+        "bill": "District of Columbia Attorney General Appointment Reform Act",
+        "billNumber": "H.R. 5179",
+        "status": "UNKNOWN",
+        "latestAction": "Placed on the Union Calendar, Calendar No. 270.",
+        "latestActionDate": "2025-09-30",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5179",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 1,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-08",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr884-s2636",
+        "bill": "Noncitizen Voting Prohibition",
+        "billNumber": "H.R. 884",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Received in the Senate and Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-06-11",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/884",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 14,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-01-31",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": false,
+          "houseVote": {
+            "date": "2025-06-10",
+            "yeas": 266,
+            "nays": 148,
+            "byParty": {
+              "republican": {
+                "yeas": 210,
+                "nays": 0
+              },
+              "democrat": {
+                "yeas": 56,
+                "nays": 148
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-house"
+        }
+      },
+      {
+        "id": "hr2562",
+        "bill": "District of Columbia One Vote One Choice Act",
+        "billNumber": "H.R. 2562",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on House Administration.",
+        "latestActionDate": "2025-04-01",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/2562",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 2,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-04-01",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hconres14-cruz",
+        "bill": "Noncitizen Voting Budget Amendment",
+        "billNumber": "H.Con.Res. 14",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Star Print ordered on the reported concurrent resolution.",
+        "latestActionDate": "2025-05-20",
+        "url": "https://www.congress.gov/bill/119th-congress/hconres/14",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "Floor vote occurred",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-02-18",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr4851",
+        "bill": "Proving Residency for Overseas Voter Eligibility Act",
+        "billNumber": "H.R. 4851",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on House Administration.",
+        "latestActionDate": "2025-08-01",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/4851",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 4,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-08-01",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr7-s186",
+        "bill": "No Taxpayer Funding for Abortion and Abortion Insurance Full Disclosure Act of 2025",
+        "billNumber": "H.R. 7",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the Committee on Energy and Commerce, and in addition to the Committees on the Judiciary, and Ways and Means, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "latestActionDate": "2025-01-22",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/7",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "89 cosponsors",
+        "cosponsorsCount": 89,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-01-22",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr1968-abortion",
+        "bill": "Full-Year Continuing Appropriations 2025 - Abortion",
+        "billNumber": "H.R. 1968",
+        "status": "ENACTED",
+        "latestAction": "Became Public Law No: 119-4.",
+        "latestActionDate": "2025-03-15",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/1968",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "Floor vote occurred",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-03-10",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": true,
+          "houseVote": {
+            "date": "2025-03-11",
+            "yeas": 217,
+            "nays": 213,
+            "byParty": {
+              "republican": {
+                "yeas": 216,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 1,
+                "nays": 212
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-both"
+        }
+      },
+      {
+        "id": "hjres82",
+        "bill": "Insurance Regulation Disapproval Resolution",
+        "billNumber": "H.J.Res. 82",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-03-27",
+        "url": "https://www.congress.gov/bill/119th-congress/hjres/82",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "13 cosponsors",
+        "cosponsorsCount": 13,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-03-27",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "s2907-hr5483",
+        "bill": "Chloe Cole Act",
+        "billNumber": "S. 2907",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+        "latestActionDate": "2025-09-18",
+        "url": "https://www.congress.gov/bill/119th-congress/s/2907",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "10 cosponsors",
+        "cosponsorsCount": 10,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-18",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr1016",
+        "bill": "Protecting Women's Private Spaces Act",
+        "billNumber": "H.R. 1016",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-02-05",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/1016",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "9 cosponsors",
+        "cosponsorsCount": 9,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-02-05",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr1968-marijuana",
+        "bill": "Full-Year Continuing Appropriations 2025 - Marijuana",
+        "billNumber": "H.R. 1968",
+        "status": "ENACTED",
+        "latestAction": "Became Public Law No: 119-4.",
+        "latestActionDate": "2025-03-15",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/1968",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "Floor vote occurred",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-03-10",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": true,
+          "houseVote": {
+            "date": "2025-03-11",
+            "yeas": 217,
+            "nays": 213,
+            "byParty": {
+              "republican": {
+                "yeas": 216,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 1,
+                "nays": 212
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-both"
+        }
+      },
+      {
+        "id": "s1450",
+        "bill": "Open Meetings Clarification Repeal",
+        "billNumber": "S. 1450",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-04-10",
+        "url": "https://www.congress.gov/bill/119th-congress/s/1450",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-04-10",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "sjres68-hjres109",
+        "bill": "Open Meetings Clarification Disapproval Resolution",
+        "billNumber": "S.J.Res. 68",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-07-23",
+        "url": "https://www.congress.gov/bill/119th-congress/sjres/68",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-07-23",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "s218-hr4558",
+        "bill": "Oswaldo Paya Way Designation",
+        "billNumber": "S. 218",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-01-23",
+        "url": "https://www.congress.gov/bill/119th-congress/s/218",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 3,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-01-23",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "s614-hr1738",
+        "bill": "Alexi Navalny Way Designation",
+        "billNumber": "S. 614",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs. (text: CR S1010-1011)",
+        "latestActionDate": "2025-02-18",
+        "url": "https://www.congress.gov/bill/119th-congress/s/614",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "9 cosponsors",
+        "cosponsorsCount": 9,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-02-18",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr1774",
+        "bill": "Black Lives Matter Plaza Removal",
+        "billNumber": "H.R. 1774",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the Subcommittee on Highways and Transit.",
+        "latestActionDate": "2025-03-03",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/1774",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-03-03",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr2522",
+        "bill": "Jimmy Lai Way Designation",
+        "billNumber": "H.R. 2522",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committee on Foreign Affairs, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "latestActionDate": "2025-03-31",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/2522",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 3,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-03-31",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5242-perry-cameras",
+        "bill": "Traffic Camera Repeal Amendment",
+        "billNumber": "H.R. 5242",
+        "status": "UNKNOWN",
+        "latestAction": "Placed on the Union Calendar, Calendar No. 293.",
+        "latestActionDate": "2025-10-14",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5242",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "Committee markup held",
+        "cosponsorsCount": 1,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-10",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5242-perry-rightturn",
+        "bill": "Right Turn Prohibition Repeal Amendment",
+        "billNumber": "H.R. 5242",
+        "status": "UNKNOWN",
+        "latestAction": "Placed on the Union Calendar, Calendar No. 293.",
+        "latestActionDate": "2025-10-14",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5242",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "Committee markup held",
+        "cosponsorsCount": 1,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-10",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5525",
+        "bill": "Stop DC CAMERA Act",
+        "billNumber": "H.R. 5525",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-09-19",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5525",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-19",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "s2998",
+        "bill": "Charlie Kirk Patriot Way Designation",
+        "billNumber": "S. 2998",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-10-09",
+        "url": "https://www.congress.gov/bill/119th-congress/s/2998",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "5 cosponsors",
+        "cosponsorsCount": 5,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-10-09",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr69",
+        "bill": "Freedom to Petition the Government Act",
+        "billNumber": "H.R. 69",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-01-03",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/69",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 2,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-01-03",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "s204-hr650",
+        "bill": "Families' Rights and Responsibilities Act",
+        "billNumber": "S. 204",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on the Judiciary.",
+        "latestActionDate": "2025-01-23",
+        "url": "https://www.congress.gov/bill/119th-congress/s/204",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "5 cosponsors",
+        "cosponsorsCount": 5,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-01-23",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "sconres7-lee",
+        "bill": "Legislative Authority Budget Amendment",
+        "billNumber": "S.Con.Res. 7",
+        "status": "UNKNOWN",
+        "latestAction": "Resolution agreed to in Senate with amendments by Yea-Nay Vote. 52 - 48. Record Vote Number: 87. (text: CR S1119-1125)",
+        "latestActionDate": "2025-02-21",
+        "url": "https://www.congress.gov/bill/119th-congress/sconres/7",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "Floor vote occurred",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-02-13",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr1968-budget",
+        "bill": "Full-Year Continuing Appropriations 2025 - Budget Cut",
+        "billNumber": "H.R. 1968",
+        "status": "ENACTED",
+        "latestAction": "Became Public Law No: 119-4.",
+        "latestActionDate": "2025-03-15",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/1968",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "Floor vote occurred",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": true,
+        "committees": [],
+        "introducedDate": "2025-03-10",
+        "passageInfo": {
+          "hasPassedHouse": true,
+          "hasPassedSenate": true,
+          "houseVote": {
+            "date": "2025-03-11",
+            "yeas": 217,
+            "nays": 213,
+            "byParty": {
+              "republican": {
+                "yeas": 216,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 1,
+                "nays": 212
+              }
+            }
+          },
+          "senateVote": null,
+          "stage": "passed-both"
+        }
+      },
+      {
+        "id": "s900",
+        "bill": "Make American Flags in America Act of 2025",
+        "billNumber": "S. 900",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-03-06",
+        "url": "https://www.congress.gov/bill/119th-congress/s/900",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "7 cosponsors",
+        "cosponsorsCount": 7,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-03-06",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr3766",
+        "bill": "Agency Interpretation Deference Prohibition",
+        "billNumber": "H.R. 3766",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Ordered to be Reported (Amended) by the Yeas and Nays: 24 - 19.",
+        "latestActionDate": "2025-12-02",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/3766",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "Committee markup held",
+        "cosponsorsCount": 1,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-06-05",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "s1991-hr4311",
+        "bill": "Delivering On Government Efficiency in Spending Act",
+        "billNumber": "S. 1991",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Committee on Small Business and Entrepreneurship. Hearings held.",
+        "latestActionDate": "2025-12-10",
+        "url": "https://www.congress.gov/bill/119th-congress/s/1991",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "Committee hearing held",
+        "cosponsorsCount": 15,
+        "hasCommitteeHearing": true,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-06-09",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr4519-s2565",
+        "bill": "District of Columbia Sister City Integrity Act",
+        "billNumber": "H.R. 4519",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-07-17",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/4519",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "11 cosponsors",
+        "cosponsorsCount": 11,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-07-17",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "s2404-hr4670",
+        "bill": "Emergency Bill Disapproval Resolution Act",
+        "billNumber": "S. 2404",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "latestActionDate": "2025-07-23",
+        "url": "https://www.congress.gov/bill/119th-congress/s/2404",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 0,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-07-23",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr4788",
+        "bill": "Congressional Concealed Carry in D.C.",
+        "billNumber": "H.R. 4788",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-07-29",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/4788",
+        "priority": "high",
+        "prioritySource": "legislative",
+        "priorityReason": "36 cosponsors",
+        "cosponsorsCount": 36,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-07-29",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5183",
+        "bill": "District of Columbia Home Rule Improvement Act",
+        "billNumber": "H.R. 5183",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Ordered to be Reported (Amended) by the Yeas and Nays: 22 - 18.",
+        "latestActionDate": "2025-09-10",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5183",
+        "priority": "high",
+        "prioritySource": "freedc",
+        "priorityReason": "Listed on FreeDC",
+        "cosponsorsCount": 3,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-08",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr5474",
+        "bill": "No DEI in DC Act",
+        "billNumber": "H.R. 5474",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-09-18",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/5474",
+        "priority": "medium",
+        "prioritySource": "legislative",
+        "priorityReason": "In committee",
+        "cosponsorsCount": 3,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-09-18",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      },
+      {
+        "id": "hr6372-s3327",
+        "bill": "D.C. Shield Law Repeal Act",
+        "billNumber": "H.R. 6372",
+        "status": "IN_COMMITTEE",
+        "latestAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "latestActionDate": "2025-12-03",
+        "url": "https://www.congress.gov/bill/119th-congress/hr/6372",
+        "priority": "high",
+        "prioritySource": "manual",
+        "priorityReason": "Manually flagged",
+        "cosponsorsCount": 26,
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "committees": [],
+        "introducedDate": "2025-12-03",
+        "passageInfo": {
+          "hasPassedHouse": false,
+          "hasPassedSenate": false,
+          "houseVote": null,
+          "senateVote": null,
+          "stage": null
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "timestamp": "2026-01-12T14:30:41.528Z",
     "changes": [
       {
         "id": "s440-hr1089",
