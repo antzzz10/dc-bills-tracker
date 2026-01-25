@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DC Elections 2026 - Candidates Data Structure",
+  "description": "Tracks DC local candidates' positions and advocacy on DC statehood",
+
+  "primaryDate": "2026-06-16",
+  "generalDate": "2026-11-03",
+  "lastUpdated": "2026-01-20",
+
+  "races": [
+    {
+      "id": "mayor-2026",
+      "office": "Mayor",
+      "type": "citywide",
+      "incumbent": null,
+      "incumbentRetiring": true,
+      "seatsAvailable": 1,
+      "candidates": [
+        {
+          "name": "Janeese Lewis George",
+          "currentPosition": "Ward 4 Councilmember",
+          "party": "D",
+          "incumbent": false,
+          "campaignWebsite": "https://...",
+          "twitter": "@Janeese4DC",
+          "email": "campaign@...",
+          "donationLink": "https://secure.actblue.com/...",
+
+          "statehoodPosition": {
+            "level": "champion",
+            "pledgeSigned": false,
+            "pledgeDate": null,
+            "pledgeSource": null,
+            "questionnaireCompleted": false,
+            "questionnaireDate": null,
+            "lastChecked": "2026-01-20"
+          },
+
+          "advocacy": {
+            "summary": "Position unknown - questionnaire pending",
+            "actions": [],
+            "testimonies": [],
+            "statements": [],
+            "voting": []
+          },
+
+          "questionnaire": {
+            "submitted": false,
+            "submittedDate": null,
+            "responses": {}
+          },
+
+          "notes": "Progressive councilmember, $1M war chest, announced Dec 2025",
+          "lastUpdated": "2026-01-20"
+        }
+      ]
+    }
+  ],
+
+  "positionLevels": {
+    "champion": {
+      "label": "Statehood Champion",
+      "icon": "🏆",
+      "color": "#28a745",
+      "criteria": "Signed pledge OR 3+ documented advocacy actions. Makes statehood a top priority.",
+      "displayOrder": 1
+    },
+    "advocate": {
+      "label": "Advocate",
+      "icon": "✅",
+      "color": "#17a2b8",
+      "criteria": "Public support + at least 1 documented action",
+      "displayOrder": 2
+    },
+    "supporter": {
+      "label": "Supporter",
+      "icon": "⚠️",
+      "color": "#ffc107",
+      "criteria": "Stated support but minimal/no advocacy",
+      "displayOrder": 3
+    },
+    "unknown": {
+      "label": "Position Unknown",
+      "icon": "❓",
+      "color": "#6c757d",
+      "criteria": "No clear public position or questionnaire not completed",
+      "displayOrder": 4
+    },
+    "silent": {
+      "label": "Silent/Avoiding",
+      "icon": "🤐",
+      "color": "#dc3545",
+      "criteria": "Refuses to take position or gives non-answer",
+      "displayOrder": 5
+    },
+    "problematic": {
+      "label": "Problematic",
+      "icon": "❌",
+      "color": "#a00000",
+      "criteria": "Opposes statehood or equivocates on DC's right to self-determination",
+      "displayOrder": 6
+    }
+  },
+
+  "actionTypes": [
+    "testimony",
+    "lobbying",
+    "rally",
+    "legislation",
+    "statement",
+    "organizing",
+    "fundraising",
+    "coalition-building"
+  ]
+}

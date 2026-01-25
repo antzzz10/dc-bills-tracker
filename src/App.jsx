@@ -7,6 +7,7 @@ import SearchBar from './components/SearchBar'
 import DownloadButton from './components/DownloadButton'
 import UpdateBanner from './components/UpdateBanner'
 import PassedBillsSection from './components/PassedBillsSection'
+import RecentActivity from './components/RecentActivity'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
 
 function App() {
@@ -18,23 +19,13 @@ function App() {
     const allBills = billsData.bills || []
     const allRiders = billsData.riders || []
 
-    // Separate passed bills from pending bills
-    const passedBills = allBills.filter(bill =>
-      bill.status?.stage &&
-      (bill.status.stage.startsWith('passed-') || bill.status.stage === 'enacted')
-    )
-    const pendingBills = allBills.filter(bill =>
-      !bill.status?.stage ||
-      (!bill.status.stage.startsWith('passed-') && bill.status.stage !== 'enacted')
-    )
-
-    // Filter bills
-    let filtered = pendingBills
+    // Start with all bills and apply filters
+    let filteredAllBills = allBills
     let filteredRiders = allRiders
 
     // Filter by selected categories
     if (selectedCategories.length > 0) {
-      filtered = filtered.filter(bill =>
+      filteredAllBills = filteredAllBills.filter(bill =>
         selectedCategories.includes(bill.category)
       )
       filteredRiders = filteredRiders.filter(rider =>
@@ -51,9 +42,19 @@ function App() {
         item.sponsors.some(sponsor => sponsor.toLowerCase().includes(term)) ||
         item.billNumbers.some(num => num.toLowerCase().includes(term))
 
-      filtered = filtered.filter(searchFilter)
+      filteredAllBills = filteredAllBills.filter(searchFilter)
       filteredRiders = filteredRiders.filter(searchFilter)
     }
+
+    // NOW separate passed bills from pending bills (after filters applied)
+    const passedBills = filteredAllBills.filter(bill =>
+      bill.status?.stage &&
+      (bill.status.stage.startsWith('passed-') || bill.status.stage === 'enacted')
+    )
+    const filtered = filteredAllBills.filter(bill =>
+      !bill.status?.stage ||
+      (!bill.status.stage.startsWith('passed-') && bill.status.stage !== 'enacted')
+    )
 
     // Separate high priority from other bills (only pending bills)
     const highPriorityBills = filtered.filter(bill => bill.priority === 'high')
@@ -135,6 +136,14 @@ function App() {
           selectedCategories={selectedCategories}
           toggleCategory={toggleCategory}
         />
+
+        {/* Recent Activity - Auto-generated from bill changes */}
+        {!searchTerm && selectedCategories.length === 0 && (
+          <RecentActivity
+            allBills={billsData.bills}
+            allRiders={billsData.riders}
+          />
+        )}
 
         <div className="results-header">
           <h2>
@@ -279,7 +288,7 @@ function App() {
           </div>
 
           <p className="footer-copyright">
-            Copyright © 2025 Represent DC
+            Copyright © 2026 Represent DC
           </p>
         </div>
       </footer>

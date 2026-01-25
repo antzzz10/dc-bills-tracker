@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-23",
+  "lastUpdated": "2026-01-20",
   "categories": [
     {
       "id": "abolishing",
@@ -85,6 +85,33 @@
         "cosponsors": 0,
         "committees": []
       }
+    },
+    {
+      "id": "hr7068",
+      "billNumbers": [
+        "H.R. 7068"
+      ],
+      "title": "DC Government Employment and Contracting Restrictions",
+      "sponsors": [
+        "Rep Nancy Mace"
+      ],
+      "description": "Would prohibit the District of Columbia government from appointing individuals convicted of crimes of violence or dangerous crimes as employees of the government or from entering into contracts with vendors who employ such individuals. Overrides DC's local hiring and contracting policies, including 'ban the box' initiatives designed to provide employment opportunities for formerly incarcerated residents.",
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": "Introduced",
+        "lastActionDate": "2026-01-20",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      },
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/7068"
     },
     {
       "id": "s440-hr1089",
@@ -1292,22 +1319,24 @@
       "sponsors": [
         "Rep Christopher Smith"
       ],
-      "description": "To designate the area between the intersections of 18th Street Northwest and Church Street Northwest, and 18th Street Northwest and P Street Northwest as \"Jimmy Lai Way\"",
-      "category": "transportation",
+      "description": "Would designate the area between 18th Street Northwest and Church Street Northwest as \"Jimmy Lai Way\" to honor the imprisoned Hong Kong democracy activist. Also being advanced as Amendment 86 to H.R. 5491, scheduled for House Foreign Affairs Committee markup. While honoring Jimmy Lai's fight for democracy is laudable, this bill bypasses DC's local street naming process. Congress should work with DC Council to support this designation rather than imposing it unilaterally—the same democratic principles Jimmy Lai fights for should apply to DC residents.",
+      "category": "civic-spaces",
       "position": "oppose",
       "type": "bill",
-      "priority": "low",
-      "prioritySource": "manual",
+      "priority": "medium",
+      "prioritySource": "legislative",
       "status": {
         "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "lastAction": "Amendment filed to H.R. 5491",
+        "lastActionDate": "2026-01-20",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
         "cosponsors": 0,
-        "committees": []
-      }
+        "committees": ["House Committee on Foreign Affairs"]
+      },
+      "relatedBills": ["H.R. 5491 (Amendment 86)"],
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/2522"
     },
     {
       "id": "hr5242-perry-cameras",
@@ -1367,25 +1396,27 @@
         "H.R. 5525"
       ],
       "title": "Stop DC CAMERA Act",
+      "fullTitle": "Stop DC Capital Authoritarian Motorvehicle Enforcement and Restoration of Autonomy Act",
       "sponsors": [
         "Rep Scott Perry"
       ],
-      "description": "Would repeal the automated traffic enforcement law and the law prohibiting right turns on red",
+      "description": "Would eliminate all 547 of D.C.'s automated traffic enforcement cameras (speed, red light, stop sign) and repeal laws banning right turns on red. The cameras currently generate over $200M annually in revenue and are used to enforce safety laws under the Vision Zero initiative. DOT is also proposing to ban cameras via upcoming surface transportation bill.",
       "category": "transportation",
       "position": "oppose",
       "type": "bill",
-      "priority": "low",
-      "prioritySource": "manual",
+      "priority": "high",
+      "prioritySource": "legislative",
       "status": {
-        "stage": null,
-        "lastAction": null,
-        "lastActionDate": null,
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2025-09-19",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 0,
-        "committees": []
-      }
+        "committees": ["Committee on Oversight and Government Reform"]
+      },
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5525"
     },
     {
       "id": "s2998",
