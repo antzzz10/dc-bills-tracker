@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-01-20",
+  "lastUpdated": "2026-01-25",
   "categories": [
     {
       "id": "abolishing",
@@ -1333,9 +1333,13 @@
         "hasCommitteeMarkup": true,
         "hasFloorVote": false,
         "cosponsors": 0,
-        "committees": ["House Committee on Foreign Affairs"]
+        "committees": [
+          "House Committee on Foreign Affairs"
+        ]
       },
-      "relatedBills": ["H.R. 5491 (Amendment 86)"],
+      "relatedBills": [
+        "H.R. 5491 (Amendment 86)"
+      ],
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/2522"
     },
     {
@@ -1414,7 +1418,9 @@
         "hasCommitteeMarkup": false,
         "hasFloorVote": true,
         "cosponsors": 0,
-        "committees": ["Committee on Oversight and Government Reform"]
+        "committees": [
+          "Committee on Oversight and Government Reform"
+        ]
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5525"
     },
