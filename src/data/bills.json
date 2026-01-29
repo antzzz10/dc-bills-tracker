@@ -1816,6 +1816,36 @@
         "cosponsors": 0,
         "committees": []
       }
+    },
+    {
+      "id": "hjres142-sjres102",
+      "billNumbers": [
+        "H.J.Res.142",
+        "S.J.Res.102"
+      ],
+      "title": "Disapproval of D.C. Tax Decoupling from Federal OBBBA Changes",
+      "fullTitle": "Disapproving the action of the District of Columbia Council in approving the D.C. Income and Franchise Tax Conformity and Revision Temporary Amendment Act of 2025",
+      "sponsors": [
+        "Sen Rick Scott"
+      ],
+      "description": "Would overturn the DC Council's decision to decouple its tax code from 13 provisions of the federal One Big Beautiful Bill Act (OBBBA). The DC law protects an estimated $179 million in FY2026 revenue (and $593 million over the financial plan) that would otherwise be lost to automatic federal tax conformity. That revenue funds DC's accelerated Earned Income Tax Credit (now a full 100% local match) and a new $1,000-per-child tax credit for families earning under $75K/$90K. If this disapproval resolution passes, DC would be forced to conform to federal changes it had no vote on — losing local revenue and the tax benefits the Council created for lower-income DC residents.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "manual",
+      "highlight": "floor-vote",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/142",
+      "status": {
+        "stage": null,
+        "lastAction": "Senate HSGAC committee markup scheduled; House floor vote possible next week",
+        "lastActionDate": "2026-01-28",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": ["Senate Homeland Security and Governmental Affairs"]
+      }
     }
   ],
   "riders": [
