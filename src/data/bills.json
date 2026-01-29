@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-01-28",
+  "lastUpdated": "2026-01-29",
   "categories": [
     {
       "id": "abolishing",
@@ -1844,7 +1844,9 @@
         "hasCommitteeMarkup": true,
         "hasFloorVote": false,
         "cosponsors": 0,
-        "committees": ["Senate Homeland Security and Governmental Affairs"]
+        "committees": [
+          "Senate Homeland Security and Governmental Affairs"
+        ]
       }
     }
   ],
