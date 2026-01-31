@@ -6,6 +6,7 @@ import CategoryGroup from './components/CategoryGroup'
 import SearchBar from './components/SearchBar'
 import DownloadButton from './components/DownloadButton'
 import UpdateBanner from './components/UpdateBanner'
+import UrgentAlert from './components/UrgentAlert'
 import PassedBillsSection from './components/PassedBillsSection'
 import RecentActivity from './components/RecentActivity'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
@@ -110,6 +111,7 @@ function App() {
 
   return (
     <div className="app">
+      <UrgentAlert />
       <UpdateBanner
         passedBills={passedBills}
         upcomingFloorVotes={filteredBills.filter(b => b.highlight === 'floor-vote')}

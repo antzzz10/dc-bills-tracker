@@ -1,12 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './BillCard.css'
 import billsData from '../data/bills.json'
 import sponsorsData from '../data/sponsors.json'
 import { stateAbbreviations } from '../data/stateAbbreviations'
 
 function BillCard({ bill }) {
-  // Start with all bills collapsed for better scanning
-  const [isExpanded, setIsExpanded] = useState(false)
+  const isTargeted = window.location.hash === `#${bill.id}`
+  const [isExpanded, setIsExpanded] = useState(isTargeted)
+  const cardRef = useRef(null)
+
+  useEffect(() => {
+    if (isTargeted && cardRef.current) {
+      setTimeout(() => {
+        cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }, 300)
+    }
+  }, [isTargeted])
   const category = billsData.categories.find(cat => cat.id === bill.category)
 
   // Look up sponsor info from sponsors.json
@@ -47,7 +56,9 @@ function BillCard({ bill }) {
 
   return (
     <div
-      className={`bill-card ${isExpanded ? 'expanded' : 'collapsed'} ${priorityClass} ${typeClass} ${bill.highlight ? 'highlighted-' + bill.highlight : ''}`}
+      ref={cardRef}
+      id={bill.id}
+      className={`bill-card ${isExpanded ? 'expanded' : 'collapsed'} ${priorityClass} ${typeClass} ${bill.highlight ? 'highlighted-' + bill.highlight : ''} ${isTargeted ? 'deep-linked' : ''}`}
       data-category={bill.category}
       onClick={() => setIsExpanded(!isExpanded)}
     >

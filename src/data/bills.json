@@ -1828,18 +1828,19 @@
       "sponsors": [
         "Sen Rick Scott"
       ],
-      "description": "Would overturn the DC Council's decision to decouple its tax code from 13 provisions of the federal One Big Beautiful Bill Act (OBBBA). The DC law protects an estimated $179 million in FY2026 revenue (and $593 million over the financial plan) that would otherwise be lost to automatic federal tax conformity. That revenue funds DC's accelerated Earned Income Tax Credit (now a full 100% local match) and a new $1,000-per-child tax credit for families earning under $75K/$90K. If this disapproval resolution passes, DC would be forced to conform to federal changes it had no vote on — losing local revenue and the tax benefits the Council created for lower-income DC residents.",
+      "description": "Would overturn the DC Council's November 2025 decision to unlink its tax code from costly federal tax cuts in the One Big Beautiful Bill Act (OBBBA), preventing the loss of $658 million in local revenue over five years. The OBBBA tax cuts overwhelmingly benefit DC households with incomes over $1.3 million. DC chose not to replicate those cuts locally and instead invested in expanding the Earned Income Tax Credit (accelerated to a full 100% local match) and a new $1,000-per-child tax credit for families earning under $75K/$90K — reaching 78,000 children and projected to reduce DC child poverty by 20%. Ten other states have taken similar decoupling action. If this disapproval resolution passes, DC loses local revenue, proven anti-poverty tax credits, and risks another credit downgrade.",
       "category": "other",
       "position": "oppose",
       "type": "bill",
       "priority": "high",
       "prioritySource": "manual",
       "highlight": "floor-vote",
+      "manualOverride": true,
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/142",
       "status": {
         "stage": null,
-        "lastAction": "Senate HSGAC committee markup scheduled; House floor vote possible next week",
-        "lastActionDate": "2026-01-28",
+        "lastAction": "House floor vote expected Tuesday Feb 3; Senate passed FY26 DC Appropriations bill same week",
+        "lastActionDate": "2026-01-31",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": true,
         "hasFloorVote": false,
@@ -2071,6 +2072,33 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026"
+    },
+    {
+      "id": "hr7148-sa4253-cameras",
+      "billNumbers": [
+        "H.R. 7148",
+        "S.Amdt. 4253"
+      ],
+      "title": "Senate D.C. Appropriations - Cruz Traffic Camera Amendment",
+      "sponsors": [
+        "Sen Ted Cruz"
+      ],
+      "description": "Senate floor amendment to the D.C. Appropriations bill that would prohibit D.C. from using funds to carry out its automated traffic enforcement law. Senate counterpart to the House rider in H.R. 5166.",
+      "category": "transportation",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2026",
+      "status": {
+        "stage": null,
+        "lastAction": "Amendment filed on Senate floor",
+        "lastActionDate": "2026-01-29",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0
+      }
     },
     {
       "id": "hr5166-slapp",

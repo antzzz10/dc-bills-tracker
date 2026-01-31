@@ -394,9 +394,22 @@ function calculatePriority(billStatus, billData) {
   return { priority: 'low', source: 'legislative', reason: 'No significant activity' };
 }
 
+// Re-read bills.json from disk to pick up any manual edits made since startup
+function reloadBillsData() {
+  const freshData = JSON.parse(readFileSync(billsPath, 'utf-8'));
+  // Update in-memory data with fresh copy
+  billsData.bills = freshData.bills;
+  billsData.riders = freshData.riders;
+  billsData.categories = freshData.categories;
+  billsData.lastUpdated = freshData.lastUpdated;
+}
+
 // Update bills.json with passage information
 function updateBillsJson(billId, passageInfo, status) {
   try {
+    // Re-read from disk before writing to avoid clobbering manual edits
+    reloadBillsData();
+
     // Find and update the bill
     const billIndex = billsData.bills.findIndex(b => b.id === billId);
     if (billIndex === -1) {
@@ -405,6 +418,13 @@ function updateBillsJson(billId, passageInfo, status) {
     }
 
     const bill = billsData.bills[billIndex];
+
+    // Skip bills with manualOverride flag — preserve all manual edits
+    if (bill.manualOverride) {
+      console.log(`  🔒 Skipping ${billId}: manual override is set (preserving manual edits)`);
+      return false;
+    }
+
     let updated = false;
 
     // Update status stage
@@ -579,6 +599,9 @@ async function monitorBills() {
   }
 
   console.log('\n✅ Monitoring complete!\n');
+
+  // Re-read from disk before final write to preserve any manual edits
+  reloadBillsData();
 
   // Always update lastUpdated timestamp to show when monitoring last ran (EST timezone for DC)
   const estDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
