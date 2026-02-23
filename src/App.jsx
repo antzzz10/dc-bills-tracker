@@ -287,6 +287,9 @@ function App() {
                 Send Feedback →
               </a>
             </p>
+            <p className="footer-feedback">
+              <a href="https://www.representdc.org">Main Site</a> · <a href="https://candidates.representdc.org">Candidates</a>
+            </p>
           </div>
 
           <p className="footer-copyright">
