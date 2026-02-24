@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-02-22",
-  "totalBills": 84,
-  "pendingBills": 70,
-  "passedBills": 14,
+  "lastUpdated": "2026-02-24",
+  "totalBills": 76,
+  "pendingBills": 63,
+  "passedBills": 13,
   "breakdown": {
-    "bills": 66,
+    "bills": 58,
     "riders": 18,
-    "supportBills": 1
+    "supportBills": 0
   },
   "passed": [
     {
@@ -86,12 +86,6 @@
       "number": "H.R. 1968",
       "title": "Full-Year Continuing Appropriations 2025 - Budget Cut",
       "stage": "passed-both"
-    },
-    {
-      "id": "hjres142-sjres102",
-      "number": "H.J.Res.142",
-      "title": "Disapproval of D.C. Tax Decoupling from Federal OBBBA Changes",
-      "stage": "enacted"
     }
   ]
 }
