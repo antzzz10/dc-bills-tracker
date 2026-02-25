@@ -11,6 +11,9 @@ import PassedBillsSection from './components/PassedBillsSection'
 import RecentActivity from './components/RecentActivity'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
 
+// Set to true when UrgentAlert is active to suppress the auto-generated UpdateBanner
+const HAS_URGENT_ALERT = true
+
 function App() {
   const [selectedCategories, setSelectedCategories] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -112,11 +115,13 @@ function App() {
   return (
     <div className="app">
       <UrgentAlert />
-      <UpdateBanner
-        passedBills={passedBills}
-        upcomingFloorVotes={filteredBills.filter(b => b.highlight === 'floor-vote')}
-        allBills={billsData.bills}
-      />
+      {!HAS_URGENT_ALERT && (
+        <UpdateBanner
+          passedBills={passedBills}
+          upcomingFloorVotes={filteredBills.filter(b => b.highlight === 'floor-vote')}
+          allBills={billsData.bills}
+        />
+      )}
       <header className="header">
         <h1>Anti-DC Bills Tracker</h1>
         <p className="subtitle">

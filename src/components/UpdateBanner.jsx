@@ -64,7 +64,7 @@ function UpdateBanner({ passedBills = [], upcomingFloorVotes = [], allBills = []
     // Prioritize showing passed bills
     if (recentlyPassed.length > 0) {
       const mostRecent = recentlyPassed[0]
-      const dateString = mostRecent.passage.house?.date || mostRecent.passage.senate?.date
+      const dateString = mostRecent.passage.senate?.date || mostRecent.passage.house?.date
       // Parse as local date to avoid timezone issues (YYYY-MM-DD format)
       const [year, month, day] = dateString.split('-').map(Number)
       const passageDate = new Date(year, month - 1, day) // month is 0-indexed
@@ -74,14 +74,24 @@ function UpdateBanner({ passedBills = [], upcomingFloorVotes = [], allBills = []
         year: 'numeric'
       })
 
-      const chamber = mostRecent.passage.house ? 'House' : 'Senate'
-      const vote = mostRecent.passage.house?.vote || mostRecent.passage.senate?.vote
+      // Determine the most recent chamber passage
+      const passedBoth = mostRecent.passage.house && mostRecent.passage.senate
+      const chamber = passedBoth ? 'Senate' : (mostRecent.passage.house ? 'House' : 'Senate')
+      const vote = passedBoth
+        ? mostRecent.passage.senate.vote
+        : (mostRecent.passage.house?.vote || mostRecent.passage.senate?.vote)
 
       if (recentlyPassed.length === 1) {
+        const isEnacted = mostRecent.status?.stage === 'enacted'
+        const nextStep = isEnacted
+          ? 'Signed into law. DC Council disputes its validity.'
+          : passedBoth
+            ? 'Awaiting presidential signature.'
+            : `Now headed to ${chamber === 'House' ? 'Senate' : 'President'}.`
         return {
           icon: '🚨',
           date: formattedDate,
-          message: `${mostRecent.billNumbers[0]} passed the ${chamber} (${vote.yeas}-${vote.nays}). Now headed to ${chamber === 'House' ? 'Senate' : 'President'}.`
+          message: `${mostRecent.billNumbers[0]} passed the ${chamber} (${vote.yeas}-${vote.nays}). ${nextStep}`
         }
       } else {
         return {
