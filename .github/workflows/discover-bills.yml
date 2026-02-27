@@ -1,0 +1,99 @@
+name: Discover New DC Bills
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 1'  # Weekly on Mondays at noon UTC
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run bill discovery script
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
+        run: node scripts/discover-bills.js --full --verbose > discovery-report.txt 2>&1
+
+      - name: Show discovery report
+        run: cat discovery-report.txt
+
+      - name: Check for new bills
+        id: check_changes
+        run: |
+          if git diff --quiet src/data/bills.json; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No new bills discovered"
+          else
+            NEW_COUNT=$(git diff src/data/bills.json | grep -c '"autoDiscovered": true' || echo "0")
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "new_count=$NEW_COUNT" >> $GITHUB_OUTPUT
+            echo "Discovered $NEW_COUNT new bills"
+          fi
+
+      - name: Upload discovery report
+        uses: actions/upload-artifact@v4
+        with:
+          name: discovery-report-${{ github.run_id }}
+          path: discovery-report.txt
+          retention-days: 90
+
+      - name: Commit and push new bills
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config --global user.name 'DC Bills Discovery'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add src/data/bills.json .discover-last-run.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-discover new DC bills - $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          fi
+
+      - name: Rebuild and deploy site
+        if: steps.check_changes.outputs.has_changes == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Rebuilding and deploying site..."
+          npm run build
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+          npm run deploy
+          echo "✅ Deployment complete"
+
+      - name: Send email notification
+        if: steps.check_changes.outputs.has_changes == 'true'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🆕 New DC Bills Discovered - ${{ steps.check_changes.outputs.new_count }} bills"
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: DC Bills Discovery <noreply@representdc.org>
+          body: |
+            The weekly bill discovery scan found new DC-related bills.
+
+            ${{ steps.check_changes.outputs.new_count }} new bills were auto-added to the tracker.
+
+            ⚠️ These bills are marked as provisional and need manual review.
+            Please check bills.json for entries with "autoDiscovered": true.
+
+            Full report: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          attachments: discovery-report.txt
+          ignore_cert: false
+          convert_markdown: true
