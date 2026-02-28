@@ -2168,6 +2168,142 @@
         ]
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/3290"
+    },
+    {
+      "id": "s2546",
+      "billNumbers": [
+        "S. 2546"
+      ],
+      "title": "A bill to provide for an extension of the legislative authority of the National Emergency Medical Services Memorial Foundation to establish a commemorative work in the District of Columbia and its environs.",
+      "sponsors": [
+        "Sen. Coons, Christopher A. [D-DE]"
+      ],
+      "description": "Auto-discovered. This bill extends the authority of the National Emergency Medical Services Memorial Foundation to establish a commemorative work in the District of Columbia that honors&nbsp;the commitment and service of emergency medical services.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-02-28",
+      "relevanceScore": 60,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/2546",
+      "status": {
+        "stage": null,
+        "lastAction": "Committee on Energy and Natural Resources. Ordered to be reported without amendment favorably.",
+        "lastActionDate": "2025-12-17",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 6,
+        "committees": [
+          "Energy and Natural Resources Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "s1353",
+      "billNumbers": [
+        "S. 1353"
+      ],
+      "title": "A bill to extend the authority for modifications to the Second Division Memorial in the District of Columbia.",
+      "sponsors": [
+        "Sen. Murkowski, Lisa [R-AK]"
+      ],
+      "description": "Auto-discovered. This bill extends through September 30, 2032, the authority to modify the Second Division Memorial located in President’s Park in the District of Columbia. Specifically, it extends the authority of the Second Indianhead Division Association, Inc., Scholarship and Memorials Foundation to place additi...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-02-28",
+      "relevanceScore": 60,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/1353",
+      "status": {
+        "stage": null,
+        "lastAction": "Committee on Energy and Natural Resources. Ordered to be reported with an amendment favorably.",
+        "lastActionDate": "2026-02-04",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 1,
+        "committees": [
+          "Energy and Natural Resources Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hjres115",
+      "billNumbers": [
+        "H.J.Res. 115"
+      ],
+      "title": "Terminating the emergency determined by the President on August 11, 2025, in the Executive Order titled \"Declaring a crime emergency in the District of Columbia\".",
+      "sponsors": [
+        "Rep. Raskin, Jamie [D-MD-8]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-02-28",
+      "relevanceScore": 45,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/115",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-08-15",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 103,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "sjres75",
+      "billNumbers": [
+        "S.J.Res. 75"
+      ],
+      "title": "A joint resolution terminating the emergency determined by the President on August 11, 2025, in the Executive Order titled \"Declaring a crime emergency in the District of Columbia\".",
+      "sponsors": [
+        "Sen. Van Hollen, Chris [D-MD]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-02-28",
+      "relevanceScore": 45,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-joint-resolution/75",
+      "status": {
+        "stage": null,
+        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "lastActionDate": "2025-09-02",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 14,
+        "committees": [
+          "Homeland Security and Governmental Affairs Committee"
+        ]
+      },
+      "attackType": "unknown"
     }
   ],
   "riders": [
