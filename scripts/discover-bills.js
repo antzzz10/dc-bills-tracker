@@ -405,13 +405,24 @@ async function fetchCandidateDetails(billType, number) {
       log(`    ⚠️  Could not fetch cosponsors`);
     }
 
+    // Fetch committees from sub-endpoint (main bill endpoint returns a reference object, not an array)
+    let committees = [];
+    try {
+      const committeesUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}/committees?api_key=${CONGRESS_API_KEY}`;
+      const committeesResponse = await rateLimitedFetch(committeesUrl);
+      const committeesData = await committeesResponse.json();
+      committees = (committeesData.committees || []).map(c => c.name).filter(Boolean);
+    } catch {
+      log(`    ⚠️  Could not fetch committees`);
+    }
+
     return {
       title: bill.title || '',
       sponsors: bill.sponsors?.map(s => s.fullName) || [],
       latestAction: bill.latestAction?.text || '',
       latestActionDate: bill.latestAction?.actionDate || null,
       introducedDate: bill.introducedDate || null,
-      committees: bill.committees?.map(c => c.name) || [],
+      committees,
       subjects,
       summary,
       cosponsorsCount,
