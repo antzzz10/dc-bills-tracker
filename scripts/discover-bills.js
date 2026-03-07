@@ -29,11 +29,11 @@ const VERBOSE = args.includes('--verbose');
 const billsPath = join(__dirname, '../src/data/bills.json');
 const lastRunPath = join(__dirname, '../.discover-last-run.json');
 
-// DC-relevant committees
+// DC-relevant committees (chamber required for correct API URL format)
 const DC_COMMITTEES = [
-  { code: 'hsgo10', name: 'House Oversight - DC Subcommittee' },
-  { code: 'hsgo00', name: 'House Oversight (parent)' },
-  { code: 'ssga00', name: 'Senate HSGAC' }
+  { code: 'hsgo10', chamber: 'house', name: 'House Oversight - DC Subcommittee' },
+  { code: 'hsgo00', chamber: 'house', name: 'House Oversight (parent)' },
+  { code: 'ssga00', chamber: 'senate', name: 'Senate HSGAC' }
 ];
 
 // Bill types to scan
@@ -186,7 +186,7 @@ async function discoverFromCommittees() {
     log(`  Checking ${committee.name} (${committee.code})...`);
 
     try {
-      const url = `${API_BASE_URL}/committee/${committee.code}/bills?api_key=${CONGRESS_API_KEY}&limit=250`;
+      const url = `${API_BASE_URL}/committee/${CONGRESS_NUMBER}/${committee.chamber}/${committee.code}/bills?api_key=${CONGRESS_API_KEY}&limit=250`;
       const response = await rateLimitedFetch(url);
       const data = await response.json();
       const bills = data.bills || [];
@@ -486,10 +486,29 @@ function scoreRelevance(candidate, details) {
     reasons.push('Mentions "home rule" (+15)');
   }
 
-  // Negative signals
+  // Negative signals - generic exclusions
   if (DC_NEGATIVE_PATTERNS.some(p => p.test(title) || p.test(summary))) {
     score -= 30;
     reasons.push('Negative signal: likely not DC-targeted (-30)');
+  }
+
+  // Negative signals - bills that mention DC only as a geographic location
+  // (memorials, monuments, federal facilities, commemorative works)
+  if (/memorial|commemorative\s+work|monument|mural|statue|plaque/i.test(title)) {
+    score -= 40;
+    reasons.push('Negative signal: DC-located memorial/monument, not governance-related (-40)');
+  }
+
+  // Negative signals - bills that help or restore DC autonomy (pro-DC, not anti-DC)
+  if (/terminating\s+the\s+emergency|end\s+the\s+emergency|repeal.*emergency/i.test(title)) {
+    score -= 50;
+    reasons.push('Negative signal: pro-DC bill terminating federal emergency (-50)');
+  }
+
+  // Negative signals - forestry, wildlife, federal lands that incidentally cover DC
+  if (/forestry|wildlife\s+restoration|sport\s+fish|McIntire|Pittman.Robertson/i.test(title)) {
+    score -= 40;
+    reasons.push('Negative signal: federal lands/wildlife bill with incidental DC mention (-40)');
   }
 
   // Bonus: found by multiple discovery channels
