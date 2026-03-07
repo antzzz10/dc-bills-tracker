@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-06",
+  "lastUpdated": "2026-03-07",
   "categories": [
     {
       "id": "abolishing",
@@ -2168,6 +2168,40 @@
         ]
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/3290"
+    },
+    {
+      "id": "hr5093",
+      "billNumbers": [
+        "H.R. 5093"
+      ],
+      "title": "District of Columbia National Guard Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-03-07",
+      "relevanceScore": 60,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5093",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-09-02",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 6,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
     }
   ],
   "riders": [
