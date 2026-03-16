@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-15",
+  "lastUpdated": "2026-03-16",
   "categories": [
     {
       "id": "abolishing",
@@ -2168,6 +2168,78 @@
         ]
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/3290"
+    },
+    {
+      "id": "hr51",
+      "billNumbers": [
+        "H.R. 51"
+      ],
+      "title": "Washington, D.C. Admission Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC]"
+      ],
+      "description": "Auto-discovered. Washington, D.C. Admission ActThis bill provides for the establishment of the State of Washington, Douglass Commonwealth, and its admission into the United States.The state is composed of most of the territory of the District of Columbia (DC), excluding a specified area that encompasses the U.S. Cap...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-03-16",
+      "relevanceScore": 80,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/51",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committees on Rules, Armed Services, the Judiciary, and Energy and Commerce, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "lastActionDate": "2025-01-03",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 206,
+        "committees": [
+          "Energy and Commerce Committee",
+          "Judiciary Committee",
+          "Armed Services Committee",
+          "Rules Committee",
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr7881",
+      "billNumbers": [
+        "H.R. 7881"
+      ],
+      "title": "To amend title 11, District of Columbia Official Code, to provide that grand and petit jurors serving in the Superior Court of the District of Columbia shall receive fees and expenses at the same rates paid to grand and petit jurors appearing in the district courts of the United States.",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-03-16",
+      "relevanceScore": 45,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/7881",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2026-03-09",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
     }
   ],
   "riders": [
