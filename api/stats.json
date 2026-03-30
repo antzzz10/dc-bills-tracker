@@ -1,8 +1,8 @@
 {
   "lastUpdated": "2026-03-30",
   "totalBills": 88,
-  "pendingBills": 74,
-  "passedBills": 14,
+  "pendingBills": 73,
+  "passedBills": 15,
   "breakdown": {
     "bills": 70,
     "riders": 18,
@@ -92,6 +92,12 @@
       "number": "H.J.Res.142",
       "title": "Disapproval of D.C. Tax Decoupling from Federal OBBBA Changes",
       "stage": "enacted"
+    },
+    {
+      "id": "hr5103",
+      "number": "H.R. 5103",
+      "title": "Make the District of Columbia Safe and Beautiful Act of 2025",
+      "stage": "passed-house"
     }
   ]
 }
