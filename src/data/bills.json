@@ -2296,19 +2296,38 @@
       "relevanceScore": 90,
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5103",
       "status": {
-        "stage": null,
-        "lastAction": "Received in the Senate.",
-        "lastActionDate": "2026-03-26",
+        "stage": "passed-house",
+        "lastAction": "Passed House",
+        "lastActionDate": "2026-03-30",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": true,
         "cosponsors": 4,
         "committees": [
           "Oversight and Government Reform Committee",
           "Natural Resources Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "passage": {
+        "house": {
+          "date": "2025-04-10",
+          "vote": {
+            "yeas": 211,
+            "nays": 215,
+            "byParty": {
+              "republican": {
+                "yeas": 0,
+                "nays": 215
+              },
+              "democrat": {
+                "yeas": 211,
+                "nays": 0
+              }
+            }
+          }
+        }
+      }
     }
   ],
   "riders": [
