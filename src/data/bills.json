@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-29",
+  "lastUpdated": "2026-03-30",
   "categories": [
     {
       "id": "abolishing",
@@ -2271,6 +2271,41 @@
         "cosponsors": 1,
         "committees": [
           "Homeland Security and Governmental Affairs Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr5103",
+      "billNumbers": [
+        "H.R. 5103"
+      ],
+      "title": "Make the District of Columbia Safe and Beautiful Act of 2025",
+      "sponsors": [
+        "Rep. McGuire, John J. [R-VA-5]"
+      ],
+      "description": "Auto-discovered. Make the District of Columbia Safe and Beautiful Act&nbsp;This bill establishes a commission in the executive branch to advise on&nbsp;certain criminal and immigration matters in the District of Columbia (DC). It also establishes a federal program to ensure that  commonly visited areas in DC are cle...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-03-30",
+      "relevanceScore": 90,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5103",
+      "status": {
+        "stage": null,
+        "lastAction": "Received in the Senate.",
+        "lastActionDate": "2026-03-26",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 4,
+        "committees": [
+          "Oversight and Government Reform Committee",
+          "Natural Resources Committee"
         ]
       },
       "attackType": "unknown"
