@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-19",
+  "lastUpdated": "2026-04-20",
   "categories": [
     {
       "id": "abolishing",
@@ -2328,6 +2328,75 @@
           }
         }
       }
+    },
+    {
+      "id": "hr8297",
+      "billNumbers": [
+        "H.R. 8297"
+      ],
+      "title": "To restore and protect the Second Amendment rights of residents and United States citizens who visit the District of Columbia by modernizing the District's firearm laws, eliminating prior restraints on acquisition and possession, establishing concealed constitutional carry, prohibiting feature-based firearm bans, and facilitating lawful purchases through Federally licensed dealers in neighboring States, and for other purposes.",
+      "sponsors": [
+        "Rep. Crenshaw, Dan [R-TX-2]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-04-20",
+      "relevanceScore": 45,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/8297",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committee on the Judiciary, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "lastActionDate": "2026-04-15",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Judiciary Committee",
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr1537",
+      "billNumbers": [
+        "H.R. 1537"
+      ],
+      "title": "District of Columbia Superior Court Jury Duty for Seniors Opt Out Act of 2025",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-04-20",
+      "relevanceScore": 70,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1537",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-02-24",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
     }
   ],
   "riders": [
