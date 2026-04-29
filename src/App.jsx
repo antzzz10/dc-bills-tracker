@@ -9,6 +9,7 @@ import UpdateBanner from './components/UpdateBanner'
 import UrgentAlert from './components/UrgentAlert'
 import PassedBillsSection from './components/PassedBillsSection'
 import RecentActivity from './components/RecentActivity'
+import NewsFeed from './components/NewsFeed'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
 
 // Set to true when UrgentAlert is active to suppress the auto-generated UpdateBanner
@@ -151,6 +152,8 @@ function App() {
             allRiders={billsData.riders}
           />
         )}
+
+        {!searchTerm && selectedCategories.length === 0 && <NewsFeed />}
 
         <div className="results-header">
           <h2>

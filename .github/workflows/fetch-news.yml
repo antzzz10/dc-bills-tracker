@@ -1,0 +1,43 @@
+name: Fetch DC News
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6,18 * * *'  # 6 AM and 6 PM UTC daily
+
+jobs:
+  fetch-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch news
+        run: node scripts/fetch-news.js
+
+      - name: Commit and deploy if changed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name 'DC Bills Monitor'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add public/api/news.json
+          if git diff --staged --quiet; then
+            echo "No news changes, skipping deploy"
+          else
+            git commit -m "Update news feed - $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+
+            npm ci
+            npm run build
+
+            git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+            npm run deploy
+            echo "✅ News feed deployed"
+          fi
