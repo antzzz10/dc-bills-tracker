@@ -1,24 +1,29 @@
 import { useState } from 'react'
 import './UrgentAlert.css'
 
+const PUBLISHED_AT = new Date('2026-02-24')
+const ALERT_DURATION_MS = 7 * 24 * 60 * 60 * 1000
+
 function UrgentAlert() {
   const [isExpanded, setIsExpanded] = useState(false)
+
+  if (Date.now() - PUBLISHED_AT.getTime() > ALERT_DURATION_MS) return null
 
   return (
     <div className="urgent-alert" id="urgent">
       <div className="urgent-alert-inner">
         <div className="urgent-alert-badge">UPDATE</div>
         <h2 className="urgent-alert-headline">
-          Trump Signed H.J.Res. 142 — But DC Says It's Already Too Late
+          H.J.Res. 142 Found Invalid — DC AG Says Override Missed Deadline, CFO Directs Normal Tax Filing
         </h2>
         <p className="urgent-alert-subhead">
-          Passed House 215-210 on Feb 4 &middot; Passed Senate 49-47 on Feb 12 &middot; Signed by President Trump &middot; <strong>Validity disputed</strong>
+          Passed House 215-210 on Feb 4 &middot; Passed Senate 49-47 on Feb 12 &middot; Signed by President Trump &middot; <strong>Validity disputed by DC government</strong>
         </p>
         <p className="urgent-alert-summary">
-          DC Council Chairman Phil Mendelson maintains the disapproval resolution is
-          invalid — the Senate voted February 12, one day after the 30-day review
-          window closed. City officials are debating whether to formally challenge it
-          in court, but no action has been filed yet.
+          DC Attorney General Brian Schwalb formally declared the disapproval resolution
+          invalid on February 24 — the Senate voted one day after the 30-day review window
+          closed. The DC CFO is now directing residents to file their 2025 taxes under DC's
+          decoupled rules. <strong>DC tax deadline: April 15.</strong>
         </p>
 
         <button
@@ -74,15 +79,16 @@ function UrgentAlert() {
               </div>
 
               <div className="urgent-alert-why">
-                <h3>What DC is doing — and debating</h3>
+                <h3>Where things stand now</h3>
                 <p>
-                  City officials are quietly discussing next steps, but there is no
-                  consensus. Shadow Senator Ankit Jain says DC has "a very strong legal
-                  case" and that the law should be followed. But some councilmembers are
-                  hesitant: Ward 5's Zachary Parker questioned whether any fight over
-                  this issue is worth the broader risk to home rule, given 15+ other
-                  anti-DC bills moving through Congress. No formal legal action has
-                  been filed yet.
+                  On February 24, DC Attorney General Brian Schwalb formally declared
+                  the override invalid, arguing Congress missed its own deadline. The DC
+                  CFO followed, directing residents to file their 2025 taxes under DC's
+                  decoupled tax rules — meaning DC's expanded EITC, child tax credits,
+                  and other provisions remain in effect for this filing season.
+                  DC's tax deadline is <strong>April 15</strong>.
+                  No court action has been filed by either side, but DC is proceeding
+                  as though the disapproval resolution has no legal force.
                 </p>
               </div>
             </div>
@@ -103,7 +109,11 @@ function UrgentAlert() {
                 </a>
                 {' '}&middot;{' '}
                 <a href="https://51st.news/tax-bill-dc-decouple-repeal-congress/" target="_blank" rel="noopener noreferrer">
-                  51st
+                  The 51st
+                </a>
+                {' '}&middot;{' '}
+                <a href="https://51st.news/time-to-file-dc-taxes-april-15/" target="_blank" rel="noopener noreferrer">
+                  51st (tax filing)
                 </a>
                 {' '}&middot;{' '}
                 <a href="https://news.bloombergtax.com/daily-tax-report/congress-votes-to-repeal-dc-tax-code-decoupling-from-gop-law" target="_blank" rel="noopener noreferrer">
