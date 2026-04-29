@@ -133,20 +133,22 @@ function PassedBillsSection({ passedBills }) {
                         {' - '}
                         <span className="vote-nays">{bill.passage.house.vote.nays}</span>
                       </div>
-                      <div className="vote-breakdown">
-                        <div className="party-vote republican">
-                          <span className="party-label">R:</span>
-                          <span className="party-votes">
-                            {bill.passage.house.vote.byParty.republican.yeas}-{bill.passage.house.vote.byParty.republican.nays}
-                          </span>
+                      {bill.passage.house.vote.byParty && (
+                        <div className="vote-breakdown">
+                          <div className="party-vote republican">
+                            <span className="party-label">R:</span>
+                            <span className="party-votes">
+                              {bill.passage.house.vote.byParty.republican.yeas}-{bill.passage.house.vote.byParty.republican.nays}
+                            </span>
+                          </div>
+                          <div className="party-vote democrat">
+                            <span className="party-label">D:</span>
+                            <span className="party-votes">
+                              {bill.passage.house.vote.byParty.democrat.yeas}-{bill.passage.house.vote.byParty.democrat.nays}
+                            </span>
+                          </div>
                         </div>
-                        <div className="party-vote democrat">
-                          <span className="party-label">D:</span>
-                          <span className="party-votes">
-                            {bill.passage.house.vote.byParty.democrat.yeas}-{bill.passage.house.vote.byParty.democrat.nays}
-                          </span>
-                        </div>
-                      </div>
+                      )}
                     </div>
                   )}
                 </div>
