@@ -1881,6 +1881,7 @@
     },
     {
       "id": "hjres142-sjres102",
+      "disputedByDC": true,
       "billNumbers": [
         "H.J.Res.142",
         "S.J.Res.102"

@@ -106,10 +106,68 @@
   flex: 1;
 }
 
+.passed-bill-numbers-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .passed-bill-numbers {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+}
+
+.bill-status-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.bill-status-tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.tag-passed-house {
+  background: #1a73e8;
+  color: white;
+}
+
+.tag-passed-both {
+  background: #d97706;
+  color: white;
+}
+
+.tag-passed-senate {
+  background: #7c3aed;
+  color: white;
+}
+
+.tag-disputed {
+  background: #92400e;
+  color: #fef3c7;
+  border: 1px solid #d97706;
+}
+
+.enacted-section {
+  border-color: #7f1d1d;
+  box-shadow: 0 2px 8px rgba(127, 29, 29, 0.2);
+}
+
+.enacted-section .passed-bills-header {
+  background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
+}
+
+.enacted-section .passed-bills-header:hover {
+  background: linear-gradient(135deg, #6f1a1a 0%, #350808 100%);
 }
 
 .passed-bill-title {
