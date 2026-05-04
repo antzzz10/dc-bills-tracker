@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-03",
+  "lastUpdated": "2026-05-04",
   "categories": [
     {
       "id": "abolishing",
@@ -2430,6 +2430,40 @@
         "committees": [
           "Oversight and Government Reform Committee",
           "Judiciary Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr5698",
+      "billNumbers": [
+        "H.R. 5698"
+      ],
+      "title": "District of Columbia Clemency Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered. District of Columbia Clemency Home Rule Act This bill authorizes the District of Columbia to legislate the terms and conditions under which clemency may be granted for violations of District criminal laws. Under the bill, clemency is defined as a pardon, reprieve, or a commutation of a sentence, or ...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-05-04",
+      "relevanceScore": 75,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5698",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-10-06",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
         ]
       },
       "attackType": "unknown"
