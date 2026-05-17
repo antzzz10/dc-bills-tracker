@@ -1,0 +1,45 @@
+name: Weekly Email Digest
+
+on:
+  schedule:
+    - cron: '0 14 * * 2'  # Tuesdays at 14:00 UTC (9am ET / 10am EDT)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Send mode'
+        required: true
+        default: 'draft'
+        type: choice
+        options:
+          - draft    # Create in Kit, no send_at — review before sending
+          - test     # Send immediately to andria.thomas@gmail.com only
+          - send     # Schedule for next Tuesday
+
+jobs:
+  generate-and-send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 14  # Need enough history for the 7-day diff
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Generate and send digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          KIT_API_KEY: ${{ secrets.KIT_API_KEY }}
+        run: |
+          MODE="${{ github.event.inputs.mode || 'send' }}"
+          if [ "$MODE" = "draft" ]; then
+            node scripts/weekly-digest.js --draft
+          elif [ "$MODE" = "test" ]; then
+            node scripts/weekly-digest.js --test
+          else
+            node scripts/weekly-digest.js
+          fi
