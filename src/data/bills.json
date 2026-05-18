@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-17",
+  "lastUpdated": "2026-05-18",
   "categories": [
     {
       "id": "abolishing",
@@ -2458,6 +2458,40 @@
         "stage": null,
         "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
         "lastActionDate": "2025-10-06",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr8801",
+      "billNumbers": [
+        "H.R. 8801"
+      ],
+      "title": "To prohibit a congestion toll in the District of Columbia.",
+      "sponsors": [
+        "Rep. Perry, Scott [R-PA-10]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-05-18",
+      "relevanceScore": 45,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/8801",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2026-05-13",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
