@@ -73,7 +73,7 @@ async function filterByRelevance(articles) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY not set');
 
-  const client = new Anthropic({ apiKey });
+  const client = new Anthropic({ apiKey, maxRetries: 5 });
 
   const titlesBlock = articles.map((a, i) => `${i}: ${a.title}`).join('\n');
 
@@ -158,4 +158,11 @@ async function main() {
   console.log(`\nSaved ${articles.length} articles → public/api/news.json`);
 }
 
-main().catch(err => { console.error(err); process.exit(1); });
+main().catch(err => {
+  if (err?.error?.type === 'overloaded_error' || err?.type === 'overloaded_error') {
+    console.warn('Claude API overloaded — keeping existing news.json unchanged.');
+    process.exit(0);
+  }
+  console.error(err);
+  process.exit(1);
+});
