@@ -2473,34 +2473,31 @@
       "billNumbers": [
         "H.R. 8801"
       ],
-      "title": "To prohibit a congestion toll in the District of Columbia.",
+      "title": "DC Rejecting Oppressive Automotive Driving Surcharges Act (DC ROADS Act)",
       "sponsors": [
-        "Rep. Perry, Scott [R-PA-10]"
+        "Rep. Scott Perry (R-PA)"
       ],
-      "description": "Auto-discovered.",
-      "category": "other",
+      "description": "Would permanently prohibit DC from imposing any charge for entry into or passage through DC, preemptively banning the District from ever implementing congestion pricing. Passed the House Oversight Committee on a largely party-line vote on May 20, 2026, with two Democrats crossing over to support it. DC has studied but not enacted congestion pricing.",
+      "category": "transportation",
       "position": "oppose",
       "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-05-18",
-      "relevanceScore": 45,
+      "priority": "high",
+      "prioritySource": "manual",
+      "provisional": false,
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/8801",
       "status": {
         "stage": null,
-        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "lastActionDate": "2026-05-13",
+        "lastAction": "Passed Committee",
+        "lastActionDate": "2026-05-20",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "direct"
     }
   ],
   "riders": [
