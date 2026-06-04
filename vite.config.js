@@ -7,4 +7,7 @@ export default defineConfig({
   // Use '/' for custom domain (representdc.org)
   // Use '/dc-bills-tracker/' for GitHub Pages without custom domain
   base: '/',
+  define: {
+    __BUILD_DATE__: JSON.stringify(new Date().toISOString().split('T')[0]),
+  },
 })

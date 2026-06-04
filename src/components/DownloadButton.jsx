@@ -87,7 +87,7 @@ function DownloadButton({ filteredBills, filteredRiders }) {
     // Add date
     doc.setFontSize(9)
     doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 33)
-    doc.text(`Last Updated: ${billsData.lastUpdated}`, 14, 38)
+    doc.text(`Last Updated: ${__BUILD_DATE__}`, 14, 38)
     doc.text(`Total Items: ${bills.length + (riders?.length || 0)} (${bills.length} bills, ${riders?.length || 0} riders)`, 14, 43)
 
     let currentY = 50
