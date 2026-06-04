@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './UrgentAlert.css'
 
-const PUBLISHED_AT = new Date('2026-05-20')
+const PUBLISHED_AT = new Date('2026-06-04')
 const ALERT_DURATION_MS = 14 * 24 * 60 * 60 * 1000
 
 function UrgentAlert() {
@@ -12,18 +12,18 @@ function UrgentAlert() {
   return (
     <div className="urgent-alert" id="urgent">
       <div className="urgent-alert-inner">
-        <div className="urgent-alert-badge">UPDATE</div>
+        <div className="urgent-alert-badge">NEW</div>
         <h2 className="urgent-alert-headline">
-          House Committee Advances Bill to Permanently Ban DC Congestion Pricing
+          Congress Moves to Override Two DC Police Oversight Laws
         </h2>
         <p className="urgent-alert-subhead">
-          Passed House Oversight Committee May 20 &middot; Largely party-line &middot; Two Democrats crossed over: Reps. Subramanyam (VA) and Mfume (MD)
+          4 disapproval resolutions introduced June 3–4 &middot; Both chambers &middot; Target body-worn camera transparency and arrest reporting laws
         </p>
         <p className="urgent-alert-summary">
-          The House Oversight Committee passed H.R. 8801, the DC ROADS Act, which would
-          permanently prohibit DC from ever implementing congestion pricing — stripping
-          the DC Council of a transportation policy tool before they've even voted on it.
-          The bill now heads to the full House floor.
+          Rep. Paul Gosar (R-AZ) and Sen. Bill Hagerty (R-TN) introduced companion disapproval
+          resolutions in both chambers to nullify two DC Council laws: one expanding transparency
+          for police body camera footage, and one requiring fuller public reporting of arrests.
+          If passed, Congress would void laws DC residents and their elected Council already enacted.
         </p>
 
         <button
@@ -40,34 +40,33 @@ function UrgentAlert() {
               <div className="urgent-alert-what">
                 <h3>What happened</h3>
                 <p>
-                  Rep. Scott Perry (R-PA) introduced H.R. 8801, which amends the DC Home
-                  Rule Act to permanently bar DC from imposing any charge for entry into
-                  or passage through the District. The House Oversight Committee passed it
-                  on May 20, 2026 on a largely party-line vote. Two Democrats from
-                  neighboring states crossed over — Rep. Suhas Subramanyam (VA) and
-                  Rep. Kweisi Mfume (MD) — giving Republicans bipartisan cover in
-                  commuter-heavy districts wary of new tolls.
+                  Sen. Hagerty (R-TN) introduced S.J.Res. 194 and S.J.Res. 195 on June 3, 2026.
+                  Rep. Gosar (R-AZ) introduced the companion House versions — H.J.Res. 192 and
+                  H.J.Res. 193 — on June 4. The four resolutions target two DC Council laws passed
+                  in 2026: the Body-Worn Camera Transparency for Use of Force Temporary Amendment
+                  Act and the Full Accountability in Arrest Reporting Temporary Amendment Act.
                 </p>
               </div>
 
               <div className="urgent-alert-stake">
                 <h3>What's at stake</h3>
                 <p>
-                  DC has studied but not enacted congestion pricing. This bill would remove
-                  that option permanently — regardless of future DC Council decisions or
-                  what DC residents want. It's a preemptive override of DC's right to set
-                  its own transportation policy, and the third markup this Congress targeting
-                  DC's local authority under the Home Rule Act.
+                  Both DC laws expand accountability and transparency for policing in DC — giving
+                  residents more information about how force is used and arrests are made. Congress
+                  using disapproval resolutions to nullify them would override the DC Council's
+                  judgment on local public safety policy, eliminating transparency measures DC
+                  residents and their elected representatives specifically chose to enact.
                 </p>
               </div>
 
               <div className="urgent-alert-why">
                 <h3>Where things stand</h3>
                 <p>
-                  The bill awaits a House floor vote. If it passes the full House, it faces
-                  the Senate. The bipartisan committee vote signals it could attract
-                  Democratic support on the floor, particularly from members representing
-                  suburban Maryland and Virginia constituencies.
+                  All four resolutions were just introduced and have not yet been assigned to
+                  committee. Disapproval resolutions require passage in both chambers and
+                  presidential signature — the same path as regular legislation. With companion
+                  bills in both chambers, they are more likely to advance than single-chamber
+                  resolutions.
                 </p>
               </div>
             </div>
@@ -75,22 +74,28 @@ function UrgentAlert() {
             <div className="urgent-alert-sources">
               <p>
                 Sources:{' '}
-                <a href="https://www.congress.gov/bill/119th-congress/house-bill/8801" target="_blank" rel="noopener noreferrer">
-                  Congress.gov
+                <a href="https://www.congress.gov/bill/119th-congress/house-joint-resolution/192" target="_blank" rel="noopener noreferrer">
+                  H.J.Res. 192 (Congress.gov)
                 </a>
                 {' '}&middot;{' '}
-                <a href="https://norton.house.gov/media/press-releases/after-oversight-committee-markup-two-anti-dc-bills-norton-calls-republican" target="_blank" rel="noopener noreferrer">
-                  Rep. Norton statement
+                <a href="https://www.congress.gov/bill/119th-congress/house-joint-resolution/193" target="_blank" rel="noopener noreferrer">
+                  H.J.Res. 193 (Congress.gov)
                 </a>
                 {' '}&middot;{' '}
-                <a href="https://oversight.house.gov/release/markup-wrap-up-oversight-committee-advances-legislation-to-codify-president-trumps-efforts-to-make-d-c-safe-and-beautiful/" target="_blank" rel="noopener noreferrer">
-                  House Oversight markup wrap-up
+                <a href="https://www.congress.gov/bill/119th-congress/senate-joint-resolution/194" target="_blank" rel="noopener noreferrer">
+                  S.J.Res. 194 (Congress.gov)
+                </a>
+                {' '}&middot;{' '}
+                <a href="https://www.congress.gov/bill/119th-congress/senate-joint-resolution/195" target="_blank" rel="noopener noreferrer">
+                  S.J.Res. 195 (Congress.gov)
                 </a>
               </p>
             </div>
 
             <div className="urgent-alert-link-hint">
-              <a href="#hr8801">See full bill details below</a>
+              <a href="#hjres192-sjres195">See arrest reporting resolution below</a>
+              {' '}&middot;{' '}
+              <a href="#hjres193-sjres194">See body-worn camera resolution below</a>
             </div>
           </div>
         )}

@@ -2532,6 +2532,54 @@
         ]
       },
       "attackType": "unknown"
+    },
+    {
+      "id": "hjres192-sjres195",
+      "billNumbers": ["H.J.Res. 192", "S.J.Res. 195"],
+      "title": "Full Accountability in Arrest Reporting Disapproval Resolution",
+      "sponsors": ["Rep. Paul Gosar", "Sen. Bill Hagerty"],
+      "description": "Companion disapproval resolutions to override the DC Council's Full Accountability in Arrest Reporting Temporary Amendment Act of 2026. If enacted, would nullify DC's own law requiring fuller public reporting of arrests. Rep. Gosar (R-AZ) introduced the House version on June 4, 2026; Sen. Hagerty (R-TN) introduced the Senate version on June 3, 2026.",
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "medium",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": "Introduced",
+        "lastActionDate": "2026-06-04",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      },
+      "attackType": "direct",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/192"
+    },
+    {
+      "id": "hjres193-sjres194",
+      "billNumbers": ["H.J.Res. 193", "S.J.Res. 194"],
+      "title": "Body-Worn Camera Transparency Disapproval Resolution",
+      "sponsors": ["Rep. Paul Gosar", "Sen. Bill Hagerty"],
+      "description": "Companion disapproval resolutions to override the DC Council's Body-Worn Camera Transparency for Use of Force Temporary Amendment Act of 2026. If enacted, would nullify DC's own law expanding transparency requirements for police body camera footage. Rep. Gosar (R-AZ) introduced the House version on June 4, 2026; Sen. Hagerty (R-TN) introduced the Senate version on June 3, 2026.",
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "medium",
+      "prioritySource": "manual",
+      "status": {
+        "stage": null,
+        "lastAction": "Introduced",
+        "lastActionDate": "2026-06-04",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      },
+      "attackType": "direct",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/193"
     }
   ],
   "riders": [
