@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-03",
+  "lastUpdated": "2026-06-15",
   "categories": [
     {
       "id": "abolishing",
@@ -2535,9 +2535,15 @@
     },
     {
       "id": "hjres192-sjres195",
-      "billNumbers": ["H.J.Res. 192", "S.J.Res. 195"],
+      "billNumbers": [
+        "H.J.Res. 192",
+        "S.J.Res. 195"
+      ],
       "title": "Full Accountability in Arrest Reporting Disapproval Resolution",
-      "sponsors": ["Rep. Paul Gosar", "Sen. Bill Hagerty"],
+      "sponsors": [
+        "Rep. Paul Gosar",
+        "Sen. Bill Hagerty"
+      ],
       "description": "Companion disapproval resolutions to override the DC Council's Full Accountability in Arrest Reporting Temporary Amendment Act of 2026. If enacted, would nullify DC's own law requiring fuller public reporting of arrests. Rep. Gosar (R-AZ) introduced the House version on June 4, 2026; Sen. Hagerty (R-TN) introduced the Senate version on June 3, 2026.",
       "category": "crime",
       "position": "oppose",
@@ -2559,9 +2565,15 @@
     },
     {
       "id": "hjres193-sjres194",
-      "billNumbers": ["H.J.Res. 193", "S.J.Res. 194"],
+      "billNumbers": [
+        "H.J.Res. 193",
+        "S.J.Res. 194"
+      ],
       "title": "Body-Worn Camera Transparency Disapproval Resolution",
-      "sponsors": ["Rep. Paul Gosar", "Sen. Bill Hagerty"],
+      "sponsors": [
+        "Rep. Paul Gosar",
+        "Sen. Bill Hagerty"
+      ],
       "description": "Companion disapproval resolutions to override the DC Council's Body-Worn Camera Transparency for Use of Force Temporary Amendment Act of 2026. If enacted, would nullify DC's own law expanding transparency requirements for police body camera footage. Rep. Gosar (R-AZ) introduced the House version on June 4, 2026; Sen. Hagerty (R-TN) introduced the Senate version on June 3, 2026.",
       "category": "crime",
       "position": "oppose",
@@ -2580,6 +2592,41 @@
       },
       "attackType": "direct",
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/193"
+    },
+    {
+      "id": "hr2693",
+      "billNumbers": [
+        "H.R. 2693"
+      ],
+      "title": "District of Columbia Electronic Transmittal of Legislation Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered. District of Columbia Electronic Transmittal of Legislation ActThis bill authorizes the District of Columbia (DC) Council to transmit legislation, including amendments to the DC Charter, to Congress by electronic means. (Current law requires most nonemergency DC legislation to be transmitted to Congr...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-06-15",
+      "relevanceScore": 90,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/2693",
+      "status": {
+        "stage": null,
+        "lastAction": "Ordered to be Reported (Amended) by the Yeas and Nays: 40 - 0.",
+        "lastActionDate": "2025-09-10",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 1,
+        "committees": [
+          "Oversight and Government Reform Committee",
+          "Rules Committee"
+        ]
+      },
+      "attackType": "unknown"
     }
   ],
   "riders": [
