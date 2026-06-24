@@ -9,13 +9,14 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { CURRENT_CONGRESS } from './config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Configuration
 const CONGRESS_API_KEY = process.env.CONGRESS_API_KEY;
-const CONGRESS_NUMBER = 119; // 119th Congress (2025-2026)
+const CONGRESS_NUMBER = CURRENT_CONGRESS;
 const API_BASE_URL = 'https://api.congress.gov/v3';
 
 // Load bills data

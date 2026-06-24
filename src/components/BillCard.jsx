@@ -3,6 +3,7 @@ import './BillCard.css'
 import billsData from '../data/bills.json'
 import sponsorsData from '../data/sponsors.json'
 import { stateAbbreviations } from '../data/stateAbbreviations'
+import { CURRENT_CONGRESS } from '../data/config'
 
 function BillCard({ bill }) {
   const isTargeted = window.location.hash === `#${bill.id}`
@@ -34,7 +35,7 @@ function BillCard({ bill }) {
     if (!match) return null
 
     const [, type, number] = match
-    const congress = 119 // 119th Congress for 2025
+    const congress = bill.congress || CURRENT_CONGRESS
 
     let billType = ''
     if (type.toLowerCase().includes('h.r.')) billType = 'hr'

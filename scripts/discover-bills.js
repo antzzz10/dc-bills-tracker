@@ -9,13 +9,14 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { CURRENT_CONGRESS } from './config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Configuration
 const CONGRESS_API_KEY = process.env.CONGRESS_API_KEY;
-const CONGRESS_NUMBER = 119;
+const CONGRESS_NUMBER = CURRENT_CONGRESS;
 const API_BASE_URL = 'https://api.congress.gov/v3';
 const RATE_LIMIT_MS = 300;
 
@@ -564,6 +565,9 @@ function buildBillEntry(billType, number, details, score) {
     autoDiscovered: true,
     discoveredDate: today,
     relevanceScore: score,
+    congress: CONGRESS_NUMBER,
+    congressValidated: true,
+    congressValidatedDate: today,
     congressGovLink,
     status: {
       stage: null,
@@ -750,20 +754,41 @@ async function main() {
 
   // Auto-add high-confidence bills to bills.json
   if (!DRY_RUN && results.autoAdd.length > 0) {
-    console.log('\n💾 Adding high-confidence bills to bills.json...');
+    console.log('\n🔍 Validating auto-add candidates against Congress.gov...');
 
-    // Re-read bills.json to avoid clobbering concurrent edits
-    const freshData = JSON.parse(readFileSync(billsPath, 'utf-8'));
-
+    const validated = [];
     for (const entry of results.autoAdd) {
-      const billEntry = buildBillEntry(entry.billType, entry.number, entry.details, entry.score);
-      freshData.bills.push(billEntry);
-      console.log(`  ✓ Added ${entry.displayNumber}: ${entry.title}`);
+      const url = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${entry.billType}/${entry.number}?api_key=${CONGRESS_API_KEY}`;
+      const res = await fetch(url);
+      if (res.ok) {
+        console.log(`  ✅ ${entry.displayNumber}: confirmed on Congress.gov`);
+        validated.push(entry);
+      } else if (res.status === 404) {
+        console.log(`  ❌ ${entry.displayNumber}: NOT found on Congress.gov — skipping`);
+      } else {
+        console.log(`  ⚠️  ${entry.displayNumber}: API error ${res.status} — skipping`);
+      }
+      await new Promise(r => setTimeout(r, RATE_LIMIT_MS));
     }
 
-    freshData.lastUpdated = new Date().toISOString().split('T')[0];
-    writeFileSync(billsPath, JSON.stringify(freshData, null, 2));
-    console.log(`\n💾 Saved ${results.autoAdd.length} new bills to bills.json`);
+    if (validated.length === 0) {
+      console.log('\nNo validated bills to add.');
+    } else {
+      console.log('\n💾 Adding validated bills to bills.json...');
+
+      // Re-read bills.json to avoid clobbering concurrent edits
+      const freshData = JSON.parse(readFileSync(billsPath, 'utf-8'));
+
+      for (const entry of validated) {
+        const billEntry = buildBillEntry(entry.billType, entry.number, entry.details, entry.score);
+        freshData.bills.push(billEntry);
+        console.log(`  ✓ Added ${entry.displayNumber}: ${entry.title}`);
+      }
+
+      freshData.lastUpdated = new Date().toISOString().split('T')[0];
+      writeFileSync(billsPath, JSON.stringify(freshData, null, 2));
+      console.log(`\n💾 Saved ${validated.length} new bills to bills.json`);
+    }
   } else if (DRY_RUN && results.autoAdd.length > 0) {
     console.log('\n📋 DRY RUN - would have added these bills to bills.json:');
     results.autoAdd.forEach(entry => {
