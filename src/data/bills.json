@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-03",
+  "lastUpdated": "2026-06-22",
   "categories": [
     {
       "id": "abolishing",
@@ -2748,6 +2748,144 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/193",
       "congress": 119,
       "congressValidated": false
+    },
+    {
+      "id": "hr2693",
+      "billNumbers": [
+        "H.R. 2693"
+      ],
+      "title": "District of Columbia Electronic Transmittal of Legislation Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered. District of Columbia Electronic Transmittal of Legislation ActThis bill authorizes the District of Columbia (DC) Council to transmit legislation, including amendments to the DC Charter, to Congress by electronic means. (Current law requires most nonemergency DC legislation to be transmitted to Congr...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-06-15",
+      "relevanceScore": 90,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/2693",
+      "status": {
+        "stage": null,
+        "lastAction": "Ordered to be Reported (Amended) by the Yeas and Nays: 40 - 0.",
+        "lastActionDate": "2025-09-10",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 1,
+        "committees": [
+          "Oversight and Government Reform Committee",
+          "Rules Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr9362",
+      "billNumbers": [
+        "H.R. 9362"
+      ],
+      "title": "To amend the District of Columbia Home Rule Act to provide for the automatic appointment of judges to the District of Columbia courts without the advice and consent of the Senate, and for other purposes.",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-06-22",
+      "relevanceScore": 60,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/9362",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committee on Rules, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "lastActionDate": "2026-06-18",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Rules Committee",
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr6950",
+      "billNumbers": [
+        "H.R. 6950"
+      ],
+      "title": "District of Columbia Transportation Funding Equality Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered. District of Columbia Transportation Funding Equality ActThis bill makes the District of Columbia eligible for certain Department of Transportation (DOT) grant programs by treating the District as a state under the programs.Specifically, the bill applies to the Bus and Bus Facilities Grant Program, w...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-06-22",
+      "relevanceScore": 40,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/6950",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the Subcommittee on Highways and Transit.",
+        "lastActionDate": "2026-01-07",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Transportation and Infrastructure Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "s4837",
+      "billNumbers": [
+        "S. 4837"
+      ],
+      "title": "A bill to amend the District of Columbia Home Rule Act to provide for the automatic appointment of judges to the District of Columbia courts without the advice and consent of the Senate, and for other purposes.",
+      "sponsors": [
+        "Sen. Van Hollen, Chris [D-MD]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-06-22",
+      "relevanceScore": 60,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/4837",
+      "status": {
+        "stage": null,
+        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "lastActionDate": "2026-06-18",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 4,
+        "committees": [
+          "Homeland Security and Governmental Affairs Committee"
+        ]
+      },
+      "attackType": "unknown"
     }
   ],
   "riders": [
