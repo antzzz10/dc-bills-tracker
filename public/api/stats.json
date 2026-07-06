@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-04-29",
-  "totalBills": 91,
-  "pendingBills": 76,
+  "lastUpdated": "2026-06-03",
+  "totalBills": 96,
+  "pendingBills": 81,
   "passedBills": 15,
   "breakdown": {
-    "bills": 73,
+    "bills": 78,
     "riders": 18,
     "supportBills": 2
   },

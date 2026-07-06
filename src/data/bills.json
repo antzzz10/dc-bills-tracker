@@ -90,7 +90,9 @@
         "committees": []
       },
       "attackType": "direct",
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/6578"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/6578",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr7068",
@@ -118,7 +120,9 @@
         "committees": []
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/7068",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s440-hr1089",
@@ -147,7 +151,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr3877",
@@ -174,7 +180,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr277",
@@ -201,7 +209,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "partial"
+      "attackType": "partial",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr2096",
@@ -247,7 +257,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr2056-s1522",
@@ -295,7 +307,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr4922-s2686",
@@ -343,7 +357,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hjres114",
@@ -370,7 +386,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5015",
@@ -397,7 +415,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5016",
@@ -424,7 +444,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s2706",
@@ -451,7 +473,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5140",
@@ -497,7 +521,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5143",
@@ -543,7 +569,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5107-s2687",
@@ -593,7 +621,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5207",
@@ -620,7 +650,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5214",
@@ -668,7 +700,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5172",
@@ -695,7 +729,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5242-secondchance",
@@ -722,7 +758,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5163",
@@ -749,7 +787,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s2517",
@@ -776,7 +816,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s2815",
@@ -803,7 +845,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5125-s2854",
@@ -851,7 +895,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5179",
@@ -878,7 +924,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr884-s2636",
@@ -926,7 +974,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr2562",
@@ -953,7 +1003,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hconres14-cruz",
@@ -980,7 +1032,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "partial"
+      "attackType": "partial",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr4851",
@@ -1007,7 +1061,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr7-s186",
@@ -1036,7 +1092,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "partial"
+      "attackType": "partial",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr1968-abortion",
@@ -1082,7 +1140,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hjres82",
@@ -1109,7 +1169,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s2907-hr5483",
@@ -1138,7 +1200,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "partial"
+      "attackType": "partial",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr1016",
@@ -1165,7 +1229,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "partial"
+      "attackType": "partial",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr1968-marijuana",
@@ -1211,7 +1277,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s1450",
@@ -1238,7 +1306,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "sjres68-hjres109",
@@ -1267,7 +1337,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s218-hr4558",
@@ -1296,7 +1368,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s614-hr1738",
@@ -1325,7 +1399,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr1774",
@@ -1352,7 +1428,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr2522",
@@ -1385,7 +1463,9 @@
         "H.R. 5491 (Amendment 86)"
       ],
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/2522",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5242-perry-cameras",
@@ -1412,7 +1492,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5242-perry-rightturn",
@@ -1439,7 +1521,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5525",
@@ -1470,7 +1554,9 @@
         ]
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5525",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s2998",
@@ -1497,7 +1583,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr69",
@@ -1524,7 +1612,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "partial"
+      "attackType": "partial",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s204-hr650",
@@ -1553,7 +1643,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "partial"
+      "attackType": "partial",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "sconres7-lee",
@@ -1580,7 +1672,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr1968-budget",
@@ -1626,7 +1720,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s900",
@@ -1653,7 +1749,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "partial"
+      "attackType": "partial",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr3766",
@@ -1680,7 +1778,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s1991-hr4311",
@@ -1709,7 +1809,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr4519-s2565",
@@ -1738,7 +1840,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s2404-hr4670",
@@ -1767,7 +1871,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr4788",
@@ -1794,7 +1900,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5183",
@@ -1821,7 +1929,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5474",
@@ -1848,7 +1958,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr6372-s3327",
@@ -1877,7 +1989,9 @@
         "cosponsors": 0,
         "committees": []
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hjres142-sjres102",
@@ -1928,7 +2042,9 @@
           }
         }
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5815",
@@ -1958,7 +2074,9 @@
           "Energy and Commerce"
         ]
       },
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5815"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5815",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5181",
@@ -1989,7 +2107,9 @@
           "Oversight and Government Reform"
         ]
       },
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5181"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5181",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr1686",
@@ -2017,7 +2137,9 @@
         "cosponsors": 1,
         "committees": []
       },
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1686"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1686",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr1421",
@@ -2048,7 +2170,9 @@
           "Energy and Commerce"
         ]
       },
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1421"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1421",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr954",
@@ -2079,7 +2203,9 @@
           "Oversight and Government Reform"
         ]
       },
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/954"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/954",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hjres31",
@@ -2107,7 +2233,9 @@
         "cosponsors": 8,
         "committees": []
       },
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/31"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/31",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s487",
@@ -2138,7 +2266,9 @@
           "Health, Education, Labor, and Pensions"
         ]
       },
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/487"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/487",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s3290",
@@ -2168,7 +2298,9 @@
           "Appropriations"
         ]
       },
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/3290"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/3290",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr51",
@@ -2206,7 +2338,9 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr7881",
@@ -2240,7 +2374,9 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s4150",
@@ -2274,7 +2410,9 @@
           "Homeland Security and Governmental Affairs Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5103",
@@ -2328,7 +2466,9 @@
             }
           }
         }
-      }
+      },
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr8297",
@@ -2363,7 +2503,9 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr1537",
@@ -2397,7 +2539,9 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr8455",
@@ -2432,7 +2576,9 @@
           "Judiciary Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5698",
@@ -2466,7 +2612,9 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr8801",
@@ -2497,7 +2645,9 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5092",
@@ -2531,13 +2681,21 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hjres192-sjres195",
-      "billNumbers": ["H.J.Res. 192", "S.J.Res. 195"],
+      "billNumbers": [
+        "H.J.Res. 192",
+        "S.J.Res. 195"
+      ],
       "title": "Full Accountability in Arrest Reporting Disapproval Resolution",
-      "sponsors": ["Rep. Paul Gosar", "Sen. Bill Hagerty"],
+      "sponsors": [
+        "Rep. Paul Gosar",
+        "Sen. Bill Hagerty"
+      ],
       "description": "Companion disapproval resolutions to override the DC Council's Full Accountability in Arrest Reporting Temporary Amendment Act of 2026. If enacted, would nullify DC's own law requiring fuller public reporting of arrests. Rep. Gosar (R-AZ) introduced the House version on June 4, 2026; Sen. Hagerty (R-TN) introduced the Senate version on June 3, 2026.",
       "category": "crime",
       "position": "oppose",
@@ -2555,13 +2713,21 @@
         "committees": []
       },
       "attackType": "direct",
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/192"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/192",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hjres193-sjres194",
-      "billNumbers": ["H.J.Res. 193", "S.J.Res. 194"],
+      "billNumbers": [
+        "H.J.Res. 193",
+        "S.J.Res. 194"
+      ],
       "title": "Body-Worn Camera Transparency Disapproval Resolution",
-      "sponsors": ["Rep. Paul Gosar", "Sen. Bill Hagerty"],
+      "sponsors": [
+        "Rep. Paul Gosar",
+        "Sen. Bill Hagerty"
+      ],
       "description": "Companion disapproval resolutions to override the DC Council's Body-Worn Camera Transparency for Use of Force Temporary Amendment Act of 2026. If enacted, would nullify DC's own law expanding transparency requirements for police body camera footage. Rep. Gosar (R-AZ) introduced the House version on June 4, 2026; Sen. Hagerty (R-TN) introduced the Senate version on June 3, 2026.",
       "category": "crime",
       "position": "oppose",
@@ -2579,7 +2745,9 @@
         "committees": []
       },
       "attackType": "direct",
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/193"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/193",
+      "congress": 119,
+      "congressValidated": false
     }
   ],
   "riders": [
@@ -2599,7 +2767,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-youth",
@@ -2617,7 +2787,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-noncitizen",
@@ -2635,7 +2807,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-emissions",
@@ -2653,7 +2827,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-oilgas",
@@ -2671,7 +2847,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-abortion",
@@ -2689,7 +2867,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-reprohealth",
@@ -2707,7 +2887,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-deathwithdignity",
@@ -2725,7 +2907,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-covid",
@@ -2743,7 +2927,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-insurance",
@@ -2761,7 +2947,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-marijuana",
@@ -2779,7 +2967,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-rightturn",
@@ -2797,7 +2987,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-cameras",
@@ -2815,7 +3007,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr7148-sa4253-cameras",
@@ -2843,7 +3037,9 @@
         "hasFloorVote": false,
         "cosponsors": 0
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-slapp",
@@ -2861,7 +3057,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-guns",
@@ -2879,7 +3077,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-sistercity",
@@ -2897,7 +3097,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "hr5166-shield",
@@ -2915,7 +3117,9 @@
       "priority": "high",
       "prioritySource": "freedc",
       "fiscalYear": "2026",
-      "attackType": "direct"
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": false
     }
   ],
   "supportBills": [
@@ -2946,7 +3150,9 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5093"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5093",
+      "congress": 119,
+      "congressValidated": false
     },
     {
       "id": "s402",
@@ -2975,7 +3181,9 @@
         "cosponsors": 1,
         "committees": []
       },
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/402"
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/402",
+      "congress": 119,
+      "congressValidated": false
     }
   ]
 }
