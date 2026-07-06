@@ -9,13 +9,14 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { CURRENT_CONGRESS } from './config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Configuration
 const CONGRESS_API_KEY = process.env.CONGRESS_API_KEY;
-const CONGRESS_NUMBER = 119; // 119th Congress (2025-2026)
+const CONGRESS_NUMBER = CURRENT_CONGRESS;
 const API_BASE_URL = 'https://api.congress.gov/v3';
 
 // Load bills data
@@ -404,8 +405,10 @@ function reloadBillsData() {
   billsData.lastUpdated = freshData.lastUpdated;
 }
 
-// Update bills.json with passage information
+// Update bills.json with the latest tracked status (stage, votes, cosponsors, hearing/markup/floor flags)
 function updateBillsJson(billId, passageInfo, status) {
+  passageInfo = passageInfo || {};
+
   try {
     // Re-read from disk before writing to avoid clobbering manual edits
     reloadBillsData();
@@ -414,7 +417,7 @@ function updateBillsJson(billId, passageInfo, status) {
     const billIndex = billsData.bills.findIndex(b => b.id === billId);
     if (billIndex === -1) {
       console.log(`  ⚠️  Could not find bill ${billId} in bills.json`);
-      return false;
+      return { updated: false, stageChanged: false };
     }
 
     const bill = billsData.bills[billIndex];
@@ -422,10 +425,11 @@ function updateBillsJson(billId, passageInfo, status) {
     // Skip bills with manualOverride flag — preserve all manual edits
     if (bill.manualOverride) {
       console.log(`  🔒 Skipping ${billId}: manual override is set (preserving manual edits)`);
-      return false;
+      return { updated: false, stageChanged: false };
     }
 
     let updated = false;
+    let stageChanged = false;
 
     // Update status stage
     if (passageInfo.stage && bill.status.stage !== passageInfo.stage) {
@@ -433,6 +437,7 @@ function updateBillsJson(billId, passageInfo, status) {
       bill.status.lastAction = passageInfo.hasPassedHouse ? 'Passed House' : 'Passed Senate';
       bill.status.lastActionDate = new Date().toISOString().split('T')[0];
       updated = true;
+      stageChanged = true;
       console.log(`  ✓ Updated stage to: ${passageInfo.stage}`);
     }
 
@@ -485,24 +490,38 @@ function updateBillsJson(billId, passageInfo, status) {
       }
     }
 
-    // Update status flags
-    bill.status.hasFloorVote = status.hasFloorVote;
-    bill.status.hasCommitteeHearing = status.hasCommitteeHearing;
-    bill.status.hasCommitteeMarkup = status.hasCommitteeMarkup;
-    bill.status.cosponsors = status.cosponsorsCount;
+    // Update status flags — each is compared before assignment so a real change
+    // (e.g. a cosponsor count bump, which signals traction) actually gets persisted,
+    // instead of silently being dropped when no stage/vote change also occurred.
+    if (bill.status.hasFloorVote !== status.hasFloorVote) {
+      bill.status.hasFloorVote = status.hasFloorVote;
+      updated = true;
+    }
+    if (bill.status.hasCommitteeHearing !== status.hasCommitteeHearing) {
+      bill.status.hasCommitteeHearing = status.hasCommitteeHearing;
+      updated = true;
+    }
+    if (bill.status.hasCommitteeMarkup !== status.hasCommitteeMarkup) {
+      bill.status.hasCommitteeMarkup = status.hasCommitteeMarkup;
+      updated = true;
+    }
+    if (bill.status.cosponsors !== status.cosponsorsCount) {
+      console.log(`  ✓ Cosponsors: ${bill.status.cosponsors ?? 0} → ${status.cosponsorsCount}`);
+      bill.status.cosponsors = status.cosponsorsCount;
+      updated = true;
+    }
 
     if (updated) {
       // Save updated bills.json
       billsData.lastUpdated = new Date().toISOString().split('T')[0];
       writeFileSync(billsPath, JSON.stringify(billsData, null, 2));
       console.log(`  💾 Updated bills.json`);
-      return true;
     }
 
-    return false;
+    return { updated, stageChanged };
   } catch (error) {
     console.log(`  ❌ Error updating bills.json:`, error.message);
-    return false;
+    return { updated: false, stageChanged: false };
   }
 }
 
@@ -545,18 +564,17 @@ async function monitorBills() {
         // Calculate priority
         const priorityInfo = calculatePriority(status, bill);
 
-        // Check for passage and update bills.json
-        if (status.passageInfo && status.passageInfo.stage) {
-          const wasUpdated = updateBillsJson(bill.id, status.passageInfo, status);
-          if (wasUpdated) {
-            passedBills.push({
-              billNumber: status.billNumber,
-              title: bill.title,
-              stage: status.passageInfo.stage,
-              houseVote: status.passageInfo.houseVote,
-              senateVote: status.passageInfo.senateVote
-            });
-          }
+        // Persist tracked status (stage, votes, cosponsors, hearing/markup/floor flags) for every bill,
+        // not just ones that passed a chamber — cosponsor/committee movement matters on its own.
+        const updateResult = updateBillsJson(bill.id, status.passageInfo, status);
+        if (updateResult.stageChanged) {
+          passedBills.push({
+            billNumber: status.billNumber,
+            title: bill.title,
+            stage: status.passageInfo.stage,
+            houseVote: status.passageInfo.houseVote,
+            senateVote: status.passageInfo.senateVote
+          });
         }
 
         // Check if status has changed (you'll need to track previous state)
@@ -620,11 +638,181 @@ async function monitorBills() {
   }
 
   // Generate report
-  generateReport(changes, errors);
+  generateReport(changes, errors, passedBills);
+}
+
+// Priority tiers for detecting escalation (watching and low are both "baseline")
+const PRIORITY_RANK = { low: 0, watching: 0, medium: 1, high: 2 };
+
+// Compare today's changes against the previous run to find what's actually new
+function diffAgainstPrevious(changes, previousChanges) {
+  const previousById = new Map((previousChanges || []).map(c => [c.id, c]));
+  const currentIds = new Set(changes.map(c => c.id));
+
+  const diff = {
+    priorityEscalations: [],
+    newHearings: [],
+    newMarkups: [],
+    newFloorVotes: [],
+    cosponsorJumps: [],
+    newBills: [],
+    routineUpdateCount: 0
+  };
+
+  for (const current of changes) {
+    const previous = previousById.get(current.id);
+
+    if (!previous) {
+      diff.newBills.push(current);
+      continue;
+    }
+
+    let notable = false;
+
+    if (PRIORITY_RANK[current.priority] > PRIORITY_RANK[previous.priority]) {
+      diff.priorityEscalations.push({ current, previous });
+      notable = true;
+    }
+    if (!previous.hasCommitteeHearing && current.hasCommitteeHearing) {
+      diff.newHearings.push(current);
+      notable = true;
+    }
+    if (!previous.hasCommitteeMarkup && current.hasCommitteeMarkup) {
+      diff.newMarkups.push(current);
+      notable = true;
+    }
+    if (!previous.hasFloorVote && current.hasFloorVote) {
+      diff.newFloorVotes.push(current);
+      notable = true;
+    }
+    const cosponsorDelta = (current.cosponsorsCount || 0) - (previous.cosponsorsCount || 0);
+    if (cosponsorDelta >= 5) {
+      diff.cosponsorJumps.push({ current, previous, delta: cosponsorDelta });
+      notable = true;
+    }
+
+    if (!notable && current.latestActionDate !== previous.latestActionDate) {
+      diff.routineUpdateCount++;
+    }
+  }
+
+  diff.removedBillIds = [...previousById.keys()].filter(id => !currentIds.has(id));
+
+  return diff;
+}
+
+function stageLabel(stage) {
+  if (stage === 'passed-house') return 'the House';
+  if (stage === 'passed-senate') return 'the Senate';
+  if (stage === 'passed-both') return 'both chambers';
+  return stage;
+}
+
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+// Build the inline-styled HTML summary that gets emailed (full detail stays in monitoring-report.txt / history for archival)
+function buildSummaryHtml({ diff, passedBills, errors, totalBills, timestamp, previousTimestamp, runUrl }) {
+  const sections = [];
+
+  if (passedBills.length > 0) {
+    const rows = passedBills.map(p => {
+      const vote = p.houseVote || p.senateVote;
+      const voteText = vote
+        ? ` — ${vote.yeas}-${vote.nays} (R ${vote.byParty.republican.yeas}-${vote.byParty.republican.nays}, D ${vote.byParty.democrat.yeas}-${vote.byParty.democrat.nays})`
+        : '';
+      return `<li><strong>${escapeHtml(p.billNumber)}</strong>: ${escapeHtml(p.title)} passed ${stageLabel(p.stage)}${voteText}.
+        <br><em>Action to consider:</em> publish an urgent alert on the site and/or a newsletter update.</li>`;
+    }).join('');
+    sections.push(`<h3 style="margin:20px 0 8px;color:#b91c1c;">🚨 Passed a chamber (${passedBills.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
+  }
+
+  if (diff.priorityEscalations.length > 0) {
+    const rows = diff.priorityEscalations.map(({ current, previous }) =>
+      `<li><strong>${escapeHtml(current.billNumber)}</strong>: ${escapeHtml(current.bill)} — priority ${previous.priority} → <strong>${current.priority}</strong> (${escapeHtml(current.priorityReason)}).
+        <br><em>Action to consider:</em> review its placement/details on the site.</li>`
+    ).join('');
+    sections.push(`<h3 style="margin:20px 0 8px;color:#b45309;">🔼 Priority escalated (${diff.priorityEscalations.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
+  }
+
+  if (diff.newMarkups.length > 0) {
+    const rows = diff.newMarkups.map(c =>
+      `<li><strong>${escapeHtml(c.billNumber)}</strong>: ${escapeHtml(c.bill)} had a committee markup.
+        <br><em>Action to consider:</em> markups often precede a floor vote — watch closely.</li>`
+    ).join('');
+    sections.push(`<h3 style="margin:20px 0 8px;">📝 New committee markups (${diff.newMarkups.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
+  }
+
+  if (diff.newHearings.length > 0) {
+    const rows = diff.newHearings.map(c =>
+      `<li><strong>${escapeHtml(c.billNumber)}</strong>: ${escapeHtml(c.bill)} had a committee hearing.</li>`
+    ).join('');
+    sections.push(`<h3 style="margin:20px 0 8px;">🗣️ New committee hearings (${diff.newHearings.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
+  }
+
+  if (diff.newFloorVotes.length > 0) {
+    const rows = diff.newFloorVotes.map(c =>
+      `<li><strong>${escapeHtml(c.billNumber)}</strong>: ${escapeHtml(c.bill)} — floor activity detected.
+        <br><em>Action to consider:</em> check Congress.gov for the outcome.</li>`
+    ).join('');
+    sections.push(`<h3 style="margin:20px 0 8px;">🗳️ New floor activity (${diff.newFloorVotes.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
+  }
+
+  if (diff.cosponsorJumps.length > 0) {
+    const rows = diff.cosponsorJumps.map(({ current, previous, delta }) =>
+      `<li><strong>${escapeHtml(current.billNumber)}</strong>: ${escapeHtml(current.bill)} — cosponsors ${previous.cosponsorsCount} → ${current.cosponsorsCount} (+${delta}).
+        <br><em>Action to consider:</em> reassess priority tier if this crosses a threshold.</li>`
+    ).join('');
+    sections.push(`<h3 style="margin:20px 0 8px;">📈 Notable cosponsor jumps (${diff.cosponsorJumps.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
+  }
+
+  if (diff.newBills.length > 0) {
+    const rows = diff.newBills.map(c => `<li><strong>${escapeHtml(c.billNumber)}</strong>: ${escapeHtml(c.bill)}</li>`).join('');
+    sections.push(`<h3 style="margin:20px 0 8px;">🆕 New to monitoring (${diff.newBills.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
+  }
+
+  if (errors.length > 0) {
+    const rows = errors.map(billNumber => `<li>${escapeHtml(billNumber)}</li>`).join('');
+    sections.push(`<h3 style="margin:20px 0 8px;color:#b91c1c;">⚠️ Fetch errors (${errors.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul><p style="margin:4px 0 0;"><em>Action to consider:</em> check bill number formatting or Congress.gov API status.</p>`);
+  }
+
+  const hasNotableChanges = sections.length > 0;
+  const intro = hasNotableChanges
+    ? `Checked <strong>${totalBills}</strong> bills. Here's what changed since the last check${previousTimestamp ? ` (${new Date(previousTimestamp).toLocaleString('en-US', { dateStyle: 'medium' })})` : ''}:`
+    : `Checked <strong>${totalBills}</strong> bills. No notable changes since the last check${previousTimestamp ? ` (${new Date(previousTimestamp).toLocaleString('en-US', { dateStyle: 'medium' })})` : ''} — nothing needs your attention today.`;
+
+  const routineNote = diff.routineUpdateCount > 0
+    ? `<p style="margin:16px 0 0;color:#6b7280;font-size:13px;">${diff.routineUpdateCount} other bill(s) had routine status/date updates with no notable category.</p>`
+    : '';
+
+  return `
+    <style>
+      @media (max-width: 600px) {
+        .summary-container { padding: 12px !important; }
+        .summary-container h2 { font-size: 20px !important; }
+        .summary-container h3 { font-size: 16px !important; }
+        .summary-container ul { padding-left: 16px !important; }
+      }
+    </style>
+    <div class="summary-container" style="max-width:600px;margin:0 auto;padding:20px;font-family:-apple-system,Helvetica,Arial,sans-serif;color:#111827;">
+      <h2 style="margin:0 0 12px;">DC Bills Tracker — Daily Summary</h2>
+      <p style="margin:0 0 12px;">${intro}</p>
+      ${sections.join('')}
+      ${routineNote}
+      <hr style="margin:24px 0 12px;border:none;border-top:1px solid #e5e7eb;">
+      <p style="margin:0;color:#6b7280;font-size:13px;font-style:italic;">
+        Full per-bill detail for all ${totalBills} bills is archived in <code>bill-status-history.json</code> (committed to the repo)
+        and attached as a workflow artifact (90-day retention).${runUrl ? ` <a href="${runUrl}">View this run</a>.` : ''}
+      </p>
+    </div>
+  `.trim();
 }
 
 // Generate summary report
-function generateReport(changes, errors) {
+function generateReport(changes, errors, passedBills) {
   console.log('📋 BILL STATUS REPORT');
   console.log('='.repeat(80));
   console.log(`Total bills checked: ${billsData.bills.length}`);
@@ -688,6 +876,8 @@ function generateReport(changes, errors) {
   const timestamp = new Date().toISOString();
   const resultsPath = join(__dirname, '../bill-status-history.json');
 
+  let previousEntry = null;
+
   try {
     let history = [];
     try {
@@ -695,6 +885,8 @@ function generateReport(changes, errors) {
     } catch (e) {
       // File doesn't exist yet, start fresh
     }
+
+    previousEntry = history.length > 0 ? history[history.length - 1] : null;
 
     history.push({
       timestamp,
@@ -714,6 +906,44 @@ function generateReport(changes, errors) {
   }
 
   console.log('\n' + '='.repeat(80));
+
+  // Build the diff-based summary that gets emailed (this file, not the full report, is the email content)
+  const diff = diffAgainstPrevious(changes, previousEntry ? previousEntry.changes : []);
+  const hasMeaningfulChanges = passedBills.length > 0 ||
+    diff.priorityEscalations.length > 0 ||
+    diff.newHearings.length > 0 ||
+    diff.newMarkups.length > 0 ||
+    diff.newFloorVotes.length > 0 ||
+    diff.cosponsorJumps.length > 0 ||
+    errors.length > 0;
+
+  const runUrl = (process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY && process.env.GITHUB_RUN_ID)
+    ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
+    : null;
+
+  const summaryHtml = buildSummaryHtml({
+    diff,
+    passedBills,
+    errors,
+    totalBills: billsData.bills.length,
+    timestamp,
+    previousTimestamp: previousEntry ? previousEntry.timestamp : null,
+    runUrl
+  });
+
+  const summaryPath = join(__dirname, '../monitoring-summary.html');
+  writeFileSync(summaryPath, summaryHtml);
+  console.log(`💾 Summary saved to: ${summaryPath}`);
+
+  const metaPath = join(__dirname, '../monitoring-meta.json');
+  writeFileSync(metaPath, JSON.stringify({
+    timestamp,
+    totalBills: billsData.bills.length,
+    passedCount: passedBills.length,
+    errorCount: errors.length,
+    hasMeaningfulChanges
+  }, null, 2));
+  console.log(`💾 Meta saved to: ${metaPath}`);
 }
 
 // Run the monitoring
