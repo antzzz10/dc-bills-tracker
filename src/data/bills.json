@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-22",
+  "lastUpdated": "2026-07-07",
   "categories": [
     {
       "id": "abolishing",
@@ -116,13 +116,14 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/7068",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s440-hr1089",
@@ -148,12 +149,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 2,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr3877",
@@ -206,12 +208,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr2096",
@@ -383,12 +386,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5015",
@@ -412,12 +416,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 5,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5016",
@@ -441,12 +446,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 5,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s2706",
@@ -470,12 +476,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5140",
@@ -724,14 +731,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 2,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5242-secondchance",
@@ -753,14 +761,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5163",
@@ -782,14 +791,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
         "cosponsors": 0,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s2517",
@@ -842,12 +852,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5125-s2854",
@@ -919,14 +930,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr884-s2636",
@@ -1000,12 +1012,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 2,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hconres14-cruz",
@@ -1028,13 +1041,14 @@
         "lastActionDate": null,
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 0,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr4851",
@@ -1058,12 +1072,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 4,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr7-s186",
@@ -1089,12 +1104,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 107,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1968-abortion",
@@ -1166,12 +1182,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 13,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s2907-hr5483",
@@ -1197,12 +1214,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 12,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1016",
@@ -1226,12 +1244,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 9,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1968-marijuana",
@@ -1365,12 +1384,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s614-hr1738",
@@ -1396,12 +1416,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 9,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1774",
@@ -1452,9 +1473,9 @@
         "lastAction": "Amendment filed to H.R. 5491",
         "lastActionDate": "2026-01-20",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
+        "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": [
           "House Committee on Foreign Affairs"
         ]
@@ -1465,7 +1486,8 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/2522",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5242-perry-cameras",
@@ -1487,14 +1509,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5242-perry-rightturn",
@@ -1516,14 +1539,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5525",
@@ -1546,9 +1570,9 @@
         "lastAction": "Passed House",
         "lastActionDate": "2025-09-19",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": true,
-        "cosponsors": 0,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "cosponsors": 2,
         "committees": [
           "Committee on Oversight and Government Reform"
         ]
@@ -1556,7 +1580,8 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5525",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s2998",
@@ -1580,12 +1605,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 5,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr69",
@@ -1609,12 +1635,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 2,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s204-hr650",
@@ -1640,12 +1667,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 5,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "sconres7-lee",
@@ -1668,13 +1696,14 @@
         "lastActionDate": null,
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 0,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1968-budget",
@@ -1746,12 +1775,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 7,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr3766",
@@ -1773,14 +1803,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s1991-hr4311",
@@ -1803,15 +1834,16 @@
         "stage": null,
         "lastAction": null,
         "lastActionDate": null,
-        "hasCommitteeHearing": false,
+        "hasCommitteeHearing": true,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 15,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr4519-s2565",
@@ -1837,12 +1869,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 11,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s2404-hr4670",
@@ -1868,12 +1901,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr4788",
@@ -1897,12 +1931,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 45,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5183",
@@ -1924,14 +1959,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5474",
@@ -1955,12 +1991,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr6372-s3327",
@@ -1986,12 +2023,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 27,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hjres142-sjres102",
@@ -2099,17 +2137,18 @@
         "stage": null,
         "lastAction": "Ordered reported by Committee on Oversight and Government Reform",
         "lastActionDate": "2025-09-10",
-        "hasCommitteeHearing": true,
+        "hasCommitteeHearing": false,
         "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": [
           "Oversight and Government Reform"
         ]
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5181",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1686",
@@ -2134,12 +2173,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 1,
+        "cosponsors": 2,
         "committees": []
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1686",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1421",
@@ -2164,7 +2204,7 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 20,
+        "cosponsors": 53,
         "committees": [
           "Judiciary",
           "Energy and Commerce"
@@ -2172,7 +2212,8 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1421",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr954",
@@ -2291,7 +2332,7 @@
         "lastAction": "Reported by Senate Appropriations Committee",
         "lastActionDate": "2025-12-01",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
+        "hasCommitteeMarkup": false,
         "hasFloorVote": false,
         "cosponsors": 0,
         "committees": [
@@ -2300,7 +2341,8 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/3290",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr51",
@@ -2329,7 +2371,7 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 206,
+        "cosponsors": 207,
         "committees": [
           "Energy and Commerce Committee",
           "Judiciary Committee",
@@ -2340,7 +2382,8 @@
       },
       "attackType": "unknown",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr7881",
@@ -2570,7 +2613,7 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 2,
+        "cosponsors": 3,
         "committees": [
           "Oversight and Government Reform Committee",
           "Judiciary Committee"
@@ -2578,7 +2621,8 @@
       },
       "attackType": "unknown",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5698",
@@ -2709,13 +2753,14 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 7,
         "committees": []
       },
       "attackType": "direct",
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/192",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hjres193-sjres194",
@@ -2741,13 +2786,14 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 8,
         "committees": []
       },
       "attackType": "direct",
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/193",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr2693",
@@ -2774,7 +2820,7 @@
         "lastAction": "Ordered to be Reported (Amended) by the Yeas and Nays: 40 - 0.",
         "lastActionDate": "2025-09-10",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
         "cosponsors": 1,
         "committees": [
@@ -2782,7 +2828,8 @@
           "Rules Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "passage": {}
     },
     {
       "id": "hr9362",
