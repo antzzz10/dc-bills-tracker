@@ -98,7 +98,7 @@ You currently have uncommitted changes to:
 
 ## Understanding the Automated Commits
 
-The monitoring workflow (`monitor-bills-FIXED.yml`) runs daily at 9 AM EST and updates:
+The monitoring workflow (`monitor-bills.yml`) runs daily at 9 AM EST and updates:
 - `bill-status-history.json` - Historical tracking data
 - `src/data/bills.json` - Current bill statuses
 

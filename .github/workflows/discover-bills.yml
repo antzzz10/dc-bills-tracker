@@ -31,6 +31,12 @@ jobs:
       - name: Show discovery report
         run: cat discovery-report.txt
 
+      # Data-quality gate: newly discovered bills are provisional (exempt from
+      # attackType checks) but must not break structure, duplicate IDs, or
+      # contradict golden labels. Fails before anything is committed or deployed.
+      - name: Lint bill data (consistency + golden-label eval)
+        run: node scripts/lint-bills.js
+
       - name: Check for new bills
         id: check_changes
         run: |

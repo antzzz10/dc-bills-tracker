@@ -32,7 +32,7 @@ The auto-discovery scoring detects DC-*relatedness*, not hostility, and defaulte
 | H.R. 7881 | DC Superior Court juror pay parity (Norton) | **support** — court fix only Congress can make | title+sponsor |
 | H.R. 1537 | Senior jury duty opt-out (Norton) | **support** — same | title+sponsor |
 | H.R. 5698 | DC Clemency Home Rule Act (Norton) | **support** — grants DC a power every state has | CRS summary |
-| H.R. 5092 | DC Police Home Rule Act (Norton) | **support** — DC control of MPD | **title+sponsor only** (Congress.gov blocked fetch) |
+| H.R. 5092 | DC Police Home Rule Act (Norton) | **support** — repeals the President's authority to assume emergency control of DC police | govinfo BILLSTATUS official title (verified same day; initial review was title+sponsor only) |
 | H.R. 2693 | Electronic Transmittal of Legislation (Norton) | **support** — modernizes congressional review | CRS summary |
 | H.R. 9362 | Automatic DC judge appointments (Norton) | **support** — reduces federal control of DC courts | full title |
 | H.R. 6950 | DC Transportation Funding Equality (Norton) | **support** — DOT grant parity | CRS summary |
@@ -44,16 +44,16 @@ The auto-discovery scoring detects DC-*relatedness*, not hostility, and defaulte
 
 All 13: `provisional: false`, `reviewedDate: 2026-07-12`, `reviewMethod: manual-three-prong`, real descriptions written. Counts moved from 82/18/2 (bills/riders/support) to **73/18/11**.
 
-**Review flag:** H.R. 5092's classification rests on title + sponsor only. Confidence is high (Norton "Home Rule Act" naming pattern matches her other bills), but it should be confirmed against the CRS summary when the Congress.gov API key is available.
+**Review flag (resolved same day):** H.R. 5092 was initially classified on title + sponsor only because Congress.gov and GovTrack block automated page fetches. Resolved via govinfo.gov bulk data (`BILLSTATUS-119hr5092.xml`), which is fetchable: the official title confirms it repeals the President's authority to assume emergency control of DC police — `support` stands. **Pattern for future reviews:** when Congress.gov pages 403, use `https://www.govinfo.gov/bulkdata/BILLSTATUS/{congress}/{type}/BILLSTATUS-{congress}{type}{number}.xml`.
 
 ## Documented divergence from the Scorecard: S. 402
 
 The Scorecard author lists S. 402 (Words Matter for the DC Courts Act) as a full attack — structurally correct under prong 3 (a state would update its own code). We keep `position: support` because the content is benign and Norton sponsors the House companion, while retaining `attackType: direct` to record the structural incursion. Pinned in golden labels with this note so it never silently flips.
 
-## Follow-ups (not done here)
-1. **UI badges** for direct/partial once the design system lands.
-2. **Methodology blurb on the site** (public-facing summary of METHODOLOGY.md).
-3. **CI wiring:** add `node scripts/lint-bills.js` to the monitor/discover workflows so bad data fails the run. Not done blind — workflows were recently fragile; test locally first.
-4. **H.R. 2522 anomaly:** has `hasCommitteeMarkup: true` but sits at Medium; per `calculatePriority` markup → High. Investigate why the monitor didn't escalate.
-5. **Verify H.R. 5092** against CRS summary (see review flag above).
-6. **Reply to the Scorecard author** — their flagged bills are all live on the site; also worth requesting their full decision tree (the embedded sheet is access-restricted).
+## Follow-ups
+1. **UI badges** for direct/partial once the design system lands. *(Open)*
+2. **Methodology blurb on the site** (public-facing summary of METHODOLOGY.md). *(Open)*
+3. **CI wiring** — DONE same day: `lint-bills.js` gates both data-writing workflows (monitor, discover) before commit/deploy; `monitor-bills-FIXED.yml` renamed to `monitor-bills.yml`; weekly-digest schedule paused pending the Kit v4 API key fix (was failing every week since 2026-06-09).
+4. **H.R. 2522 anomaly:** has `hasCommitteeMarkup: true` but sits at Medium; per `calculatePriority` markup → High. Investigate why the monitor didn't escalate. *(Open)*
+5. **Verify H.R. 5092** — DONE same day via govinfo (see resolved review flag above).
+6. **Reply to the Scorecard author** — drafted 2026-07-12, pending user send. Also requests their full decision tree (the embedded sheet is access-restricted).

@@ -1,8 +1,14 @@
 name: Weekly Email Digest
 
 on:
-  schedule:
-    - cron: '0 14 * * 2'  # Tuesdays at 14:00 UTC (9am ET / 10am EDT)
+  # Schedule paused 2026-07-12: every weekly run since 2026-06-09 failed with
+  # Kit API 401 ("The access token is invalid") — the KIT_API_KEY secret is a
+  # v3 (ConvertKit) key but scripts/weekly-digest.js calls the v4 API.
+  # Fix: Kit Settings → Developer → API Keys → copy the V4 key, update the
+  # KIT_API_KEY repo secret, run this workflow manually in "test" mode, then
+  # restore the schedule below.
+  # schedule:
+  #   - cron: '0 14 * * 2'  # Tuesdays at 14:00 UTC (9am ET / 10am EDT)
   workflow_dispatch:
     inputs:
       mode:

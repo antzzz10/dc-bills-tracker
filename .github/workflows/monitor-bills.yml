@@ -31,6 +31,11 @@ jobs:
           CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
         run: node scripts/monitor-bills.js > monitoring-report.txt
 
+      # Data-quality gate: if the updated bills.json fails consistency checks or
+      # drifts from golden labels, fail here so nothing is committed or deployed.
+      - name: Lint bill data (consistency + golden-label eval)
+        run: node scripts/lint-bills.js
+
       - name: Check for unvalidated bills
         run: |
           node --input-type=module << 'EOF'
