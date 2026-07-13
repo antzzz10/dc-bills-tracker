@@ -351,13 +351,27 @@ function getSimplifiedStatus(bill) {
 
 // Determine priority based on legislative activity
 function calculatePriority(billStatus, billData) {
+  const hasMomentum = billStatus.hasFloorVote || billStatus.hasCommitteeMarkup ||
+    billStatus.hasCommitteeHearing || billStatus.cosponsorsCount >= 20;
+
+  // Partial attacks (bills where DC is not the primary target) can only rank
+  // high on real legislative momentum — never on a manual flag or FreeDC
+  // listing alone. See METHODOLOGY.md.
+  const cappedAtMedium = billData.attackType === 'partial' && !hasMomentum;
+
   // Check if bill is manually marked as high priority in bills.json
   if (billData.priority === 'high' && billData.prioritySource === 'manual') {
+    if (cappedAtMedium) {
+      return { priority: 'medium', source: 'manual', reason: 'Manually flagged (capped: partial attack without momentum)' };
+    }
     return { priority: 'high', source: 'manual', reason: 'Manually flagged' };
   }
 
   // Check if listed on FreeDC (you can set this in bills.json)
   if (billData.prioritySource === 'freedc') {
+    if (cappedAtMedium) {
+      return { priority: 'medium', source: 'freedc', reason: 'Listed on FreeDC (capped: partial attack without momentum)' };
+    }
     return { priority: 'high', source: 'freedc', reason: 'Listed on FreeDC' };
   }
 

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-22",
+  "lastUpdated": "2026-07-13",
   "categories": [
     {
       "id": "abolishing",
@@ -116,13 +116,14 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/7068",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s440-hr1089",
@@ -148,12 +149,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 2,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr3877",
@@ -206,12 +208,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr2096",
@@ -383,12 +386,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5015",
@@ -412,12 +416,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 5,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5016",
@@ -441,12 +446,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 5,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s2706",
@@ -470,12 +476,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5140",
@@ -724,14 +731,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 2,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5242-secondchance",
@@ -753,14 +761,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5163",
@@ -782,14 +791,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
         "cosponsors": 0,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s2517",
@@ -842,12 +852,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5125-s2854",
@@ -919,14 +930,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr884-s2636",
@@ -1000,12 +1012,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 2,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hconres14-cruz",
@@ -1028,13 +1041,14 @@
         "lastActionDate": null,
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 0,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr4851",
@@ -1058,12 +1072,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 4,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr7-s186",
@@ -1089,12 +1104,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 108,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1968-abortion",
@@ -1166,12 +1182,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 13,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s2907-hr5483",
@@ -1197,12 +1214,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 12,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1016",
@@ -1226,12 +1244,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 9,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1968-marijuana",
@@ -1365,12 +1384,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s614-hr1738",
@@ -1396,12 +1416,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 9,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1774",
@@ -1452,9 +1473,9 @@
         "lastAction": "Amendment filed to H.R. 5491",
         "lastActionDate": "2026-01-20",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
+        "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": [
           "House Committee on Foreign Affairs"
         ]
@@ -1465,7 +1486,8 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/2522",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5242-perry-cameras",
@@ -1487,14 +1509,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5242-perry-rightturn",
@@ -1516,14 +1539,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5525",
@@ -1546,9 +1570,9 @@
         "lastAction": "Passed House",
         "lastActionDate": "2025-09-19",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": true,
-        "cosponsors": 0,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "cosponsors": 2,
         "committees": [
           "Committee on Oversight and Government Reform"
         ]
@@ -1556,7 +1580,8 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5525",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s2998",
@@ -1580,12 +1605,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 5,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr69",
@@ -1609,12 +1635,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 2,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s204-hr650",
@@ -1640,12 +1667,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 5,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "sconres7-lee",
@@ -1668,13 +1696,14 @@
         "lastActionDate": null,
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 0,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1968-budget",
@@ -1746,12 +1775,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 7,
         "committees": []
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr3766",
@@ -1773,14 +1803,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s1991-hr4311",
@@ -1803,15 +1834,16 @@
         "stage": null,
         "lastAction": null,
         "lastActionDate": null,
-        "hasCommitteeHearing": false,
+        "hasCommitteeHearing": true,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 15,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr4519-s2565",
@@ -1837,12 +1869,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 11,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s2404-hr4670",
@@ -1868,12 +1901,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr4788",
@@ -1897,12 +1931,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 45,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5183",
@@ -1924,14 +1959,15 @@
         "lastAction": null,
         "lastActionDate": null,
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr5474",
@@ -1955,12 +1991,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 3,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr6372-s3327",
@@ -1986,12 +2023,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 27,
         "committees": []
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hjres142-sjres102",
@@ -2099,17 +2137,18 @@
         "stage": null,
         "lastAction": "Ordered reported by Committee on Oversight and Government Reform",
         "lastActionDate": "2025-09-10",
-        "hasCommitteeHearing": true,
+        "hasCommitteeHearing": false,
         "hasCommitteeMarkup": true,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": [
           "Oversight and Government Reform"
         ]
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5181",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1686",
@@ -2134,12 +2173,13 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 1,
+        "cosponsors": 2,
         "committees": []
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1686",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr1421",
@@ -2164,7 +2204,7 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 20,
+        "cosponsors": 53,
         "committees": [
           "Judiciary",
           "Energy and Commerce"
@@ -2172,7 +2212,8 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1421",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hr954",
@@ -2291,7 +2332,7 @@
         "lastAction": "Reported by Senate Appropriations Committee",
         "lastActionDate": "2025-12-01",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
+        "hasCommitteeMarkup": false,
         "hasFloorVote": false,
         "cosponsors": 0,
         "committees": [
@@ -2300,83 +2341,8 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/3290",
       "congress": 119,
-      "congressValidated": false
-    },
-    {
-      "id": "hr51",
-      "billNumbers": [
-        "H.R. 51"
-      ],
-      "title": "Washington, D.C. Admission Act",
-      "sponsors": [
-        "Del. Norton, Eleanor Holmes [D-DC]"
-      ],
-      "description": "Auto-discovered. Washington, D.C. Admission ActThis bill provides for the establishment of the State of Washington, Douglass Commonwealth, and its admission into the United States.The state is composed of most of the territory of the District of Columbia (DC), excluding a specified area that encompasses the U.S. Cap...",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-03-16",
-      "relevanceScore": 80,
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/51",
-      "status": {
-        "stage": null,
-        "lastAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committees on Rules, Armed Services, the Judiciary, and Energy and Commerce, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
-        "lastActionDate": "2025-01-03",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 206,
-        "committees": [
-          "Energy and Commerce Committee",
-          "Judiciary Committee",
-          "Armed Services Committee",
-          "Rules Committee",
-          "Oversight and Government Reform Committee"
-        ]
-      },
-      "attackType": "unknown",
-      "congress": 119,
-      "congressValidated": false
-    },
-    {
-      "id": "hr7881",
-      "billNumbers": [
-        "H.R. 7881"
-      ],
-      "title": "To amend title 11, District of Columbia Official Code, to provide that grand and petit jurors serving in the Superior Court of the District of Columbia shall receive fees and expenses at the same rates paid to grand and petit jurors appearing in the district courts of the United States.",
-      "sponsors": [
-        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
-      ],
-      "description": "Auto-discovered.",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-03-16",
-      "relevanceScore": 45,
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/7881",
-      "status": {
-        "stage": null,
-        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "lastActionDate": "2026-03-09",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
-        "committees": [
-          "Oversight and Government Reform Committee"
-        ]
-      },
-      "attackType": "unknown",
-      "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "s4150",
@@ -2387,13 +2353,13 @@
       "sponsors": [
         "Sen. Scott, Rick [R-FL]"
       ],
-      "description": "Auto-discovered.",
+      "description": "Would amend the Home Rule Act to impose a uniform 60-day congressional review period on all DC laws and extend disapproval resolutions to DC executive orders and regulations — a major expansion of congressional veto power over DC self-governance. Senate counterpart in spirit to H.R. 5183.",
       "category": "other",
       "position": "oppose",
       "type": "bill",
       "priority": "watching",
       "prioritySource": "auto-discovered",
-      "provisional": true,
+      "provisional": false,
       "autoDiscovered": true,
       "discoveredDate": "2026-03-23",
       "relevanceScore": 60,
@@ -2410,9 +2376,11 @@
           "Homeland Security and Governmental Affairs Committee"
         ]
       },
-      "attackType": "unknown",
+      "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
     },
     {
       "id": "hr5103",
@@ -2423,13 +2391,13 @@
       "sponsors": [
         "Rep. McGuire, John J. [R-VA-5]"
       ],
-      "description": "Auto-discovered. Make the District of Columbia Safe and Beautiful Act&nbsp;This bill establishes a commission in the executive branch to advise on&nbsp;certain criminal and immigration matters in the District of Columbia (DC). It also establishes a federal program to ensure that  commonly visited areas in DC are cle...",
-      "category": "other",
+      "description": "Would establish a federal executive-branch commission over criminal and immigration matters in DC and a federally managed program controlling the cleanliness and maintenance of DC public spaces — federal takeover of core local functions.",
+      "category": "crime",
       "position": "oppose",
       "type": "bill",
       "priority": "watching",
       "prioritySource": "auto-discovered",
-      "provisional": true,
+      "provisional": false,
       "autoDiscovered": true,
       "discoveredDate": "2026-03-30",
       "relevanceScore": 90,
@@ -2447,7 +2415,7 @@
           "Natural Resources Committee"
         ]
       },
-      "attackType": "unknown",
+      "attackType": "direct",
       "passage": {
         "house": {
           "date": "2025-04-10",
@@ -2468,7 +2436,9 @@
         }
       },
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
     },
     {
       "id": "hr8297",
@@ -2479,13 +2449,13 @@
       "sponsors": [
         "Rep. Crenshaw, Dan [R-TX-2]"
       ],
-      "description": "Auto-discovered.",
-      "category": "other",
+      "description": "Would override DC's firearm laws wholesale: eliminating acquisition and possession restrictions, mandating concealed carry, prohibiting feature-based firearm bans, and enabling purchases through dealers in neighboring states.",
+      "category": "crime",
       "position": "oppose",
       "type": "bill",
       "priority": "watching",
       "prioritySource": "auto-discovered",
-      "provisional": true,
+      "provisional": false,
       "autoDiscovered": true,
       "discoveredDate": "2026-04-20",
       "relevanceScore": 45,
@@ -2503,62 +2473,28 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown",
+      "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
-    },
-    {
-      "id": "hr1537",
-      "billNumbers": [
-        "H.R. 1537"
-      ],
-      "title": "District of Columbia Superior Court Jury Duty for Seniors Opt Out Act of 2025",
-      "sponsors": [
-        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
-      ],
-      "description": "Auto-discovered.",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-04-20",
-      "relevanceScore": 70,
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1537",
-      "status": {
-        "stage": null,
-        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "lastActionDate": "2025-02-24",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
-        "committees": [
-          "Oversight and Government Reform Committee"
-        ]
-      },
-      "attackType": "unknown",
-      "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
     },
     {
       "id": "hr8455",
       "billNumbers": [
         "H.R. 8455"
       ],
-      "title": "To repeal an act entitled \"An act to retrocede the county of Alexandria, in the District of Columbia, to the State of Virginia,\" and for other purposes.",
+      "title": "Make DC Square Again Act",
       "sponsors": [
         "Rep. McCormick, Richard [R-GA-7]"
       ],
-      "description": "Auto-discovered.",
+      "description": "Would repeal the 1846 retrocession of Alexandria County to Virginia, redrawing the District's boundaries without DC's consent — pitched primarily as a fix for Virginia's redistricting disputes. No state's borders can be changed without its consent; DC's can.",
       "category": "other",
       "position": "oppose",
       "type": "bill",
       "priority": "watching",
       "prioritySource": "auto-discovered",
-      "provisional": true,
+      "provisional": false,
       "autoDiscovered": true,
       "discoveredDate": "2026-04-27",
       "relevanceScore": 45,
@@ -2570,51 +2506,18 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 2,
+        "cosponsors": 3,
         "committees": [
           "Oversight and Government Reform Committee",
           "Judiciary Committee"
         ]
       },
-      "attackType": "unknown",
+      "attackType": "partial",
       "congress": 119,
-      "congressValidated": false
-    },
-    {
-      "id": "hr5698",
-      "billNumbers": [
-        "H.R. 5698"
-      ],
-      "title": "District of Columbia Clemency Home Rule Act",
-      "sponsors": [
-        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
-      ],
-      "description": "Auto-discovered. District of Columbia Clemency Home Rule Act This bill authorizes the District of Columbia to legislate the terms and conditions under which clemency may be granted for violations of District criminal laws. Under the bill, clemency is defined as a pardon, reprieve, or a commutation of a sentence, or ...",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-05-04",
-      "relevanceScore": 75,
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5698",
-      "status": {
-        "stage": null,
-        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "lastActionDate": "2025-10-06",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
-        "committees": [
-          "Oversight and Government Reform Committee"
-        ]
-      },
-      "attackType": "unknown",
-      "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {},
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
     },
     {
       "id": "hr8801",
@@ -2650,42 +2553,6 @@
       "congressValidated": false
     },
     {
-      "id": "hr5092",
-      "billNumbers": [
-        "H.R. 5092"
-      ],
-      "title": "District of Columbia Police Home Rule Act",
-      "sponsors": [
-        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
-      ],
-      "description": "Auto-discovered.",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-05-25",
-      "relevanceScore": 60,
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5092",
-      "status": {
-        "stage": null,
-        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "lastActionDate": "2025-09-02",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 5,
-        "committees": [
-          "Oversight and Government Reform Committee"
-        ]
-      },
-      "attackType": "unknown",
-      "congress": 119,
-      "congressValidated": false
-    },
-    {
       "id": "hjres192-sjres195",
       "billNumbers": [
         "H.J.Res. 192",
@@ -2709,13 +2576,14 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 7,
         "committees": []
       },
       "attackType": "direct",
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/192",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": false,
+      "passage": {}
     },
     {
       "id": "hjres193-sjres194",
@@ -2741,151 +2609,14 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 8,
         "committees": []
       },
       "attackType": "direct",
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/193",
       "congress": 119,
-      "congressValidated": false
-    },
-    {
-      "id": "hr2693",
-      "billNumbers": [
-        "H.R. 2693"
-      ],
-      "title": "District of Columbia Electronic Transmittal of Legislation Act",
-      "sponsors": [
-        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
-      ],
-      "description": "Auto-discovered. District of Columbia Electronic Transmittal of Legislation ActThis bill authorizes the District of Columbia (DC) Council to transmit legislation, including amendments to the DC Charter, to Congress by electronic means. (Current law requires most nonemergency DC legislation to be transmitted to Congr...",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-06-15",
-      "relevanceScore": 90,
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/2693",
-      "status": {
-        "stage": null,
-        "lastAction": "Ordered to be Reported (Amended) by the Yeas and Nays: 40 - 0.",
-        "lastActionDate": "2025-09-10",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 1,
-        "committees": [
-          "Oversight and Government Reform Committee",
-          "Rules Committee"
-        ]
-      },
-      "attackType": "unknown"
-    },
-    {
-      "id": "hr9362",
-      "billNumbers": [
-        "H.R. 9362"
-      ],
-      "title": "To amend the District of Columbia Home Rule Act to provide for the automatic appointment of judges to the District of Columbia courts without the advice and consent of the Senate, and for other purposes.",
-      "sponsors": [
-        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
-      ],
-      "description": "Auto-discovered.",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-06-22",
-      "relevanceScore": 60,
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/9362",
-      "status": {
-        "stage": null,
-        "lastAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committee on Rules, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
-        "lastActionDate": "2026-06-18",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
-        "committees": [
-          "Rules Committee",
-          "Oversight and Government Reform Committee"
-        ]
-      },
-      "attackType": "unknown"
-    },
-    {
-      "id": "hr6950",
-      "billNumbers": [
-        "H.R. 6950"
-      ],
-      "title": "District of Columbia Transportation Funding Equality Act",
-      "sponsors": [
-        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
-      ],
-      "description": "Auto-discovered. District of Columbia Transportation Funding Equality ActThis bill makes the District of Columbia eligible for certain Department of Transportation (DOT) grant programs by treating the District as a state under the programs.Specifically, the bill applies to the Bus and Bus Facilities Grant Program, w...",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-06-22",
-      "relevanceScore": 40,
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/6950",
-      "status": {
-        "stage": null,
-        "lastAction": "Referred to the Subcommittee on Highways and Transit.",
-        "lastActionDate": "2026-01-07",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
-        "committees": [
-          "Transportation and Infrastructure Committee"
-        ]
-      },
-      "attackType": "unknown"
-    },
-    {
-      "id": "s4837",
-      "billNumbers": [
-        "S. 4837"
-      ],
-      "title": "A bill to amend the District of Columbia Home Rule Act to provide for the automatic appointment of judges to the District of Columbia courts without the advice and consent of the Senate, and for other purposes.",
-      "sponsors": [
-        "Sen. Van Hollen, Chris [D-MD]"
-      ],
-      "description": "Auto-discovered.",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-06-22",
-      "relevanceScore": 60,
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/4837",
-      "status": {
-        "stage": null,
-        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "lastActionDate": "2026-06-18",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 4,
-        "committees": [
-          "Homeland Security and Governmental Affairs Committee"
-        ]
-      },
-      "attackType": "unknown"
+      "congressValidated": false,
+      "passage": {}
     }
   ],
   "riders": [
@@ -3322,6 +3053,339 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/402",
       "congress": 119,
       "congressValidated": false
+    },
+    {
+      "id": "hr51",
+      "billNumbers": [
+        "H.R. 51"
+      ],
+      "title": "Washington, D.C. Admission Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC]"
+      ],
+      "description": "The flagship DC statehood bill. Would admit the State of Washington, Douglass Commonwealth to the Union, composed of most of the current District, with a reduced federal enclave around the Capitol, White House, and National Mall.",
+      "category": "other",
+      "position": "support",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-03-16",
+      "relevanceScore": 80,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/51",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committees on Rules, Armed Services, the Judiciary, and Energy and Commerce, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "lastActionDate": "2025-01-03",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 207,
+        "committees": [
+          "Energy and Commerce Committee",
+          "Judiciary Committee",
+          "Armed Services Committee",
+          "Rules Committee",
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "congress": 119,
+      "congressValidated": false,
+      "passage": {},
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
+    },
+    {
+      "id": "hr7881",
+      "billNumbers": [
+        "H.R. 7881"
+      ],
+      "title": "To amend title 11, District of Columbia Official Code, to provide that grand and petit jurors serving in the Superior Court of the District of Columbia shall receive fees and expenses at the same rates paid to grand and petit jurors appearing in the district courts of the United States.",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Would pay grand and petit jurors in the DC Superior Court the same fees and expenses as jurors in federal district courts. DC cannot set its own court juror pay — Congress controls the DC courts.",
+      "category": "other",
+      "position": "support",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-03-16",
+      "relevanceScore": 45,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/7881",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2026-03-09",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "congress": 119,
+      "congressValidated": false,
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
+    },
+    {
+      "id": "hr1537",
+      "billNumbers": [
+        "H.R. 1537"
+      ],
+      "title": "District of Columbia Superior Court Jury Duty for Seniors Opt Out Act of 2025",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Would let DC residents age 70 and older opt out of jury duty in the DC Superior Court. Another court-administration fix only Congress can make because Congress controls the DC courts.",
+      "category": "other",
+      "position": "support",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-04-20",
+      "relevanceScore": 70,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1537",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-02-24",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "congress": 119,
+      "congressValidated": false,
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
+    },
+    {
+      "id": "hr5698",
+      "billNumbers": [
+        "H.R. 5698"
+      ],
+      "title": "District of Columbia Clemency Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Would authorize DC to legislate the terms and conditions of clemency (pardons, reprieves, commutations) for violations of DC criminal law — a power every state governor has but DC lacks.",
+      "category": "other",
+      "position": "support",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-05-04",
+      "relevanceScore": 75,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5698",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-10-06",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "congress": 119,
+      "congressValidated": false,
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
+    },
+    {
+      "id": "hr5092",
+      "billNumbers": [
+        "H.R. 5092"
+      ],
+      "title": "District of Columbia Police Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Would give DC full home-rule control over the Metropolitan Police Department, ending the President's authority to commandeer DC's police force under the Home Rule Act.",
+      "category": "other",
+      "position": "support",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-05-25",
+      "relevanceScore": 60,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5092",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-09-02",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 5,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "congress": 119,
+      "congressValidated": false,
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
+    },
+    {
+      "id": "hr2693",
+      "billNumbers": [
+        "H.R. 2693"
+      ],
+      "title": "District of Columbia Electronic Transmittal of Legislation Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Would let the DC Council transmit legislation to Congress electronically instead of by physical delivery — a modernization of the congressional review process DC cannot make on its own.",
+      "category": "other",
+      "position": "support",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-06-15",
+      "relevanceScore": 90,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/2693",
+      "status": {
+        "stage": null,
+        "lastAction": "Ordered to be Reported (Amended) by the Yeas and Nays: 40 - 0.",
+        "lastActionDate": "2025-09-10",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": true,
+        "hasFloorVote": false,
+        "cosponsors": 1,
+        "committees": [
+          "Oversight and Government Reform Committee",
+          "Rules Committee"
+        ]
+      },
+      "passage": {},
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
+    },
+    {
+      "id": "hr9362",
+      "billNumbers": [
+        "H.R. 9362"
+      ],
+      "title": "To amend the District of Columbia Home Rule Act to provide for the automatic appointment of judges to the District of Columbia courts without the advice and consent of the Senate, and for other purposes.",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Would provide for automatic appointment of judges to the DC courts without Senate advice and consent, reducing federal control over DC's local judiciary.",
+      "category": "other",
+      "position": "support",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-06-22",
+      "relevanceScore": 60,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/9362",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committee on Rules, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "lastActionDate": "2026-06-18",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Rules Committee",
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
+    },
+    {
+      "id": "hr6950",
+      "billNumbers": [
+        "H.R. 6950"
+      ],
+      "title": "District of Columbia Transportation Funding Equality Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Would treat DC as a state for certain Department of Transportation grant programs (including Bus and Bus Facilities grants), ending DC's exclusion from funding every state receives.",
+      "category": "other",
+      "position": "support",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-06-22",
+      "relevanceScore": 40,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/6950",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the Subcommittee on Highways and Transit.",
+        "lastActionDate": "2026-01-07",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Transportation and Infrastructure Committee"
+        ]
+      },
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
+    },
+    {
+      "id": "s4837",
+      "billNumbers": [
+        "S. 4837"
+      ],
+      "title": "A bill to amend the District of Columbia Home Rule Act to provide for the automatic appointment of judges to the District of Columbia courts without the advice and consent of the Senate, and for other purposes.",
+      "sponsors": [
+        "Sen. Van Hollen, Chris [D-MD]"
+      ],
+      "description": "Senate companion to H.R. 9362: automatic appointment of DC court judges without Senate advice and consent, reducing federal control over DC's local judiciary.",
+      "category": "other",
+      "position": "support",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-06-22",
+      "relevanceScore": 60,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/4837",
+      "status": {
+        "stage": null,
+        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "lastActionDate": "2026-06-18",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 4,
+        "committees": [
+          "Homeland Security and Governmental Affairs Committee"
+        ]
+      },
+      "reviewedDate": "2026-07-12",
+      "reviewMethod": "manual-three-prong"
     }
   ]
 }

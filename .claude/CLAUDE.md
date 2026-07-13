@@ -96,11 +96,13 @@ npm run deploy:staging      # Deploy to staging environment
 
 ### Data Structure (`src/data/bills.json`)
 
-The bills data uses a three-section structure:
+The bills data uses a three-section structure (counts as of 2026-07-12):
 
-1. **`bills`** (54 items) - Primary bills to oppose
-2. **`riders`** (17 items) - Budget riders in appropriations bills (H.R. 5166)
-3. **`supportBills`** (0 items currently) - Pro-DC bills to support
+1. **`bills`** (73 items) - Primary bills to oppose
+2. **`riders`** (18 items) - Budget riders in appropriations bills (H.R. 5166)
+3. **`supportBills`** (11 items) - Pro-DC bills to support
+
+Classification follows `METHODOLOGY.md` (repo root): `position` (oppose/support advocacy stance) is independent of `attackType` ("direct" | "partial" per the Statehood Scorecard's three-prong test). Auto-discovered bills are `provisional: true` until a human review sets these fields. Golden labels in `scripts/eval/golden-labels.json` pin reviewed classifications; `node scripts/lint-bills.js` (offline, no API key) checks consistency + golden drift and must pass before deploying data changes.
 
 Each bill/rider includes:
 - `position`: "oppose" | "support"
@@ -129,6 +131,8 @@ Each bill/rider includes:
 - In committee (no hearing yet)
 
 **Watching/Low** - Recently introduced, no activity
+
+**Partial-attack cap** (added 2026-07-12): bills with `attackType: "partial"` reach high priority only via legislative momentum (floor vote, markup, hearing, 20+ cosponsors) — never via manual flag or FreeDC listing alone. Enforced in `calculatePriority` and checked by `scripts/lint-bills.js`.
 
 ### Passed Bills Tracking
 

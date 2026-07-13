@@ -1,0 +1,28 @@
+{
+  "description": "Golden classification labels for eval. lint-bills.js fails if bills.json drifts from these. attackType null means the field must be absent (support bills are not incursions). When a classification legitimately changes, update this file in the same commit and record why in a decision note.",
+  "updated": "2026-07-12",
+  "labels": {
+    "hr51": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Washington, D.C. Admission Act — the flagship statehood bill" },
+    "hr7881": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Norton: DC Superior Court juror pay parity" },
+    "hr1537": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Norton: senior jury duty opt-out" },
+    "hr5698": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Norton: DC clemency power" },
+    "hr5092": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Norton: DC control of MPD; verified by title+sponsor only" },
+    "hr2693": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Norton: electronic transmittal of legislation" },
+    "hr9362": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Norton: DC judge appointments without Senate consent" },
+    "hr6950": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Norton: DOT grant parity for DC" },
+    "s4837": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Van Hollen: Senate companion to H.R. 9362" },
+    "s4150": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Rick Scott: 60-day review of all DC laws + disapproval of DC executive orders/regulations" },
+    "hr5103": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Federal commission over DC crime/immigration + federal control of public spaces" },
+    "hr8297": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Overrides DC firearm laws wholesale" },
+    "hr8455": { "position": "oppose", "attackType": "partial", "source": "manual-review-2026-07-12", "note": "Make DC Square Again Act — redraws DC boundaries; primarily a Virginia redistricting play" },
+    "hr5815": { "position": "oppose", "attackType": "direct", "source": "scorecard-author-2026-07", "note": "Author lists as full attack" },
+    "hr5181": { "position": "oppose", "attackType": "direct", "source": "scorecard-author-2026-07", "note": "Author lists as full attack" },
+    "hr1686": { "position": "oppose", "attackType": "direct", "source": "scorecard-author-2026-07", "note": "Author lists as full attack" },
+    "hr954": { "position": "oppose", "attackType": "direct", "source": "scorecard-author-2026-07", "note": "Author lists as full attack" },
+    "hr1421": { "position": "oppose", "attackType": "partial", "source": "scorecard-author-2026-07", "note": "Author lists as partial attack (*)" },
+    "hjres31": { "position": "oppose", "attackType": "partial", "source": "scorecard-author-2026-07", "note": "Author lists as partial attack (*)" },
+    "s487": { "position": "oppose", "attackType": "partial", "source": "scorecard-author-2026-07", "note": "Author lists as partial attack (*)" },
+    "s3290": { "position": "oppose", "attackType": "partial", "source": "scorecard-author-2026-07", "note": "Author lists as partial attack (*)" },
+    "s402": { "position": "support", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Documented divergence from scorecard author: structurally a prong-3 incursion (attackType direct) but content is benign and Norton sponsors the companion, so position is support. See METHODOLOGY.md edge case." }
+  }
+}
