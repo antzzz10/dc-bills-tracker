@@ -2684,11 +2684,12 @@
         "lastActionDate": "2025-03-18",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
+        "hasFloorVote": true,
         "cosponsors": 6,
         "committees": []
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "passage": {}
     }
   ],
   "riders": [
