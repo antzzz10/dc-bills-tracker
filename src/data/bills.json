@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-15",
+  "lastUpdated": "2026-07-20",
   "categories": [
     {
       "id": "abolishing",
@@ -2617,6 +2617,78 @@
       "congress": 119,
       "congressValidated": false,
       "passage": {}
+    },
+    {
+      "id": "hr9741",
+      "billNumbers": [
+        "H.R. 9741"
+      ],
+      "title": "To name the District of Columbia tuition assistance grant program the \"Eleanor Holmes Norton District of Columbia Tuition Assistance Grant Program\".",
+      "sponsors": [
+        "Rep. Garcia, Robert [D-CA-42]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-20",
+      "relevanceScore": 45,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-20",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/9741",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2026-07-16",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "s1077",
+      "billNumbers": [
+        "S. 1077"
+      ],
+      "title": "District of Columbia Local Funds Act, 2025",
+      "sponsors": [
+        "Sen. Collins, Susan M. [R-ME]"
+      ],
+      "description": "Auto-discovered. District of Columbia Local Funds Act, 2025This bill appropriates FY2025 local funds to the District of Columbia for programs and activities included in the District's Fiscal Year 2025 Local Budget Act of 2024.&nbsp;Under current law, Congress is required to approve the District's annual budget. This...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-20",
+      "relevanceScore": 65,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-20",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/1077",
+      "status": {
+        "stage": null,
+        "lastAction": "Held at the desk.",
+        "lastActionDate": "2025-03-18",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 6,
+        "committees": []
+      },
+      "attackType": "unknown"
     }
   ],
   "riders": [
