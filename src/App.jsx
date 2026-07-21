@@ -21,8 +21,12 @@ function App() {
   const [showOtherBills, setShowOtherBills] = useState(false)
 
   const { filteredBills, filteredRiders, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, totalCount, pendingCount, passedCount } = useMemo(() => {
-    const allBills = billsData.bills || []
-    const allRiders = billsData.riders || []
+    // Exclude provisional (auto-discovered, not-yet-human-reviewed) entries from
+    // the public oppose/support sections — their `position` is an unverified
+    // default, not a reviewed classification. They still surface in Recent
+    // Activity (via the raw billsData passed there) as "Introduced".
+    const allBills = (billsData.bills || []).filter(bill => !bill.provisional)
+    const allRiders = (billsData.riders || []).filter(rider => !rider.provisional)
 
     // Start with all bills and apply filters
     let filteredAllBills = allBills

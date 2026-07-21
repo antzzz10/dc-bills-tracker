@@ -34,7 +34,9 @@ const lastRunPath = join(__dirname, '../.discover-last-run.json');
 const DC_COMMITTEES = [
   { code: 'hsgo10', chamber: 'house', name: 'House Oversight - DC Subcommittee' },
   { code: 'hsgo00', chamber: 'house', name: 'House Oversight (parent)' },
-  { code: 'ssga00', chamber: 'senate', name: 'Senate HSGAC' }
+  { code: 'ssga00', chamber: 'senate', name: 'Senate HSGAC' },
+  { code: 'hsap00', chamber: 'house', name: 'House Appropriations' },
+  { code: 'ssap00', chamber: 'senate', name: 'Senate Appropriations' }
 ];
 
 // Bill types to scan
@@ -43,7 +45,7 @@ const BILL_TYPES = ['hr', 's', 'hjres', 'sjres'];
 // DC keyword patterns (positive signals)
 const DC_POSITIVE_PATTERNS = [
   /district\s+of\s+columbia/i,
-  /\bD\.C\.\b/,
+  /\bD\.C\.(?!\w)/i,
   /\bDC\b(?!\s*(Comics?|power|current|voltage|motor|circuit|Universe))/,
   /home\s+rule/i,
   /DC\s+Council/i,
@@ -186,37 +188,58 @@ async function discoverFromCommittees() {
   for (const committee of DC_COMMITTEES) {
     log(`  Checking ${committee.name} (${committee.code})...`);
 
-    try {
-      const url = `${API_BASE_URL}/committee/${CONGRESS_NUMBER}/${committee.chamber}/${committee.code}/bills?api_key=${CONGRESS_API_KEY}&limit=250`;
-      const response = await rateLimitedFetch(url);
-      const data = await response.json();
-      const bills = data.bills || [];
+    let offset = 0;
+    const limit = 250;
+    let hasMore = true;
+    let committeeBillCount = 0;
 
-      log(`    Found ${bills.length} bills`);
+    while (hasMore) {
+      try {
+        // No `sort` param — this endpoint doesn't support it — so we must paginate
+        // through the whole list rather than assume recent bills sort first.
+        const url = `${API_BASE_URL}/committee/${CONGRESS_NUMBER}/${committee.chamber}/${committee.code}/bills?api_key=${CONGRESS_API_KEY}&limit=${limit}&offset=${offset}`;
+        const response = await rateLimitedFetch(url);
+        const data = await response.json();
+        const bills = data.bills || [];
 
-      for (const bill of bills) {
-        // Only look at current congress
-        if (bill.congress !== CONGRESS_NUMBER) continue;
+        committeeBillCount += bills.length;
 
-        const billType = bill.type?.toLowerCase();
-        const number = bill.number?.toString();
-        if (!billType || !number) continue;
+        for (const bill of bills) {
+          // Only look at current congress
+          if (bill.congress !== CONGRESS_NUMBER) continue;
 
-        const id = normalizeBillId(billType, number);
-        if (!candidates.has(id)) {
-          candidates.set(id, {
-            billType,
-            number,
-            title: bill.title || '',
-            source: [committee.name]
-          });
-        } else {
-          candidates.get(id).source.push(committee.name);
+          const billType = bill.type?.toLowerCase();
+          const number = bill.number?.toString();
+          if (!billType || !number) continue;
+
+          const id = normalizeBillId(billType, number);
+          if (!candidates.has(id)) {
+            candidates.set(id, {
+              billType,
+              number,
+              title: bill.title || '',
+              source: [committee.name]
+            });
+          } else {
+            candidates.get(id).source.push(committee.name);
+          }
         }
+
+        // Stop paginating once we get a short page back — no cap on total
+        // offset here (unlike title-scan) since a single committee's full
+        // bill list for one Congress is a bounded, much smaller set.
+        if (bills.length < limit) {
+          hasMore = false;
+        } else {
+          offset += limit;
+        }
+      } catch (error) {
+        console.log(`  ⚠️  Error querying ${committee.name} at offset ${offset}: ${error.message}`);
+        hasMore = false;
       }
-    } catch (error) {
-      console.log(`  ⚠️  Error querying ${committee.name}: ${error.message}`);
     }
+
+    log(`    Found ${committeeBillCount} bills`);
   }
 
   console.log(`  Found ${candidates.size} candidates from committees`);
@@ -451,7 +474,7 @@ function scoreRelevance(candidate, details) {
   if (/district\s+of\s+columbia/i.test(title)) {
     score += 30;
     reasons.push('Title: "District of Columbia" (+30)');
-  } else if (/\bD\.C\.\b/.test(title) || /Washington,?\s+D\.?C\.?/i.test(title)) {
+  } else if (/\bD\.C\.(?!\w)/i.test(title) || /Washington,?\s+D\.?C\.?/i.test(title)) {
     score += 20;
     reasons.push('Title: DC reference (+20)');
   }
@@ -498,6 +521,14 @@ function scoreRelevance(candidate, details) {
   if (/memorial|commemorative\s+work|monument|mural|statue|plaque/i.test(title)) {
     score -= 40;
     reasons.push('Negative signal: DC-located memorial/monument, not governance-related (-40)');
+  }
+
+  // Negative signals - honorary naming/renaming bills (programs, buildings,
+  // streets, post offices). Common, high-scoring on DC keywords alone, but
+  // not governance-related.
+  if (/^\s*to\s+(re)?name\b/i.test(title) || /^\s*to\s+(re)?designate\b/i.test(title)) {
+    score -= 40;
+    reasons.push('Negative signal: honorary naming/designation bill, not governance-related (-40)');
   }
 
   // Negative signals - bills that help or restore DC autonomy (pro-DC, not anti-DC)

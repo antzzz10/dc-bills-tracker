@@ -267,8 +267,10 @@ function DownloadButton({ filteredBills, filteredRiders }) {
   }
 
   const handleDownload = (format, scope) => {
-    const bills = scope === 'filtered' ? filteredBills : (billsData.bills || [])
-    const riders = scope === 'filtered' ? filteredRiders : (billsData.riders || [])
+    // "All" scope reads straight from billsData, so provisional (unreviewed)
+    // entries must be excluded here too, same as the on-site sections.
+    const bills = scope === 'filtered' ? filteredBills : (billsData.bills || []).filter(b => !b.provisional)
+    const riders = scope === 'filtered' ? filteredRiders : (billsData.riders || []).filter(r => !r.provisional)
     const scopeText = scope === 'filtered' ? 'filtered' : 'all'
     const timestamp = new Date().toISOString().split('T')[0]
 
