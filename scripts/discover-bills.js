@@ -300,8 +300,15 @@ async function discoverFromTitleScan(fromDate) {
           }
         }
 
-        // Stop paginating if we got fewer than limit or already scanned a lot
-        if (bills.length < limit || offset >= 1000) {
+        // Stop when a page comes back short (true end of data). The 1000-offset
+        // safety cap only applies to incremental (date-filtered) scans — a `--full`
+        // scan sorts by updateDate desc across the WHOLE Congress, and routine
+        // activity on thousands of unrelated bills pushes a quiet-since-introduction
+        // bill past offset 1000 within days. Capping there silently blinds full
+        // scans to exactly the dormant bills they exist to catch (e.g. H.R. 9720,
+        // referred and untouched since, missed by this cap on 2026-07-21).
+        const scanCap = FULL_SCAN ? 20000 : 1000;
+        if (bills.length < limit || offset >= scanCap) {
           hasMore = false;
         } else {
           offset += limit;
