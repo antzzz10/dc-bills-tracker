@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-20",
+  "lastUpdated": "2026-07-21",
   "categories": [
     {
       "id": "abolishing",
@@ -2690,6 +2690,1004 @@
       },
       "attackType": "unknown",
       "passage": {}
+    },
+    {
+      "id": "hr5856",
+      "billNumbers": [
+        "H.R. 5856"
+      ],
+      "title": "District of Columbia Government Title Equality Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.  District of Columbia Government Title Equality ActThis bill amends the District of Columbia (DC) Home Rule Act to change the titles of DC elected&nbsp;officials and offices so that the titles correspond to terms used by state governments. Under the bill, the Office of the Mayor becomes the Office o...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 80,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5856",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-10-28",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr4574",
+      "billNumbers": [
+        "H.R. 4574"
+      ],
+      "title": "District of Columbia Courts Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered. District of Columbia Courts Home Rule ActThis bill authorizes the District of Columbia (DC) Council to pass legislation related to the organization and jurisdiction of the DC courts. Current law prohibits such legislation from being enacted.&nbsp;",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 80,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/4574",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-07-21",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr7196",
+      "billNumbers": [
+        "H.R. 7196"
+      ],
+      "title": "To amend the District of Columbia Home Rule Act to prohibit the Council of the District of Columbia from enacting any law to permit euthanasia and assisted suicide in the District of Columbia, and for other purposes.",
+      "sponsors": [
+        "Rep. Barrett, Tom [R-MI-7]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 60,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/7196",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2026-01-22",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 1,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr4300",
+      "billNumbers": [
+        "H.R. 4300"
+      ],
+      "title": "Commission of Fine Arts District of Columbia Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 60,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/4300",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-07-07",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr7020",
+      "billNumbers": [
+        "H.R. 7020"
+      ],
+      "title": "District of Columbia Courts and Public Defender Service Employment Non-Discrimination Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 45,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/7020",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2026-01-12",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr6928",
+      "billNumbers": [
+        "H.R. 6928"
+      ],
+      "title": "District of Columbia Chief Financial Officer Salary Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 60,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/6928",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-12-23",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr6339",
+      "billNumbers": [
+        "H.R. 6339"
+      ],
+      "title": "District of Columbia Special Elections Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 60,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/6339",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-12-01",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr1022",
+      "billNumbers": [
+        "H.R. 1022"
+      ],
+      "title": "Words Matter for the District of Columbia Courts Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 70,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1022",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-02-05",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr5754",
+      "billNumbers": [
+        "H.R. 5754"
+      ],
+      "title": "Government Accountability Office District of Columbia Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 60,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5754",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-10-14",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr5654",
+      "billNumbers": [
+        "H.R. 5654"
+      ],
+      "title": "To provide for interim appropriations for the District of Columbia courts and related agencies with respect to any fiscal year for which appropriations are not otherwise provided for such courts and agencies.",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered. This bill provides continuing appropriations to the District of Columbia courts and related agencies during any fiscal year in which appropriations have not otherwise been provided. (The continuing appropriations would exempt the courts and agencies from a government shutdown due to a lapse in appro...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 50,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5654",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Appropriations.",
+        "lastActionDate": "2025-09-30",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Appropriations Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr806",
+      "billNumbers": [
+        "H.R. 806"
+      ],
+      "title": "District of Columbia Code Returning Citizens Coordination Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered. District of Columbia Code Returning Citizens Coordination ActThis bill requires that the Bureau of Prisons (BOP) periodically provide the District of Columbia (DC) with information about individuals who are serving sentences in a BOP facility for DC felony convictions. (Generally, an individual who ...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 90,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/806",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-01-28",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr4378",
+      "billNumbers": [
+        "H.R. 4378"
+      ],
+      "title": "District of Columbia Board of Zoning Adjustment Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 60,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/4378",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-07-14",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr4088",
+      "billNumbers": [
+        "H.R. 4088"
+      ],
+      "title": "District of Columbia Zoning Commission Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 60,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/4088",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-06-23",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr4956",
+      "billNumbers": [
+        "H.R. 4956"
+      ],
+      "title": "Commission of Fine Arts District of Columbia Residency Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 45,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/4956",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-08-12",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr4815",
+      "billNumbers": [
+        "H.R. 4815"
+      ],
+      "title": "District of Columbia National Guard Commanding General Residency Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 45,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/4815",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-07-29",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr4259",
+      "billNumbers": [
+        "H.R. 4259"
+      ],
+      "title": "National Capital Planning Commission District of Columbia Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 60,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/4259",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-06-30",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr4061",
+      "billNumbers": [
+        "H.R. 4061"
+      ],
+      "title": "District of Columbia Local Juror Non-Discrimination Act of 2025",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 45,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/4061",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-06-20",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr3850",
+      "billNumbers": [
+        "H.R. 3850"
+      ],
+      "title": "District of Columbia Non-Discrimination Home Rule Act of 2025",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 45,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/3850",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on the Judiciary.",
+        "lastActionDate": "2025-06-09",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Judiciary Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr1173",
+      "billNumbers": [
+        "H.R. 1173"
+      ],
+      "title": "Equal Federal Funding for the District of Columbia Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 55,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1173",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on the Judiciary.",
+        "lastActionDate": "2025-02-10",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Judiciary Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr3047",
+      "billNumbers": [
+        "H.R. 3047"
+      ],
+      "title": "To require the Director of the Court Services and Offender Supervision Agency for the District of Columbia and the Director of the Pretrial Services Agency for the District of Columbia to reside in the District of Columbia.",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 45,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/3047",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-04-28",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr356",
+      "billNumbers": [
+        "H.R. 356"
+      ],
+      "title": "District of Columbia Prosecutor Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered. District of Columbia Prosecutor Home Rule ActThis bill shifts the responsibility for prosecuting all violations of the laws, ordinances, and regulations of the District of Columbia (DC) to a local prosecutor's office.Currently, the responsibility for prosecuting such violations is shared between DC ...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 105,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/356",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2025-01-13",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr565",
+      "billNumbers": [
+        "H.R. 565"
+      ],
+      "title": "District of Columbia Federal Judicial Officials Residency Equality Act of 2025",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered. District of Columbia Federal Judicial Officials Residency Equality Act of 2025This bill requires U.S. district and circuit court judges, U.S. district court clerks, U.S. attorneys, and U.S. marshals who are appointed to serve in the District of Columbia to be residents of the District of Columbia.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 70,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/565",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on the Judiciary.",
+        "lastActionDate": "2025-01-20",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Judiciary Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "hr214",
+      "billNumbers": [
+        "H.R. 214"
+      ],
+      "title": "District of Columbia Legislative Home Rule Act",
+      "sponsors": [
+        "Del. Norton, Eleanor Holmes [D-DC-At Large]"
+      ],
+      "description": "Auto-discovered. District of Columbia Legislative Home Rule ActThis bill eliminates the authority of Congress to nullify recently enacted laws of the District of Columbia (DC).Current law generally provides Congress with a 30-day period in which to review and nullify measures enacted by the DC Council (60 days for m...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 105,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/214",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committee on Rules, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "lastActionDate": "2025-01-06",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Rules Committee",
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "s2689",
+      "billNumbers": [
+        "S. 2689"
+      ],
+      "title": "District of Columbia Police Home Rule Act",
+      "sponsors": [
+        "Sen. Van Hollen, Chris [D-MD]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 60,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/2689",
+      "status": {
+        "stage": null,
+        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "lastActionDate": "2025-09-02",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 11,
+        "committees": [
+          "Homeland Security and Governmental Affairs Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "s2688",
+      "billNumbers": [
+        "S. 2688"
+      ],
+      "title": "District of Columbia National Guard Home Rule Act",
+      "sponsors": [
+        "Sen. Van Hollen, Chris [D-MD]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 45,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/2688",
+      "status": {
+        "stage": null,
+        "lastAction": "Read twice and referred to the Committee on Armed Services.",
+        "lastActionDate": "2025-09-02",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 12,
+        "committees": [
+          "Armed Services Committee"
+        ]
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "s2748",
+      "billNumbers": [
+        "S. 2748"
+      ],
+      "title": "Make the District of Columbia Safe and Beautiful Act",
+      "sponsors": [
+        "Sen. Schmitt, Eric [R-MO]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 55,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/2748",
+      "status": {
+        "stage": null,
+        "lastAction": "Read the second time. Placed on Senate Legislative Calendar under General Orders. Calendar No. 155.",
+        "lastActionDate": "2025-09-10",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": []
+      },
+      "attackType": "unknown"
+    },
+    {
+      "id": "s51",
+      "billNumbers": [
+        "S. 51"
+      ],
+      "title": "Washington, D.C. Admission Act",
+      "sponsors": [
+        "Sen. Van Hollen, Chris [D-MD]"
+      ],
+      "description": "Auto-discovered. Washington, D.C. Admission ActThis bill provides for the establishment of the State of Washington, Douglass Commonwealth, and its admission into the United States.The state is composed of most of the territory of the District of Columbia (DC), excluding a specified area that encompasses the U.S. Cap...",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 80,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/51",
+      "status": {
+        "stage": null,
+        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "lastActionDate": "2025-01-09",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 43,
+        "committees": [
+          "Homeland Security and Governmental Affairs Committee"
+        ]
+      },
+      "attackType": "unknown"
     }
   ],
   "riders": [
