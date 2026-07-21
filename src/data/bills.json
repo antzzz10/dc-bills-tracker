@@ -3653,43 +3653,6 @@
       "attackType": "unknown"
     },
     {
-      "id": "s51",
-      "billNumbers": [
-        "S. 51"
-      ],
-      "title": "Washington, D.C. Admission Act",
-      "sponsors": [
-        "Sen. Van Hollen, Chris [D-MD]"
-      ],
-      "description": "Auto-discovered. Washington, D.C. Admission ActThis bill provides for the establishment of the State of Washington, Douglass Commonwealth, and its admission into the United States.The state is composed of most of the territory of the District of Columbia (DC), excluding a specified area that encompasses the U.S. Cap...",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-07-21",
-      "relevanceScore": 80,
-      "congress": 119,
-      "congressValidated": true,
-      "congressValidatedDate": "2026-07-21",
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/51",
-      "status": {
-        "stage": null,
-        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "lastActionDate": "2025-01-09",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 43,
-        "committees": [
-          "Homeland Security and Governmental Affairs Committee"
-        ]
-      },
-      "attackType": "unknown"
-    },
-    {
       "id": "hr9720",
       "billNumbers": [
         "H.R. 9720"
@@ -4492,6 +4455,42 @@
       },
       "reviewedDate": "2026-07-12",
       "reviewMethod": "manual-three-prong"
+    },
+    {
+      "id": "s51",
+      "billNumbers": [
+        "S. 51"
+      ],
+      "title": "Washington, D.C. Admission Act",
+      "sponsors": [
+        "Sen. Van Hollen, Chris [D-MD]"
+      ],
+      "description": "Auto-discovered. Washington, D.C. Admission ActThis bill provides for the establishment of the State of Washington, Douglass Commonwealth, and its admission into the United States.The state is composed of most of the territory of the District of Columbia (DC), excluding a specified area that encompasses the U.S. Cap...",
+      "category": "other",
+      "position": "support",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "manual",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-21",
+      "relevanceScore": 80,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/51",
+      "status": {
+        "stage": null,
+        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "lastActionDate": "2025-01-09",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 43,
+        "committees": [
+          "Homeland Security and Governmental Affairs Committee"
+        ]
+      }
     }
   ]
 }
