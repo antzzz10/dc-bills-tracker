@@ -6,13 +6,22 @@
  * Usage:
  *   node scripts/weekly-digest.js          # Schedule broadcast for next Tuesday
  *   node scripts/weekly-digest.js --draft  # Create as unscheduled draft (review in Kit before sending)
- *   node scripts/weekly-digest.js --test   # Send to test address only (andria.thomas@gmail.com)
+ *   node scripts/weekly-digest.js --test   # Send to test address only, via Kit
+ *   node scripts/weekly-digest.js --self   # Bypass Kit entirely — send self-to-self via Gmail SMTP for review
  *
- * Required env vars: ANTHROPIC_API_KEY, KIT_API_KEY
+ * Required env vars:
+ *   ANTHROPIC_API_KEY, KIT_API_KEY   (normal / --draft / --test modes)
+ *   ANTHROPIC_API_KEY                (--self mode)
+ *
+ * --self mode reads the Gmail app password from the macOS Keychain (one-time setup):
+ *   security add-generic-password -a "resistrisedc@gmail.com" -s "dc-bills-digest" -w
+ * Override with GMAIL_USER / GMAIL_APP_PASSWORD env vars if you'd rather not use Keychain
+ * (e.g. running this on a non-Mac machine).
  */
 
 import Anthropic from '@anthropic-ai/sdk';
-import { execSync } from 'child_process';
+import nodemailer from 'nodemailer';
+import { execSync, execFileSync } from 'child_process';
 import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -26,8 +35,12 @@ const FROM_NAME = 'RepresentDC Bill Tracker';
 const TEST_EMAIL = 'andria.thomas@gmail.com';
 const DAYS_BACK = 7;
 
+const KEYCHAIN_SERVICE = 'dc-bills-digest';
+const DEFAULT_GMAIL_USER = 'resistrisedc@gmail.com';
+
 const isDraft = process.argv.includes('--draft');
 const isTest = process.argv.includes('--test');
+const isSelf = process.argv.includes('--self');
 
 // ── Data loading ──────────────────────────────────────────────────────────────
 
@@ -194,6 +207,47 @@ Return only the HTML — no commentary before or after.`,
   return message.content[0].text.trim();
 }
 
+// ── Gmail SMTP (self-review, bypasses Kit) ─────────────────────────────────────
+
+function getGmailPassword(user) {
+  if (process.env.GMAIL_APP_PASSWORD) return process.env.GMAIL_APP_PASSWORD;
+
+  try {
+    const pass = execFileSync(
+      'security',
+      ['find-generic-password', '-a', user, '-s', KEYCHAIN_SERVICE, '-w'],
+      { encoding: 'utf8' }
+    ).trim();
+    if (pass) return pass;
+  } catch {
+    // fall through to error below
+  }
+
+  throw new Error(
+    `No Gmail app password found. Either set GMAIL_APP_PASSWORD, or store it in Keychain once with:\n` +
+    `  security add-generic-password -a "${user}" -s "${KEYCHAIN_SERVICE}" -w`
+  );
+}
+
+async function sendViaGmail(subject, htmlContent) {
+  const user = process.env.GMAIL_USER || DEFAULT_GMAIL_USER;
+  const pass = getGmailPassword(user);
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: { user, pass },
+  });
+
+  console.log(`Sending self-review email to ${user} via Gmail SMTP...`);
+  const info = await transporter.sendMail({
+    from: `"${FROM_NAME} (review)" <${user}>`,
+    to: user,
+    subject: `[REVIEW] ${subject}`,
+    html: htmlContent,
+  });
+  return info;
+}
+
 // ── Kit API ───────────────────────────────────────────────────────────────────
 
 async function kitRequest(path, method, body) {
@@ -257,7 +311,7 @@ async function main() {
   console.log('DC Bills Tracker — Weekly Digest Generator\n');
 
   if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY not set');
-  if (!process.env.KIT_API_KEY) throw new Error('KIT_API_KEY not set');
+  if (!isSelf && !process.env.KIT_API_KEY) throw new Error('KIT_API_KEY not set');
 
   const data = loadBillsData();
   const news = loadNewsData();
@@ -280,6 +334,13 @@ async function main() {
     : `DC Bills Tracker: Weekly Update — ${weekOf}`;
 
   console.log(`Subject: ${subject}`);
+
+  if (isSelf) {
+    const info = await sendViaGmail(subject, html);
+    console.log(`\nSelf-review email sent. Message ID: ${info.messageId}`);
+    return;
+  }
+
   const result = await createBroadcast(subject, html);
 
   const broadcastId = result?.broadcast?.id || result?.id;

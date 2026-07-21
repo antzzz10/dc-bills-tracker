@@ -12,7 +12,8 @@
     "deploy": "gh-pages -d dist --dotfiles",
     "deploy:staging": "node deploy-staging.js",
     "stats": "node scripts/generate-stats.js",
-    "discover": "node scripts/discover-bills.js"
+    "discover": "node scripts/discover-bills.js",
+    "digest:self": "node scripts/weekly-digest.js --self"
   },
   "dependencies": {
     "jspdf": "3.0.3",
@@ -31,6 +32,7 @@
     "eslint-plugin-react-refresh": "0.4.24",
     "gh-pages": "6.3.0",
     "globals": "16.4.0",
+    "nodemailer": "^9.0.3",
     "vite": "7.1.12"
   }
 }
