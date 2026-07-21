@@ -3688,6 +3688,41 @@
         ]
       },
       "attackType": "unknown"
+    },
+    {
+      "id": "hr9720",
+      "billNumbers": [
+        "H.R. 9720"
+      ],
+      "title": "D.C. Taxing Authority Review Act",
+      "sponsors": [
+        "Rep. James Comer (R-KY)"
+      ],
+      "description": "Would require a resolution of congressional approval for any DC Council act involving Title 47 of the DC Code, or that imposes or increases a tax or fee — stripping DC of the ability to set or change its own taxes and fees without Congress signing off first. Introduced with 21 original Republican cosponsors, including Jim Jordan, Andy Biggs, Paul Gosar, and Lauren Boebert. Referred to the House Oversight and Government Reform Committee and the Rules Committee.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "legislative",
+      "provisional": false,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/9720",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the Committees on Oversight and Government Reform, and Rules.",
+        "lastActionDate": "2026-07-16",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 21,
+        "committees": [
+          "Oversight and Government Reform Committee",
+          "Rules Committee"
+        ]
+      },
+      "attackType": "direct",
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-21"
     }
   ],
   "riders": [
