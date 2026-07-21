@@ -23,6 +23,7 @@
     "hjres31": { "position": "oppose", "attackType": "partial", "source": "scorecard-author-2026-07", "note": "Author lists as partial attack (*)" },
     "s487": { "position": "oppose", "attackType": "partial", "source": "scorecard-author-2026-07", "note": "Author lists as partial attack (*)" },
     "s3290": { "position": "oppose", "attackType": "partial", "source": "scorecard-author-2026-07", "note": "Author lists as partial attack (*)" },
-    "s402": { "position": "support", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Documented divergence from scorecard author: structurally a prong-3 incursion (attackType direct) but content is benign and Norton sponsors the companion, so position is support. See METHODOLOGY.md edge case." }
+    "s402": { "position": "support", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Documented divergence from scorecard author: structurally a prong-3 incursion (attackType direct) but content is benign and Norton sponsors the companion, so position is support. See METHODOLOGY.md edge case." },
+    "hr1022": { "position": "support", "attackType": "direct", "source": "manual-review-2026-07-21", "note": "House companion to S. 402 (same bill, same edge case) — auto-discovered 2026-07-20, reviewed via scripts/review-provisional.js" }
   }
 }
