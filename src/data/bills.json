@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-21",
+  "lastUpdated": "2026-07-22",
   "categories": [
     {
       "id": "abolishing",
@@ -2656,42 +2656,6 @@
       "attackType": "unknown"
     },
     {
-      "id": "s1077",
-      "billNumbers": [
-        "S. 1077"
-      ],
-      "title": "District of Columbia Local Funds Act, 2025",
-      "sponsors": [
-        "Sen. Collins, Susan M. [R-ME]"
-      ],
-      "description": "Auto-discovered. District of Columbia Local Funds Act, 2025This bill appropriates FY2025 local funds to the District of Columbia for programs and activities included in the District's Fiscal Year 2025 Local Budget Act of 2024.&nbsp;Under current law, Congress is required to approve the District's annual budget. This...",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-07-20",
-      "relevanceScore": 65,
-      "congress": 119,
-      "congressValidated": true,
-      "congressValidatedDate": "2026-07-20",
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/1077",
-      "status": {
-        "stage": null,
-        "lastAction": "Held at the desk.",
-        "lastActionDate": "2025-03-18",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": true,
-        "cosponsors": 6,
-        "committees": []
-      },
-      "attackType": "unknown",
-      "passage": {}
-    },
-    {
       "id": "hr7196",
       "billNumbers": [
         "H.R. 7196"
@@ -4468,6 +4432,44 @@
         ]
       },
       "attackType": "direct"
+    }
+  ],
+  "routineBills": [
+    {
+      "id": "s1077",
+      "billNumbers": [
+        "S. 1077"
+      ],
+      "title": "District of Columbia Local Funds Act, 2025",
+      "sponsors": [
+        "Sen. Collins, Susan M. [R-ME]"
+      ],
+      "description": "Appropriates DC's own, already-locally-raised local funds for its Fiscal Year 2025 budget. Congress is required to approve DC's annual local budget every year before DC can spend money it raised itself — a routine act no state legislature would ever need. Passed the Senate; held at the desk since March 2025.",
+      "category": "other",
+      "position": "routine",
+      "type": "bill",
+      "priority": "high",
+      "prioritySource": "legislative",
+      "provisional": false,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-07-20",
+      "relevanceScore": 65,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-07-20",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/1077",
+      "status": {
+        "stage": null,
+        "lastAction": "Held at the desk.",
+        "lastActionDate": "2025-03-18",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": true,
+        "cosponsors": 6,
+        "committees": []
+      },
+      "attackType": "direct",
+      "passage": {}
     }
   ]
 }

@@ -8,9 +8,11 @@
  *
  * Checks:
  *   1. No duplicate bill IDs across bills/riders/supportBills
- *   2. Section/position agreement (bills+riders oppose, supportBills support)
- *   3. Every non-provisional bill/rider has attackType "direct" or "partial";
- *      support bills carry no attackType unless golden-labeled as an edge case
+ *   2. Section/position agreement (bills+riders oppose, supportBills support,
+ *      routineBills routine)
+ *   3. Every non-provisional oppose/routine bill has attackType "direct" or
+ *      "partial"; support bills carry no attackType unless golden-labeled as
+ *      an edge case
  *   4. No high-priority partial attack without legislative momentum
  *      (mirrors the runtime cap in monitor-bills.js calculatePriority)
  *   5. Categories exist in the taxonomy
@@ -33,7 +35,8 @@ const warnings = [];
 const sections = [
   ['bills', data.bills, 'oppose'],
   ['riders', data.riders, 'oppose'],
-  ['supportBills', data.supportBills, 'support']
+  ['supportBills', data.supportBills, 'support'],
+  ['routineBills', data.routineBills || [], 'routine']
 ];
 
 // 1. Duplicate IDs
@@ -60,10 +63,11 @@ for (const [section, items, expectedPosition] of sections) {
       errors.push(`${label}: position "${bill.position}" but section expects "${expectedPosition}"`);
     }
 
-    // 3. attackType discipline
-    if (expectedPosition === 'oppose') {
+    // 3. attackType discipline — oppose and routine both require it once reviewed;
+    // routine's stakes/severity signal lives in attackType, never in the position label
+    if (expectedPosition === 'oppose' || expectedPosition === 'routine') {
       if (!bill.provisional && !['direct', 'partial'].includes(bill.attackType)) {
-        errors.push(`${label}: non-provisional attack missing valid attackType (got "${bill.attackType}")`);
+        errors.push(`${label}: non-provisional ${expectedPosition} bill missing valid attackType (got "${bill.attackType}")`);
       }
     } else if (bill.attackType && golden.labels[bill.id]?.attackType !== bill.attackType) {
       warnings.push(`${label}: support bill carries attackType "${bill.attackType}" without a golden-label edge case`);

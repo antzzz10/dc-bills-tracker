@@ -19,6 +19,7 @@ Every tracked item carries two separate judgments. Keeping them separate is deli
 
 - `oppose` — the bill harms DC or its residents (listed under attacks)
 - `support` — the bill expands DC's self-governance or helps DC residents (listed under bills to support)
+- `routine` — the bill is Congress performing an *existing, expected, recurring* structural obligation over DC (not a new restriction), listed under "Everyday Indignities." See below.
 
 ### Axis 2 — `attackType`: is this a structural incursion, and how targeted?
 
@@ -36,6 +37,19 @@ Attacks are tagged by targeting:
 Bills we support (e.g., the Washington, D.C. Admission Act, or Del. Norton's home-rule expansion bills) are not incursions and carry no `attackType`.
 
 **A documented edge case:** S. 402 (Words Matter for the DC Courts Act) updates offensive terminology in DC's court code. Structurally it satisfies prong 3 — a state would fix its own code, so the Scorecard counts it as an attack. But its content is benign and DC's delegate sponsors the House companion, so our `position` is `support` while `attackType` remains `direct`. The two-axis model is what lets both facts be recorded.
+
+### A third `position`: `routine` — the everyday cost of not being a state
+
+Some bills are neither an attack nor an advocacy win: they're Congress performing a structural obligation that already exists *because* DC isn't a state — a state legislature would never need to ask permission for the equivalent action. The clearest example is **S. 1077** (District of Columbia Local Funds Act, 2025): it appropriates DC's own, already-locally-raised local budget. Nobody introduced it to harm DC, and passing it isn't a win for advocates — it's Congress doing the thing DC has to let it do every year regardless.
+
+`routine` is for exactly this case, and it's still a real structural incursion:
+
+- It must satisfy the three-prong test the same as any `oppose`/`attackType`-bearing bill — the difference from `oppose` is that Congress is performing an **existing, expected, recurring** obligation, not adding a **new** restriction.
+- `attackType` (`direct` or `partial`) is **mandatory** on every non-provisional `routine` bill, same as `oppose` — never omitted the way benign `support` bills omit it. The severity/stakes signal lives in `attackType`, not in the `routine` label itself, so `routine` never reads as "harmless."
+- Priority is computed identically to `oppose`/`support` bills (momentum-based) — a routine bill that stalls past its usual cadence is itself worth flagging.
+- Displayed in its own top-level site section, "Everyday Indignities" — given equal billing to attacks and support bills, since the accumulation of these is itself part of the case for statehood.
+
+See `decisions/2026-07-21-routine-position-category.md` for the full design discussion.
 
 ## How priority is assigned
 
@@ -55,7 +69,7 @@ Priority measures **legislative momentum** — how urgently advocates need to pa
 Accuracy is the product. Three mechanisms guard it:
 
 - **`scripts/validate-bills.js`** — confirms every tracked bill exists on Congress.gov for the stated Congress (requires `CONGRESS_API_KEY`).
-- **`scripts/lint-bills.js`** — offline consistency checks: no duplicate IDs, every non-provisional attack has a valid `attackType`, positions match their section, no High partial attack without momentum, categories are valid.
+- **`scripts/lint-bills.js`** — offline consistency checks: no duplicate IDs, every non-provisional `oppose`/`routine` bill has a valid `attackType`, positions match their section, no High partial attack without momentum, categories are valid.
 - **Golden-label eval (`scripts/eval/golden-labels.json`)** — a reviewed set of expected classifications, including external labels from the D.C. Statehood Scorecard's author. `lint-bills.js` fails if `bills.json` drifts from a golden label. When a classification legitimately changes, update the golden file in the same commit and say why.
 
 Run before deploying data changes:

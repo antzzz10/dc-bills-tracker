@@ -20,17 +20,25 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [showOtherBills, setShowOtherBills] = useState(false)
 
-  const { filteredBills, filteredRiders, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, totalCount, pendingCount, passedCount } = useMemo(() => {
+  const { filteredBills, filteredRiders, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, totalCount, pendingCount, passedCount } = useMemo(() => {
     // Exclude provisional (auto-discovered, not-yet-human-reviewed) entries from
-    // the public oppose/support sections — their `position` is an unverified
-    // default, not a reviewed classification. They still surface in Recent
-    // Activity (via the raw billsData passed there) as "Introduced".
+    // the public oppose/support/routine sections — their `position` is an
+    // unverified default, not a reviewed classification. They still surface in
+    // Recent Activity (via the raw billsData passed there) as "Introduced".
     const allBills = (billsData.bills || []).filter(bill => !bill.provisional)
     const allRiders = (billsData.riders || []).filter(rider => !rider.provisional)
+    const allRoutineBills = (billsData.routineBills || []).filter(bill => !bill.provisional)
 
     // Start with all bills and apply filters
     let filteredAllBills = allBills
     let filteredRiders = allRiders
+    let filteredRoutineBills = allRoutineBills
+
+    const searchFilter = (term) => item =>
+      item.title.toLowerCase().includes(term) ||
+      item.description.toLowerCase().includes(term) ||
+      item.sponsors.some(sponsor => sponsor.toLowerCase().includes(term)) ||
+      item.billNumbers.some(num => num.toLowerCase().includes(term))
 
     // Filter by selected categories
     if (selectedCategories.length > 0) {
@@ -40,19 +48,17 @@ function App() {
       filteredRiders = filteredRiders.filter(rider =>
         selectedCategories.includes(rider.category)
       )
+      filteredRoutineBills = filteredRoutineBills.filter(bill =>
+        selectedCategories.includes(bill.category)
+      )
     }
 
     // Filter by search term
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase()
-      const searchFilter = item =>
-        item.title.toLowerCase().includes(term) ||
-        item.description.toLowerCase().includes(term) ||
-        item.sponsors.some(sponsor => sponsor.toLowerCase().includes(term)) ||
-        item.billNumbers.some(num => num.toLowerCase().includes(term))
-
-      filteredAllBills = filteredAllBills.filter(searchFilter)
-      filteredRiders = filteredRiders.filter(searchFilter)
+      filteredAllBills = filteredAllBills.filter(searchFilter(term))
+      filteredRiders = filteredRiders.filter(searchFilter(term))
+      filteredRoutineBills = filteredRoutineBills.filter(searchFilter(term))
     }
 
     // NOW separate passed bills from pending bills (after filters applied)
@@ -87,7 +93,13 @@ function App() {
       bills: filteredRiders.filter(rider => rider.category === category.id)
     })).filter(group => group.bills.length > 0)
 
-    const pendingCount = filtered.length + filteredRiders.length
+    // Group routine bills by category
+    const routineGroups = billsData.categories.map(category => ({
+      category,
+      bills: filteredRoutineBills.filter(bill => bill.category === category.id)
+    })).filter(group => group.bills.length > 0)
+
+    const pendingCount = filtered.length + filteredRiders.length + filteredRoutineBills.length
     const passedCount = passedBills.length
     const totalCount = pendingCount + passedCount
 
@@ -98,6 +110,7 @@ function App() {
       highPriorityGroups,
       otherBillsGroups,
       riderGroups,
+      routineGroups,
       totalCount,
       pendingCount,
       passedCount
@@ -216,6 +229,29 @@ function App() {
                   {highPriorityGroups.map(group => (
                     <CategoryGroup
                       key={`high-${group.category.id}`}
+                      category={group.category}
+                      bills={group.bills}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* Everyday Indignities Section — bills that are neither attacks nor
+                  advocacy wins: Congress performing a routine, recurring structural
+                  obligation over DC that a state legislature would never need to ask
+                  permission for. Still a real structural incursion (attackType is
+                  mandatory on every entry) — see METHODOLOGY.md. */}
+              {routineGroups.length > 0 && (
+                <div className="priority-section">
+                  <div className="section-header routine-header">
+                    <h2>📎 Everyday Indignities ({routineGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
+                    <p className="section-description">
+                      The routine paperwork of not being a state — sign-offs Congress requires from DC that no state legislature would ever need to ask for.
+                    </p>
+                  </div>
+                  {routineGroups.map(group => (
+                    <CategoryGroup
+                      key={`routine-${group.category.id}`}
                       category={group.category}
                       bills={group.bills}
                     />

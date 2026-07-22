@@ -214,6 +214,11 @@ body {
   background: linear-gradient(to right, #f9f9f9, white);
 }
 
+.routine-header {
+  border-left-color: #5B5F97;
+  background: linear-gradient(to right, #f4f4fa, white);
+}
+
 .collapsible {
   cursor: pointer;
   transition: all 0.2s ease;

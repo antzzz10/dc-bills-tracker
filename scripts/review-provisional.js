@@ -8,10 +8,11 @@
  *     Writes PROVISIONAL-REVIEW.md (also prints to stdout) listing every
  *     provisional bill/rider/supportBill, sorted by relevanceScore desc.
  *
- *   node scripts/review-provisional.js --confirm <id> --position <oppose|support> --attackType <direct|partial> [--priority <high|medium|low|watching>] [--category <id>]
+ *   node scripts/review-provisional.js --confirm <id> --position <oppose|support|routine> --attackType <direct|partial> [--priority <high|medium|low|watching>] [--category <id>]
  *     Clears provisional, applies the reviewed classification, and moves the
- *     entry into the correct section (bills vs supportBills) if position
- *     changed — lint-bills.js requires position to match section.
+ *     entry into the correct section (bills/supportBills/routineBills) if
+ *     position changed — lint-bills.js requires position to match section.
+ *     attackType is required for oppose and routine, optional for support.
  *
  *   node scripts/review-provisional.js --reject <id>
  *     Removes the entry entirely (use when auto-discovery pulled in
@@ -32,7 +33,7 @@ const flag = (name) => {
   return i === -1 ? null : args[i + 1];
 };
 
-const SECTIONS = ['bills', 'riders', 'supportBills'];
+const SECTIONS = ['bills', 'riders', 'supportBills', 'routineBills'];
 
 function loadBills() {
   return JSON.parse(readFileSync(billsPath, 'utf-8'));
@@ -73,19 +74,22 @@ function report() {
     'do not treat that as a finding. Confirm or reject each one:',
     '',
     '```',
-    'node scripts/review-provisional.js --confirm <id> --position <oppose|support> --attackType <direct|partial> [--priority <high|medium|low|watching>]',
+    'node scripts/review-provisional.js --confirm <id> --position <oppose|support|routine> --attackType <direct|partial> [--priority <high|medium|low|watching>]',
     'node scripts/review-provisional.js --reject <id>',
     '```',
     '',
-    '| ID | Bill | Title | Sponsor | Score | Section | Link |',
-    '|---|---|---|---|---|---|---|',
+    'A "possible-routine" hint means discover-bills.js matched a local-funds/appropriations/',
+    'sign-off title pattern — a suggestion to look closer, not a classification.',
+    '',
+    '| ID | Bill | Title | Sponsor | Score | Hint | Section | Link |',
+    '|---|---|---|---|---|---|---|---|',
   ];
 
   for (const b of provisional) {
     const title = (b.title || '').replace(/\|/g, '\\|').slice(0, 90);
     const sponsor = (b.sponsors || []).join(', ').replace(/\|/g, '\\|');
     lines.push(
-      `| ${b.id} | ${(b.billNumbers || []).join(', ')} | ${title} | ${sponsor} | ${b.relevanceScore ?? ''} | ${b._section} | [congress.gov](${b.congressGovLink || ''}) |`
+      `| ${b.id} | ${(b.billNumbers || []).join(', ')} | ${title} | ${sponsor} | ${b.relevanceScore ?? ''} | ${b.provisionalHint || ''} | ${b._section} | [congress.gov](${b.congressGovLink || ''}) |`
     );
   }
 
@@ -108,14 +112,15 @@ function confirm(id) {
   const priority = flag('--priority');
   const category = flag('--category');
 
-  if (!position || !['oppose', 'support'].includes(position)) {
-    console.error('--position <oppose|support> is required');
+  if (!position || !['oppose', 'support', 'routine'].includes(position)) {
+    console.error('--position <oppose|support|routine> is required');
     process.exit(1);
   }
-  // lint-bills.js only requires attackType on non-provisional bills/riders
-  // (the oppose side) — supportBills entries mostly go without one.
-  if (position === 'oppose' && (!attackType || !['direct', 'partial'].includes(attackType))) {
-    console.error('--attackType <direct|partial> is required when --position oppose');
+  // lint-bills.js requires attackType on non-provisional oppose/routine bills —
+  // routine's severity/stakes signal lives in attackType, never in the position
+  // label itself. supportBills entries mostly go without one.
+  if ((position === 'oppose' || position === 'routine') && (!attackType || !['direct', 'partial'].includes(attackType))) {
+    console.error(`--attackType <direct|partial> is required when --position ${position}`);
     process.exit(1);
   }
   if (attackType && !['direct', 'partial'].includes(attackType)) {
@@ -131,11 +136,12 @@ function confirm(id) {
     delete bill.attackType;
   }
   bill.provisional = false;
+  delete bill.provisionalHint;
   if (priority) bill.priority = priority;
   if (category) bill.category = category;
   bill.prioritySource = bill.prioritySource === 'auto-discovered' ? 'manual' : bill.prioritySource;
 
-  const targetSection = position === 'support' ? 'supportBills' : 'bills';
+  const targetSection = { support: 'supportBills', routine: 'routineBills', oppose: 'bills' }[position];
   if (targetSection !== section) {
     data[section].splice(idx, 1);
     data[targetSection] = data[targetSection] || [];

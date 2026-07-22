@@ -62,6 +62,18 @@ const DC_NEGATIVE_PATTERNS = [
   /direct\s+current/i
 ];
 
+// Non-authoritative hint only — surfaced in review-provisional.js's --report
+// as a "look closer" flag for the human reviewer, never auto-classified.
+// Matches recurring structural sign-offs Congress performs on an existing
+// schedule (e.g. S. 1077, the DC Local Funds Act) — candidates for
+// position: "routine" rather than "oppose". See METHODOLOGY.md.
+const ROUTINE_HINT_PATTERNS = [
+  /local\s+funds\s+act/i,
+  /interim\s+appropriations/i,
+  /continuing\s+appropriations/i,
+  /budget\s+act/i
+];
+
 // Parse bill number to API format (duplicated from monitor-bills.js)
 function parseBillNumber(billNumber) {
   const match = billNumber.match(/(H\.R\.|S\.|H\.J\.Res\.|S\.J\.Res\.|H\.Con\.Res\.|S\.Con\.Res\.)\s*(\d+)/i);
@@ -588,6 +600,9 @@ function buildBillEntry(billType, number, details, score) {
     description += ` ${truncated}`;
   }
 
+  const routineHintText = `${details.title || ''} ${details.summary || ''}`;
+  const possibleRoutine = ROUTINE_HINT_PATTERNS.some(p => p.test(routineHintText));
+
   return {
     id,
     billNumbers: [displayNumber],
@@ -603,6 +618,7 @@ function buildBillEntry(billType, number, details, score) {
     autoDiscovered: true,
     discoveredDate: today,
     relevanceScore: score,
+    ...(possibleRoutine ? { provisionalHint: 'possible-routine' } : {}),
     congress: CONGRESS_NUMBER,
     congressValidated: true,
     congressValidatedDate: today,

@@ -20,6 +20,7 @@ const billsData = JSON.parse(readFileSync(billsPath, 'utf-8'));
 const bills = billsData.bills || [];
 const riders = billsData.riders || [];
 const supportBills = billsData.supportBills || [];
+const routineBills = billsData.routineBills || [];
 
 const passedBills = bills.filter(bill =>
   bill.status?.stage &&
@@ -31,8 +32,8 @@ const pendingBills = bills.filter(bill =>
   (!bill.status.stage.startsWith('passed-') && bill.status.stage !== 'enacted')
 );
 
-const totalOpposeBills = bills.length + riders.length;
-const pendingOpposeBills = pendingBills.length + riders.length;
+const totalOpposeBills = bills.length + riders.length + routineBills.length;
+const pendingOpposeBills = pendingBills.length + riders.length + routineBills.length;
 
 const stats = {
   lastUpdated: billsData.lastUpdated,
@@ -42,7 +43,8 @@ const stats = {
   breakdown: {
     bills: bills.length,
     riders: riders.length,
-    supportBills: supportBills.length
+    supportBills: supportBills.length,
+    routineBills: routineBills.length
   },
   passed: passedBills.map(bill => ({
     id: bill.id,
