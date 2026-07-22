@@ -1,15 +1,18 @@
 .passed-bills-section {
   margin-bottom: 2rem;
-  background: white;
+  background: var(--white);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(220, 20, 60, 0.15);
-  border: 2px solid #dc143c;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--navy);
 }
 
+/* Flat navy, not a red gradient — "passed a chamber" is procedural progress,
+   independent of priority/severity (a bill can be low-priority and still
+   passed-house). Red stays reserved for genuine urgency signals. */
 .passed-bills-header {
-  background: linear-gradient(135deg, #dc143c 0%, #a00000 100%);
-  color: white;
+  background: var(--navy);
+  color: var(--white);
   padding: 1rem 1.25rem;
   cursor: pointer;
   display: flex;
@@ -20,7 +23,7 @@
 }
 
 .passed-bills-header:hover {
-  background: linear-gradient(135deg, #c11234 0%, #900000 100%);
+  background: var(--navy-600);
 }
 
 .passed-bills-title {
@@ -54,7 +57,7 @@
 
 .bill-count-passed {
   background-color: rgba(255, 255, 255, 0.3);
-  color: white;
+  color: var(--white);
   padding: 0.3rem 0.7rem;
   border-radius: 12px;
   font-size: 0.85rem;
@@ -68,10 +71,10 @@
 .passed-bills-intro {
   margin: 0 0 1.25rem;
   padding: 1rem;
-  background: #fff5f5;
-  border-left: 4px solid #dc143c;
+  background: var(--navy-tint);
+  border-left: 4px solid var(--navy);
   border-radius: 4px;
-  color: #666;
+  color: var(--slate-700);
   font-size: 0.95rem;
   line-height: 1.5;
 }
@@ -83,16 +86,16 @@
 }
 
 .passed-bill-card {
-  background: white;
-  border: 1px solid #e0e0e0;
+  background: var(--white);
+  border: 1px solid var(--line);
   border-radius: 6px;
   padding: 1rem;
   transition: all 0.2s ease;
 }
 
 .passed-bill-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-color: #dc143c;
+  box-shadow: var(--shadow-sm);
+  border-color: var(--navy);
 }
 
 .passed-bill-header {
@@ -137,62 +140,68 @@
 }
 
 .tag-passed-house {
-  background: #1a73e8;
-  color: white;
+  background: var(--status-house);
+  color: var(--white);
 }
 
 .tag-passed-both {
-  background: #d97706;
-  color: white;
+  background: var(--status-both);
+  color: var(--white);
 }
 
 .tag-passed-senate {
-  background: #7c3aed;
-  color: white;
+  background: var(--status-senate);
+  color: var(--white);
 }
 
+/* A caveat, not a severity level — dashed border instead of a solid fill so
+   the "texture, not just color" device from the logo mark carries the
+   distinction accessibly (colorblind-safe, survives grayscale/print) */
 .tag-disputed {
-  background: #92400e;
-  color: #fef3c7;
-  border: 1px solid #d97706;
+  background: var(--white);
+  color: var(--slate-700);
+  border: 1px dashed var(--slate-400);
 }
 
+/* Enacted = signed into law, the gravest and most final stage — the one
+   place besides genuine urgency that a strong red is warranted. Flat color,
+   not a gradient. */
 .enacted-section {
-  border-color: #7f1d1d;
-  box-shadow: 0 2px 8px rgba(127, 29, 29, 0.2);
+  border-color: var(--status-enacted);
+  box-shadow: 0 2px 8px rgba(122, 10, 28, 0.2);
 }
 
 .enacted-section .passed-bills-header {
-  background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
+  background: var(--status-enacted);
 }
 
 .enacted-section .passed-bills-header:hover {
-  background: linear-gradient(135deg, #6f1a1a 0%, #350808 100%);
+  filter: brightness(0.88);
 }
 
 .passed-bill-title {
   margin: 0 0 0.5rem;
   font-size: 1.05rem;
   font-weight: 600;
-  color: #222;
+  color: var(--ink);
   line-height: 1.3;
 }
 
 .passed-bill-description {
   margin: 0;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--slate-700);
   line-height: 1.4;
 }
 
 .passed-bill-sponsors {
   margin-top: 0.75rem;
   font-size: 0.85rem;
-  color: #555;
+  color: var(--slate-700);
 }
 
 .passed-bill-sponsors strong {
-  color: #333;
+  color: var(--ink);
   display: block;
   margin-bottom: 0.4rem;
 }
@@ -211,7 +220,7 @@
 }
 
 .passed-bill-sponsors .sponsor-name {
-  color: #333;
+  color: var(--ink);
   font-weight: 500;
 }
 
@@ -227,18 +236,18 @@
 }
 
 .passed-bill-sponsors .sponsor-badge.party-r {
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--party-r);
+  color: var(--white);
 }
 
 .passed-bill-sponsors .sponsor-badge.party-d {
-  background-color: #0066cc;
-  color: white;
+  background-color: var(--party-d);
+  color: var(--white);
 }
 
 .passed-bill-sponsors .sponsor-badge.party-i {
-  background-color: #6c757d;
-  color: white;
+  background-color: var(--party-i);
+  color: var(--white);
 }
 
 .vote-info {
@@ -247,14 +256,14 @@
   align-items: flex-end;
   gap: 0.4rem;
   padding: 0.75rem;
-  background: #f9f9f9;
+  background: var(--surface-2);
   border-radius: 6px;
   min-width: 180px;
 }
 
 .vote-date {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--slate-500);
   font-weight: 500;
   text-align: right;
 }
@@ -262,16 +271,16 @@
 .vote-total {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #333;
+  color: var(--ink);
   font-family: 'Courier New', monospace;
 }
 
 .vote-yeas {
-  color: #dc143c;
+  color: var(--dc-red);
 }
 
 .vote-nays {
-  color: #666;
+  color: var(--slate-500);
 }
 
 .vote-breakdown {
@@ -285,17 +294,17 @@
   align-items: center;
   gap: 0.3rem;
   padding: 0.3rem 0.6rem;
-  background: white;
+  background: var(--white);
   border-radius: 4px;
   font-family: 'Courier New', monospace;
 }
 
 .party-vote.republican {
-  border: 1px solid #ff6b6b;
+  border: 1px solid var(--party-r);
 }
 
 .party-vote.democrat {
-  border: 1px solid #4dabf7;
+  border: 1px solid var(--party-d);
 }
 
 .party-label {

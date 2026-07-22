@@ -5,7 +5,17 @@ import sponsorsData from '../data/sponsors.json'
 import { stateAbbreviations } from '../data/stateAbbreviations'
 import { CURRENT_CONGRESS } from '../data/config'
 
-function BillCard({ bill }) {
+const ATTACK_TYPE_LABEL = {
+  direct: 'Direct attack',
+  partial: 'Partial attack',
+}
+
+const ATTACK_TYPE_DESCRIPTION = {
+  direct: "Targeting DC is this bill's purpose.",
+  partial: "This bill undermines DC's self-governance, but DC is not its primary target — it attacks DC along the way.",
+}
+
+function BillCard({ bill, variant = 'attack' }) {
   const isTargeted = window.location.hash === `#${bill.id}`
   const [isExpanded, setIsExpanded] = useState(isTargeted)
   const cardRef = useRef(null)
@@ -54,12 +64,19 @@ function BillCard({ bill }) {
   // Get priority class for color coding
   const priorityClass = bill.priority ? `priority-${bill.priority}` : 'priority-low'
   const typeClass = bill.type === 'rider' ? 'type-rider' : ''
+  const variantClass = variant === 'support' ? 'variant-support' : ''
+
+  // Support cards never show the attackType badge — even S. 402's documented
+  // edge case (support position, direct attackType) reads as confusing paired
+  // with the positive styling here, and its description already explains the
+  // nuance in prose. See docs/support-section-and-badges-draft.md.
+  const showAttackTypeBadge = variant !== 'support' && ['direct', 'partial'].includes(bill.attackType)
 
   return (
     <div
       ref={cardRef}
       id={bill.id}
-      className={`bill-card ${isExpanded ? 'expanded' : 'collapsed'} ${priorityClass} ${typeClass} ${bill.highlight ? 'highlighted-' + bill.highlight : ''} ${isTargeted ? 'deep-linked' : ''}`}
+      className={`bill-card ${isExpanded ? 'expanded' : 'collapsed'} ${priorityClass} ${typeClass} ${variantClass} ${bill.highlight ? 'highlighted-' + bill.highlight : ''} ${isTargeted ? 'deep-linked' : ''}`}
       data-category={bill.category}
       onClick={() => setIsExpanded(!isExpanded)}
     >
@@ -88,8 +105,17 @@ function BillCard({ bill }) {
           })}
         </div>
         <div className="bill-header-right">
+          {showAttackTypeBadge && (
+            <span
+              className={`attack-type-badge attack-type-${bill.attackType}`}
+              title={ATTACK_TYPE_DESCRIPTION[bill.attackType]}
+              aria-label={ATTACK_TYPE_DESCRIPTION[bill.attackType]}
+            >
+              {ATTACK_TYPE_LABEL[bill.attackType]}
+            </span>
+          )}
           {bill.highlight === 'floor-vote' && (
-            <span className="floor-vote-badge">FLOOR VOTE</span>
+            <span className="floor-vote-badge"><span className="dot"></span>FLOOR VOTE</span>
           )}
           <span className="expand-icon">{isExpanded ? '−' : '+'}</span>
         </div>

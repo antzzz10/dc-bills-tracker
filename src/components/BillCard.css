@@ -1,10 +1,10 @@
 .bill-card {
-  background: white;
+  background: var(--white);
   border-radius: 8px;
   padding: 0.7rem 0.9rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-xs);
   transition: all 0.2s ease;
-  border-left: 3px solid #ccc;
+  border-left: 3px solid var(--prio-low);
   cursor: pointer;
   user-select: none;
 }
@@ -15,76 +15,83 @@
 
 .bill-card.expanded {
   padding: 0.9rem 1.1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-sm);
 }
 
 .bill-card.deep-linked {
-  border-left: 4px solid #b71c1c;
-  box-shadow: 0 0 0 2px rgba(183, 28, 28, 0.3), 0 4px 12px rgba(183, 28, 28, 0.15);
+  border-left: 4px solid var(--navy);
+  box-shadow: 0 0 0 2px rgba(20, 33, 61, 0.3), var(--shadow-md);
   animation: deepLinkHighlight 2s ease-out;
 }
 
 @keyframes deepLinkHighlight {
-  0% { box-shadow: 0 0 0 4px rgba(183, 28, 28, 0.5), 0 4px 12px rgba(183, 28, 28, 0.3); }
-  100% { box-shadow: 0 0 0 2px rgba(183, 28, 28, 0.3), 0 4px 12px rgba(183, 28, 28, 0.15); }
+  0% { box-shadow: 0 0 0 4px rgba(20, 33, 61, 0.5), var(--shadow-md); }
+  100% { box-shadow: 0 0 0 2px rgba(20, 33, 61, 0.3), var(--shadow-md); }
 }
 
 .bill-card:hover {
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-sm);
   border-left-width: 4px;
 }
 
 /* Priority-based border colors */
 .bill-card.priority-high {
-  border-left-color: #DC143C;
+  border-left-color: var(--prio-high);
 }
 
 .bill-card.priority-medium {
-  border-left-color: #FF8C00;
+  border-left-color: var(--prio-medium);
 }
 
 .bill-card.priority-low,
 .bill-card.priority-watching {
-  border-left-color: #ccc;
+  border-left-color: var(--prio-low);
 }
 
 .bill-card.type-rider {
-  border-left-color: #FF8C00;
+  border-left-color: var(--prio-medium);
 }
 
-/* Floor vote highlighting */
+/* Floor vote highlighting — the one true "act now" urgency signal, so it's
+   the only place besides priority-high that gets the accent red */
 .bill-card.highlighted-floor-vote {
-  background: linear-gradient(to right, #fffbea 0%, #ffffff 100%);
-  border-left-color: #ff6b00;
+  background: var(--dc-red-tint);
+  border-left-color: var(--dc-red);
   border-left-width: 4px;
-  box-shadow: 0 2px 12px rgba(255, 107, 0, 0.15);
+  box-shadow: var(--shadow-md);
 }
 
 .bill-card.highlighted-floor-vote:hover {
-  box-shadow: 0 4px 16px rgba(255, 107, 0, 0.25);
+  box-shadow: var(--shadow-lg);
   border-left-width: 5px;
 }
 
 .floor-vote-badge {
-  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
-  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--dc-red);
+  color: var(--white);
   padding: 0.4rem 0.7rem;
   border-radius: 4px;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
-  animation: pulse 2s ease-in-out infinite;
+}
+
+.floor-vote-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--white);
+  animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0%, 100% {
-    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
-  }
-  50% {
-    box-shadow: 0 2px 10px rgba(255, 107, 0, 0.5);
-  }
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6); }
+  70% { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
 }
 
 .bill-header {
@@ -101,33 +108,62 @@
   gap: 0.75rem;
 }
 
+/* attackType badge — direct is filled (stronger claim: DC is the target),
+   partial is outlined (weaker claim: DC is caught up in something broader).
+   Deliberately not color-only per WCAG — fill vs. outline + label text both
+   carry the distinction. Navy, not red: red stays reserved for urgency
+   (floor-vote, priority-high), and every attack card already gets one of
+   these badges, so a red badge on every card would flatten that signal. */
+.attack-type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--r-pill, 999px);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.attack-type-badge.attack-type-direct {
+  background: var(--navy);
+  color: var(--white);
+  border: 1px solid var(--navy);
+}
+
+.attack-type-badge.attack-type-partial {
+  background: transparent;
+  color: var(--navy);
+  border: 1px solid var(--navy-600);
+}
+
 .expand-icon {
   font-size: 1.2rem;
   font-weight: 300;
-  color: #666;
+  color: var(--slate-500);
   width: 24px;
   height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: var(--surface-2);
   border-radius: 50%;
   transition: all 0.2s ease;
   flex-shrink: 0;
 }
 
 .bill-card:hover .expand-icon {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--line);
 }
 
 /* Priority-specific expand icon colors */
 .bill-card.priority-high .expand-icon {
-  color: #DC143C;
-  background-color: rgba(220, 20, 60, 0.1);
+  color: var(--prio-high);
+  background-color: var(--dc-red-tint);
 }
 
 .bill-card.priority-high:hover .expand-icon {
-  background-color: rgba(220, 20, 60, 0.2);
+  background-color: rgba(200, 16, 46, 0.18);
 }
 
 .bill-numbers {
@@ -140,7 +176,7 @@
 .bill-number,
 .bill-number-link {
   font-weight: 600;
-  color: #333;
+  color: var(--ink);
   font-size: 0.85rem;
   font-family: 'Courier New', monospace;
   text-decoration: none;
@@ -153,24 +189,26 @@
 }
 
 .bill-number-link:hover {
-  background-color: #333;
-  color: white;
+  background-color: var(--ink);
+  color: var(--white);
   text-decoration: none;
 }
 
 /* High priority bills get red bill numbers */
 .bill-card.priority-high .bill-number,
 .bill-card.priority-high .bill-number-link {
-  color: #DC143C;
+  color: var(--prio-high);
 }
 
 .bill-card.priority-high .bill-number-link:hover {
-  background-color: #DC143C;
+  background-color: var(--prio-high);
 }
 
+/* Category is a neutral label, not a severity signal — navy, not red,
+   frees red to mean "urgent" exclusively */
 .category-badge {
-  background-color: #DC143C;
-  color: white;
+  background-color: var(--navy);
+  color: var(--white);
   padding: 0.4rem 0.8rem;
   border-radius: 15px;
   font-size: 0.8rem;
@@ -181,7 +219,7 @@
 .bill-title {
   margin: 0.2rem 0;
   font-size: 0.95rem;
-  color: #222;
+  color: var(--ink);
   font-weight: 600;
   line-height: 1.3;
   transition: all 0.2s ease;
@@ -195,7 +233,7 @@
 .bill-details {
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--line);
   animation: slideDown 0.2s ease;
 }
 
@@ -213,11 +251,11 @@
 .bill-sponsors {
   margin: 0.5rem 0;
   font-size: 0.85rem;
-  color: #555;
+  color: var(--slate-500);
 }
 
 .bill-sponsors strong {
-  color: #333;
+  color: var(--ink);
   display: block;
   margin-bottom: 0.4rem;
 }
@@ -236,7 +274,7 @@
 }
 
 .sponsor-name {
-  color: #333;
+  color: var(--ink);
   font-weight: 500;
 }
 
@@ -252,25 +290,58 @@
 }
 
 .sponsor-badge.party-r {
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--party-r);
+  color: var(--white);
 }
 
 .sponsor-badge.party-d {
-  background-color: #0066cc;
-  color: white;
+  background-color: var(--party-d);
+  color: var(--white);
 }
 
 .sponsor-badge.party-i {
-  background-color: #6c757d;
-  color: white;
+  background-color: var(--party-i);
+  color: var(--white);
 }
 
 .bill-description {
   margin: 0.5rem 0 0 0;
   font-size: 0.9rem;
-  color: #444;
+  color: var(--slate-700);
   line-height: 1.5;
+}
+
+/* Support cards: positive accent instead of the priority-driven red/orange
+   scale — this section should read as visually distinct from the attack
+   sections at a glance, regardless of the bill's underlying `priority`
+   value. Placed after the priority-* rules above so it wins the cascade
+   (equal specificity, later wins) no matter which priority a support bill
+   carries. */
+.bill-card.variant-support {
+  border-left-color: var(--support-green);
+}
+
+.bill-card.variant-support:hover {
+  border-left-color: var(--support-green-dark);
+}
+
+.bill-card.variant-support .expand-icon {
+  color: var(--support-green-dark);
+  background-color: var(--support-green-tint);
+}
+
+.bill-card.variant-support:hover .expand-icon {
+  background-color: var(--support-green-tint);
+}
+
+.bill-card.variant-support .bill-number,
+.bill-card.variant-support .bill-number-link {
+  color: var(--support-green-dark);
+}
+
+.bill-card.variant-support .bill-number-link:hover {
+  background-color: var(--support-green);
+  color: var(--white);
 }
 
 @media (max-width: 768px) {

@@ -1,0 +1,84 @@
+.support-bills-section {
+  margin-bottom: 2rem;
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--support-green);
+}
+
+.support-bills-header {
+  background: var(--support-green);
+  color: var(--white);
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.support-bills-header:hover {
+  background: var(--support-green-dark);
+}
+
+.support-bills-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+/* No pulse animation — that's PassedBillsSection's alarm register.
+   This is a calm, constructive call to action, not an urgency signal. */
+.support-icon {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.support-bills-title h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.bill-count-support {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: var(--white);
+  padding: 0.3rem 0.7rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.support-bills-content {
+  padding: 1.25rem;
+}
+
+.support-bills-intro {
+  margin: 0 0 1.25rem;
+  padding: 1rem;
+  background: var(--support-green-tint);
+  border-left: 4px solid var(--support-green);
+  border-radius: 4px;
+  color: var(--slate-700);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.support-bills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+@media (max-width: 768px) {
+  .support-bills-title h2 {
+    font-size: 1.05rem;
+  }
+
+  .support-icon {
+    font-size: 1.2rem;
+  }
+}

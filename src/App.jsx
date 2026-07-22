@@ -8,6 +8,7 @@ import DownloadButton from './components/DownloadButton'
 import UpdateBanner from './components/UpdateBanner'
 import UrgentAlert from './components/UrgentAlert'
 import PassedBillsSection from './components/PassedBillsSection'
+import SupportBillsSection from './components/SupportBillsSection'
 import RecentActivity from './components/RecentActivity'
 import NewsFeed from './components/NewsFeed'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
@@ -20,7 +21,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [showOtherBills, setShowOtherBills] = useState(false)
 
-  const { filteredBills, filteredRiders, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, totalCount, pendingCount, passedCount } = useMemo(() => {
+  const { filteredBills, filteredRiders, filteredSupportBills, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, totalCount, pendingCount, passedCount } = useMemo(() => {
     // Exclude provisional (auto-discovered, not-yet-human-reviewed) entries from
     // the public oppose/support/routine sections — their `position` is an
     // unverified default, not a reviewed classification. They still surface in
@@ -28,11 +29,13 @@ function App() {
     const allBills = (billsData.bills || []).filter(bill => !bill.provisional)
     const allRiders = (billsData.riders || []).filter(rider => !rider.provisional)
     const allRoutineBills = (billsData.routineBills || []).filter(bill => !bill.provisional)
+    const allSupportBills = (billsData.supportBills || []).filter(bill => !bill.provisional)
 
     // Start with all bills and apply filters
     let filteredAllBills = allBills
     let filteredRiders = allRiders
     let filteredRoutineBills = allRoutineBills
+    let filteredSupportBills = allSupportBills
 
     const searchFilter = (term) => item =>
       item.title.toLowerCase().includes(term) ||
@@ -51,6 +54,9 @@ function App() {
       filteredRoutineBills = filteredRoutineBills.filter(bill =>
         selectedCategories.includes(bill.category)
       )
+      filteredSupportBills = filteredSupportBills.filter(bill =>
+        selectedCategories.includes(bill.category)
+      )
     }
 
     // Filter by search term
@@ -59,6 +65,7 @@ function App() {
       filteredAllBills = filteredAllBills.filter(searchFilter(term))
       filteredRiders = filteredRiders.filter(searchFilter(term))
       filteredRoutineBills = filteredRoutineBills.filter(searchFilter(term))
+      filteredSupportBills = filteredSupportBills.filter(searchFilter(term))
     }
 
     // NOW separate passed bills from pending bills (after filters applied)
@@ -106,6 +113,7 @@ function App() {
     return {
       filteredBills: filtered,
       filteredRiders,
+      filteredSupportBills,
       passedBills,
       highPriorityGroups,
       otherBillsGroups,
@@ -308,6 +316,11 @@ function App() {
               </div>
             </>
           )}
+
+          {/* Bills to Support — the constructive closer. Rendered unconditionally
+              (outside the totalCount===0 branch above) so it still shows even
+              when a search/filter matches zero oppose bills. */}
+          <SupportBillsSection supportBills={filteredSupportBills} />
         </div>
 
         {/* <ContactSection /> */}
