@@ -23,9 +23,30 @@ const FEEDS = [
   // News outlets — recent coverage only
   { url: 'https://51st.news/rss/', source: 'The 51st' },
   { url: 'https://washingtoninformer.com/feed/', source: 'Washington Informer' },
+  // NOTUS is a general national-politics feed, not DC-specific — confirmed
+  // valid RSS 2.0 at this URL (2026-07-12). Relies on the relevance filter
+  // below to do more of the work than the DC-focused feeds above.
+  { url: 'https://www.notus.org/index.rss', source: 'NOTUS' },
   // Advocacy org blogs — publish infrequently, so allow a wider window
   { url: 'https://acludc.org/feed/', source: 'ACLU DC', maxAgeDays: 60 },
   { url: 'https://www.dcvote.org/feed/', source: 'DC Vote', maxAgeDays: 60 },
+  // Added 2026-07-12, URL NOT yet confirmed — direct fetch got 403'd by a
+  // WAF/bot-blocker even with this script's own User-Agent, which could be
+  // an IP-based block that behaves differently from GitHub Actions' infra.
+  // fetchFeed() fails closed on a bad URL (logs a warning, returns [],
+  // doesn't break the run) — check the next Action run's log for
+  // "Failed: https://lwvdc.org/feed/" before trusting this is live.
+  { url: 'https://lwvdc.org/feed/', source: 'League of Women Voters DC', maxAgeDays: 60 },
+  // Rep. Eleanor Holmes Norton (norton.house.gov) — NOT added. Every RSS
+  // path guessed either 403'd or 404'd, and the one guess that returned a
+  // real feed (/rss.xml) turned out to be a stale artifact from an old site
+  // redesign — items dated 2021–2022 ("117th Congress convenes"), not live
+  // press releases. Needs a manually-confirmed current feed URL (or a
+  // non-RSS ingestion method) before this source can be added correctly.
+  // Senator Ankit Jain's site (senatorjaindc.com/news/) has no RSS/Atom
+  // feed at all — a manually-maintained listing page, not a blog feed.
+  // Skipped rather than force a non-RSS source into this pipeline; revisit
+  // with custom scraping only if this source becomes important enough.
 ];
 
 function extractCDATA(text) {
