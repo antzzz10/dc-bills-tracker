@@ -90,12 +90,13 @@ async function fetchFeed({ url, source }) {
   }
 }
 
-async function filterByRelevance(articles) {
+function getClient() {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY not set');
+  return new Anthropic({ apiKey, maxRetries: 5 });
+}
 
-  const client = new Anthropic({ apiKey, maxRetries: 5 });
-
+async function filterByRelevance(client, articles) {
   const titlesBlock = articles.map((a, i) => `${i}: ${a.title}`).join('\n');
 
   const message = await client.messages.create({
@@ -134,6 +135,32 @@ ${titlesBlock}`,
   return indices.map(i => articles[i]).filter(Boolean);
 }
 
+// Summarizes only the final, already-filtered article set — and only from
+// their titles/sources, since that's all this pipeline has. The prompt
+// explicitly forbids inventing detail beyond what a title implies, since a
+// fabricated specific here would ship straight to a public page.
+async function summarizeArticles(client, articles) {
+  if (!articles.length) return '';
+
+  const listBlock = articles.map(a => `- "${a.title}" (${a.source})`).join('\n');
+
+  const message = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 200,
+    messages: [{
+      role: 'user',
+      content: `You write a short neutral news-digest summary for a DC statehood advocacy website (billtracker.representdc.org). Below are today's top DC statehood/home-rule headlines.
+
+Write 2-3 sentences summarizing what's happening across these stories, for a reader who wants the gist before deciding which to read in full. Use ONLY information present in the titles below — do not infer or invent specifics (numbers, names, outcomes) that aren't stated in a title. If titles don't give enough to summarize substantively, write a shorter, more general sentence rather than guessing. Plain prose, no headers, no bullet points, no preamble like "Here is a summary."
+
+Headlines:
+${listBlock}`,
+    }],
+  });
+
+  return message.content[0].text.trim();
+}
+
 async function main() {
   console.log('Fetching DC news feeds...\n');
 
@@ -162,7 +189,8 @@ async function main() {
   all.forEach(a => console.log(`  • [${a.source}] ${a.title}`));
   console.log();
 
-  const relevant = await filterByRelevance(all);
+  const client = getClient();
+  const relevant = await filterByRelevance(client, all);
 
   console.log(`${relevant.length} passed relevance filter:\n`);
   relevant.forEach(a => console.log(`  ✓ [${a.source}] ${a.title}`));
@@ -172,10 +200,14 @@ async function main() {
     .slice(0, MAX_ARTICLES)
     .map(({ _ts, ...a }) => a);
 
+  console.log('\nSummarizing...');
+  const summary = await summarizeArticles(client, articles);
+  if (summary) console.log(`  "${summary}"`);
+
   const dir = join(__dirname, '../public/api');
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
 
-  writeFileSync(OUTPUT_PATH, JSON.stringify({ lastUpdated: new Date().toISOString(), articles }, null, 2));
+  writeFileSync(OUTPUT_PATH, JSON.stringify({ lastUpdated: new Date().toISOString(), summary, articles }, null, 2));
   console.log(`\nSaved ${articles.length} articles → public/api/news.json`);
 }
 
