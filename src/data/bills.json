@@ -1104,7 +1104,7 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 109,
+        "cosponsors": 110,
         "committees": []
       },
       "attackType": "partial",
@@ -2749,7 +2749,7 @@
         "lastAction": "Ordered reported by the House Committee on Oversight and Government Reform on a party-line vote",
         "lastActionDate": "2026-07-22",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
+        "hasCommitteeMarkup": false,
         "hasFloorVote": false,
         "cosponsors": 21,
         "committees": [
@@ -2760,7 +2760,8 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-07-21"
+      "congressValidatedDate": "2026-07-21",
+      "passage": {}
     }
   ],
   "riders": [
