@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-22",
+  "lastUpdated": "2026-07-23",
   "categories": [
     {
       "id": "abolishing",
@@ -2736,7 +2736,7 @@
       "sponsors": [
         "Rep. James Comer (R-KY)"
       ],
-      "description": "Would require a resolution of congressional approval for any DC Council act involving Title 47 of the DC Code, or that imposes or increases a tax or fee — stripping DC of the ability to set or change its own taxes and fees without Congress signing off first. Introduced with 21 original Republican cosponsors, including Jim Jordan, Andy Biggs, Paul Gosar, and Lauren Boebert. Referred to the House Oversight and Government Reform Committee and the Rules Committee.",
+      "description": "Would require a resolution of congressional approval for any DC Council act involving Title 47 of the DC Code, or that imposes or increases a tax or fee — applying to both increases and decreases, with a narrow exception for fee changes under $500 that do not touch any other tax or fee. Strips DC of the ability to manage its own tax code, including routine fiscal actions like pension-contribution timing, targeted tax exemptions, and CFO bond flexibility. Introduced with 21 original Republican cosponsors, including Jim Jordan, Andy Biggs, Paul Gosar, and Lauren Boebert. Passed the House Oversight and Government Reform Committee on a party-line vote on July 22, 2026, without a public hearing — over the written objection of DC Council Chairman Phil Mendelson, who warned it would also freeze the District's General License Law (also under Title 47) and could raise DC's borrowing costs per a Moody's rating warning.",
       "category": "other",
       "position": "oppose",
       "type": "bill",
@@ -2746,10 +2746,10 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/9720",
       "status": {
         "stage": null,
-        "lastAction": "Referred to the Committees on Oversight and Government Reform, and Rules.",
-        "lastActionDate": "2026-07-16",
+        "lastAction": "Ordered reported by the House Committee on Oversight and Government Reform on a party-line vote",
+        "lastActionDate": "2026-07-22",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
         "cosponsors": 21,
         "committees": [

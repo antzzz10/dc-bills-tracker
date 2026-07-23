@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './UrgentAlert.css'
 
-const PUBLISHED_AT = new Date('2026-06-04')
+const PUBLISHED_AT = new Date('2026-07-22')
 const ALERT_DURATION_MS = 14 * 24 * 60 * 60 * 1000
 
 function UrgentAlert() {
@@ -14,14 +14,13 @@ function UrgentAlert() {
       <div className="urgent-alert-inner">
         <div className="urgent-alert-badge">NEW</div>
         <h2 className="urgent-alert-headline">
-          Congress Moves to Override Two DC Police Oversight Laws
+          House Committee Advances Bill to Cut Off DC's Taxing Authority
         </h2>
-        <p className="urgent-alert-dateline">June 4, 2026</p>
+        <p className="urgent-alert-dateline">July 22, 2026</p>
         <div className="urgent-alert-laws">
-          <p>Body-worn camera transparency law targeted</p>
-          <p>Arrest reporting law targeted</p>
+          <p>H.R. 9720 — D.C. Taxing Authority Review Act</p>
         </div>
-        <p className="urgent-alert-chambernote">House &amp; Senate companion resolutions introduced</p>
+        <p className="urgent-alert-chambernote">Passed House Oversight &amp; Government Reform Committee, party-line vote</p>
 
         <button
           className="urgent-alert-toggle"
@@ -34,35 +33,40 @@ function UrgentAlert() {
         {isExpanded && (
           <div className="urgent-alert-details">
             <p className="urgent-alert-summary">
-              Companion resolutions in both chambers would nullify two DC Council laws — one on
-              body-worn camera transparency, one on arrest reporting. If passed, Congress overrides
-              laws DC residents and their elected Council already enacted.
+              H.R. 9720 would require an affirmative resolution of congressional approval — within
+              a 60-day review period — for any DC Council act involving Title 47 of the DC Code, or
+              that imposes or increases a tax or fee. It applies to both increases and decreases,
+              with a narrow exception for fee changes under $500 that don't touch any other tax or
+              fee.
             </p>
             <div className="urgent-alert-explainer">
               <div className="urgent-alert-what">
                 <h3>What happened</h3>
                 <p>
-                  Sen. Hagerty (R-TN) introduced S.J.Res. 194–195 on June 3; Rep. Gosar (R-AZ)
-                  introduced companion H.J.Res. 192–193 on June 4. Both sets target DC Council
-                  laws on police body cameras and arrest reporting passed in 2026.
+                  Introduced by Rep. James Comer (R-KY) on July 16 with 21 original Republican
+                  cosponsors, including Jim Jordan, Andy Biggs, Paul Gosar, and Lauren Boebert. The
+                  House Oversight and Government Reform Committee passed it on a party-line vote on
+                  July 22 — without a public hearing.
                 </p>
               </div>
 
               <div className="urgent-alert-stake">
                 <h3>What's at stake</h3>
                 <p>
-                  Both laws expand accountability for how DC police use force and make arrests.
-                  Nullifying them overrides the DC Council's judgment on local public safety —
-                  eliminating transparency measures DC residents specifically chose to enact.
+                  DC Council Chairman Phil Mendelson objected in writing before the markup (letter
+                  to Chairman Comer, July 20): the bill would freeze routine DC fiscal management —
+                  pension-contribution timing, targeted tax exemptions, CFO bond flexibility — and
+                  also freezes the District's General License Law, since that's under Title 47 too.
+                  Mendelson also cited a Moody's rating action (July 10) flagging federal revenue
+                  restrictions as a factor that could raise DC's cost of borrowing.
                 </p>
               </div>
 
               <div className="urgent-alert-why">
                 <h3>Where things stand</h3>
                 <p>
-                  All four resolutions are newly introduced, not yet in committee. With companion
-                  bills in both chambers they are more likely to advance than single-chamber
-                  resolutions.
+                  Passed committee on a party-line vote; also referred to the Rules Committee. 21
+                  cosponsors already clears the high-priority threshold for legislative momentum.
                 </p>
               </div>
             </div>
@@ -70,28 +74,16 @@ function UrgentAlert() {
             <div className="urgent-alert-sources">
               <p>
                 Sources:{' '}
-                <a href="https://www.congress.gov/bill/119th-congress/house-joint-resolution/192" target="_blank" rel="noopener noreferrer">
-                  H.J.Res. 192 (Congress.gov)
+                <a href="https://www.congress.gov/bill/119th-congress/house-bill/9720" target="_blank" rel="noopener noreferrer">
+                  H.R. 9720 (Congress.gov)
                 </a>
                 {' '}&middot;{' '}
-                <a href="https://www.congress.gov/bill/119th-congress/house-joint-resolution/193" target="_blank" rel="noopener noreferrer">
-                  H.J.Res. 193 (Congress.gov)
-                </a>
-                {' '}&middot;{' '}
-                <a href="https://www.congress.gov/bill/119th-congress/senate-joint-resolution/194" target="_blank" rel="noopener noreferrer">
-                  S.J.Res. 194 (Congress.gov)
-                </a>
-                {' '}&middot;{' '}
-                <a href="https://www.congress.gov/bill/119th-congress/senate-joint-resolution/195" target="_blank" rel="noopener noreferrer">
-                  S.J.Res. 195 (Congress.gov)
-                </a>
+                Letter from DC Council Chairman Phil Mendelson to Chairman James Comer, July 20, 2026
               </p>
             </div>
 
             <div className="urgent-alert-link-hint">
-              <a href="#hjres192-sjres195">See arrest reporting resolution below</a>
-              {' '}&middot;{' '}
-              <a href="#hjres193-sjres194">See body-worn camera resolution below</a>
+              <a href="#hr9720">See bill details below</a>
             </div>
           </div>
         )}
