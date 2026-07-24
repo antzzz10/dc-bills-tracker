@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-23",
+  "lastUpdated": "2026-07-24",
   "categories": [
     {
       "id": "abolishing",
@@ -2749,7 +2749,7 @@
         "lastAction": "Ordered reported by the House Committee on Oversight and Government Reform on a party-line vote",
         "lastActionDate": "2026-07-22",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
         "cosponsors": 21,
         "committees": [
