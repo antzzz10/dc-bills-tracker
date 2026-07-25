@@ -10,9 +10,18 @@ on:
   schedule:
     - cron: '0 14 * * *'
 
+# The daily check is idempotent, so a newer run should always win. On 2026-07-25 a
+# scheduled run sat in `queued` for 4h39m without ever being assigned a runner; without
+# this, such a run lingers and the next day's run queues up behind it.
+concurrency:
+  group: monitor-bills
+  cancel-in-progress: true
+
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    # A healthy run takes ~2-3 minutes. Fail loudly rather than hanging.
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repository

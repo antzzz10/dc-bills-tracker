@@ -958,6 +958,24 @@ function generateReport(changes, errors, passedBills) {
     hasMeaningfulChanges
   }, null, 2));
   console.log(`💾 Meta saved to: ${metaPath}`);
+
+  // Stamp when the data was last verified against Congress.gov. This is distinct
+  // from `lastUpdated`, which only moves when a bill's own fields change — a run
+  // that finds nothing new is still a successful check, and the site needs to be
+  // able to say so. Only stamp when we actually reached the API for at least one
+  // bill: a run where every lookup failed is not a check, and must not look like one.
+  if (changes.length > 0) {
+    try {
+      const fresh = JSON.parse(readFileSync(billsPath, 'utf-8'));
+      fresh.lastChecked = timestamp;
+      writeFileSync(billsPath, JSON.stringify(fresh, null, 2));
+      console.log(`💾 Stamped lastChecked: ${timestamp}`);
+    } catch (error) {
+      console.error('Error stamping lastChecked:', error.message);
+    }
+  } else {
+    console.log('⚠️  No bills checked successfully — leaving lastChecked untouched');
+  }
 }
 
 // Run the monitoring

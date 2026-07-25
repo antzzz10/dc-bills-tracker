@@ -1,18 +1,17 @@
 import { useState } from 'react'
 import './UrgentAlert.css'
 
-const PUBLISHED_AT = new Date('2026-07-22')
-const ALERT_DURATION_MS = 14 * 24 * 60 * 60 * 1000
+import { isUrgentAlertActive, isUrgentAlertNew } from './urgentAlertState'
 
 function UrgentAlert() {
   const [isExpanded, setIsExpanded] = useState(false)
 
-  if (Date.now() - PUBLISHED_AT.getTime() > ALERT_DURATION_MS) return null
+  if (!isUrgentAlertActive()) return null
 
   return (
     <div className="urgent-alert" id="urgent">
       <div className="urgent-alert-inner">
-        <div className="urgent-alert-badge">NEW</div>
+        {isUrgentAlertNew() && <div className="urgent-alert-badge">NEW</div>}
         <h2 className="urgent-alert-headline">
           House Committee Advances Bill to Cut Off DC's Taxing Authority
         </h2>

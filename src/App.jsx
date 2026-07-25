@@ -7,14 +7,52 @@ import SearchBar from './components/SearchBar'
 import DownloadButton from './components/DownloadButton'
 import UpdateBanner from './components/UpdateBanner'
 import UrgentAlert from './components/UrgentAlert'
+import { isUrgentAlertActive } from './components/urgentAlertState'
 import PassedBillsSection from './components/PassedBillsSection'
 import SupportBillsSection from './components/SupportBillsSection'
 import RecentActivity from './components/RecentActivity'
 import NewsFeed from './components/NewsFeed'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
 
-// Set to true when UrgentAlert is active to suppress the auto-generated UpdateBanner
-const HAS_URGENT_ALERT = true
+// Bill-data freshness. `lastChecked` is stamped by scripts/monitor-bills.js on every
+// run that successfully reaches Congress.gov, so it reflects when the DATA was verified
+// — not when the bundle was built. The old build-date display kept reading "today" even
+// when monitoring had stalled, because fetch-news rebuilds and redeploys the whole site
+// twice a day regardless of whether any bill was checked.
+const STALE_AFTER_MS = 48 * 60 * 60 * 1000
+const LAST_CHECKED = billsData.lastChecked || null
+const IS_DATA_STALE = LAST_CHECKED
+  ? Date.now() - new Date(LAST_CHECKED).getTime() > STALE_AFTER_MS
+  : false
+
+// Freshness is rendered in Eastern Time regardless of where it's read from — the audience
+// is DC, and "last checked" shouldn't shift meaning based on the reader's own timezone.
+// Safe to pin a timezone here only because `lastChecked` is a true instant (ISO-8601 with
+// Z). Never pin one on a date-only value like "2026-07-22": that parses as UTC midnight
+// and renders a day backwards in ET — the reason parseLocalDate() exists in
+// PassedBillsSection.jsx and RecentActivity.jsx.
+const ET_TIME_ZONE = 'America/New_York'
+
+const formatCheckedInstant = (isoInstant) =>
+  `${new Date(isoInstant).toLocaleString('en-US', {
+    timeZone: ET_TIME_ZONE,
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  })} ET`
+
+// Fallback only, for data written before `lastChecked` existed. __BUILD_DATE__ is
+// date-only, so it must be split into local parts rather than timezone-converted.
+const formatBuildDate = (dateOnly) => {
+  const [year, month, day] = dateOnly.split('-').map(Number)
+  return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
 
 function App() {
   const [selectedCategories, setSelectedCategories] = useState([])
@@ -141,7 +179,7 @@ function App() {
   return (
     <div className="app">
       <UrgentAlert />
-      {!HAS_URGENT_ALERT && (
+      {!isUrgentAlertActive() && (
         <UpdateBanner
           passedBills={passedBills}
           upcomingFloorVotes={filteredBills.filter(b => b.highlight === 'floor-vote')}
@@ -153,8 +191,16 @@ function App() {
         <p className="subtitle">
           Tracking bills in Congress that threaten D.C. home rule and autonomy
         </p>
-        <p className="last-updated">
-          Last checked: {new Date(__BUILD_DATE__).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} • Monitoring runs daily
+        <p className={`last-updated${IS_DATA_STALE ? ' last-updated-stale' : ''}`}>
+          {LAST_CHECKED ? (
+            IS_DATA_STALE ? (
+              <>⚠️ Bill data last verified {formatCheckedInstant(LAST_CHECKED)} — daily monitoring may be stalled</>
+            ) : (
+              <>Bill data last checked: {formatCheckedInstant(LAST_CHECKED)} • Monitoring runs daily</>
+            )
+          ) : (
+            <>Site last built: {formatBuildDate(__BUILD_DATE__)}</>
+          )}
         </p>
       </header>
 

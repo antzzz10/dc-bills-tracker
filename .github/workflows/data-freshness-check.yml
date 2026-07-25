@@ -1,0 +1,103 @@
+name: Data Freshness Check
+
+# Watchdog for the bill-monitoring pipeline.
+#
+# Every other alerting path in this repo is *inside* the monitor job: the summary email
+# only sends when `Monitor DC Bills` actually runs. So the failure modes that matter most
+# — the run never starts, sits queued without a runner, or is cancelled — produce no
+# signal at all. That is how monitoring can stall for days unnoticed while the site keeps
+# redeploying (fetch-news rebuilds twice a day) and therefore keeps looking healthy.
+#
+# This job checks the one fact that can't be faked: when bill data was last verified
+# against Congress.gov, as stamped in src/data/bills.json by scripts/monitor-bills.js.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Twice daily, offset a few hours after the 14:00 UTC monitor run so a normal
+    # run has time to finish before we judge it.
+    - cron: '0 20 * * *'
+    - cron: '0 8 * * *'
+
+concurrency:
+  group: data-freshness-check
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Evaluate bill-data freshness
+        id: freshness
+        run: |
+          node --input-type=module << 'EOF' >> $GITHUB_OUTPUT
+          import { readFileSync } from 'fs';
+
+          const MAX_AGE_HOURS = 36;
+          const data = JSON.parse(readFileSync('src/data/bills.json', 'utf-8'));
+          const lastChecked = data.lastChecked;
+
+          if (!lastChecked) {
+            // Pre-dates the lastChecked stamp, or the monitor has never completed a
+            // successful run since it was added. Either way, needs a human.
+            console.log('is_stale=true');
+            console.log('age_hours=unknown');
+            console.log('last_checked=never');
+            process.exit(0);
+          }
+
+          const ageHours = (Date.now() - new Date(lastChecked).getTime()) / 36e5;
+          console.log(`is_stale=${ageHours > MAX_AGE_HOURS}`);
+          console.log(`age_hours=${ageHours.toFixed(1)}`);
+          console.log(`last_checked=${lastChecked}`);
+          EOF
+
+      - name: Report status
+        run: |
+          echo "Last checked: ${{ steps.freshness.outputs.last_checked }}"
+          echo "Age (hours):  ${{ steps.freshness.outputs.age_hours }}"
+          echo "Stale:        ${{ steps.freshness.outputs.is_stale }}"
+
+      - name: Alert on stale data
+        if: steps.freshness.outputs.is_stale == 'true'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "⚠️ DC Bills: monitoring appears stalled (last checked ${{ steps.freshness.outputs.age_hours }}h ago)"
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: DC Bills Monitor <noreply@representdc.org>
+          html_body: |
+            <h2>Bill monitoring appears stalled</h2>
+            <p>
+              Bill data was last verified against Congress.gov at
+              <strong>${{ steps.freshness.outputs.last_checked }}</strong>
+              (${{ steps.freshness.outputs.age_hours }} hours ago).
+            </p>
+            <p>
+              The site may still look current — it is redeployed twice daily by the news
+              workflow regardless of whether bills were checked — so this email is the
+              only reliable signal.
+            </p>
+            <p>
+              Check the
+              <a href="https://github.com/${{ github.repository }}/actions/workflows/monitor-bills.yml">
+                Monitor DC Bills run history
+              </a>
+              for a run that failed, was cancelled, or is stuck in <code>queued</code>.
+            </p>
+
+      # Make the failure visible in the Actions UI too, not just by email.
+      - name: Fail the run when data is stale
+        if: steps.freshness.outputs.is_stale == 'true'
+        run: |
+          echo "::error::Bill data last checked ${{ steps.freshness.outputs.age_hours }}h ago (threshold: 36h)"
+          exit 1

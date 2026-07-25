@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react'
 
+// Pinned to Eastern Time for the DC audience. Both values passed in here are true
+// instants — news.json's `lastUpdated` is ISO-8601 with Z, and article `pubDate` is
+// RFC-2822 with an offset — so converting them to a timezone is well-defined.
+const ET_TIME_ZONE = 'America/New_York'
+
 function formatRelativeDate(pubDate) {
   const date = new Date(pubDate)
   if (isNaN(date)) return ''
@@ -7,7 +12,11 @@ function formatRelativeDate(pubDate) {
   if (days === 0) return 'Today'
   if (days === 1) return 'Yesterday'
   if (days < 7) return `${days} days ago`
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  return date.toLocaleDateString('en-US', {
+    timeZone: ET_TIME_ZONE,
+    month: 'short',
+    day: 'numeric',
+  })
 }
 
 export default function NewsFeed() {

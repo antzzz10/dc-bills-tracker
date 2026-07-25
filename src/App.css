@@ -51,6 +51,15 @@ body {
   font-style: italic;
 }
 
+/* Shown when bill data hasn't been verified against Congress.gov in over 48 hours,
+   so a stalled monitor is visible to readers instead of silently serving old data. */
+.last-updated-stale {
+  opacity: 1;
+  font-style: normal;
+  font-weight: 600;
+  color: #ffd166;
+}
+
 .container {
   max-width: 1200px;
   width: 100%;

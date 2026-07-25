@@ -37,6 +37,7 @@ const pendingOpposeBills = pendingBills.length + riders.length + routineBills.le
 
 const stats = {
   lastUpdated: billsData.lastUpdated,
+  lastChecked: billsData.lastChecked || null,
   totalBills: totalOpposeBills,
   pendingBills: pendingOpposeBills,
   passedBills: passedBills.length,
