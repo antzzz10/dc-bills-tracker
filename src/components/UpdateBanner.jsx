@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './UpdateBanner.css'
+import Icon from './Icon'
 
 function UpdateBanner({ passedBills = [], upcomingFloorVotes = [], allBills = [] }) {
   const [isVisible, setIsVisible] = useState(true)
@@ -84,20 +85,20 @@ function UpdateBanner({ passedBills = [], upcomingFloorVotes = [], allBills = []
       if (recentlyPassed.length === 1) {
         const isEnacted = mostRecent.status?.stage === 'enacted'
         const nextStep = isEnacted
-          ? 'Signed into law. DC Council disputes its validity.'
+          ? 'Signed into law. D.C. Council disputes its validity.'
           : passedBoth
             ? 'Awaiting presidential signature.'
             : `Now headed to ${chamber === 'House' ? 'Senate' : 'President'}.`
         return {
-          icon: '🚨',
+          icon: 'siren',
           date: formattedDate,
           message: `${mostRecent.billNumbers[0]} passed the ${chamber} (${vote.yeas}-${vote.nays}). ${nextStep}`
         }
       } else {
         return {
-          icon: '🚨',
+          icon: 'siren',
           date: formattedDate,
-          message: `${recentlyPassed.length} bills have passed! Most recent: ${mostRecent.billNumbers[0]} (${chamber}, ${vote.yeas}-${vote.nays}). Click "Bills That Have Passed" section below for details.`
+          message: `${recentlyPassed.length} bills have passed! Most recent: ${mostRecent.billNumbers[0]} (${chamber}, ${vote.yeas}-${vote.nays}). Click "Bills that have passed" section below for details.`
         }
       }
     }
@@ -106,7 +107,7 @@ function UpdateBanner({ passedBills = [], upcomingFloorVotes = [], allBills = []
     if (floorVoteBills.length > 0) {
       const billNumbers = floorVoteBills.slice(0, 3).map(b => b.billNumbers[0]).join(', ')
       return {
-        icon: '📢',
+        icon: 'megaphone',
         date: 'Alert',
         message: `${floorVoteBills.length} bill${floorVoteBills.length > 1 ? 's' : ''} scheduled for floor vote: ${billNumbers}`
       }
@@ -124,7 +125,7 @@ function UpdateBanner({ passedBills = [], upcomingFloorVotes = [], allBills = []
   return (
     <div className="update-banner">
       <div className="update-banner-content">
-        <span className="update-icon">{bannerData.icon}</span>
+        <span className="update-icon"><Icon name={bannerData.icon} size={22} /></span>
         <p className="update-text">
           <strong>{bannerData.date}:</strong> {bannerData.message}
         </p>
@@ -133,7 +134,7 @@ function UpdateBanner({ passedBills = [], upcomingFloorVotes = [], allBills = []
           onClick={() => setIsVisible(false)}
           aria-label="Close banner"
         >
-          ✕
+          <Icon name="x" size={17} />
         </button>
       </div>
     </div>

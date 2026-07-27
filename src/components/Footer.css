@@ -1,0 +1,87 @@
+/* Ported from the footer block in representdc-main/src/App.css — keep in sync.
+   Divergence: .footer-statement (the advocacy line) is unique to this site. */
+
+.footer {
+  background: var(--navy);
+  color: var(--white);
+  padding: var(--s-8) var(--s-5);
+  margin-top: var(--s-8);
+}
+
+.footer-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.footer-statement {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+  font-weight: 600;
+  color: var(--white);
+  margin: 0;
+}
+
+.footer-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--s-5);
+  margin: var(--s-5) 0;
+  text-align: left;
+  padding-bottom: var(--s-5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-section h3 {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  margin-bottom: var(--s-3);
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 700;
+}
+
+.footer-section p {
+  line-height: var(--lh-body);
+  font-size: var(--fs-sm);
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.footer-section a {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  transition: opacity var(--dur) var(--ease);
+}
+
+.footer-section a:hover {
+  opacity: 0.8;
+}
+
+.footer-feedback-link {
+  margin-top: var(--s-4);
+  padding-top: var(--s-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+
+.footer-copyright {
+  margin-top: var(--s-2);
+  font-size: var(--fs-xs);
+  color: rgba(255, 255, 255, 0.5);
+}

@@ -5,7 +5,7 @@
 .category-filter h3 {
   margin: 0 0 1rem 0;
   font-size: 1.2rem;
-  color: #333;
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -17,8 +17,8 @@
 
 .category-tag {
   background-color: white;
-  border: 2px solid #e0e0e0;
-  color: #555;
+  border: 2px solid var(--line);
+  color: var(--slate-700);
   padding: 0.7rem 1.2rem;
   border-radius: 25px;
   cursor: pointer;
@@ -30,23 +30,23 @@
 }
 
 .category-tag:hover {
-  border-color: #DC143C;
-  color: #DC143C;
+  border-color: var(--dc-red);
+  color: var(--dc-red);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(220, 20, 60, 0.15);
 }
 
 .category-tag.selected {
-  background: linear-gradient(135deg, #DC143C 0%, #A00000 100%);
-  border-color: #DC143C;
+  background: linear-gradient(135deg, var(--dc-red) 0%, var(--dc-red-dark) 100%);
+  border-color: var(--dc-red);
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(220, 20, 60, 0.3);
 }
 
 .category-tag.selected:hover {
-  background: linear-gradient(135deg, #A00000 0%, #800000 100%);
-  border-color: #A00000;
+  background: linear-gradient(135deg, var(--dc-red-dark) 0%, var(--dc-red-darker) 100%);
+  border-color: var(--dc-red-dark);
 }
 
 .category-name {

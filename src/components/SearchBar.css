@@ -6,7 +6,7 @@
 .search-input {
   width: 100%;
   padding: 1rem 3rem 1rem 1.2rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--line);
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.2s ease;
@@ -16,12 +16,12 @@
 
 .search-input:focus {
   outline: none;
-  border-color: #DC143C;
+  border-color: var(--dc-red);
   box-shadow: 0 2px 8px rgba(220, 20, 60, 0.15);
 }
 
 .search-input::placeholder {
-  color: #999;
+  color: var(--slate-400);
 }
 
 .clear-search {
@@ -32,7 +32,7 @@
   background: none;
   border: none;
   font-size: 1.2rem;
-  color: #999;
+  color: var(--slate-400);
   cursor: pointer;
   padding: 0.5rem;
   line-height: 1;
@@ -40,7 +40,7 @@
 }
 
 .clear-search:hover {
-  color: #DC143C;
+  color: var(--dc-red);
 }
 
 @media (max-width: 768px) {

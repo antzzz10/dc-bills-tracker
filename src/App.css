@@ -2,17 +2,7 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f5f5;
-  color: #333;
-}
+/* Base body type/color lives in index.css so it sits with the font tokens. */
 
 .app {
   min-height: 100vh;
@@ -20,51 +10,100 @@ body {
   flex-direction: column;
 }
 
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+/* These wrappers used to hold emoji/glyph text and were sized with font-size.
+   They now hold SVGs, so they need to center a box rather than a character. */
+.expand-icon,
+.expand-icon-large,
+.expand-icon-section,
+.expand-icon-contact,
+.update-icon,
+.activity-type-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+/* Headings that carry a leading icon. */
+.news-feed-header h3,
+.section-header h2,
+.recent-activity-title h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+/* Tiny label text is the one place UPPERCASE is allowed (DESIGN-GUARDRAILS.md). */
+.eyebrow {
+  margin: 0 0 var(--s-3);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  color: var(--gold);
+}
+
+/* Navy is the workhorse. The subtle navy gradient is the one sanctioned
+   gradient exception, allowed on large hero/footer panels only. */
 .header {
-  background: linear-gradient(135deg, #DC143C 0%, #A00000 100%);
-  color: white;
-  padding: 3rem 2rem;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-700) 100%);
+  color: var(--white);
+  padding: var(--s-8) var(--s-6);
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .header h1 {
-  margin: 0 0 0.5rem 0;
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: -0.5px;
+  margin: 0 0 var(--s-2) 0;
+  font-size: var(--fs-display);
+  font-weight: 800;
+  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-tight);
 }
 
 .subtitle {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
-  opacity: 0.95;
+  margin: var(--s-2) auto 0;
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+  color: rgba(255, 255, 255, 0.82);
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
+/* Freshness strip — sits below the hero so the hero keeps to 3 blocks. */
 .last-updated {
-  margin: 1rem 0 0 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
-  font-style: italic;
+  margin: 0;
+  padding: var(--s-3) var(--s-6);
+  background: var(--navy-tint);
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--slate-500);
 }
 
 /* Shown when bill data hasn't been verified against Congress.gov in over 48 hours,
    so a stalled monitor is visible to readers instead of silently serving old data. */
 .last-updated-stale {
-  opacity: 1;
-  font-style: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  background: var(--dc-red-tint);
+  border-bottom-color: var(--dc-red);
   font-weight: 600;
-  color: #ffd166;
+  color: var(--dc-red-dark);
 }
 
 .container {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: var(--s-6);
   flex: 1;
 }
 
@@ -72,63 +111,69 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 2rem 0 1.5rem 0;
+  margin: var(--s-6) 0 var(--s-5) 0;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--s-4);
 }
 
 .results-header h2 {
   margin: 0;
-  font-size: 1.5rem;
-  color: #333;
+  font-size: var(--fs-h2);
+  color: var(--navy);
+  letter-spacing: var(--ls-tight);
 }
 
 .count-breakdown {
-  font-size: 1rem;
+  font-size: var(--fs-base);
   font-weight: 400;
-  color: #666;
-  margin-left: 0.5rem;
+  color: var(--slate-500);
+  margin-left: var(--s-2);
 }
 
 .results-actions {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--s-3);
   align-items: center;
   flex-wrap: wrap;
 }
 
+/* Clearing filters is a primary action — one of the rationed red uses. */
 .clear-filters {
-  background-color: #DC143C;
-  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  background-color: var(--dc-red);
+  color: var(--white);
   border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-sm);
   cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  transition: all var(--dur) var(--ease);
 }
 
 .clear-filters:hover {
-  background-color: #A00000;
+  background-color: var(--dc-red-dark);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(220, 20, 60, 0.3);
+  box-shadow: var(--shadow-md);
 }
 
 /* Pending Bills Section - mirrors passed bills section */
 .pending-bills-section {
-  margin-bottom: 2rem;
-  background: white;
-  border-radius: 8px;
+  margin-bottom: var(--s-6);
+  background: var(--surface);
+  border-radius: var(--r-md);
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
-  border: 2px solid #667eea;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line);
 }
 
 .pending-bills-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 1rem 1.25rem;
+  background: var(--navy);
+  color: var(--white);
+  padding: var(--s-4) var(--s-5);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -138,222 +183,155 @@ body {
 .pending-bills-title {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--s-3);
   flex: 1;
 }
 
 .pending-bills-title h2 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: var(--fs-h3);
   font-weight: 600;
 }
 
 .bill-count-pending {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 0.3rem 0.7rem;
-  border-radius: 12px;
-  font-size: 0.85rem;
+  background-color: rgba(255, 255, 255, 0.18);
+  color: var(--white);
+  padding: var(--s-1) var(--s-3);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
   font-weight: 600;
 }
 
 .pending-bills-content {
-  padding: 1.25rem;
+  padding: var(--s-5);
 }
 
 .pending-bills-intro {
-  margin: 0 0 1.25rem;
-  padding: 1rem;
-  background: #f5f7ff;
-  border-left: 4px solid #667eea;
-  border-radius: 4px;
-  color: #666;
-  font-size: 0.95rem;
-  line-height: 1.5;
+  margin: 0 0 var(--s-5);
+  padding: var(--s-4);
+  background: var(--navy-tint);
+  border-left: 3px solid var(--navy-600);
+  border-radius: var(--r-sm);
+  color: var(--slate-700);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
 }
 
 .bills-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--s-5);
 }
 
 .priority-section {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: var(--s-2);
 }
 
 .section-header {
-  background: white;
-  padding: 1rem 1.25rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #DC143C;
+  background: var(--surface);
+  padding: var(--s-4) var(--s-5);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-xs);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--navy-600);
 }
 
 .section-header h2 {
-  margin: 0 0 0.35rem 0;
-  font-size: 1.2rem;
-  color: #333;
+  margin: 0 0 var(--s-1) 0;
+  font-size: var(--fs-h3);
+  color: var(--navy);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--s-2);
 }
 
 .section-description {
   margin: 0;
-  color: #666;
-  font-size: 0.85rem;
-  line-height: 1.4;
+  color: var(--slate-500);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
 }
 
+/* High priority is the one section that earns the red accent. */
 .high-priority-header {
-  border-left-color: #DC143C;
-  background: linear-gradient(to right, #fff5f5, white);
+  border-left-color: var(--dc-red);
 }
 
 .riders-header {
-  border-left-color: #FF8C00;
-  background: linear-gradient(to right, #fff8f0, white);
+  border-left-color: var(--prio-medium);
 }
 
 .other-bills-header {
-  border-left-color: #999;
-  background: linear-gradient(to right, #f9f9f9, white);
+  border-left-color: var(--prio-low);
 }
 
 .routine-header {
-  border-left-color: #5B5F97;
-  background: linear-gradient(to right, #f4f4fa, white);
+  border-left-color: var(--navy-600);
 }
 
 .collapsible {
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--dur) var(--ease);
 }
 
 .collapsible:hover {
-  background: linear-gradient(to right, #f0f0f0, #f8f8f8);
+  background: var(--surface-2);
   transform: translateX(2px);
 }
 
 .expand-icon-section {
-  margin-left: 0.5rem;
-  font-size: 1.2rem;
-  font-weight: normal;
-  opacity: 0.7;
+  margin-left: var(--s-2);
+  display: inline-flex;
+  align-items: center;
+  color: var(--slate-400);
 }
 
 .other-bills-section {
-  margin-top: 1rem;
+  margin-top: var(--s-4);
 }
 
 .no-results {
   text-align: center;
-  padding: 3rem;
-  background: white;
-  border-radius: 8px;
-  color: #666;
+  padding: var(--s-8);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  color: var(--slate-500);
 }
 
 .no-results p {
   margin: 0;
-  font-size: 1.1rem;
-}
-
-.footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 3rem 2rem;
-  margin-top: 3rem;
-}
-
-.footer-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.footer-statement {
-  margin: 0 0 2rem;
-  font-size: 1rem;
-  opacity: 0.95;
-  line-height: 1.6;
-}
-
-.footer-about {
-  margin: 2rem 0;
-  padding: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  border-top: 2px solid rgba(220, 20, 60, 0.5);
-}
-
-.footer-about h3 {
-  margin: 0 0 0.75rem;
-  font-size: 1.1rem;
-  color: #fff;
-  font-weight: 600;
-}
-
-.footer-about p {
-  margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
-  line-height: 1.5;
-}
-
-.footer-feedback {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-feedback a {
-  color: #FFD700;
-  text-decoration: none;
-  font-weight: 500;
-  transition: opacity 0.3s ease;
-}
-
-.footer-feedback a:hover {
-  opacity: 0.8;
-  text-decoration: underline;
-}
-
-.footer-copyright {
-  margin: 2rem 0 0;
-  font-size: 0.85rem;
-  opacity: 0.7;
+  font-size: var(--fs-lg);
 }
 
 /* News Feed */
 .news-feed-section {
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 1.25rem 1.5rem;
-  margin-bottom: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--s-5) var(--s-6);
+  margin-bottom: var(--s-5);
 }
 
 .news-feed-header {
   display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-3);
 }
 
 .news-feed-header h3 {
   margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--navy);
 }
 
 .news-feed-meta {
-  font-size: 0.8rem;
-  color: #888;
+  font-size: var(--fs-xs);
+  color: var(--slate-400);
 }
 
 .news-feed-list {
@@ -362,15 +340,15 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: var(--s-3);
 }
 
 .news-feed-item {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid #f0f0f0;
+  gap: var(--s-1);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--line);
 }
 
 .news-feed-item:last-child {
@@ -379,36 +357,42 @@ body {
 }
 
 .news-feed-title {
-  font-size: 0.9rem;
-  color: #1a0dab;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--navy-600);
   text-decoration: none;
-  line-height: 1.4;
+  line-height: var(--lh-snug);
 }
 
 .news-feed-title:hover {
+  color: var(--navy);
   text-decoration: underline;
 }
 
 .news-feed-byline {
-  font-size: 0.75rem;
-  color: #888;
+  font-size: var(--fs-xs);
+  color: var(--slate-400);
 }
 
 .news-feed-source {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
+  .header {
+    padding: var(--s-7) var(--s-5);
+  }
+
   .header h1 {
-    font-size: 2rem;
+    font-size: var(--fs-h1);
   }
 
   .subtitle {
-    font-size: 1rem;
+    font-size: var(--fs-base);
   }
 
   .container {
-    padding: 1rem;
+    padding: var(--s-4);
   }
 
   .results-header {
@@ -416,23 +400,7 @@ body {
     align-items: flex-start;
   }
 
-  .footer {
-    padding: 2rem 1rem;
-  }
-
-  .footer-statement {
-    font-size: 0.9rem;
-  }
-
-  .footer-about {
-    padding: 1rem;
-  }
-
-  .footer-about h3 {
-    font-size: 1rem;
-  }
-
-  .footer-about p {
-    font-size: 0.85rem;
+  .last-updated {
+    padding: var(--s-3) var(--s-4);
   }
 }

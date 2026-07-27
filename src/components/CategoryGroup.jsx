@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './CategoryGroup.css'
 import BillCard from './BillCard'
+import Icon from './Icon'
 
 function CategoryGroup({ category, bills }) {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -15,7 +16,9 @@ function CategoryGroup({ category, bills }) {
           <h2>{category.name}</h2>
           <span className="bill-count">{bills.length} {bills.length === 1 ? 'bill' : 'bills'}</span>
         </div>
-        <span className="expand-icon-large">{isExpanded ? '−' : '+'}</span>
+        <span className="expand-icon-large">
+          <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={18} />
+        </span>
       </div>
 
       {isExpanded && (

@@ -7,11 +7,12 @@
    representdc-main/DESIGN-GUARDRAILS.md for the rules these tokens
    serve — navy is the workhorse, red is a rationed accent.
 
-   NOTE: this pass is a color/token remap only (per the 2026-07-10
-   handoff scope) — fonts are NOT loaded here and --font-* below are
-   inert until a future pass actually adopts Public Sans etc. in this
-   repo. Don't import the Google Fonts stylesheet without a reason to
-   use it.
+   Fonts ARE live as of 2026-07-26 (design-system rollout — see
+   decisions/2026-07-26-design-system-rollout.md), superseding the
+   2026-07-10 color-only scope note. The Google Fonts stylesheet is
+   loaded from index.html rather than @import-ed here so it can be
+   preceded by a preconnect; main uses @import, which is the one
+   knowing divergence between the two copies of this file.
    ============================================================ */
 
 :root {

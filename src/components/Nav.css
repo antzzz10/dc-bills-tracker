@@ -1,0 +1,88 @@
+/* Ported from representdc-main/src/components/Nav.css — keep in sync.
+   Divergences: a current-page marker for "Bill tracker", and the mobile
+   rule keeps the CTA visible rather than collapsing to the brand alone. */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(160%) blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--s-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 66px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+}
+
+.nav-link {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--slate-700);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur) var(--ease);
+}
+
+.nav-link:hover {
+  color: var(--navy);
+}
+
+.nav-link-current {
+  color: var(--navy);
+  cursor: default;
+  border-bottom: 2px solid var(--dc-red);
+  padding-bottom: 2px;
+}
+
+.nav-cta {
+  background: var(--dc-red);
+  color: var(--white);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  padding: var(--s-2) var(--s-4);
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--dur) var(--ease);
+}
+
+.nav-cta:hover {
+  background: var(--dc-red-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+  .nav-inner {
+    padding: 0 var(--s-5);
+  }
+
+  .nav-links {
+    gap: var(--s-4);
+  }
+
+  /* Collapse the cross-site links; keep the current-page marker and the CTA. */
+  .nav-links .nav-link:not(.nav-link-current) {
+    display: none;
+  }
+}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Icon from './Icon'
 
 // Pinned to Eastern Time for the DC audience. Both values passed in here are true
 // instants — news.json's `lastUpdated` is ISO-8601 with Z, and article `pubDate` is
@@ -39,7 +40,7 @@ export default function NewsFeed() {
   return (
     <div className="news-feed-section">
       <div className="news-feed-header">
-        <h3>📰 In the News</h3>
+        <h3><Icon name="newspaper" size={17} /> In the news</h3>
         <span className="news-feed-meta">
           Updated {formatRelativeDate(data.lastUpdated)}
         </span>
