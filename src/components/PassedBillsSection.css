@@ -307,6 +307,10 @@
   border: 1px solid var(--party-d);
 }
 
+.party-vote.independent {
+  border: 1px solid var(--party-i);
+}
+
 .party-label {
   font-weight: 600;
   font-size: 0.75rem;

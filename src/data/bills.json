@@ -2386,18 +2386,19 @@
     {
       "id": "hr5103",
       "billNumbers": [
-        "H.R. 5103"
+        "H.R. 5103",
+        "S. 2748"
       ],
       "title": "Make the District of Columbia Safe and Beautiful Act of 2025",
       "sponsors": [
         "Rep. McGuire, John J. [R-VA-5]"
       ],
-      "description": "Would establish a federal executive-branch commission over criminal and immigration matters in DC and a federally managed program controlling the cleanliness and maintenance of DC public spaces — federal takeover of core local functions.",
+      "description": "Would establish a federal executive-branch commission over criminal and immigration matters in DC and a federally managed program controlling the cleanliness and maintenance of DC public spaces — federal takeover of core local functions. The commission chair is directed to monitor DC's sanctuary-city status and compliance with federal immigration enforcement. Passed the House 218-206 on March 25, 2026 and now sits on the Senate Legislative Calendar; its Senate companion, S. 2748 (Sen. Schmitt), is separately on the calendar with substantively identical text.",
       "category": "crime",
       "position": "oppose",
       "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
+      "priority": "high",
+      "prioritySource": "legislative",
       "provisional": false,
       "autoDiscovered": true,
       "discoveredDate": "2026-03-30",
@@ -2405,9 +2406,9 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5103",
       "status": {
         "stage": "passed-house",
-        "lastAction": "Passed House",
-        "lastActionDate": "2026-03-30",
-        "hasCommitteeHearing": false,
+        "lastAction": "Read twice. Placed on Senate Legislative Calendar under General Orders. Calendar No. 437.",
+        "lastActionDate": "2026-06-16",
+        "hasCommitteeHearing": true,
         "hasCommitteeMarkup": true,
         "hasFloorVote": true,
         "cosponsors": 4,
@@ -2419,17 +2420,23 @@
       "attackType": "direct",
       "passage": {
         "house": {
-          "date": "2025-04-10",
+          "date": "2026-03-25",
+          "rollCall": 101,
           "vote": {
-            "yeas": 211,
-            "nays": 215,
+            "yeas": 218,
+            "nays": 206,
+            "notVoting": 8,
             "byParty": {
               "republican": {
-                "yeas": 0,
-                "nays": 215
+                "yeas": 212,
+                "nays": 0
               },
               "democrat": {
-                "yeas": 211,
+                "yeas": 5,
+                "nays": 206
+              },
+              "independent": {
+                "yeas": 1,
                 "nays": 0
               }
             }
@@ -2620,58 +2627,21 @@
       "passage": {}
     },
     {
-      "id": "hr9741",
-      "billNumbers": [
-        "H.R. 9741"
-      ],
-      "title": "To name the District of Columbia tuition assistance grant program the \"Eleanor Holmes Norton District of Columbia Tuition Assistance Grant Program\".",
-      "sponsors": [
-        "Rep. Garcia, Robert [D-CA-42]"
-      ],
-      "description": "Auto-discovered.",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-07-20",
-      "relevanceScore": 45,
-      "congress": 119,
-      "congressValidated": true,
-      "congressValidatedDate": "2026-07-20",
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/9741",
-      "status": {
-        "stage": null,
-        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
-        "lastActionDate": "2026-07-16",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
-        "committees": [
-          "Oversight and Government Reform Committee"
-        ]
-      },
-      "attackType": "unknown"
-    },
-    {
       "id": "hr7196",
       "billNumbers": [
         "H.R. 7196"
       ],
-      "title": "To amend the District of Columbia Home Rule Act to prohibit the Council of the District of Columbia from enacting any law to permit euthanasia and assisted suicide in the District of Columbia, and for other purposes.",
+      "title": "Prohibiting DC from enacting euthanasia or assisted suicide laws",
       "sponsors": [
         "Rep. Barrett, Tom [R-MI-7]"
       ],
-      "description": "Auto-discovered.",
-      "category": "other",
+      "description": "Would amend section 602(a) of the Home Rule Act — the enumerated list of subjects the DC Council may not legislate on — to permanently bar the Council from enacting any law permitting assisted suicide, and would separately repeal DC's existing Death With Dignity Act of 2016 outright. Congress could neither strip a policy area from a state legislature nor repeal a state's duly enacted statute, so this satisfies all three prongs of the attack test.",
+      "category": "healthcare",
       "position": "oppose",
       "type": "bill",
       "priority": "watching",
       "prioritySource": "auto-discovered",
-      "provisional": true,
+      "provisional": false,
       "autoDiscovered": true,
       "discoveredDate": "2026-07-21",
       "relevanceScore": 60,
@@ -2691,42 +2661,8 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown"
-    },
-    {
-      "id": "s2748",
-      "billNumbers": [
-        "S. 2748"
-      ],
-      "title": "Make the District of Columbia Safe and Beautiful Act",
-      "sponsors": [
-        "Sen. Schmitt, Eric [R-MO]"
-      ],
-      "description": "Auto-discovered.",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
-      "autoDiscovered": true,
-      "discoveredDate": "2026-07-21",
-      "relevanceScore": 55,
-      "congress": 119,
-      "congressValidated": true,
-      "congressValidatedDate": "2026-07-21",
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/2748",
-      "status": {
-        "stage": null,
-        "lastAction": "Read the second time. Placed on Senate Legislative Calendar under General Orders. Calendar No. 155.",
-        "lastActionDate": "2025-09-10",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
-        "committees": []
-      },
-      "attackType": "unknown"
+      "attackType": "direct",
+      "fullTitle": "To amend the District of Columbia Home Rule Act to prohibit the Council of the District of Columbia from enacting any law to permit euthanasia and assisted suicide in the District of Columbia, and for other purposes."
     },
     {
       "id": "hr9720",

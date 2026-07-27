@@ -1,6 +1,6 @@
 {
   "description": "Golden classification labels for eval. lint-bills.js fails if bills.json drifts from these. attackType null means the field must be absent (support bills are not incursions). When a classification legitimately changes, update this file in the same commit and record why in a decision note.",
-  "updated": "2026-07-12",
+  "updated": "2026-07-27",
   "labels": {
     "hr51": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Washington, D.C. Admission Act — the flagship statehood bill" },
     "hr7881": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Norton: DC Superior Court juror pay parity" },
@@ -12,7 +12,8 @@
     "hr6950": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Norton: DOT grant parity for DC" },
     "s4837": { "position": "support", "attackType": null, "source": "manual-review-2026-07-12", "note": "Van Hollen: Senate companion to H.R. 9362" },
     "s4150": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Rick Scott: 60-day review of all DC laws + disapproval of DC executive orders/regulations" },
-    "hr5103": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Federal commission over DC crime/immigration + federal control of public spaces" },
+    "hr5103": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Federal commission over DC crime/immigration + federal control of public spaces. Senate companion S. 2748 folded into this entry 2026-07-27 (texts substantively identical)" },
+    "hr7196": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-07-27", "note": "Adds a new paragraph to Home Rule Act sec. 602(a) barring the Council from legislating on assisted suicide, and repeals DC's Death With Dignity Act of 2016; verified against govinfo bill text" },
     "hr8297": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Overrides DC firearm laws wholesale" },
     "hr8455": { "position": "oppose", "attackType": "partial", "source": "manual-review-2026-07-12", "note": "Make DC Square Again Act — redraws DC boundaries; primarily a Virginia redistricting play" },
     "hr5815": { "position": "oppose", "attackType": "direct", "source": "scorecard-author-2026-07", "note": "Author lists as full attack" },

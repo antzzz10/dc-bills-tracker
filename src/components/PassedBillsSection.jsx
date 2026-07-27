@@ -108,18 +108,26 @@ function BillCard({ bill }) {
             </div>
             {vote.vote.byParty && (
               <div className="vote-breakdown">
-                <div className="party-vote republican">
-                  <span className="party-label">R:</span>
-                  <span className="party-votes">
-                    {vote.vote.byParty.republican.yeas}-{vote.vote.byParty.republican.nays}
-                  </span>
-                </div>
-                <div className="party-vote democrat">
-                  <span className="party-label">D:</span>
-                  <span className="party-votes">
-                    {vote.vote.byParty.democrat.yeas}-{vote.vote.byParty.democrat.nays}
-                  </span>
-                </div>
+                {/* Rendered from whichever caucuses are present, and only when
+                    present. Independents are rare but real: on H.R. 5103 an
+                    independent yea is the difference between the party rows
+                    summing to the displayed total and being one vote short. */}
+                {[
+                  ['republican', 'R'],
+                  ['democrat', 'D'],
+                  ['independent', 'I'],
+                ].map(([key, label]) => {
+                  const tally = vote.vote.byParty[key]
+                  if (!tally) return null
+                  return (
+                    <div key={key} className={`party-vote ${key}`}>
+                      <span className="party-label">{label}:</span>
+                      <span className="party-votes">
+                        {tally.yeas}-{tally.nays}
+                      </span>
+                    </div>
+                  )
+                })}
               </div>
             )}
           </div>

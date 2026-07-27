@@ -1,16 +1,16 @@
 {
   "lastUpdated": "2026-07-24",
   "lastChecked": "2026-07-25T19:11:29.404Z",
-  "totalBills": 93,
-  "pendingBills": 78,
+  "totalBills": 94,
+  "pendingBills": 79,
   "passedBills": 15,
   "breakdown": {
-    "bills": 74,
+    "bills": 75,
     "riders": 18,
     "supportBills": 36,
     "routineBills": 1
   },
-  "provisionalAwaitingReview": 3,
+  "provisionalAwaitingReview": 0,
   "passed": [
     {
       "id": "hr2096",
