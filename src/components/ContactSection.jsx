@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './ContactSection.css'
+import Icon from './Icon'
 
 function ContactSection() {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -18,10 +19,12 @@ function ContactSection() {
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="contact-title">
-          <span className="contact-icon">💬</span>
-          <h2>Send Feedback</h2>
+          <Icon name="message-circle" size={20} />
+          <h2>Send feedback</h2>
         </div>
-        <span className="expand-icon-contact">{isExpanded ? '−' : '+'}</span>
+        <span className="expand-icon-contact">
+          <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={18} />
+        </span>
       </div>
 
       {isExpanded && (
@@ -39,7 +42,7 @@ function ContactSection() {
                   frameBorder="0"
                   marginHeight="0"
                   marginWidth="0"
-                  title="Feedback Form"
+                  title="Feedback form"
                 >
                   Loading…
                 </iframe>

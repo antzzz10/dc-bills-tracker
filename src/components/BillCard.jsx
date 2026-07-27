@@ -4,6 +4,7 @@ import billsData from '../data/bills.json'
 import sponsorsData from '../data/sponsors.json'
 import { stateAbbreviations } from '../data/stateAbbreviations'
 import { CURRENT_CONGRESS } from '../data/config'
+import Icon from './Icon'
 
 const ATTACK_TYPE_LABEL = {
   direct: 'Direct attack',
@@ -11,8 +12,8 @@ const ATTACK_TYPE_LABEL = {
 }
 
 const ATTACK_TYPE_DESCRIPTION = {
-  direct: "Targeting DC is this bill's purpose.",
-  partial: "This bill undermines DC's self-governance, but DC is not its primary target — it attacks DC along the way.",
+  direct: "Targeting D.C. is this bill's purpose.",
+  partial: "This bill undermines D.C.'s self-governance, but D.C. is not its primary target — it attacks D.C. along the way.",
 }
 
 function BillCard({ bill, variant = 'attack' }) {
@@ -117,7 +118,9 @@ function BillCard({ bill, variant = 'attack' }) {
           {bill.highlight === 'floor-vote' && (
             <span className="floor-vote-badge"><span className="dot"></span>FLOOR VOTE</span>
           )}
-          <span className="expand-icon">{isExpanded ? '−' : '+'}</span>
+          <span className="expand-icon">
+            <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={17} />
+          </span>
         </div>
       </div>
 

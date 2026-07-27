@@ -2,8 +2,9 @@ import { useState } from 'react'
 import './PassedBillsSection.css'
 import sponsorsData from '../data/sponsors.json'
 import { stateAbbreviations } from '../data/stateAbbreviations'
+import Icon from './Icon'
 
-// Update this date to control which enacted bills appear in the "Enacted Into Law" section
+// Update this date to control which enacted bills appear in the "Enacted into law" section
 const ENACTED_SINCE = new Date('2025-01-20')
 
 const CONGRESS_PATH = {
@@ -63,7 +64,7 @@ function BillCard({ bill }) {
               })}
             </div>
             <div className="bill-status-tags">
-              {stage === 'passed-both' && <span className="bill-status-tag tag-passed-both">Passed Both Chambers</span>}
+              {stage === 'passed-both' && <span className="bill-status-tag tag-passed-both">Passed both chambers</span>}
               {stage === 'passed-senate' && <span className="bill-status-tag tag-passed-senate">Passed Senate</span>}
               {stage === 'passed-house' && <span className="bill-status-tag tag-passed-house">Passed House</span>}
               {bill.disputedByDC && <span className="bill-status-tag tag-disputed">Disputed by DC</span>}
@@ -133,11 +134,13 @@ function AccordionSection({ title, count, bills, intro, expanded, onToggle, clas
     <div className={`passed-bills-section ${className || ''}`}>
       <div className="passed-bills-header" onClick={onToggle}>
         <div className="passed-bills-title">
-          <span className="alert-icon">⚠️</span>
+          <Icon name="alert-triangle" size={20} />
           <h2>{title}</h2>
           <span className="bill-count-passed">{count}</span>
         </div>
-        <span className="expand-icon-large">{expanded ? '−' : '+'}</span>
+        <span className="expand-icon-large">
+          <Icon name={expanded ? 'chevron-up' : 'chevron-down'} size={18} />
+        </span>
       </div>
       {expanded && (
         <div className="passed-bills-content">
@@ -169,7 +172,7 @@ function PassedBillsSection({ passedBills }) {
     <>
       {enactedBills.length > 0 && (
         <AccordionSection
-          title="Enacted Into Law"
+          title="Enacted into law"
           count={enactedBills.length}
           bills={enactedBills}
           intro="These anti-DC bills have been signed into law since January 20, 2025. Review each for ongoing legal challenges or DC government responses."
@@ -180,7 +183,7 @@ function PassedBillsSection({ passedBills }) {
       )}
       {advancedBills.length > 0 && (
         <AccordionSection
-          title="Bills That Have Advanced"
+          title="Bills that have advanced"
           count={advancedBills.length}
           bills={advancedBills}
           intro="These anti-DC bills have cleared at least one chamber of Congress. Bills that have passed both chambers are headed to the President for signature."

@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import './RecentActivity.css'
+import Icon from './Icon'
 
 // Helper to parse date strings as local dates (avoiding timezone issues)
 const parseLocalDate = (dateString) => {
@@ -40,12 +41,12 @@ function RecentActivity({ allBills, allRiders }) {
       // Determine activity type and description
       let activityType = ''
       let description = ''
-      let icon = '📋'
+      let icon = 'file-text'
 
       // Passed bills
       if (item.status?.stage?.startsWith('passed-')) {
         activityType = 'passed'
-        icon = '⚠️'
+        icon = 'alert-triangle'
         if (item.status.stage === 'passed-house') {
           description = `Passed the House`
         } else if (item.status.stage === 'passed-senate') {
@@ -57,23 +58,23 @@ function RecentActivity({ allBills, allRiders }) {
       // New bills (introduced recently)
       else if (item.status?.lastAction === 'Introduced' || item.provisional) {
         activityType = 'introduced'
-        icon = '🆕'
+        icon = 'sparkles'
         description = 'Introduced'
       }
       // Committee activity
       else if (item.status?.hasCommitteeMarkup) {
         activityType = 'markup'
-        icon = '📝'
+        icon = 'pencil'
         description = 'Committee markup'
       } else if (item.status?.hasCommitteeHearing) {
         activityType = 'hearing'
-        icon = '👂'
+        icon = 'ear'
         description = 'Committee hearing held'
       }
       // Other status changes
       else if (item.status?.lastAction) {
         activityType = 'status-change'
-        icon = '🔄'
+        icon = 'refresh-cw'
         description = item.status.lastAction
       }
 
@@ -135,12 +136,14 @@ function RecentActivity({ allBills, allRiders }) {
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="recent-activity-title">
-          <span className="activity-icon">📅</span>
-          <h2>Recent Activity</h2>
+          <Icon name="calendar" size={20} />
+          <h2>Recent activity</h2>
           <span className="activity-count">{recentActivities.length}</span>
-          <span className="activity-timeframe">Last 30 Days</span>
+          <span className="activity-timeframe">Last 30 days</span>
         </div>
-        <span className="expand-icon-large">{isExpanded ? '−' : '+'}</span>
+        <span className="expand-icon-large">
+          <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={18} />
+        </span>
       </div>
 
       {isExpanded && (
@@ -160,7 +163,7 @@ function RecentActivity({ allBills, allRiders }) {
                   <span className="date-text">{formatDate(activity.date)}</span>
                 </div>
                 <div className="activity-details">
-                  <span className="activity-type-icon">{activity.icon}</span>
+                  <span className="activity-type-icon"><Icon name={activity.icon} size={16} /></span>
                   <span className="activity-bill-number">{activity.billNumbers}</span>
                   <span className={`activity-priority priority-${activity.priority}`}>
                     {activity.priority}

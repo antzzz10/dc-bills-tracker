@@ -1,6 +1,9 @@
 import { useState, useMemo } from 'react'
 import './App.css'
 import billsData from './data/bills.json'
+import Icon from './components/Icon'
+import Nav from './components/Nav'
+import Footer from './components/Footer'
 import CategoryFilter from './components/CategoryFilter'
 import CategoryGroup from './components/CategoryGroup'
 import SearchBar from './components/SearchBar'
@@ -178,6 +181,7 @@ function App() {
 
   return (
     <div className="app">
+      <Nav />
       <UrgentAlert />
       {!isUrgentAlertActive() && (
         <UpdateBanner
@@ -186,23 +190,29 @@ function App() {
           allBills={billsData.bills}
         />
       )}
+      {/* Sub-page hero: eyebrow + h1 + one-line subtitle. Max 3 blocks
+          (DESIGN-GUARDRAILS.md) — the freshness line sits outside the hero. */}
       <header className="header">
-        <h1>Anti-DC Bills Tracker</h1>
+        <p className="eyebrow">Bill tracker</p>
+        <h1>Anti-DC bills tracker</h1>
         <p className="subtitle">
           Tracking bills in Congress that threaten D.C. home rule and autonomy
         </p>
-        <p className={`last-updated${IS_DATA_STALE ? ' last-updated-stale' : ''}`}>
-          {LAST_CHECKED ? (
-            IS_DATA_STALE ? (
-              <>⚠️ Bill data last verified {formatCheckedInstant(LAST_CHECKED)} — daily monitoring may be stalled</>
-            ) : (
-              <>Bill data last checked: {formatCheckedInstant(LAST_CHECKED)} • Monitoring runs daily</>
-            )
-          ) : (
-            <>Site last built: {formatBuildDate(__BUILD_DATE__)}</>
-          )}
-        </p>
       </header>
+      <p className={`last-updated${IS_DATA_STALE ? ' last-updated-stale' : ''}`}>
+        {LAST_CHECKED ? (
+          IS_DATA_STALE ? (
+            <>
+              <Icon name="alert-triangle" size={15} />
+              Bill data last verified {formatCheckedInstant(LAST_CHECKED)} — daily monitoring may be stalled
+            </>
+          ) : (
+            <>Bill data last checked: {formatCheckedInstant(LAST_CHECKED)} • Monitoring runs daily</>
+          )
+        ) : (
+          <>Site last built: {formatBuildDate(__BUILD_DATE__)}</>
+        )}
+      </p>
 
       <div className="container">
         <SearchBar
@@ -228,7 +238,7 @@ function App() {
 
         <div className="results-header">
           <h2>
-            {totalCount} {totalCount === 1 ? 'Item' : 'Items'} Found
+            {totalCount} {totalCount === 1 ? 'item' : 'items'} found
             {passedCount > 0 && (
               <span className="count-breakdown"> ({pendingCount} pending, {passedCount} passed)</span>
             )}
@@ -260,8 +270,8 @@ function App() {
               <div className="pending-bills-section">
                 <div className="pending-bills-header">
                   <div className="pending-bills-title">
-                    <span className="alert-icon">📋</span>
-                    <h2>Pending Bills</h2>
+                    <Icon name="list" size={20} />
+                    <h2>Pending bills</h2>
                     <span className="bill-count-pending">{pendingCount}</span>
                   </div>
                 </div>
@@ -275,7 +285,7 @@ function App() {
                   {highPriorityGroups.length > 0 && (
                 <div className="priority-section">
                   <div className="section-header high-priority-header">
-                    <h2>🔴 High Priority Bills ({highPriorityGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
+                    <h2><Icon name="alert-circle" size={18} /> High priority bills ({highPriorityGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
                     <p className="section-description">
                       Bills with significant legislative activity or identified as high-priority threats by FreeDC
                     </p>
@@ -292,15 +302,15 @@ function App() {
 
               {/* Everyday Indignities Section — bills that are neither attacks nor
                   advocacy wins: Congress performing a routine, recurring structural
-                  obligation over DC that a state legislature would never need to ask
+                  obligation over D.C. that a state legislature would never need to ask
                   permission for. Still a real structural incursion (attackType is
                   mandatory on every entry) — see METHODOLOGY.md. */}
               {routineGroups.length > 0 && (
                 <div className="priority-section">
                   <div className="section-header routine-header">
-                    <h2>📎 Everyday Indignities ({routineGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
+                    <h2><Icon name="paperclip" size={18} /> Everyday indignities ({routineGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
                     <p className="section-description">
-                      The routine paperwork of not being a state — sign-offs Congress requires from DC that no state legislature would ever need to ask for.
+                      The routine paperwork of not being a state — sign-offs Congress requires from D.C. that no state legislature would ever need to ask for.
                     </p>
                   </div>
                   {routineGroups.map(group => (
@@ -317,7 +327,7 @@ function App() {
               {riderGroups.length > 0 && (
                 <div className="priority-section">
                   <div className="section-header riders-header">
-                    <h2>📋 Budget Riders ({riderGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
+                    <h2><Icon name="file-text" size={18} /> Budget riders ({riderGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
                     <p className="section-description">
                       Policy restrictions attached to appropriations bills (H.R. 5166)
                     </p>
@@ -341,8 +351,10 @@ function App() {
                   >
                     <div>
                       <h2>
-                        ⚪ Other Introduced Bills ({otherBillsGroups.reduce((sum, g) => sum + g.bills.length, 0)})
-                        <span className="expand-icon-section">{showOtherBills ? '−' : '+'}</span>
+                        <Icon name="circle" size={18} /> Other introduced bills ({otherBillsGroups.reduce((sum, g) => sum + g.bills.length, 0)})
+                        <span className="expand-icon-section">
+                          <Icon name={showOtherBills ? 'chevron-up' : 'chevron-down'} size={18} />
+                        </span>
                       </h2>
                       <p className="section-description">
                         Bills introduced but with no significant activity yet
@@ -373,37 +385,7 @@ function App() {
         {/* Contact section hidden until Google Form is set up - see FEEDBACK-SETUP.md */}
       </div>
 
-      <footer className="footer">
-        <div className="footer-content">
-          <p className="footer-statement">
-            D.C. statehood is a civil rights issue. These bills undermine the democratic rights of D.C. residents.
-          </p>
-
-          <div className="footer-about">
-            <h3>About This Site</h3>
-            <p>
-              This is an independent, volunteer-run project created by a proud DC resident
-              to track anti-DC legislation. Not affiliated with any organization.
-            </p>
-            <p className="footer-feedback">
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLScoQfgfU-vHBN0EXqGp51Vv79oT2iS-1_uPTzoPtpmFlQ58kQ/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Send Feedback →
-              </a>
-            </p>
-            <p className="footer-feedback">
-              <a href="https://www.representdc.org">Main Site</a> · <a href="https://candidates.representdc.org">Candidates</a>
-            </p>
-          </div>
-
-          <p className="footer-copyright">
-            Copyright © 2026 Represent DC
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

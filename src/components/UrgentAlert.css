@@ -1,11 +1,11 @@
 .urgent-alert {
-  background: #fff;
-  color: #1a1a1a;
+  background: var(--white);
+  color: var(--ink);
   padding: 2rem 2rem;
   text-align: center;
   position: relative;
-  border-top: 4px solid #c62828;
-  border-bottom: 1px solid #e0e0e0;
+  border-top: 4px solid var(--dc-red);
+  border-bottom: 1px solid var(--line);
 }
 
 .urgent-alert-inner {
@@ -17,8 +17,8 @@
 
 .urgent-alert-badge {
   display: inline-block;
-  background: #c62828;
-  color: #fff;
+  background: var(--dc-red);
+  color: var(--white);
   font-weight: 800;
   font-size: 0.8rem;
   letter-spacing: 0.15em;
@@ -39,7 +39,7 @@
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.5px;
-  color: #b71c1c;
+  color: var(--dc-red-dark);
 }
 
 .urgent-alert-dateline {
@@ -48,11 +48,20 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #c62828;
+  color: var(--dc-red);
 }
 
+/* A drawn dot, not a unicode glyph — glyphs doing icon duty are out
+   (DESIGN-GUARDRAILS.md); a real shape also scales with the text box. */
 .urgent-alert-dateline::before {
-  content: '● ';
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  margin-right: 0.5em;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: baseline;
 }
 
 .urgent-alert-laws {
@@ -62,35 +71,41 @@
 .urgent-alert-laws p {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--ink);
   margin: 0 0 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
 }
 
-.urgent-alert-laws p::before {
-  content: '→ ';
-  color: #c62828;
+.urgent-alert-laws .icon {
+  color: var(--dc-red);
 }
 
 .urgent-alert-chambernote {
   margin: 0 0 1.25rem;
   font-size: 0.875rem;
-  color: #666;
+  color: var(--slate-500);
 }
 
 .urgent-alert-summary {
   margin: 0 0 1.5rem;
   font-size: 0.975rem;
   line-height: 1.6;
-  color: #333;
+  color: var(--ink);
   max-width: 640px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .urgent-alert-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: inherit;
   background: transparent;
-  border: 1px solid #c62828;
-  color: #c62828;
+  border: 1px solid var(--dc-red);
+  color: var(--dc-red);
   padding: 0.45rem 1.25rem;
   border-radius: 4px;
   cursor: pointer;
@@ -102,7 +117,7 @@
 }
 
 .urgent-alert-toggle:hover {
-  background: #fef2f2;
+  background: var(--dc-red-tint);
 }
 
 .urgent-alert-details {
@@ -120,7 +135,7 @@
 .urgent-alert-what,
 .urgent-alert-stake,
 .urgent-alert-why {
-  background: #f5f5f5;
+  background: var(--paper);
   border-radius: 8px;
   padding: 1.25rem;
 }
@@ -130,7 +145,7 @@
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #b71c1c;
+  color: var(--dc-red-dark);
   font-weight: 600;
 }
 
@@ -138,7 +153,7 @@
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: #333;
+  color: var(--ink);
 }
 
 .urgent-alert-explainer ul {
@@ -166,8 +181,8 @@
 
 .urgent-alert-button {
   display: inline-block;
-  background: #fff;
-  color: #b71c1c;
+  background: var(--white);
+  color: var(--dc-red-dark);
   font-size: 1.15rem;
   font-weight: 700;
   padding: 0.9rem 2.5rem;
@@ -180,7 +195,7 @@
 .urgent-alert-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-  background: #fff9c4;
+  background: var(--gold-soft);
 }
 
 .urgent-alert-actions-preview {
@@ -193,23 +208,23 @@
   margin-top: 1rem;
   margin-bottom: 0.75rem;
   padding-top: 1rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--line);
 }
 
 .urgent-alert-sources p {
   margin: 0;
   font-size: 0.8rem;
-  color: #666;
+  color: var(--slate-500);
 }
 
 .urgent-alert-sources a {
-  color: #c62828;
+  color: var(--dc-red);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .urgent-alert-sources a:hover {
-  color: #7f0000;
+  color: var(--dc-red-darker);
 }
 
 .urgent-alert-link-hint {
@@ -217,14 +232,14 @@
 }
 
 .urgent-alert-link-hint a {
-  color: #c62828;
+  color: var(--dc-red);
   font-size: 0.85rem;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .urgent-alert-link-hint a:hover {
-  color: #7f0000;
+  color: var(--dc-red-darker);
 }
 
 /* Mobile */

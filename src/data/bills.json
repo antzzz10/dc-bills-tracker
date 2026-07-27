@@ -4,12 +4,12 @@
   "categories": [
     {
       "id": "abolishing",
-      "name": "Abolishing Mayor and Council",
+      "name": "Abolishing mayor and council",
       "color": "#DC143C"
     },
     {
       "id": "crime",
-      "name": "Crime/Policing",
+      "name": "Crime/policing",
       "color": "#DC143C"
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "id": "healthcare",
-      "name": "Health Care",
+      "name": "Health care",
       "color": "#DC143C"
     },
     {
@@ -49,7 +49,7 @@
     },
     {
       "id": "civic-spaces",
-      "name": "Civic Spaces & Local Autonomy",
+      "name": "Civic spaces & local autonomy",
       "color": "#DC143C"
     },
     {

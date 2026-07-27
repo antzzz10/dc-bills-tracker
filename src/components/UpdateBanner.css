@@ -1,5 +1,5 @@
 .update-banner {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-700) 100%);
   color: white;
   padding: 1rem 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -38,7 +38,7 @@
 }
 
 .update-text strong {
-  color: #ffd700;
+  color: var(--gold);
   margin-right: 0.5rem;
 }
 

@@ -3,6 +3,7 @@ import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import billsData from '../data/bills.json'
 import './DownloadButton.css'
+import Icon from './Icon'
 
 function DownloadButton({ filteredBills, filteredRiders }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -24,7 +25,7 @@ function DownloadButton({ filteredBills, filteredRiders }) {
 
   const exportToCSV = (bills, riders, filename) => {
     // Define CSV headers
-    const headers = ['Type', 'Priority', 'Bill Numbers', 'Title', 'Category', 'Sponsors', 'Description']
+    const headers = ['Type', 'Priority', 'Bill numbers', 'Title', 'Category', 'Sponsors', 'Description']
 
     // Convert bills to CSV rows
     const billRows = bills.map(bill => [
@@ -77,7 +78,7 @@ function DownloadButton({ filteredBills, filteredRiders }) {
     // Add title
     doc.setFontSize(18)
     doc.setTextColor(220, 20, 60) // DC red
-    doc.text('Anti-DC Bills Tracker', 14, 20)
+    doc.text('Anti-DC bills tracker', 14, 20)
 
     // Add subtitle
     doc.setFontSize(10)
@@ -289,7 +290,7 @@ function DownloadButton({ filteredBills, filteredRiders }) {
         className="download-button"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="download-icon">⬇</span>
+        <Icon name="download" size={17} />
         Download
       </button>
 
@@ -298,7 +299,7 @@ function DownloadButton({ filteredBills, filteredRiders }) {
           <div className="download-backdrop" onClick={() => setIsOpen(false)} />
           <div className="download-menu">
             <div className="download-menu-header">
-              <h3>Download Bills</h3>
+              <h3>Download bills</h3>
             </div>
 
             <div className="download-section">

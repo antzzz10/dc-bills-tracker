@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './SupportBillsSection.css'
 import BillCard from './BillCard'
+import Icon from './Icon'
 
 // H.R. 51 and its Senate companion S. 51 (same bill, both titled "Washington,
 // D.C. Admission Act") are always first, paired together — otherwise priority-
@@ -42,11 +43,13 @@ function SupportBillsSection({ supportBills }) {
     <div className="support-bills-section">
       <div className="support-bills-header" onClick={() => setIsExpanded(e => !e)}>
         <div className="support-bills-title">
-          <span className="support-icon">✓</span>
-          <h2>Bills to Support</h2>
+          <Icon name="check-circle" size={20} />
+          <h2>Bills to support</h2>
           <span className="bill-count-support">{sorted.length}</span>
         </div>
-        <span className="expand-icon-large">{isExpanded ? '−' : '+'}</span>
+        <span className="expand-icon-large">
+          <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={18} />
+        </span>
       </div>
       {isExpanded && (
         <div className="support-bills-content">

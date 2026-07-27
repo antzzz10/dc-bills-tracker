@@ -1,4 +1,5 @@
 import './SearchBar.css'
+import Icon from './Icon'
 
 function SearchBar({ searchTerm, setSearchTerm }) {
   return (
@@ -16,7 +17,7 @@ function SearchBar({ searchTerm, setSearchTerm }) {
           onClick={() => setSearchTerm('')}
           aria-label="Clear search"
         >
-          ✕
+          <Icon name="x" size={17} />
         </button>
       )}
     </div>

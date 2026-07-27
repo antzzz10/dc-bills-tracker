@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Icon from './Icon'
 import './UrgentAlert.css'
 
 import { isUrgentAlertActive, isUrgentAlertNew } from './urgentAlertState'
@@ -13,11 +14,14 @@ function UrgentAlert() {
       <div className="urgent-alert-inner">
         {isUrgentAlertNew() && <div className="urgent-alert-badge">NEW</div>}
         <h2 className="urgent-alert-headline">
-          House Committee Advances Bill to Cut Off DC's Taxing Authority
+          House committee advances bill to cut off D.C.'s taxing authority
         </h2>
         <p className="urgent-alert-dateline">July 22, 2026</p>
         <div className="urgent-alert-laws">
-          <p>H.R. 9720 — D.C. Taxing Authority Review Act</p>
+          <p>
+            <Icon name="arrow-right" size={17} />
+            H.R. 9720 — D.C. Taxing Authority Review Act
+          </p>
         </div>
         <p className="urgent-alert-chambernote">Passed House Oversight &amp; Government Reform Committee, party-line vote</p>
 
@@ -26,14 +30,15 @@ function UrgentAlert() {
           onClick={() => setIsExpanded(!isExpanded)}
           aria-expanded={isExpanded}
         >
-          {isExpanded ? 'Hide details ▲' : 'Show details ▼'}
+          {isExpanded ? 'Hide details' : 'Show details'}
+          <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={16} />
         </button>
 
         {isExpanded && (
           <div className="urgent-alert-details">
             <p className="urgent-alert-summary">
               H.R. 9720 would require an affirmative resolution of congressional approval — within
-              a 60-day review period — for any DC Council act involving Title 47 of the DC Code, or
+              a 60-day review period — for any D.C. Council act involving Title 47 of the D.C. Code, or
               that imposes or increases a tax or fee. It applies to both increases and decreases,
               with a narrow exception for fee changes under $500 that don't touch any other tax or
               fee.
@@ -52,12 +57,12 @@ function UrgentAlert() {
               <div className="urgent-alert-stake">
                 <h3>What's at stake</h3>
                 <p>
-                  DC Council Chairman Phil Mendelson objected in writing before the markup (letter
-                  to Chairman Comer, July 20): the bill would freeze routine DC fiscal management —
+                  D.C. Council Chairman Phil Mendelson objected in writing before the markup (letter
+                  to Chairman Comer, July 20): the bill would freeze routine D.C. fiscal management —
                   pension-contribution timing, targeted tax exemptions, CFO bond flexibility — and
                   also freezes the District's General License Law, since that's under Title 47 too.
                   Mendelson also cited a Moody's rating action (July 10) flagging federal revenue
-                  restrictions as a factor that could raise DC's cost of borrowing.
+                  restrictions as a factor that could raise D.C.'s cost of borrowing.
                 </p>
               </div>
 
@@ -77,7 +82,7 @@ function UrgentAlert() {
                   H.R. 9720 (Congress.gov)
                 </a>
                 {' '}&middot;{' '}
-                Letter from DC Council Chairman Phil Mendelson to Chairman James Comer, July 20, 2026
+                Letter from D.C. Council Chairman Phil Mendelson to Chairman James Comer, July 20, 2026
               </p>
             </div>
 
