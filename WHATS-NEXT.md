@@ -14,33 +14,25 @@ whether it can run in parallel or has to be serial — per
 
 ---
 
-## Ready to build
+## Waiting on you (5 minutes each)
 
-### 1. Event tracking — 4 events, vendor pending
-**Lane B (serial — touches many components).** Blocked only on the vendor call.
+### 1. Event tracking — ✅ BUILT AND DEPLOYED, inert until you add a key
+**Shipped 2026-07-27** (`2fb0d67`). Full reasoning: `decisions/2026-07-27-analytics.md`.
 
-Cloudflare Web Analytics (already live in `index.html`) is pageview/Core-Web-Vitals
-only — it has no custom-event API. Zaraz was considered and rejected: it's a tag
-manager, not an analytics backend, so it needs a destination anyway, *and* it
-requires a Cloudflare-proxied domain, which this isn't (`billtracker.representdc.org`
-resolves straight to GitHub Pages; no `cf-ray` header).
+Four events fire through `src/lib/analytics.js`: `bill_source_opened`,
+`bill_expanded`, `export_downloaded`, `category_filtered`. Cookieless, no
+autocapture, no session recording, no consent banner. Cost to the bundle: +0.57 kB
+gzip (PostHog loads async, outside the bundle).
 
-Events to instrument, all decided:
-- outbound Congress.gov link clicks (which bills people actually read)
-- PDF download button usage (does the export justify the jsPDF weight?)
-- bill card expansions (what gets read vs. scrolled past)
-- filter/category usage (which of the 12 categories earn their place)
+**It records nothing until `VITE_POSTHOG_KEY` is set.** To turn it on:
 
-**Explicitly not tracked:** search terms. On an advocacy site those can reveal what a
-visitor is personally worried about.
-
-Build notes:
-- Put all calls behind `src/lib/analytics.js` so the vendor is swappable in one file.
-- If PostHog: load via **async snippet, not the npm package** — `posthog-js` is 73 KB
-  gzip, ~30% on the current bundle. Set `autocapture: false`,
-  `disable_session_recording: true`, `persistence: 'memory'` (cookieless → no consent
-  banner). Free tier is 1M events/mo, no card.
-- Whatever the vendor: no cookies, no session replay, no consent banner.
+1. Create a PostHog project — free tier is 1M events/mo, no credit card. Copy the
+   project API key (publishable; safe in client code).
+2. Local: put `VITE_POSTHOG_KEY=phc_...` in a `.env` file (gitignored).
+3. **CI — do not skip this.** `monitor-bills.yml` and `fetch-news.yml` rebuild and
+   redeploy the site on a schedule. If the key isn't available to those builds, every
+   automated deploy ships the inert placeholder and overwrites any manual deploy that
+   had it. This is the most likely way this quietly fails.
 
 ### 2. About page → belongs in `representdc-main`
 **Not this repo.** Decided 2026-07-27: it goes at `representdc.org/about`, the org's
