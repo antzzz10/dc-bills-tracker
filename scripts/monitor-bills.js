@@ -231,11 +231,13 @@ async function fetchBillStatus(billNumber) {
     // Fetch basic bill info
     const response = await fetch(billUrl);
     if (!response.ok) {
+      // Every failure mode throws with its HTTP status attached. A 404 usually means a
+      // bad bill number, but a *fleet* of 404s means the API is misbehaving — and the two
+      // are only distinguishable after the fact if the status is recorded per bill.
       if (response.status === 404) {
-        console.log(`❌ Bill not found in API: ${billNumber}`);
-        return null;
+        throw new Error(`HTTP 404 — not found in the ${CONGRESS_NUMBER}th Congress`);
       }
-      throw new Error(`API error: ${response.status}`);
+      throw new Error(`HTTP ${response.status}`);
     }
 
     const data = await response.json();
@@ -319,9 +321,10 @@ async function fetchBillStatus(billNumber) {
     console.log(`  ✓ Successfully fetched ${billNumber}`);
     return result;
   } catch (error) {
+    // Rethrow rather than returning null: the caller records the reason, and swallowing
+    // it here is what made a 77/77 API outage look identical to 77 bad bill numbers.
     console.log(`  ❌ Error in fetchBillStatus for ${billNumber}:`, error.message);
-    console.log(`  Stack: ${error.stack}`);
-    return null;
+    throw error;
   }
 }
 
@@ -619,11 +622,11 @@ async function monitorBills() {
         console.log(`  ${priorityBadge} Priority: ${priorityInfo.priority} (${priorityInfo.reason})`);
       } else {
         console.log(`  ❌ No status returned for ${billNumber}`);
-        errors.push(billNumber);
+        errors.push({ billNumber, reason: 'No status returned' });
       }
     } catch (error) {
-      console.log(`  ❌ Error processing ${billNumber}:`, error.message);
-      errors.push(billNumber);
+      console.log(`  ❌ Error processing ${billNumber}: ${error.message}`);
+      errors.push({ billNumber, reason: error.message });
     }
 
     // Rate limiting: wait 300ms between requests (more requests now with vote data)
@@ -789,8 +792,14 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, timestamp, pr
   }
 
   if (errors.length > 0) {
-    const rows = errors.map(billNumber => `<li>${escapeHtml(billNumber)}</li>`).join('');
-    sections.push(`<h3 style="margin:20px 0 8px;color:#b91c1c;">⚠️ Fetch errors (${errors.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul><p style="margin:4px 0 0;"><em>Action to consider:</em> check bill number formatting or Congress.gov API status.</p>`);
+    const rows = errors
+      .map(e => `<li>${escapeHtml(e.billNumber)} — <code>${escapeHtml(e.reason)}</code></li>`)
+      .join('');
+    const allFailed = errors.length === totalBills;
+    const guidance = allFailed
+      ? 'Every lookup failed — this is an API-wide problem (outage, key, or rate limit), not bad bill numbers. Bill data was NOT verified this run.'
+      : 'Check bill number formatting or Congress.gov API status.';
+    sections.push(`<h3 style="margin:20px 0 8px;color:#b91c1c;">⚠️ Fetch errors (${errors.length} of ${totalBills})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul><p style="margin:4px 0 0;"><em>Action to consider:</em> ${escapeHtml(guidance)}</p>`);
   }
 
   const hasNotableChanges = sections.length > 0;
@@ -883,7 +892,7 @@ function generateReport(changes, errors, passedBills) {
   if (errors.length > 0) {
     console.log('\n\n❌ ERRORS');
     console.log('-'.repeat(80));
-    errors.forEach(bill => console.log(`  ${bill}`));
+    errors.forEach(e => console.log(`  ${e.billNumber}: ${e.reason}`));
   }
 
   // Save results to file for future comparison
@@ -902,19 +911,26 @@ function generateReport(changes, errors, passedBills) {
 
     previousEntry = history.length > 0 ? history[history.length - 1] : null;
 
-    history.push({
-      timestamp,
-      changes,
-      errors
-    });
+    // A run that checked nothing has nothing to remember. Appending it would push a real
+    // entry off the 30-entry cap — on 2026-07-26 one failed run cost 2,273 lines of
+    // history — so a string of outages would quietly erase the change log it exists to keep.
+    if (changes.length === 0 && errors.length > 0) {
+      console.log('\n⚠️  Every lookup failed — not appending to history (would evict a real entry)');
+    } else {
+      history.push({
+        timestamp,
+        changes,
+        errors
+      });
 
-    // Keep last 30 checks
-    if (history.length > 30) {
-      history = history.slice(-30);
+      // Keep last 30 checks
+      if (history.length > 30) {
+        history = history.slice(-30);
+      }
+
+      writeFileSync(resultsPath, JSON.stringify(history, null, 2));
+      console.log(`\n💾 Results saved to: ${resultsPath}`);
     }
-
-    writeFileSync(resultsPath, JSON.stringify(history, null, 2));
-    console.log(`\n💾 Results saved to: ${resultsPath}`);
   } catch (error) {
     console.error('Error saving results:', error);
   }
@@ -949,12 +965,20 @@ function generateReport(changes, errors, passedBills) {
   writeFileSync(summaryPath, summaryHtml);
   console.log(`💾 Summary saved to: ${summaryPath}`);
 
+  // A run is only trustworthy if most lookups actually succeeded. Below that bar the
+  // data is not verified, so downstream steps must not commit, deploy, or claim success.
+  const MAX_ERROR_RATE = 0.25;
+  const errorRate = billsData.bills.length > 0 ? errors.length / billsData.bills.length : 1;
+  const checkFailed = errorRate > MAX_ERROR_RATE;
+
   const metaPath = join(__dirname, '../monitoring-meta.json');
   writeFileSync(metaPath, JSON.stringify({
     timestamp,
     totalBills: billsData.bills.length,
     passedCount: passedBills.length,
     errorCount: errors.length,
+    errorRate: Number(errorRate.toFixed(3)),
+    checkFailed,
     hasMeaningfulChanges
   }, null, 2));
   console.log(`💾 Meta saved to: ${metaPath}`);
@@ -962,9 +986,9 @@ function generateReport(changes, errors, passedBills) {
   // Stamp when the data was last verified against Congress.gov. This is distinct
   // from `lastUpdated`, which only moves when a bill's own fields change — a run
   // that finds nothing new is still a successful check, and the site needs to be
-  // able to say so. Only stamp when we actually reached the API for at least one
-  // bill: a run where every lookup failed is not a check, and must not look like one.
-  if (changes.length > 0) {
+  // able to say so. Only stamp when the check was actually healthy: a run where most
+  // lookups failed is not a check, and must not look like one.
+  if (!checkFailed && changes.length > 0) {
     try {
       const fresh = JSON.parse(readFileSync(billsPath, 'utf-8'));
       fresh.lastChecked = timestamp;
@@ -974,7 +998,7 @@ function generateReport(changes, errors, passedBills) {
       console.error('Error stamping lastChecked:', error.message);
     }
   } else {
-    console.log('⚠️  No bills checked successfully — leaving lastChecked untouched');
+    console.log(`⚠️  Check unhealthy (${errors.length}/${billsData.bills.length} lookups failed) — leaving lastChecked untouched`);
   }
 }
 
