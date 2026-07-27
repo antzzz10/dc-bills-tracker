@@ -2,6 +2,7 @@ import { useState } from 'react'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import billsData from '../data/bills.json'
+import { track, EVENTS } from '../lib/analytics'
 import './DownloadButton.css'
 import Icon from './Icon'
 
@@ -274,6 +275,12 @@ function DownloadButton({ filteredBills, filteredRiders }) {
     const riders = scope === 'filtered' ? filteredRiders : (billsData.riders || []).filter(r => !r.provisional)
     const scopeText = scope === 'filtered' ? 'filtered' : 'all'
     const timestamp = new Date().toISOString().split('T')[0]
+
+    track(EVENTS.EXPORT_DOWNLOADED, {
+      format,
+      scope: scopeText,
+      itemCount: bills.length + riders.length,
+    })
 
     if (format === 'csv') {
       exportToCSV(bills, riders, `dc-bills-${scopeText}-${timestamp}.csv`)

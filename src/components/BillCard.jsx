@@ -5,6 +5,7 @@ import sponsorsData from '../data/sponsors.json'
 import { stateAbbreviations } from '../data/stateAbbreviations'
 import { CURRENT_CONGRESS } from '../data/config'
 import Icon from './Icon'
+import { track, EVENTS } from '../lib/analytics'
 
 const ATTACK_TYPE_LABEL = {
   direct: 'Direct attack',
@@ -79,7 +80,17 @@ function BillCard({ bill, variant = 'attack' }) {
       id={bill.id}
       className={`bill-card ${isExpanded ? 'expanded' : 'collapsed'} ${priorityClass} ${typeClass} ${variantClass} ${bill.highlight ? 'highlighted-' + bill.highlight : ''} ${isTargeted ? 'deep-linked' : ''}`}
       data-category={bill.category}
-      onClick={() => setIsExpanded(!isExpanded)}
+      onClick={() => {
+        // Only the opening direction is interesting — a collapse is just cleanup.
+        if (!isExpanded) {
+          track(EVENTS.BILL_EXPANDED, {
+            billId: bill.id,
+            category: bill.category,
+            priority: bill.priority,
+          })
+        }
+        setIsExpanded(!isExpanded)
+      }}
     >
       <div className="bill-header">
         <div className="bill-numbers">
@@ -93,7 +104,14 @@ function BillCard({ bill, variant = 'attack' }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bill-number-link"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      track(EVENTS.BILL_SOURCE_OPENED, {
+                        billId: bill.id,
+                        billNumber: billNum,
+                        category: bill.category,
+                      })
+                    }}
                   >
                     {billNum}
                   </a>

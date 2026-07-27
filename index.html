@@ -16,9 +16,32 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
     />
 
-    <!-- Cloudflare Web Analytics -->
+    <!-- Cloudflare Web Analytics — pageviews + Core Web Vitals, cookieless.
+         Kept alongside PostHog, which handles custom events only. -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a1ff222d2a4a4844a58faa73b6a8b297"}'></script>
     <!-- End Cloudflare Web Analytics -->
+
+    <!-- PostHog — custom events only. Loaded by async snippet rather than the
+         posthog-js npm package on purpose: the package is ~73 kB gzip, roughly
+         +30% on this bundle, and none of it is needed on first paint.
+         autocapture / session recording / cookies are all off deliberately —
+         see src/lib/analytics.js and decisions/2026-07-27-analytics.md.
+         No key configured (dev, or an unset VITE_POSTHOG_KEY) = no tracking. -->
+    <script>
+      (function () {
+        var key = '%VITE_POSTHOG_KEY%'
+        if (!key || key.charAt(0) === '%') return
+        !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+        posthog.init(key, {
+          api_host: 'https://us.i.posthog.com',
+          persistence: 'memory',        // cookieless — no consent banner needed
+          autocapture: false,           // only the four events we chose
+          capture_pageview: false,      // Cloudflare already does pageviews
+          disable_session_recording: true,
+        })
+      })()
+    </script>
+    <!-- End PostHog -->
   </head>
   <body>
     <div id="root"></div>
