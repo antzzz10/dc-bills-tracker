@@ -12,15 +12,17 @@ function UrgentAlert() {
   return (
     <div className="urgent-alert" id="urgent">
       <div className="urgent-alert-inner">
-        {isUrgentAlertNew() && <div className="urgent-alert-badge">NEW</div>}
+        <div className="urgent-alert-meta">
+          {isUrgentAlertNew() && <span className="urgent-alert-badge">NEW</span>}
+          <p className="urgent-alert-dateline">July 22, 2026</p>
+        </div>
         <h2 className="urgent-alert-headline">
           House committee advances bill to cut off D.C.'s taxing authority
         </h2>
-        <p className="urgent-alert-dateline">July 22, 2026</p>
         <div className="urgent-alert-laws">
           <p>
             <Icon name="arrow-right" size={17} />
-            H.R. 9720 — D.C. Taxing Authority Review Act
+            <span className="bill-number">H.R. 9720</span> — D.C. Taxing Authority Review Act
           </p>
         </div>
         <p className="urgent-alert-chambernote">Passed House Oversight &amp; Government Reform Committee, party-line vote</p>

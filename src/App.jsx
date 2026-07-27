@@ -14,7 +14,6 @@ import { isUrgentAlertActive } from './components/urgentAlertState'
 import PassedBillsSection from './components/PassedBillsSection'
 import SupportBillsSection from './components/SupportBillsSection'
 import RecentActivity from './components/RecentActivity'
-import NewsFeed from './components/NewsFeed'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
 
 // Bill-data freshness. `lastChecked` is stamped by scripts/monitor-bills.js on every
@@ -234,7 +233,11 @@ function App() {
           />
         )}
 
-        {!searchTerm && selectedCategories.length === 0 && <NewsFeed />}
+        {/* The news feed moved to representdc.org/news (2026-07-26). The data
+            pipeline stays: scripts/fetch-news.js still publishes
+            public/api/news.json, which main's News.jsx fetches from
+            https://billtracker.representdc.org/api/news.json. Do not remove
+            fetch-news.js or its workflow — that would break main's /news page. */}
 
         <div className="results-header">
           <h2>

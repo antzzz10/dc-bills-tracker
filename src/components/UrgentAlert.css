@@ -1,54 +1,76 @@
+/* This is a banner, not a hero. It sits above the page <h1>, so it must stay
+   visually subordinate to it: smaller type, navy headline, red rationed to the
+   rail/badge/dateline. Everything is left-aligned — the previous centered
+   layout broke as soon as one child became a flex row. */
 .urgent-alert {
   background: var(--white);
   color: var(--ink);
-  padding: 2rem 2rem;
-  text-align: center;
+  padding: var(--s-5) 0;
+  text-align: left;
   position: relative;
-  border-top: 4px solid var(--dc-red);
+  border-top: 3px solid var(--dc-red);
   border-bottom: 1px solid var(--line);
 }
 
+/* Same max-width + horizontal padding as .container, so the alert's text edge
+   lines up with the search box and bill cards below it. */
 .urgent-alert-inner {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 var(--s-6);
   position: relative;
   z-index: 1;
+}
+
+/* Badge and dateline share one compact row above the headline. */
+.urgent-alert-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-2);
 }
 
 .urgent-alert-badge {
   display: inline-block;
   background: var(--dc-red);
   color: var(--white);
-  font-weight: 800;
-  font-size: 0.8rem;
-  letter-spacing: 0.15em;
-  padding: 0.3rem 1rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  animation: urgentPulse 2s ease-in-out infinite;
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-label);
+  padding: 2px var(--s-2);
+  border-radius: var(--r-sm);
+  animation: urgentPulse 2.4s var(--ease) infinite;
 }
 
+/* Opacity only — the old version also scaled, which made the badge jitter
+   against the text baseline next to it. */
 @keyframes urgentPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.03); }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .urgent-alert-badge { animation: none; }
 }
 
 .urgent-alert-headline {
-  margin: 0 0 0.5rem;
-  font-size: 2rem;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.5px;
-  color: var(--dc-red-dark);
+  margin: 0 0 var(--s-2);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--navy);
+  max-width: 60ch;
 }
 
 .urgent-alert-dateline {
-  margin: 0 0 0.75rem;
-  font-size: 0.8rem;
+  margin: 0;
+  font-size: var(--fs-xs);
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--dc-red);
+  white-space: nowrap;
 }
 
 /* A drawn dot, not a unicode glyph — glyphs doing icon duty are out
@@ -65,37 +87,42 @@
 }
 
 .urgent-alert-laws {
-  margin: 0 0 0.6rem;
+  margin: 0;
 }
 
+/* Normal inline flow, not flex. As a flex row this line let the bill number
+   shrink and break mid-token ("H.R." / "9720") at narrow widths; inline text
+   wraps at spaces the way prose should. */
 .urgent-alert-laws p {
-  font-size: 1.05rem;
+  font-size: var(--fs-base);
   font-weight: 600;
   color: var(--ink);
-  margin: 0 0 0.25rem;
-  display: flex;
-  align-items: center;
-  gap: var(--s-2);
+  margin: 0;
+}
+
+/* Only the bill number is data — the title stays in the UI face. */
+.urgent-alert-laws .bill-number {
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .urgent-alert-laws .icon {
   color: var(--dc-red);
+  margin-right: var(--s-2);
 }
 
 .urgent-alert-chambernote {
-  margin: 0 0 1.25rem;
-  font-size: 0.875rem;
+  margin: var(--s-1) 0 var(--s-4);
+  font-size: var(--fs-sm);
   color: var(--slate-500);
 }
 
 .urgent-alert-summary {
-  margin: 0 0 1.5rem;
-  font-size: 0.975rem;
-  line-height: 1.6;
+  margin: 0 0 var(--s-5);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
   color: var(--ink);
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 70ch;
 }
 
 .urgent-alert-toggle {
@@ -245,19 +272,23 @@
 /* Mobile */
 @media (max-width: 768px) {
   .urgent-alert {
-    padding: 2rem 1rem;
+    padding: var(--s-4) 0;
+  }
+
+  .urgent-alert-inner {
+    padding: 0 var(--s-4);
   }
 
   .urgent-alert-headline {
-    font-size: 1.5rem;
+    font-size: var(--fs-lg);
   }
 
   .urgent-alert-subhead {
-    font-size: 1rem;
+    font-size: var(--fs-base);
   }
 
   .urgent-alert-summary {
-    font-size: 0.95rem;
+    font-size: var(--fs-sm);
   }
 
   .urgent-alert-explainer {

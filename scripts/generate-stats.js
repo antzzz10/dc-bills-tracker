@@ -16,11 +16,29 @@ const __dirname = dirname(__filename);
 const billsPath = join(__dirname, '../src/data/bills.json');
 const billsData = JSON.parse(readFileSync(billsPath, 'utf-8'));
 
+/**
+ * Provisional entries are auto-discovered by discover-bills.js and have NOT been
+ * human-reviewed for position/attackType (see METHODOLOGY.md). The site excludes
+ * them (App.jsx filters `!bill.provisional`), so stats.json must exclude them too
+ * — otherwise representdc-main, which fetches these counts via useBillStats, would
+ * publish a bill count that includes unreviewed entries.
+ *
+ * This divergence was live: on 2026-07-26 the tracker showed 93 while main cited
+ * 96, a gap of exactly the 3 then-unreviewed provisionals. Keep this filter and
+ * App.jsx's in agreement; scripts/lint-bills.js now asserts that they match.
+ */
+const reviewed = (list) => (list || []).filter(item => !item.provisional);
+
 // Calculate stats
-const bills = billsData.bills || [];
-const riders = billsData.riders || [];
-const supportBills = billsData.supportBills || [];
-const routineBills = billsData.routineBills || [];
+const bills = reviewed(billsData.bills);
+const riders = reviewed(billsData.riders);
+const supportBills = reviewed(billsData.supportBills);
+const routineBills = reviewed(billsData.routineBills);
+
+const provisionalCount =
+  (billsData.bills || []).length + (billsData.riders || []).length +
+  (billsData.routineBills || []).length -
+  (bills.length + riders.length + routineBills.length);
 
 const passedBills = bills.filter(bill =>
   bill.status?.stage &&
@@ -47,6 +65,8 @@ const stats = {
     supportBills: supportBills.length,
     routineBills: routineBills.length
   },
+  // Awaiting human review — deliberately excluded from every count above.
+  provisionalAwaitingReview: provisionalCount,
   passed: passedBills.map(bill => ({
     id: bill.id,
     number: bill.billNumbers[0],
@@ -68,7 +88,10 @@ const statsPath = join(apiDir, 'stats.json');
 writeFileSync(statsPath, JSON.stringify(stats, null, 2));
 
 console.log('✓ Generated stats.json');
-console.log(`  Total bills: ${stats.totalBills}`);
+console.log(`  Total bills: ${stats.totalBills}  (reviewed only)`);
 console.log(`  Pending: ${stats.pendingBills}`);
 console.log(`  Passed: ${stats.passedBills}`);
+if (provisionalCount > 0) {
+  console.log(`  ⚠ ${provisionalCount} provisional entr${provisionalCount === 1 ? 'y' : 'ies'} excluded — awaiting human review`);
+}
 console.log(`  Last updated: ${stats.lastUpdated}`);

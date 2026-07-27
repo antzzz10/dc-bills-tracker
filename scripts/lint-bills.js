@@ -17,6 +17,8 @@
  *      (mirrors the runtime cap in monitor-bills.js calculatePriority)
  *   5. Categories exist in the taxonomy
  *   6. bills.json matches scripts/eval/golden-labels.json
+ *   7. public/api/stats.json totalBills matches what the site renders
+ *      (non-provisional only) — main fetches that number and publishes it
  *
  * Exits 1 on any error. See METHODOLOGY.md ("Quality control").
  */
@@ -99,6 +101,31 @@ for (const [id, expected] of Object.entries(golden.labels)) {
   const actualAttackType = bill.attackType ?? null;
   if (actualAttackType !== expected.attackType) {
     errors.push(`golden/${id}: attackType is ${JSON.stringify(actualAttackType)}, golden expects ${JSON.stringify(expected.attackType)} (${expected.source})`);
+  }
+}
+
+// 7. Published count agrees with what the site actually renders.
+//    App.jsx filters `!bill.provisional`; generate-stats.js must do the same, or
+//    representdc-main (which fetches stats.json via useBillStats) publishes a
+//    different number than the tracker displays. This diverged silently once —
+//    the tracker showed 93 while main cited 96 — so it is asserted here.
+{
+  const reviewed = (list) => (data[list] || []).filter(item => !item.provisional).length;
+  const siteTotal = reviewed('bills') + reviewed('riders') + reviewed('routineBills');
+
+  let statsJson = null;
+  try {
+    statsJson = JSON.parse(readFileSync(join(__dirname, '../public/api/stats.json'), 'utf-8'));
+  } catch {
+    warnings.push('public/api/stats.json not found — run `node scripts/generate-stats.js` (skipping count check)');
+  }
+
+  if (statsJson && statsJson.totalBills !== siteTotal) {
+    errors.push(
+      `stats.json totalBills is ${statsJson.totalBills} but the site renders ${siteTotal} ` +
+      `(non-provisional bills+riders+routineBills). Regenerate stats.json — representdc-main ` +
+      `publishes this number.`
+    );
   }
 }
 
