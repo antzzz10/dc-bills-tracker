@@ -65,7 +65,14 @@ jobs:
         id: check_changes
         run: |
           if [ -f bill-status-history.json ]; then
-            LATEST=$(cat bill-status-history.json | jq -r '.[-1].timestamp')
+            # Prefer this run's own timestamp. A run where every lookup failed is no longer
+            # appended to the history, so .[-1] there belongs to an earlier run and would
+            # mislabel the artifact and email.
+            if [ -f monitoring-meta.json ]; then
+              LATEST=$(jq -r '.timestamp' monitoring-meta.json)
+            else
+              LATEST=$(jq -r '.[-1].timestamp' bill-status-history.json)
+            fi
             CHANGES_COUNT=$(cat bill-status-history.json | jq -r '.[-1].changes | length')
             SAFE_TIMESTAMP=$(echo $LATEST | tr ':' '-')
             echo "timestamp=$LATEST" >> $GITHUB_OUTPUT
@@ -84,12 +91,17 @@ jobs:
             PASSED_COUNT=$(jq -r '.passedCount' monitoring-meta.json)
             ERROR_COUNT=$(jq -r '.errorCount' monitoring-meta.json)
             TOTAL_BILLS=$(jq -r '.totalBills' monitoring-meta.json)
+            CHECK_FAILED=$(jq -r '.checkFailed' monitoring-meta.json)
             echo "has_meaningful_changes=$HAS_MEANINGFUL" >> $GITHUB_OUTPUT
             echo "passed_count=$PASSED_COUNT" >> $GITHUB_OUTPUT
             echo "error_count=$ERROR_COUNT" >> $GITHUB_OUTPUT
             echo "total_bills=$TOTAL_BILLS" >> $GITHUB_OUTPUT
+            echo "check_failed=$CHECK_FAILED" >> $GITHUB_OUTPUT
           else
+            # No meta file means the monitor script died before writing one. Treat that
+            # as a failed check rather than a quiet no-op.
             echo "has_meaningful_changes=false" >> $GITHUB_OUTPUT
+            echo "check_failed=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Upload monitoring report
@@ -105,7 +117,7 @@ jobs:
           retention-days: 90
 
       - name: Commit and push updates
-        if: steps.check_changes.outputs.has_changes == 'true' && github.event.inputs.dry_run != 'true'
+        if: steps.check_changes.outputs.has_changes == 'true' && github.event.inputs.dry_run != 'true' && steps.summary_meta.outputs.check_failed != 'true'
         run: |
           git config --global user.name 'DC Bills Monitor'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -118,7 +130,7 @@ jobs:
           fi
 
       - name: Rebuild and deploy site
-        if: steps.check_changes.outputs.has_changes == 'true' && github.event.inputs.dry_run != 'true'
+        if: steps.check_changes.outputs.has_changes == 'true' && github.event.inputs.dry_run != 'true' && steps.summary_meta.outputs.check_failed != 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -140,11 +152,26 @@ jobs:
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
+          # A run where the lookups failed gets its own subject. It used to inherit
+          # "notable changes found" — because errors feed hasMeaningfulChanges — so a
+          # total API outage arrived in the inbox looking like a productive run.
           subject: >-
-            ${{ steps.summary_meta.outputs.has_meaningful_changes == 'true'
-              && format('DC Bills: notable changes found - {0}', steps.check_changes.outputs.timestamp)
-              || format('DC Bills: no notable changes - {0}', steps.check_changes.outputs.timestamp) }}
+            ${{ steps.summary_meta.outputs.check_failed == 'true'
+              && format('⚠️ DC Bills: CHECK FAILED — {0}/{1} lookups errored, data NOT verified',
+                        steps.summary_meta.outputs.error_count, steps.summary_meta.outputs.total_bills)
+              || (steps.summary_meta.outputs.has_meaningful_changes == 'true'
+                  && format('DC Bills: notable changes found - {0}', steps.check_changes.outputs.timestamp)
+                  || format('DC Bills: no notable changes - {0}', steps.check_changes.outputs.timestamp)) }}
           to: ${{ secrets.NOTIFICATION_EMAIL }}
           from: DC Bills Monitor <noreply@representdc.org>
           html_body: file://monitoring-summary.html
           ignore_cert: false
+
+      # Runs last, so the artifact and the summary email are still produced for debugging.
+      # Without this the job went green on 2026-07-26 with 77/77 lookups failing, and the
+      # only signal was the freshness watchdog 19 hours later.
+      - name: Fail the run when the check was unhealthy
+        if: steps.summary_meta.outputs.check_failed == 'true'
+        run: |
+          echo "::error::Bill check unhealthy: ${{ steps.summary_meta.outputs.error_count }}/${{ steps.summary_meta.outputs.total_bills }} lookups failed. Nothing was committed or deployed, and lastChecked was not stamped."
+          exit 1
