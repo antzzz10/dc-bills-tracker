@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Per-run output from scripts/monitor-bills.js. Regenerated every run and uploaded as a
+# CI artifact, never committed. Note bill-status-history.json IS tracked — not one of these.
+monitoring-report.txt
+monitoring-summary.html
+monitoring-meta.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
