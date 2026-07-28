@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-07-24",
-  "lastChecked": "2026-07-27T14:59:36.232Z",
+  "lastUpdated": "2026-07-28",
+  "lastChecked": "2026-07-28T14:49:39.015Z",
   "categories": [
     {
       "id": "abolishing",
@@ -1105,7 +1105,7 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 110,
+        "cosponsors": 111,
         "committees": []
       },
       "attackType": "partial",
@@ -2408,7 +2408,7 @@
         "stage": "passed-house",
         "lastAction": "Read twice. Placed on Senate Legislative Calendar under General Orders. Calendar No. 437.",
         "lastActionDate": "2026-06-16",
-        "hasCommitteeHearing": true,
+        "hasCommitteeHearing": false,
         "hasCommitteeMarkup": true,
         "hasFloorVote": true,
         "cosponsors": 4,
@@ -2420,23 +2420,17 @@
       "attackType": "direct",
       "passage": {
         "house": {
-          "date": "2026-03-25",
-          "rollCall": 101,
+          "date": "2025-04-10",
           "vote": {
-            "yeas": 218,
-            "nays": 206,
-            "notVoting": 8,
+            "yeas": 211,
+            "nays": 215,
             "byParty": {
               "republican": {
-                "yeas": 212,
-                "nays": 0
+                "yeas": 0,
+                "nays": 215
               },
               "democrat": {
-                "yeas": 5,
-                "nays": 206
-              },
-              "independent": {
-                "yeas": 1,
+                "yeas": 211,
                 "nays": 0
               }
             }
