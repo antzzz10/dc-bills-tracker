@@ -5,8 +5,14 @@ A walkable pipeline for work that's been scoped but isn't built yet. Companion t
 is for what's *next*, with enough detail that picking any item up doesn't require
 re-deriving the context.
 
-Domain-wide items live in `representdc-main/WHATS-NEXT.md`; this file is
-tracker-specific. Cross-project scheduling lives in `~/Projects/QUEUE.md`.
+**Domain-wide decisions and rollout state now live in
+`representdc-main/decisions/2026-07-27-domain-standards-and-rollout.md`** — analytics
+policy, privacy rules, bundle discipline, the About page, the design-system rollout
+across all three sites, and the cross-repo data contracts. Read that first; this file
+is only what is specific to the bill tracker.
+
+Longer-range domain ideas: `representdc-main/WHATS-NEXT.md`. Cross-project
+scheduling: `~/Projects/QUEUE.md`.
 
 Started 2026-07-27 from a `site-batch` triage. Each item carries its **lane** —
 whether it can run in parallel or has to be serial — per
@@ -34,14 +40,10 @@ gzip (PostHog loads async, outside the bundle).
    automated deploy ships the inert placeholder and overwrites any manual deploy that
    had it. This is the most likely way this quietly fails.
 
-### 2. About page → belongs in `representdc-main`
-**Not this repo.** Decided 2026-07-27: it goes at `representdc.org/about`, the org's
-front door, not on a tool subdomain. Draft copy and full spec:
-`docs/about-page-draft.md`. Hand to whoever is working `representdc-main`.
-
-Carries one bug worth fixing in passing: `representdc-main/src/hooks/useBillStats.js`
-has a stale hardcoded fallback of **74** bills that renders whenever the stats fetch
-fails.
+### 2. About page → **moved out of this repo**
+Not tracker work. Decided domain-level: it's canonical at `representdc.org/about`.
+Draft copy and spec remain at `docs/about-page-draft.md` purely as a handoff artifact
+— nothing in this repo changes. Tracked in the domain note.
 
 ---
 
