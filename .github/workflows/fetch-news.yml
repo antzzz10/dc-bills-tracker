@@ -28,6 +28,8 @@ jobs:
       - name: Commit and deploy if changed
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # See monitor-bills.yml — publishable key, variable not secret.
+          VITE_POSTHOG_KEY: ${{ vars.VITE_POSTHOG_KEY }}
         run: |
           git config --global user.name 'DC Bills Monitor'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'

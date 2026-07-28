@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Local env. `*.local` above already covers .env.local, but plain .env was not
+# ignored — added 2026-07-28 before it could hold anything.
+.env
+.env.*
+!.env.example
+
 # Per-run output from scripts/monitor-bills.js. Regenerated every run and uploaded as a
 # CI artifact, never committed. Note bill-status-history.json IS tracked — not one of these.
 monitoring-report.txt
