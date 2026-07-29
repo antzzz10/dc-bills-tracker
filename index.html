@@ -37,7 +37,21 @@
           persistence: 'memory',        // cookieless — no consent banner needed
           autocapture: false,           // only the four events we chose
           capture_pageview: false,      // Cloudflare already does pageviews
+          capture_pageleave: false,
           disable_session_recording: true,
+
+          // These default to `undefined`, which means "defer to PostHog's remote
+          // config" — and their server enables them. Verified 2026-07-28: with
+          // these unset, the page pulled down dead-clicks-autocapture.js,
+          // web-vitals.js and surveys.js despite autocapture being off. Only an
+          // explicit `false` prevents that. Do not remove these lines.
+          capture_dead_clicks: false,
+          capture_performance: false,   // Cloudflare already does Core Web Vitals
+          capture_heatmaps: false,
+          rageclick: false,
+          disable_surveys: true,
+          disable_web_experiments: true,
+          advanced_disable_flags: true, // we use no feature flags
         })
       })()
     </script>
