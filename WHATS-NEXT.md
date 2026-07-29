@@ -20,25 +20,31 @@ whether it can run in parallel or has to be serial — per
 
 ---
 
-## Waiting on you (5 minutes each)
+## Waiting on you
 
-### 1. Event tracking — ✅ BUILT AND DEPLOYED, inert until you add a key
-**Shipped 2026-07-27** (`2fb0d67`). Full reasoning: `decisions/2026-07-27-analytics.md`.
+### 1. Event tracking — ✅ LIVE
+**Shipped 2026-07-27, key wired 2026-07-28.** Reasoning:
+`decisions/2026-07-27-analytics.md`.
 
-Four events fire through `src/lib/analytics.js`: `bill_source_opened`,
-`bill_expanded`, `export_downloaded`, `category_filtered`. Cookieless, no
-autocapture, no session recording, no consent banner. Cost to the bundle: +0.57 kB
-gzip (PostHog loads async, outside the bundle).
+Four events through `src/lib/analytics.js`: `bill_source_opened`, `bill_expanded`,
+`export_downloaded`, `category_filtered`. Cookieless, +0.57 kB gzip. Key is set both
+locally (`.env`, gitignored) and as the `VITE_POSTHOG_KEY` repo **variable**, so the
+three scheduled rebuild workflows keep it.
 
-**It records nothing until `VITE_POSTHOG_KEY` is set.** To turn it on:
+**One thing left for you: confirm a real visit registers.** Open
+billtracker.representdc.org, expand any bill, and check PostHog → Activity.
+Browser-side delivery could not be verified here because PostHog silently drops
+events from automated browsers (`capture()` returns undefined with no log, in
+headless regardless of user agent or `navigator.webdriver`). The key itself is
+confirmed good — a direct `POST` to the ingestion endpoint returned
+`{"status":"Ok"}`, and that test event appears as `setup_verification` from
+distinct_id `setup-check`.
 
-1. Create a PostHog project — free tier is 1M events/mo, no credit card. Copy the
-   project API key (publishable; safe in client code).
-2. Local: put `VITE_POSTHOG_KEY=phc_...` in a `.env` file (gitignored).
-3. **CI — do not skip this.** `monitor-bills.yml` and `fetch-news.yml` rebuild and
-   redeploy the site on a schedule. If the key isn't available to those builds, every
-   automated deploy ships the inert placeholder and overwrites any manual deploy that
-   had it. This is the most likely way this quietly fails.
+**Watch out:** several PostHog features default to `undefined`, meaning "defer to
+remote config", and their server turns them on — dead clicks, web vitals, heatmaps,
+surveys, web experiments. They are now explicitly `false` in `index.html`. Don't
+remove those lines; without them the running page loads tracking we deliberately
+rejected.
 
 ### 2. About page → **moved out of this repo**
 Not tracker work. Decided domain-level: it's canonical at `representdc.org/about`.
