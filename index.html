@@ -29,7 +29,7 @@
          No key configured (dev, or an unset VITE_POSTHOG_KEY) = no tracking. -->
     <script>
       (function () {
-        var key = ''
+        var key = 'phc_kSCPDz38pSieRrTcSLBK76PCdjirQCnJusvytuivQ8Mh'
         if (!key || key.charAt(0) === '%') return
         !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
         posthog.init(key, {
@@ -37,12 +37,26 @@
           persistence: 'memory',        // cookieless — no consent banner needed
           autocapture: false,           // only the four events we chose
           capture_pageview: false,      // Cloudflare already does pageviews
+          capture_pageleave: false,
           disable_session_recording: true,
+
+          // These default to `undefined`, which means "defer to PostHog's remote
+          // config" — and their server enables them. Verified 2026-07-28: with
+          // these unset, the page pulled down dead-clicks-autocapture.js,
+          // web-vitals.js and surveys.js despite autocapture being off. Only an
+          // explicit `false` prevents that. Do not remove these lines.
+          capture_dead_clicks: false,
+          capture_performance: false,   // Cloudflare already does Core Web Vitals
+          capture_heatmaps: false,
+          rageclick: false,
+          disable_surveys: true,
+          disable_web_experiments: true,
+          advanced_disable_flags: true, // we use no feature flags
         })
       })()
     </script>
     <!-- End PostHog -->
-    <script type="module" crossorigin src="/assets/index-LkS26hO6.js"></script>
+    <script type="module" crossorigin src="/assets/index-DniWx-lH.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-r3B8_LTF.css">
   </head>
   <body>
