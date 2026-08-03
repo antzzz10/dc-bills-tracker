@@ -11,6 +11,8 @@ import DownloadButton from './components/DownloadButton'
 import UpdateBanner from './components/UpdateBanner'
 import UrgentAlert from './components/UrgentAlert'
 import { isUrgentAlertActive } from './components/urgentAlertState'
+import PageSummary from './components/PageSummary'
+import { getUpdateBannerMessage } from './components/updateBannerMessage'
 import PassedBillsSection from './components/PassedBillsSection'
 import RecentActivity from './components/RecentActivity'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
@@ -175,6 +177,25 @@ function App() {
     setSearchTerm('')
   }
 
+  // The top slot holds at most one thing. UrgentAlert (hand-written, expires) outranks
+  // UpdateBanner (auto, only speaks when something moved), which outranks PageSummary
+  // (orientation for a first-time reader). Asking the banner for its message rather than
+  // for its presence matters: it renders null on a quiet week, and that is exactly when
+  // the summary should take the slot.
+  //
+  // Deliberately keyed to whether the banner HAS a message, not to whether the reader
+  // dismissed it — swapping in different copy under someone who just closed a banner
+  // reads as a bug, not a feature.
+  const hasBannerMessage = Boolean(
+    !isUrgentAlertActive() &&
+    getUpdateBannerMessage({
+      passedBills,
+      upcomingFloorVotes: filteredBills.filter(b => b.highlight === 'floor-vote'),
+      allBills: billsData.bills,
+    })
+  )
+  const showPageSummary = !isUrgentAlertActive() && !hasBannerMessage
+
   return (
     <div className="app">
       <Nav />
@@ -211,6 +232,14 @@ function App() {
       </p>
 
       <div className="container">
+        {showPageSummary && (
+          <PageSummary
+            bills={billsData.bills}
+            riders={billsData.riders}
+            routineBills={billsData.routineBills}
+          />
+        )}
+
         <SearchBar
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

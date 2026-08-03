@@ -1,0 +1,51 @@
+/*
+ * Orientation copy, not an alert. It only renders when nothing more urgent holds
+ * the slot, so it is styled to sit quietly under the hero rather than compete
+ * with UrgentAlert (red) or UpdateBanner (navy gradient) — a third loud band at
+ * the top of the page is exactly the stacking the hero guardrails warn against.
+ */
+.page-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  max-width: 1200px;
+  margin: 0 auto 1.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--navy-tint);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--navy-600);
+  border-radius: 6px;
+}
+
+.page-summary-icon {
+  flex-shrink: 0;
+  color: var(--navy-600);
+  /* Optical alignment with the first line of text rather than the box top. */
+  margin-top: 0.15rem;
+}
+
+.page-summary-text {
+  margin: 0;
+  color: var(--slate-700);
+  font-size: 0.975rem;
+  line-height: 1.55;
+}
+
+.page-summary-text strong {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .page-summary {
+    gap: 0.6rem;
+    padding: 0.875rem 1rem;
+    margin-bottom: 1.25rem;
+    border-radius: 4px;
+  }
+
+  .page-summary-text {
+    font-size: 0.925rem;
+    line-height: 1.5;
+  }
+}
