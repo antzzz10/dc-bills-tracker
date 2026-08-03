@@ -129,6 +129,48 @@ for (const [id, expected] of Object.entries(golden.labels)) {
   }
 }
 
+// 8. Vote records must be internally possible.
+//    A wrong vote total is the most falsifiable thing on the site — anyone can click
+//    through to Congress.gov — so these are errors, not warnings. This fires on the exact
+//    shape of the 2026-07-28 regression, where a session-mismatched roll call published
+//    "passed the House 211-215" (a losing tally) for H.R. 5103, dated five months before
+//    the bill was introduced, with the parties reversed.
+for (const [section, items] of sections) {
+  for (const bill of items) {
+    const label = `${section}/${bill.id}`;
+    for (const chamber of ['house', 'senate']) {
+      const record = bill.passage?.[chamber];
+      const vote = record?.vote;
+      if (!vote) continue;
+
+      const { yeas, nays, byParty } = vote;
+
+      // A recorded passage that did not carry a majority is a data error by definition.
+      if (typeof yeas === 'number' && typeof nays === 'number' && yeas <= nays) {
+        errors.push(`${label}: ${chamber} passage recorded as ${yeas}-${nays} — a passed vote cannot have yeas <= nays`);
+      }
+
+      // Party rows must not exceed the totals they break down.
+      if (byParty) {
+        const sum = key => Object.values(byParty).reduce((n, p) => n + (p?.[key] || 0), 0);
+        if (typeof yeas === 'number' && sum('yeas') > yeas) {
+          errors.push(`${label}: ${chamber} party yeas sum to ${sum('yeas')}, exceeding the ${yeas} total`);
+        }
+        if (typeof nays === 'number' && sum('nays') > nays) {
+          errors.push(`${label}: ${chamber} party nays sum to ${sum('nays')}, exceeding the ${nays} total`);
+        }
+      }
+
+      // A vote cannot predate the bill. This is what proved H.R. 5103's record wrong
+      // without needing the API at all.
+      const introduced = bill.status?.introducedDate || bill.introducedDate;
+      if (record.date && introduced && record.date < introduced) {
+        errors.push(`${label}: ${chamber} vote dated ${record.date} predates introduction on ${introduced}`);
+      }
+    }
+  }
+}
+
 const total = sections.reduce((n, [, items]) => n + items.length, 0);
 console.log(`Checked ${total} entries against ${Object.keys(golden.labels).length} golden labels.`);
 warnings.forEach(w => console.log(`⚠️  ${w}`));

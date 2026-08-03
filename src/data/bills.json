@@ -2420,17 +2420,21 @@
       "attackType": "direct",
       "passage": {
         "house": {
-          "date": "2025-04-10",
+          "date": "2026-03-25",
           "vote": {
-            "yeas": 211,
-            "nays": 215,
+            "yeas": 218,
+            "nays": 206,
             "byParty": {
               "republican": {
-                "yeas": 0,
-                "nays": 215
+                "yeas": 212,
+                "nays": 0
               },
               "democrat": {
-                "yeas": 211,
+                "yeas": 5,
+                "nays": 206
+              },
+              "independent": {
+                "yeas": 1,
                 "nays": 0
               }
             }
