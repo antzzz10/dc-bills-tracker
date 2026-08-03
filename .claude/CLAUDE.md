@@ -100,7 +100,11 @@ The bills data uses a three-section structure (counts as of 2026-07-12):
 
 1. **`bills`** (73 items) - Primary bills to oppose
 2. **`riders`** (18 items) - Budget riders in appropriations bills (H.R. 5166)
-3. **`supportBills`** (11 items) - Pro-DC bills to support
+3. **`supportBills`** (36 items) - Pro-DC bills. **PARKED 2026-08-03 — does not render.**
+   The tracker is oppose-only; the data is retained and linted but no page reads it, and
+   it is tree-shaken out of the bundle. Do not re-add it to the page without reading
+   `decisions/2026-08-03-park-support-bills.md` — reviving it requires extending
+   `monitor-bills.js`, which has never scanned these bills.
 
 Classification follows `METHODOLOGY.md` (repo root): `position` (oppose/support advocacy stance) is independent of `attackType` ("direct" | "partial" per the Statehood Scorecard's three-prong test). Auto-discovered bills are `provisional: true` until a human review sets these fields. Golden labels in `scripts/eval/golden-labels.json` pin reviewed classifications; `node scripts/lint-bills.js` (offline, no API key) checks consistency + golden drift and must pass before deploying data changes.
 

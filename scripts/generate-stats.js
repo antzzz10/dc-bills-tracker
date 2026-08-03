@@ -32,7 +32,6 @@ const reviewed = (list) => (list || []).filter(item => !item.provisional);
 // Calculate stats
 const bills = reviewed(billsData.bills);
 const riders = reviewed(billsData.riders);
-const supportBills = reviewed(billsData.supportBills);
 const routineBills = reviewed(billsData.routineBills);
 
 const provisionalCount =
@@ -59,10 +58,13 @@ const stats = {
   totalBills: totalOpposeBills,
   pendingBills: pendingOpposeBills,
   passedBills: passedBills.length,
+  // Oppose-side only. supportBills is deliberately absent: pro-DC bills are parked
+  // (decisions/2026-08-03-park-support-bills.md) and the site does not render them,
+  // so publishing a count for them would advertise something no page shows. Verified
+  // unconsumed by representdc-main and dc-statehood-pledge before removal.
   breakdown: {
     bills: bills.length,
     riders: riders.length,
-    supportBills: supportBills.length,
     routineBills: routineBills.length
   },
   // Awaiting human review — deliberately excluded from every count above.

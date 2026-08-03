@@ -53,12 +53,39 @@ Draft copy and spec remain at `docs/about-page-draft.md` purely as a handoff art
 
 ---
 
+## 🅿️ Parking lot
+
+### Support bills (pro-DC) — **parked 2026-08-03**
+The tracker is **oppose-only**. `SupportBillsSection` no longer renders and
+`breakdown.supportBills` is gone from `/api/stats.json`. The 36 entries stay in
+`bills.json` and stay linted; the component file is kept, unreferenced.
+
+**Why:** a "bills to support" list at the bottom of the attack list makes the page
+ambiguous to anyone who lands mid-scroll — and this is the page most likely to be
+shared cold. Oppose counts did not move (94 / 79 / 15, `bills.json` byte-identical).
+
+Full rationale, the verified before/after, and revival steps:
+`decisions/2026-08-03-park-support-bills.md`.
+
+**Blocker on revival — must be fixed first:** `scripts/monitor-bills.js` never scanned
+these bills. Its loop covers `billsData.bills` only, so all 36 have been drifting since
+they were added (H.R. 51 was already stale at 207 stored vs 208 live). Reviving the
+section without extending the scan ships stale data on day one. Extending it also means
+checking `calculatePriority` against `position: "support"` — the partial-attack cap was
+written for oppose bills.
+
+A separate `/support` page via a second Vite entry (no router, per the domain
+bundle-discipline rule) was scoped and is the preferred shape if this comes back. It was
+parked for focus, not rejected.
+
+---
+
 ## Needs scoping before it can be built
 
 ### 3. Remaining UI/UX changes
 **Lane B (serial).** Too broad to start. Known concrete items:
-- `SupportBillsSection` floods `--support-green` as a large surface; the token's own
-  comment reserves it for candidate/pledge use. Needs a ruling.
+- ~~`SupportBillsSection` floods `--support-green` as a large surface~~ — moot while
+  support bills are parked (the section no longer renders). Revisit only if revived.
 - `bills.json` categories carry an unused `color: "#DC143C"` field — dead data.
 - Nav/footer will need reconciling once `representdc-main`'s IA rework lands.
 
