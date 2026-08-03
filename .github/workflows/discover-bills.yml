@@ -37,6 +37,15 @@ jobs:
       - name: Lint bill data (consistency + golden-label eval)
         run: node scripts/lint-bills.js
 
+      - name: Regenerate stats for the claims check
+        run: node scripts/generate-stats.js
+
+      # Claims gate: lint-bills.js validates the data's shape; this renders the sentences
+      # the page will actually show and asserts each against bills.json. Every falsehood
+      # this site has published came from well-formed data, so shape alone is not enough.
+      - name: Check published claims (banner + summary)
+        run: node scripts/check-published-claims.js
+
       - name: Check for new bills
         id: check_changes
         run: |

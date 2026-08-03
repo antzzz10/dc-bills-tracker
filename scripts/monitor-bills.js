@@ -487,6 +487,22 @@ function updateBillsJson(billId, passageInfo, status) {
     let updated = false;
     let stageChanged = false;
 
+    // A successful fetch *is* the validation: validate-bills.js confirms a bill by doing
+    // the same GET /bill/{congress}/{type}/{number} and checking res.ok, which the monitor
+    // has just done. Recording it stops the flag from lying — it read "73 of 75 bills not
+    // validated against Congress.gov" while this loop reached all 75 every night, and a
+    // warning that is wrong 97% of the time teaches everyone to ignore warnings.
+    //
+    // Stamped once, not refreshed daily: bills.json is committed on every run, and
+    // re-dating 75 bills a day would bury real changes in churn. Recency of the whole
+    // sweep is already carried by the top-level `lastChecked`.
+    if (status && !bill.congressValidated) {
+      bill.congressValidated = true;
+      bill.congressValidatedDate = new Date().toISOString().split('T')[0];
+      updated = true;
+      console.log(`  ✓ Recorded Congress.gov validation`);
+    }
+
     // Update status stage
     if (passageInfo.stage && bill.status.stage !== passageInfo.stage) {
       bill.status.stage = passageInfo.stage;

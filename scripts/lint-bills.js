@@ -171,6 +171,56 @@ for (const [section, items] of sections) {
   }
 }
 
+// 9 + 10. Hand-set display flags must expire and must not contradict derived state.
+//
+//    `highlight: "floor-vote"` drives the loudest things on the page — the top banner
+//    and a pulsing "FLOOR VOTE" badge with red card styling. Nothing in the pipeline
+//    reads or writes it, so it was true-forever: on 2026-08-03 all three flagged bills
+//    had moved (two passed the House in Nov 2025, one was signed into law in Feb 2026)
+//    and the banner had been announcing a false "3 bills scheduled for floor vote" for
+//    53 straight days.
+//
+//    Two rules, because either alone leaves a hole: the stage check catches a flag the
+//    data has already outrun, and the date check catches one on a bill that simply never
+//    moved — where no derived field would ever contradict it.
+const HIGHLIGHT_TTL_DAYS = 30;
+const todayIso = new Date().toISOString().slice(0, 10);
+
+for (const [section, items] of sections) {
+  for (const bill of items) {
+    if (!bill.highlight) continue;
+    const label = `${section}/${bill.id}`;
+
+    // 9. A bill that has already reached a stage cannot be awaiting one.
+    if (bill.highlight === 'floor-vote' && bill.status?.stage) {
+      errors.push(
+        `${label}: highlight "floor-vote" but status.stage is "${bill.status.stage}" — ` +
+        `it has already advanced and cannot be awaiting a floor vote`
+      );
+    }
+
+    // 10. Every hand-set highlight carries the date it was set, and expires.
+    if (!bill.highlightSetOn) {
+      errors.push(
+        `${label}: highlight "${bill.highlight}" has no highlightSetOn date. Urgency ` +
+        `claims must expire — add "highlightSetOn": "YYYY-MM-DD" or drop the flag.`
+      );
+    } else {
+      const ageDays = Math.floor(
+        (Date.parse(todayIso) - Date.parse(bill.highlightSetOn)) / 86400000
+      );
+      if (Number.isNaN(ageDays)) {
+        errors.push(`${label}: highlightSetOn "${bill.highlightSetOn}" is not a YYYY-MM-DD date`);
+      } else if (ageDays > HIGHLIGHT_TTL_DAYS) {
+        errors.push(
+          `${label}: highlight "${bill.highlight}" was set ${ageDays} days ago ` +
+          `(max ${HIGHLIGHT_TTL_DAYS}). Re-confirm it against Congress.gov or remove it.`
+        );
+      }
+    }
+  }
+}
+
 const total = sections.reduce((n, [, items]) => n + items.length, 0);
 console.log(`Checked ${total} entries against ${Object.keys(golden.labels).length} golden labels.`);
 warnings.forEach(w => console.log(`⚠️  ${w}`));

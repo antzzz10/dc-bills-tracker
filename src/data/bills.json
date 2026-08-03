@@ -595,7 +595,6 @@
       ],
       "description": "Would repeal the Comprehensive Policing and Justice Reform Amendment Act of 2022",
       "category": "crime",
-      "highlight": "floor-vote",
       "position": "oppose",
       "type": "bill",
       "priority": "high",
@@ -674,7 +673,6 @@
       ],
       "description": "Would require pretrial detention and a secured appearance bond for certain crimes",
       "category": "crime",
-      "highlight": "floor-vote",
       "position": "oppose",
       "type": "bill",
       "priority": "high",
@@ -2050,7 +2048,6 @@
       "type": "bill",
       "priority": "high",
       "prioritySource": "manual",
-      "highlight": "floor-vote",
       "manualOverride": true,
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/142",
       "status": {

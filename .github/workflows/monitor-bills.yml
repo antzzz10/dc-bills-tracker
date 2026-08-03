@@ -45,19 +45,32 @@ jobs:
       - name: Lint bill data (consistency + golden-label eval)
         run: node scripts/lint-bills.js
 
+      - name: Regenerate stats for the claims check
+        run: node scripts/generate-stats.js
+
+      # Claims gate: lint-bills.js validates the data's shape; this renders the sentences
+      # the page will actually show and asserts each against bills.json. Every falsehood
+      # this site has published came from well-formed data, so shape alone is not enough.
+      - name: Check published claims (banner + summary)
+        run: node scripts/check-published-claims.js
+
       - name: Check for unvalidated bills
         run: |
           node --input-type=module << 'EOF'
           import { readFileSync } from 'fs';
           const data = JSON.parse(readFileSync('src/data/bills.json', 'utf-8'));
-          const all = [...(data.bills||[]), ...(data.riders||[]), ...(data.supportBills||[])];
-          const unvalidated = all.filter(b => !b.congressValidated);
+          // Only the sections this job actually fetches. It used to count riders and
+          // supportBills too, which the monitor never scans — 17 of 18 riders are
+          // provisions of one appropriations bill and support bills are parked — so the
+          // warning reported 102 unvalidated entries every single run and meant nothing.
+          const scanned = data.bills || [];
+          const unvalidated = scanned.filter(b => !b.congressValidated);
           if (unvalidated.length > 0) {
-            console.log(`⚠️  WARNING: ${unvalidated.length} bill(s) have not been validated against Congress.gov:`);
+            console.log(`⚠️  WARNING: ${unvalidated.length} of ${scanned.length} scanned bill(s) have never been confirmed on Congress.gov:`);
             unvalidated.forEach(b => console.log(`  - ${b.id} (${(b.billNumbers||[]).join(', ')})`));
-            console.log('Run: node scripts/validate-bills.js to validate them.');
+            console.log('These should self-resolve on the next successful run; a bill that persists here may have a wrong number.');
           } else {
-            console.log('✅ All bills are validated against Congress.gov.');
+            console.log(`✅ All ${scanned.length} scanned bills confirmed on Congress.gov.`);
           }
           EOF
 

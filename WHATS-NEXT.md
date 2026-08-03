@@ -53,6 +53,21 @@ Draft copy and spec remain at `docs/about-page-draft.md` purely as a handoff art
 
 ---
 
+## Credibility guardrails — next step
+
+Two gates now block commit and deploy: `lint-bills.js` (data shape + vote plausibility +
+urgency-claim expiry) and `check-published-claims.js` (the sentences the page shows).
+Rationale and the six incidents that prompted them:
+`decisions/2026-08-03-claims-verification-gates.md`.
+
+**Still open — provenance per fact (`_source`, `_verifiedAt`).** The highest-value item
+left, because it is the only one that turns internal checking into something a *reader*
+can verify: a bill card that says "vote confirmed against Congress.gov roll call 101,
+checked 2026-08-03" invites the scrutiny rather than asking for trust. Everything else on
+this list protects us from shipping a falsehood; this one lets someone else catch it.
+
+---
+
 ## 🅿️ Parking lot
 
 ### Support bills (pro-DC) — **parked 2026-08-03**
