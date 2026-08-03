@@ -56,11 +56,27 @@ function parseBillNumber(billNumber) {
   return { billType, number, chamber };
 }
 
-// Fetch roll call vote details
-async function fetchRollCallVote(chamber, year, rollCallNumber) {
+// A Congress convenes in an odd year: the 119th began in 2025. Session 1 is that first
+// year, session 2 the second.
+const CONGRESS_START_YEAR = 1789 + (CONGRESS_NUMBER - 1) * 2;
+
+// Fetch roll call vote details.
+//
+// `expected` ({ billType, number }) is required: roll call numbers restart every session,
+// so the same number identifies a different vote in each year of a Congress. Querying the
+// wrong session returns a real, well-formed vote for an unrelated bill — which is how
+// H.R. 5103 came to display "211-215 on 2025-04-10", a vote taken five months before the
+// bill was introduced, with the parties reversed. Deriving the session fixes the cause;
+// checking the returned vote's own legislation ID catches anything else that would put a
+// stranger's vote on a bill card.
+async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
   try {
-    // Determine session (session 1 for 119th Congress in 2025)
-    const session = 1; // 119th Congress, 1st session (2025)
+    // Sessions run 1..2 within a Congress; anything else means the action date is bogus.
+    const session = year - CONGRESS_START_YEAR + 1;
+    if (session !== 1 && session !== 2) {
+      console.log(`  ⚠️  Vote year ${year} is outside the ${CONGRESS_NUMBER}th Congress — skipping roll call ${rollCallNumber}`);
+      return null;
+    }
 
     // Use new house-vote/senate-vote endpoints (2025 API format)
     const chamberEndpoint = chamber === 'house' ? 'house-vote' : 'senate-vote';
@@ -68,13 +84,24 @@ async function fetchRollCallVote(chamber, year, rollCallNumber) {
     const response = await fetch(voteUrl);
 
     if (!response.ok) {
-      console.log(`  ⚠️  Could not fetch roll call vote ${chamber} ${rollCallNumber}`);
+      console.log(`  ⚠️  Could not fetch roll call vote ${chamber} ${rollCallNumber} (session ${session}): HTTP ${response.status}`);
       return null;
     }
 
     const data = await response.json();
     // New API format uses houseRollCallVote or senateRollCallVote
     const vote = data.houseRollCallVote || data.senateRollCallVote;
+
+    // Refuse a vote that belongs to a different bill. Without this, any future drift in
+    // roll call numbering silently publishes someone else's vote totals as fact.
+    if (expected && vote?.legislationType && vote?.legislationNumber) {
+      const gotType = String(vote.legislationType).toLowerCase();
+      const gotNumber = String(vote.legislationNumber);
+      if (gotType !== expected.billType || gotNumber !== String(expected.number)) {
+        console.log(`  ❌ Roll call ${rollCallNumber} (session ${session}) is for ${gotType.toUpperCase()} ${gotNumber}, expected ${expected.billType.toUpperCase()} ${expected.number} — discarding`);
+        return null;
+      }
+    }
 
     // Parse party breakdown from new API format (2025)
     // New format has votePartyTotal array instead of members
@@ -99,6 +126,13 @@ async function fetchRollCallVote(chamber, year, rollCallNumber) {
           yeas: partyData.yeaTotal || 0,
           nays: partyData.nayTotal || 0
         };
+      } else if (party === 'I' || party === 'Independent') {
+        // Dropped previously, which made the party rows silently fail to sum to the
+        // displayed total. PassedBillsSection already renders an independent row.
+        partyVotes.independent = {
+          yeas: partyData.yeaTotal || 0,
+          nays: partyData.nayTotal || 0
+        };
       }
     });
 
@@ -108,7 +142,12 @@ async function fetchRollCallVote(chamber, year, rollCallNumber) {
       nays: totalNays,
       byParty: {
         republican: partyVotes.republican || { yeas: 0, nays: 0 },
-        democrat: partyVotes.democrat || { yeas: 0, nays: 0 }
+        democrat: partyVotes.democrat || { yeas: 0, nays: 0 },
+        // Only when someone actually caucused independently — an all-zero row would
+        // otherwise appear on every bill card.
+        ...(partyVotes.independent && (partyVotes.independent.yeas || partyVotes.independent.nays)
+          ? { independent: partyVotes.independent }
+          : {})
       }
     };
   } catch (error) {
@@ -118,7 +157,7 @@ async function fetchRollCallVote(chamber, year, rollCallNumber) {
 }
 
 // Detect bill passage and fetch vote data from actions
-async function detectPassage(actions, chamber) {
+async function detectPassage(actions, chamber, expected) {
   const passageInfo = {
     hasPassedHouse: false,
     hasPassedSenate: false,
@@ -162,7 +201,7 @@ async function detectPassage(actions, chamber) {
         console.log(`  🗳️  Detected House passage with roll call ${rollNumber}`);
 
         // Fetch vote details
-        const voteData = await fetchRollCallVote('house', new Date(actionDate).getFullYear(), rollNumber);
+        const voteData = await fetchRollCallVote('house', new Date(actionDate).getFullYear(), rollNumber, expected);
         if (voteData) {
           passageInfo.houseVote = voteData;
           console.log(`  ✓ House vote data: ${voteData.yeas}-${voteData.nays}`);
@@ -193,7 +232,7 @@ async function detectPassage(actions, chamber) {
         console.log(`  🗳️  Detected Senate passage with roll call ${rollNumber}`);
 
         // Fetch vote details
-        const voteData = await fetchRollCallVote('senate', new Date(actionDate).getFullYear(), rollNumber);
+        const voteData = await fetchRollCallVote('senate', new Date(actionDate).getFullYear(), rollNumber, expected);
         if (voteData) {
           passageInfo.senateVote = voteData;
           console.log(`  ✓ Senate vote data: ${voteData.yeas}-${voteData.nays}`);
@@ -258,7 +297,7 @@ async function fetchBillStatus(billNumber) {
         actions = actionsData.actions || [];
 
         // Detect passage and fetch vote data
-        passageInfo = await detectPassage(actions, chamber);
+        passageInfo = await detectPassage(actions, chamber, { billType, number });
 
         // Analyze actions for significant events
         actions.forEach(action => {
