@@ -60,11 +60,53 @@ urgency-claim expiry) and `check-published-claims.js` (the sentences the page sh
 Rationale and the six incidents that prompted them:
 `decisions/2026-08-03-claims-verification-gates.md`.
 
-**Still open — provenance per fact (`_source`, `_verifiedAt`).** The highest-value item
-left, because it is the only one that turns internal checking into something a *reader*
-can verify: a bill card that says "vote confirmed against Congress.gov roll call 101,
-checked 2026-08-03" invites the scrutiny rather than asking for trust. Everything else on
-this list protects us from shipping a falsehood; this one lets someone else catch it.
+### Next: provenance per fact — do it in phases, start with the votes
+**Lane A (parallel-safe for phase 1).** The highest-value item left, because it is the only
+one that turns internal checking into something a *reader* can verify. Everything else here
+protects us from shipping a falsehood; this lets someone else catch it.
+
+**The gap it closes:** a bill card presents "passed the House 218-206" and "this is a direct
+attack on home rule" in identical visual weight. One is a Congress.gov record, the other is
+our editorial judgment under the three-prong test. Nothing on the page distinguishes them.
+
+**Not starting from zero — five partial mechanisms already exist**, none unified:
+
+| mechanism | coverage |
+|---|---|
+| `prioritySource` (`freedc`/`legislative`/`manual`) | 130 / 130 — the model that works |
+| `congressValidated` | 126 / 130 |
+| `congressValidatedDate` | 28 / 130 |
+| `reviewedDate` + `reviewMethod` | 13 / 130 |
+| `manualOverride` | 1 / 130 |
+| golden-labels `source` + `note` | 24 labels |
+| `_source` (planned) | 0 |
+
+The work is consolidating and surfacing these, not inventing them.
+
+**Phase 1 — the passage votes only.** There are just **15 vote records across 14 bills**. Add
+`source` (resolvable roll-call URL) + `verifiedOn`, render as a link on the passed-bills
+cards. Negligible bundle, no daily churn (a recorded vote does not change), and it covers the
+exact class that has produced two live errors. It would also have made the session bug
+self-evident: `house-vote/119/1/101` on a vote dated 2026 is visibly wrong on sight.
+
+**Phase 2 — surface judgments already recorded.** `reviewMethod: "manual-three-prong"` and
+`reviewedDate` exist on 13 entries. Showing them costs nothing new and directly addresses the
+fact-vs-judgment conflation.
+
+**Phase 3 — decide whether remaining fetched fields justify the cost.** Probably not per-field.
+
+**Two constraints that must shape any design:**
+- **Diff churn.** `bills.json` is committed every run. A `_verifiedAt` on every fact rewrites
+  94 entries daily and buries real changes. This already bit the `congressValidated` stamp,
+  which is why it is written once rather than re-dated. Stamp on change, or use a sidecar.
+- **Bundle.** `bills.json` is 143 kB raw / 18 kB gzip inside a 231 kB gzip bundle (~8%).
+  Per-field provenance across 94 entries could plausibly double it, against the domain
+  bundle-discipline rule.
+
+**Be clear on what it does not do:** provenance would *not* have blocked H.R. 5103. That vote
+came from a real Congress.gov endpoint, so provenance would have faithfully recorded a true
+source for a false fact. Lint gates prevent; provenance explains. Do not let it displace the
+gates in priority.
 
 ---
 
