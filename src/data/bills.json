@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-07-28",
-  "lastChecked": "2026-08-03T14:59:37.854Z",
+  "lastUpdated": "2026-08-04",
+  "lastChecked": "2026-08-04T14:49:23.526Z",
   "categories": [
     {
       "id": "abolishing",
@@ -93,7 +93,9 @@
       "attackType": "direct",
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/6578",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "hr7068",
@@ -123,8 +125,9 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/7068",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s440-hr1089",
@@ -155,8 +158,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr3877",
@@ -185,7 +189,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "hr277",
@@ -214,8 +220,9 @@
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr2096",
@@ -263,7 +270,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr2056-s1522",
@@ -313,7 +321,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr4922-s2686",
@@ -363,7 +372,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hjres114",
@@ -392,8 +402,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5015",
@@ -422,8 +433,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5016",
@@ -452,8 +464,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s2706",
@@ -482,8 +495,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5140",
@@ -531,7 +545,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5143",
@@ -579,7 +594,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5107-s2687",
@@ -630,7 +646,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5207",
@@ -659,7 +676,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "hr5214",
@@ -708,7 +727,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5172",
@@ -737,8 +757,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5242-secondchance",
@@ -767,8 +788,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5163",
@@ -797,8 +819,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s2517",
@@ -827,7 +850,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "s2815",
@@ -856,8 +881,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5125-s2854",
@@ -907,7 +933,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5179",
@@ -936,8 +963,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr884-s2636",
@@ -987,7 +1015,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr2562",
@@ -1016,8 +1045,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hconres14-cruz",
@@ -1046,8 +1076,9 @@
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr4851",
@@ -1076,8 +1107,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr7-s186",
@@ -1108,8 +1140,9 @@
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr1968-abortion",
@@ -1157,7 +1190,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hjres82",
@@ -1186,8 +1220,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s2907-hr5483",
@@ -1218,8 +1253,9 @@
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr1016",
@@ -1248,8 +1284,9 @@
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr1968-marijuana",
@@ -1297,7 +1334,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s1450",
@@ -1326,7 +1364,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "sjres68-hjres109",
@@ -1357,7 +1397,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "s218-hr4558",
@@ -1388,8 +1430,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s614-hr1738",
@@ -1420,8 +1463,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr1774",
@@ -1450,7 +1494,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "hr2522",
@@ -1485,8 +1531,9 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/2522",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5242-perry-cameras",
@@ -1515,8 +1562,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5242-perry-rightturn",
@@ -1545,8 +1593,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5525",
@@ -1579,8 +1628,9 @@
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5525",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s2998",
@@ -1609,8 +1659,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr69",
@@ -1639,8 +1690,9 @@
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s204-hr650",
@@ -1671,8 +1723,9 @@
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "sconres7-lee",
@@ -1701,8 +1754,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr1968-budget",
@@ -1750,7 +1804,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s900",
@@ -1779,8 +1834,9 @@
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr3766",
@@ -1809,8 +1865,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s1991-hr4311",
@@ -1841,8 +1898,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr4519-s2565",
@@ -1873,8 +1931,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s2404-hr4670",
@@ -1905,8 +1964,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr4788",
@@ -1935,8 +1995,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5183",
@@ -1965,8 +2026,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr5474",
@@ -1995,8 +2057,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr6372-s3327",
@@ -2027,8 +2090,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hjres142-sjres102",
@@ -2112,7 +2176,9 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5815",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "hr5181",
@@ -2145,8 +2211,9 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5181",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr1686",
@@ -2176,8 +2243,9 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1686",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr1421",
@@ -2210,8 +2278,9 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/1421",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr954",
@@ -2244,7 +2313,9 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/954",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "hjres31",
@@ -2274,7 +2345,9 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/31",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "s487",
@@ -2307,7 +2380,9 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/487",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "s3290",
@@ -2339,8 +2414,9 @@
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/3290",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "s4150",
@@ -2376,9 +2452,11 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
+      "congressValidated": true,
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "hr5103",
@@ -2439,9 +2517,10 @@
         }
       },
       "congress": 119,
-      "congressValidated": false,
+      "congressValidated": true,
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr8297",
@@ -2478,9 +2557,11 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false,
+      "congressValidated": true,
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "hr8455",
@@ -2517,10 +2598,11 @@
       },
       "attackType": "partial",
       "congress": 119,
-      "congressValidated": false,
+      "congressValidated": true,
       "passage": {},
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr8801",
@@ -2553,7 +2635,9 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-04",
+      "passage": {}
     },
     {
       "id": "hjres192-sjres195",
@@ -2585,8 +2669,9 @@
       "attackType": "direct",
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/192",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hjres193-sjres194",
@@ -2618,8 +2703,9 @@
       "attackType": "direct",
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/193",
       "congress": 119,
-      "congressValidated": false,
-      "passage": {}
+      "congressValidated": true,
+      "passage": {},
+      "congressValidatedDate": "2026-08-04"
     },
     {
       "id": "hr7196",
