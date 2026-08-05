@@ -478,12 +478,6 @@ function updateBillsJson(billId, passageInfo, status) {
 
     const bill = billsData.bills[billIndex];
 
-    // Skip bills with manualOverride flag — preserve all manual edits
-    if (bill.manualOverride) {
-      console.log(`  🔒 Skipping ${billId}: manual override is set (preserving manual edits)`);
-      return { updated: false, stageChanged: false };
-    }
-
     let updated = false;
     let stageChanged = false;
 
@@ -496,11 +490,31 @@ function updateBillsJson(billId, passageInfo, status) {
     // Stamped once, not refreshed daily: bills.json is committed on every run, and
     // re-dating 75 bills a day would bury real changes in churn. Recency of the whole
     // sweep is already carried by the top-level `lastChecked`.
+    //
+    // Deliberately ABOVE the manualOverride return. This is provenance — "we reached this
+    // bill on Congress.gov" — not a content edit, so it does not overwrite the human
+    // judgement manualOverride exists to protect, and it writes at most once per bill.
+    // Below the return it produced exactly the false warning it was meant to remove:
+    // H.J.Res.142 carries manualOverride, so it was fetched cleanly every night and still
+    // reported as "never confirmed on Congress.gov".
     if (status && !bill.congressValidated) {
       bill.congressValidated = true;
       bill.congressValidatedDate = new Date().toISOString().split('T')[0];
       updated = true;
       console.log(`  ✓ Recorded Congress.gov validation`);
+    }
+
+    // Everything below this point rewrites bill content, so manual edits win.
+    // The validation stamp above is intentionally the only thing that runs first.
+    if (bill.manualOverride) {
+      console.log(`  🔒 Skipping ${billId}: manual override is set (preserving manual edits)`);
+      if (updated) {
+        // Only ever the validation stamp, and only the first time — no lastUpdated bump,
+        // since nothing about the bill's own content changed.
+        writeFileSync(billsPath, JSON.stringify(billsData, null, 2));
+        console.log(`  💾 Updated bills.json`);
+      }
+      return { updated, stageChanged: false };
     }
 
     // Update status stage
