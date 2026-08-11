@@ -1,7 +1,13 @@
 {
-  "lastUpdated": "2026-08-11T06:41:49.905Z",
-  "summary": "A federal takeover and extended National Guard deployment in Washington, D.C. are prompting statehood advocates to argue that the city needs greater self-governance and autonomy. Meanwhile, D.C. secured a legal victory against the Trump administration regarding voter rolls, and questions about home rule authority continue to arise as federal control over local matters persists.",
+  "lastUpdated": "2026-08-11T18:41:31.214Z",
+  "summary": "A year after National Guard deployment in Washington, D.C., statehood advocates are emphasizing how the incident demonstrates the need for greater local autonomy and self-governance. Meanwhile, DC Vote is calling on House lawmakers to reject proposals that would further restrict the district's fiscal independence. The headlines reflect ongoing concerns about federal control over D.C. and its implications for home rule.",
   "articles": [
+    {
+      "title": "What D.C. residents will remember from a year of National Guard occupation",
+      "link": "https://51st.news/national-guard-washington-dc-residents-memories-trump-takeover/",
+      "pubDate": "Tue, 11 Aug 2026 15:02:11 GMT",
+      "source": "The 51st"
+    },
     {
       "title": "One Year Later, DC Vote Says Federal Takeover Underscores the Urgency of DC Statehood",
       "link": "https://www.dcvote.org/one-year-later-dc-vote-says-federal-takeover-underscores-the-urgency-of-dc-statehood/",
@@ -15,22 +21,16 @@
       "source": "NOTUS"
     },
     {
-      "title": "D.C. Wins Fight Against Trump Administration Over Voter Rolls",
-      "link": "https://www.notus.org/metro/dc-voter-rolls-trump-administration",
-      "pubDate": "Fri, 07 Aug 2026 15:46:50 GMT",
-      "source": "NOTUS"
-    },
-    {
-      "title": "Trump&#8217;s National Guard Mission in Washington Carries a $1.4 Billion Price Tag as Deployment Extends Through 2029",
-      "link": "https://www.washingtoninformer.com/pentagon-extends-national-guard-dc/",
-      "pubDate": "Thu, 06 Aug 2026 17:59:00 +0000",
-      "source": "Washington Informer"
-    },
-    {
       "title": "One Year After President Trump Deployed National Guard Troops to Washington, D.C., Statehood is More Important Than Ever",
       "link": "https://www.acludc.org/news/one-year-after-president-trump-deployed-national-guard-troops-to-washington-d-c-statehood-is-more-important-than-ever-2/",
       "pubDate": "Wed, 05 Aug 2026 16:44:39 +0000",
       "source": "ACLU DC"
+    },
+    {
+      "title": "DC Vote Urges House Committee to Reject Sweeping Attack on DC’s Fiscal Independence",
+      "link": "https://www.dcvote.org/dc-vote-urges-house-committee-to-reject-sweeping-attack-on-dcs-fiscal-independence/",
+      "pubDate": "Tue, 21 Jul 2026 11:38:51 +0000",
+      "source": "DC Vote"
     }
   ]
 }
