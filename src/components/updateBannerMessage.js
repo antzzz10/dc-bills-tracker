@@ -36,15 +36,18 @@ export function getUpdateBannerMessage({ passedBills = [], upcomingFloorVotes = 
       year: 'numeric'
     })
 
-    // Handle provisional bills without bill numbers yet
-    const billNumberText = newest.provisional
-      ? 'New bill (number pending)'
-      : newest.billNumbers.join('/')
+    // Bill number when it exists (nearly always, provisional or not); the bare
+    // fallback covers a bill announced before Congress.gov assigns a number.
+    const billNumberText = newest.billNumbers?.length
+      ? newest.billNumbers.join('/')
+      : 'New bill'
 
+    // Title only — it is Congress.gov's own text. The stored description is
+    // pipeline metadata and has no business in reader-facing copy.
     return {
       icon: '🆕',
       date: formattedDate,
-      message: `${billNumberText} just introduced: ${newest.title}. ${newest.description}`
+      message: `${billNumberText} introduced: ${newest.title}`
     }
   }
 

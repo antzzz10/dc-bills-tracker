@@ -371,3 +371,26 @@
     font-size: 1rem;
   }
 }
+
+/* Underline makes the number read as a link before hover reveals it */
+.bill-number-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.congress-gov-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.congress-gov-link:hover {
+  opacity: 0.75;
+}

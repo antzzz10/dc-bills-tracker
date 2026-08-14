@@ -221,3 +221,24 @@
     white-space: normal;
   }
 }
+
+/* Rows are links out to Congress.gov; keep the row's own typography */
+a.activity-item {
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.activity-item:hover .activity-bill-number {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.activity-external {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink-soft, #6b7280);
+  flex-shrink: 0;
+}

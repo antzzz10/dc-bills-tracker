@@ -855,13 +855,14 @@ function buildBillEntry(billType, number, details, score) {
   const typeSlug = typeSlugMap[billType] || billType;
   const congressGovLink = `https://www.congress.gov/bill/${CONGRESS_NUMBER}th-congress/${typeSlug}/${number}`;
 
-  // Truncate summary for description
-  let description = 'Auto-discovered.';
+  // Description is Congress.gov's own summary when one exists, otherwise empty —
+  // the card renders nothing rather than pipeline language like "Auto-discovered."
+  // (provenance lives in the autoDiscovered/provisional fields, not reader copy).
+  let description = '';
   if (details.summary) {
-    const truncated = details.summary.length > 300
+    description = details.summary.length > 300
       ? details.summary.substring(0, 300) + '...'
       : details.summary;
-    description += ` ${truncated}`;
   }
 
   const routineHintText = `${details.title || ''} ${details.summary || ''}`;

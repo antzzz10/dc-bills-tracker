@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import './RecentActivity.css'
 import Icon from './Icon'
+import { getCongressGovUrl } from './congressLink'
 
 // Helper to parse date strings as local dates (avoiding timezone issues)
 const parseLocalDate = (dateString) => {
@@ -58,7 +59,7 @@ function RecentActivity({ allBills, allRiders }) {
       // New bills (introduced recently)
       else if (item.status?.lastAction === 'Introduced' || item.provisional) {
         activityType = 'introduced'
-        icon = 'sparkles'
+        icon = 'eye'
         description = 'Introduced'
       }
       // Committee activity
@@ -88,7 +89,8 @@ function RecentActivity({ allBills, allRiders }) {
           description,
           priority: item.priority,
           category: item.category,
-          isPassed: item.status?.stage?.startsWith('passed-')
+          isPassed: item.status?.stage?.startsWith('passed-'),
+          url: item.congressGovLink || getCongressGovUrl(item.billNumbers?.[0], item.congress)
         })
       }
     })
@@ -148,38 +150,44 @@ function RecentActivity({ allBills, allRiders }) {
 
       {isExpanded && (
         <div className="recent-activity-content">
-          <p className="recent-activity-intro">
-            Latest updates and changes to anti-DC bills. This feed is automatically generated
-            from bill status changes and new introductions.
-          </p>
-
           <div className="activity-list">
-            {recentActivities.map((activity, idx) => (
-              <div
-                key={idx}
-                className={`activity-item ${activity.isPassed ? 'activity-passed' : ''}`}
-              >
-                <div className="activity-date">
-                  <span className="date-text">{formatDate(activity.date)}</span>
+            {recentActivities.map((activity, idx) => {
+              const rowContent = (
+                <>
+                  <div className="activity-date">
+                    <span className="date-text">{formatDate(activity.date)}</span>
+                  </div>
+                  <div className="activity-details">
+                    <span className="activity-type-icon"><Icon name={activity.icon} size={16} /></span>
+                    <span className="activity-bill-number">{activity.billNumbers}</span>
+                    <span className={`activity-priority priority-${activity.priority}`}>
+                      {activity.priority}
+                    </span>
+                    <span className="activity-title">{activity.title}</span>
+                    <span className="activity-description">{activity.description}</span>
+                    {activity.url && (
+                      <span className="activity-external"><Icon name="external-link" size={14} /></span>
+                    )}
+                  </div>
+                </>
+              )
+              const className = `activity-item ${activity.isPassed ? 'activity-passed' : ''}`
+              return activity.url ? (
+                <a
+                  key={idx}
+                  className={className}
+                  href={activity.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {rowContent}
+                </a>
+              ) : (
+                <div key={idx} className={className}>
+                  {rowContent}
                 </div>
-                <div className="activity-details">
-                  <span className="activity-type-icon"><Icon name={activity.icon} size={16} /></span>
-                  <span className="activity-bill-number">{activity.billNumbers}</span>
-                  <span className={`activity-priority priority-${activity.priority}`}>
-                    {activity.priority}
-                  </span>
-                  <span className="activity-title">{activity.title}</span>
-                  <span className="activity-description">{activity.description}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="activity-footer">
-            <p>
-              Activity is automatically detected from bill status updates.
-              Daily monitoring ensures this feed stays current.
-            </p>
+              )
+            })}
           </div>
         </div>
       )}

@@ -2791,7 +2791,7 @@
       "sponsors": [
         "Rep. Mace, Nancy [R-SC-1]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "oppose",
       "type": "bill",
@@ -2825,11 +2825,11 @@
       "billNumbers": [
         "S. 5147"
       ],
-      "title": "PLEDGE Act (A bill to establish requirements for patriotic observances in elementary and secondary schools of the District of Columbia)",
+      "title": "PLEDGE Act",
       "sponsors": [
         "Sen. Moody, Ashley [R-FL]"
       ],
-      "description": "Added manually 2026-08-14 after a discovery gap: the bill's short title hides the DC target, so the title scan cannot see it (official long title names the District of Columbia).",
+      "description": "A bill to establish requirements for patriotic observances in elementary and secondary schools of the District of Columbia.",
       "category": "other",
       "position": "oppose",
       "type": "bill",
@@ -2853,18 +2853,19 @@
           "Homeland Security and Governmental Affairs Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "fullTitle": "A bill to establish requirements for patriotic observances in elementary and secondary schools of the District of Columbia."
     },
     {
       "id": "hr10067",
       "billNumbers": [
         "H.R. 10067"
       ],
-      "title": "Ride in Freedom Act (To prohibit the District of Columbia from requiring a person to wear a protective helmet to operate, or ride on, a motorcycle or motor-driven cycle)",
+      "title": "Ride in Freedom Act",
       "sponsors": [
         "Rep. Van Orden, Derrick [R-WI-3]"
       ],
-      "description": "Added manually 2026-08-14 after a discovery gap: the bill's short title hides the DC target, so the title scan cannot see it (official long title names the District of Columbia).",
+      "description": "To prohibit the District of Columbia from requiring a person to wear a protective helmet to operate, or ride on, a motorcycle or motor-driven cycle.",
       "category": "other",
       "position": "oppose",
       "type": "bill",
@@ -2888,18 +2889,19 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "fullTitle": "To prohibit the District of Columbia from requiring a person to wear a protective helmet to operate, or ride on, a motorcycle or motor-driven cycle."
     },
     {
       "id": "s5274",
       "billNumbers": [
         "S. 5274"
       ],
-      "title": "Ride in Freedom Act (A bill to prohibit the District of Columbia from requiring a person to wear a protective helmet to operate, or ride on, a motorcycle or motor-driven cycle)",
+      "title": "Ride in Freedom Act",
       "sponsors": [
         "Sen. Sheehy, Tim [R-MT]"
       ],
-      "description": "Added manually 2026-08-14 after a discovery gap: the bill's short title hides the DC target, so the title scan cannot see it (official long title names the District of Columbia).",
+      "description": "A bill to prohibit the District of Columbia from requiring a person to wear a protective helmet to operate, or ride on, a motorcycle or motor-driven cycle.",
       "category": "other",
       "position": "oppose",
       "type": "bill",
@@ -2923,7 +2925,8 @@
           "Homeland Security and Governmental Affairs Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "unknown",
+      "fullTitle": "A bill to prohibit the District of Columbia from requiring a person to wear a protective helmet to operate, or ride on, a motorcycle or motor-driven cycle."
     }
   ],
   "riders": [
@@ -3703,7 +3706,7 @@
       "sponsors": [
         "Sen. Van Hollen, Chris [D-MD]"
       ],
-      "description": "Auto-discovered. Washington, D.C. Admission ActThis bill provides for the establishment of the State of Washington, Douglass Commonwealth, and its admission into the United States.The state is composed of most of the territory of the District of Columbia (DC), excluding a specified area that encompasses the U.S. Cap...",
+      "description": "Washington, D.C. Admission ActThis bill provides for the establishment of the State of Washington, Douglass Commonwealth, and its admission into the United States.The state is composed of most of the territory of the District of Columbia (DC), excluding a specified area that encompasses the U.S. Cap...",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -3739,7 +3742,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered. District of Columbia Legislative Home Rule ActThis bill eliminates the authority of Congress to nullify recently enacted laws of the District of Columbia (DC).Current law generally provides Congress with a 30-day period in which to review and nullify measures enacted by the DC Council (60 days for m...",
+      "description": "District of Columbia Legislative Home Rule ActThis bill eliminates the authority of Congress to nullify recently enacted laws of the District of Columbia (DC).Current law generally provides Congress with a 30-day period in which to review and nullify measures enacted by the DC Council (60 days for m...",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -3776,7 +3779,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered. District of Columbia Prosecutor Home Rule ActThis bill shifts the responsibility for prosecuting all violations of the laws, ordinances, and regulations of the District of Columbia (DC) to a local prosecutor's office.Currently, the responsibility for prosecuting such violations is shared between DC ...",
+      "description": "District of Columbia Prosecutor Home Rule ActThis bill shifts the responsibility for prosecuting all violations of the laws, ordinances, and regulations of the District of Columbia (DC) to a local prosecutor's office.Currently, the responsibility for prosecuting such violations is shared between DC ...",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -3812,7 +3815,7 @@
       "sponsors": [
         "Sen. Van Hollen, Chris [D-MD]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -3848,7 +3851,7 @@
       "sponsors": [
         "Sen. Van Hollen, Chris [D-MD]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -3884,7 +3887,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered. District of Columbia Federal Judicial Officials Residency Equality Act of 2025This bill requires U.S. district and circuit court judges, U.S. district court clerks, U.S. attorneys, and U.S. marshals who are appointed to serve in the District of Columbia to be residents of the District of Columbia.",
+      "description": "District of Columbia Federal Judicial Officials Residency Equality Act of 2025This bill requires U.S. district and circuit court judges, U.S. district court clerks, U.S. attorneys, and U.S. marshals who are appointed to serve in the District of Columbia to be residents of the District of Columbia.",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -3920,7 +3923,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -3956,7 +3959,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -3992,7 +3995,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4028,7 +4031,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered. District of Columbia Code Returning Citizens Coordination ActThis bill requires that the Bureau of Prisons (BOP) periodically provide the District of Columbia (DC) with information about individuals who are serving sentences in a BOP facility for DC felony convictions. (Generally, an individual who ...",
+      "description": "District of Columbia Code Returning Citizens Coordination ActThis bill requires that the Bureau of Prisons (BOP) periodically provide the District of Columbia (DC) with information about individuals who are serving sentences in a BOP facility for DC felony convictions. (Generally, an individual who ...",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4064,7 +4067,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered. This bill provides continuing appropriations to the District of Columbia courts and related agencies during any fiscal year in which appropriations have not otherwise been provided. (The continuing appropriations would exempt the courts and agencies from a government shutdown due to a lapse in appro...",
+      "description": "This bill provides continuing appropriations to the District of Columbia courts and related agencies during any fiscal year in which appropriations have not otherwise been provided. (The continuing appropriations would exempt the courts and agencies from a government shutdown due to a lapse in appro...",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4100,7 +4103,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4136,7 +4139,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4172,7 +4175,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4208,7 +4211,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4244,7 +4247,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4280,7 +4283,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4316,7 +4319,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4352,7 +4355,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4388,7 +4391,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4424,7 +4427,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4460,7 +4463,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4496,7 +4499,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.  District of Columbia Government Title Equality ActThis bill amends the District of Columbia (DC) Home Rule Act to change the titles of DC elected&nbsp;officials and offices so that the titles correspond to terms used by state governments. Under the bill, the Office of the Mayor becomes the Office o...",
+      "description": "District of Columbia Government Title Equality ActThis bill amends the District of Columbia (DC) Home Rule Act to change the titles of DC elected&nbsp;officials and offices so that the titles correspond to terms used by state governments. Under the bill, the Office of the Mayor becomes the Office o...",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4532,7 +4535,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered. District of Columbia Courts Home Rule ActThis bill authorizes the District of Columbia (DC) Council to pass legislation related to the organization and jurisdiction of the DC courts. Current law prohibits such legislation from being enacted.&nbsp;",
+      "description": "District of Columbia Courts Home Rule ActThis bill authorizes the District of Columbia (DC) Council to pass legislation related to the organization and jurisdiction of the DC courts. Current law prohibits such legislation from being enacted.&nbsp;",
       "category": "other",
       "position": "support",
       "type": "bill",
@@ -4568,7 +4571,7 @@
       "sponsors": [
         "Del. Norton, Eleanor Holmes [D-DC-At Large]"
       ],
-      "description": "Auto-discovered.",
+      "description": "",
       "category": "other",
       "position": "support",
       "type": "bill",

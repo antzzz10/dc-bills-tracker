@@ -4,6 +4,7 @@ import billsData from '../data/bills.json'
 import sponsorsData from '../data/sponsors.json'
 import { stateAbbreviations } from '../data/stateAbbreviations'
 import { CURRENT_CONGRESS } from '../data/config'
+import { getCongressGovUrl } from './congressLink'
 import Icon from './Icon'
 import { track, EVENTS } from '../lib/analytics'
 
@@ -41,27 +42,8 @@ function BillCard({ bill, variant = 'attack' }) {
     return stateAbbreviations[stateName] || stateName
   }
 
-  const getCongressLink = (billNumber) => {
-    // Parse bill number like "H.R. 1089" or "S. 440"
-    const match = billNumber.match(/(H\.R\.|S\.|H\.J\.Res\.|S\.J\.Res\.|H\.Con\.Res\.|S\.Con\.Res\.)\s*(\d+)/i)
-    if (!match) return null
-
-    const [, type, number] = match
-    const congress = bill.congress || CURRENT_CONGRESS
-
-    let billType = ''
-    if (type.toLowerCase().includes('h.r.')) billType = 'hr'
-    else if (type.toLowerCase().includes('s.') && !type.toLowerCase().includes('res')) billType = 's'
-    else if (type.toLowerCase().includes('h.j.res')) billType = 'hjres'
-    else if (type.toLowerCase().includes('s.j.res')) billType = 'sjres'
-    else if (type.toLowerCase().includes('h.con.res')) billType = 'hconres'
-    else if (type.toLowerCase().includes('s.con.res')) billType = 'sconres'
-
-    return `https://www.congress.gov/bill/${congress}th-congress/house-bill/${number}`
-      .replace('house-bill', billType === 's' || billType === 'sjres' || billType === 'sconres' ? 'senate-bill' : 'house-bill')
-      .replace('/house-bill/', `/${billType}/`)
-      .replace('/senate-bill/', `/${billType}/`)
-  }
+  const getCongressLink = (billNumber) =>
+    getCongressGovUrl(billNumber, bill.congress || CURRENT_CONGRESS)
 
   // Get priority class for color coding
   const priorityClass = bill.priority ? `priority-${bill.priority}` : 'priority-low'
@@ -166,7 +148,26 @@ function BillCard({ bill, variant = 'attack' }) {
             </div>
           </div>
 
-          <p className="bill-description">{bill.description}</p>
+          {bill.description && <p className="bill-description">{bill.description}</p>}
+
+          {(bill.congressGovLink || getCongressLink(bill.billNumbers[0])) && (
+            <a
+              className="congress-gov-link"
+              href={bill.congressGovLink || getCongressLink(bill.billNumbers[0])}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                e.stopPropagation()
+                track(EVENTS.BILL_SOURCE_OPENED, {
+                  billId: bill.id,
+                  billNumber: bill.billNumbers[0],
+                  category: bill.category,
+                })
+              }}
+            >
+              View on Congress.gov <Icon name="external-link" size={14} />
+            </a>
+          )}
         </div>
       )}
     </div>
