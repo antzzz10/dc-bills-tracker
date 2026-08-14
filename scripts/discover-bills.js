@@ -307,7 +307,9 @@ async function discoverFromCommittees() {
         const url = `${API_BASE_URL}/committee/${committee.chamber}/${committee.code}/bills?api_key=${CONGRESS_API_KEY}&limit=${limit}&offset=${offset}`;
         const response = await rateLimitedFetch(url);
         const data = await response.json();
-        const bills = data.bills || [];
+        // This endpoint nests its list under "committee-bills" — reading data.bills
+        // silently yielded 0 for every committee (found live 2026-08-14).
+        const bills = data['committee-bills']?.bills || data.bills || [];
 
         committeeBillCount += bills.length;
 
@@ -411,6 +413,65 @@ async function preflightAscSort(billType) {
   log(`  Preflight OK (${billType}): ascending updateDate confirmed (${dates[0]} → ${dates[dates.length - 1]})`);
 }
 
+// Shared title test for the walk and the reconciliation probe — one derivation.
+function considerTitleCandidate(candidates, billType, number, title, source) {
+  const matchesPositive = DC_POSITIVE_PATTERNS.some(p => p.test(title));
+  const matchesNegative = DC_NEGATIVE_PATTERNS.some(p => p.test(title));
+  if (matchesPositive && !matchesNegative) {
+    const id = normalizeBillId(billType, number);
+    if (!candidates.has(id)) {
+      candidates.set(id, { billType, number: String(number), title, source: [source] });
+    }
+  }
+}
+
+// The Congress.gov list endpoint drops a small, varying subset of bills from paginated
+// walks (measured live 2026-08-14: 26 of 10,108 hr bills, 5 of 5,367 s bills; the
+// dropped set differs between runs — it hid the helmet bills on one day and S. 5147 on
+// another). Bill numbers are dense (every introduced bill takes the next integer), so
+// the walk can be reconciled exactly:
+//  1. one newest-updated head page catches bills numbered above the walk's max
+//     (recently introduced ⇒ recently updated), then
+//  2. every unseen number in 1..max is probed directly — 404 means the number was
+//     reserved/never used (not an error); 200 recovers a dropped bill.
+async function reconcileTitleScan(billType, seenNumbers, candidates) {
+  const headUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}?api_key=${CONGRESS_API_KEY}&limit=250&sort=updateDate+desc`;
+  const headData = await (await rateLimitedFetch(headUrl)).json();
+  for (const bill of headData.bills || []) {
+    const number = Number(bill.number);
+    if (!Number.isInteger(number) || seenNumbers.has(number)) continue;
+    seenNumbers.add(number);
+    considerTitleCandidate(candidates, billType, number, bill.title || '', 'title-scan-reconcile');
+  }
+
+  const max = Math.max(...seenNumbers);
+  const gaps = [];
+  for (let n = 1; n <= max; n++) {
+    if (!seenNumbers.has(n)) gaps.push(n);
+  }
+  // Reserved-but-unused numbers 404 harmlessly, but an explosion of gaps means the
+  // walk lost far more than the API's known flakiness — fail closed instead of
+  // hammering the API.
+  const PROBE_CAP = 300;
+  if (gaps.length > PROBE_CAP) {
+    throw new Error(`${gaps.length} number gaps exceeds probe cap ${PROBE_CAP}`);
+  }
+  let recovered = 0;
+  for (const n of gaps) {
+    const url = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${n}?api_key=${CONGRESS_API_KEY}`;
+    await new Promise(r => setTimeout(r, RATE_LIMIT_MS));
+    const res = await fetch(url);
+    if (res.status === 404) continue; // number never used
+    if (!res.ok) throw new Error(`probe of ${billType} ${n} failed: HTTP ${res.status}`);
+    const bill = (await res.json()).bill;
+    seenNumbers.add(n);
+    recovered++;
+    considerTitleCandidate(candidates, billType, n, bill?.title || '', 'title-scan-reconcile');
+  }
+  log(`    Reconciled ${billType}: probed ${gaps.length} gaps, recovered ${recovered} dropped bills`);
+  return { probed: gaps.length, recovered };
+}
+
 async function discoverFromTitleScan(fromDate) {
   console.log('\n🔍 Channel 2: Title scanning');
   const candidates = new Map();
@@ -434,6 +495,7 @@ async function discoverFromTitleScan(fromDate) {
     let hasMore = true;
     let scanFailed = false;
     const seenIds = new Set();
+    const seenNumbers = new Set();
     let apiCount = null;
     let pages = 0;
     // Hard bound against a pagination loop; generous vs the ~11k bills/Congress.
@@ -459,22 +521,9 @@ async function discoverFromTitleScan(fromDate) {
           const number = bill.number?.toString();
           if (!number) continue;
           seenIds.add(normalizeBillId(billType, number));
+          if (Number.isInteger(Number(number))) seenNumbers.add(Number(number));
 
-          // Check if title matches DC patterns
-          const matchesPositive = DC_POSITIVE_PATTERNS.some(p => p.test(title));
-          const matchesNegative = DC_NEGATIVE_PATTERNS.some(p => p.test(title));
-
-          if (matchesPositive && !matchesNegative) {
-            const id = normalizeBillId(billType, number);
-            if (!candidates.has(id)) {
-              candidates.set(id, {
-                billType,
-                number,
-                title,
-                source: ['title-scan']
-              });
-            }
-          }
+          considerTitleCandidate(candidates, billType, number, title, 'title-scan');
         }
 
         // Follow the API's own pagination signal rather than the short-page
@@ -497,17 +546,32 @@ async function discoverFromTitleScan(fromDate) {
       }
     }
 
-    // Invariant: we must have seen at least as many unique bills as the API said
-    // existed when we started (new bills arriving mid-scan can only add). Fewer
-    // means the walk lost data — fail closed.
-    if (!scanFailed && apiCount !== null && seenIds.size < apiCount) {
-      const msg = `unique bills seen (${seenIds.size}) < pagination.count (${apiCount})`;
-      console.log(`  ❌ ${billType}: ${msg}`);
-      health.titleScan.errors.push({ billType, reason: msg });
-      scanFailed = true;
+    // Invariant: we must end up knowing at least as many unique bills as the API said
+    // existed when we started (new bills arriving mid-scan can only add). The list
+    // endpoint drops a small varying subset per walk, so a shortfall goes through the
+    // exact number-gap reconciliation first; only an unreconcilable shortfall fails
+    // the scan. Skipped for date-filtered scans, where numbers aren't dense.
+    let reconcile = null;
+    if (!scanFailed && !fromDate && apiCount !== null && seenNumbers.size < apiCount) {
+      console.log(`  ⚠️  ${billType}: walk saw ${seenNumbers.size} unique bills, API counts ${apiCount} — reconciling`);
+      try {
+        reconcile = await reconcileTitleScan(billType, seenNumbers, candidates);
+        if (seenNumbers.size < apiCount) {
+          throw new Error(`still short after reconciliation: ${seenNumbers.size} < ${apiCount}`);
+        }
+        console.log(`  ✅ ${billType}: reconciled (probed ${reconcile.probed}, recovered ${reconcile.recovered})`);
+      } catch (error) {
+        const msg = `reconciliation failed: ${error.message}`;
+        console.log(`  ❌ ${billType}: ${msg}`);
+        health.titleScan.errors.push({ billType, reason: msg });
+        scanFailed = true;
+      }
     }
 
-    health.titleScan.perType[billType] = { pages, apiCount, uniqueSeen: seenIds.size };
+    health.titleScan.perType[billType] = {
+      pages, apiCount, uniqueSeen: seenNumbers.size,
+      ...(reconcile ? { probed: reconcile.probed, recovered: reconcile.recovered } : {})
+    };
     if (!scanFailed) health.titleScan.completed++;
   }
 
