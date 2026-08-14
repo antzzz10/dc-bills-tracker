@@ -284,3 +284,80 @@ jobs:
         run: |
           echo "::error::Freshness check final state: '${{ steps.resolve.outputs.final_state }}' (last checked ${{ steps.freshness.outputs.age_hours }}h ago; threshold ${{ github.event.inputs.max_age_hours || '36' }}h)"
           exit 1
+
+  # Discovery staleness (alert-only, no self-heal by decision 2026-08-14): the weekly
+  # Monday-noon discovery scan stamps .discover-last-run.json only when fully healthy.
+  # 192h (8 days) means a missed or unhealthy Monday scan alerts at Tuesday's 20:00
+  # check. Discovery failed silently for three weeks in 2026-07/08; this job is the
+  # guarantee that can never happen again. Fail-closed: a missing or unparseable stamp
+  # alerts rather than passing.
+  discovery-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Evaluate discovery freshness
+        id: discover_fresh
+        continue-on-error: true
+        run: |
+          node --input-type=module << 'EOF' >> $GITHUB_OUTPUT
+          import { readFileSync } from 'fs';
+
+          const MAX_AGE_HOURS = 192; // weekly Monday cron + ~1 day grace
+          let lastRun;
+          try {
+            lastRun = JSON.parse(readFileSync('.discover-last-run.json', 'utf-8')).lastRun;
+          } catch {
+            console.log('is_stale=unknown');
+            console.log('age_hours=unknown');
+            console.log('last_run=unreadable');
+            process.exit(0);
+          }
+          const ageHours = (Date.now() - new Date(lastRun).getTime()) / 36e5;
+          if (!Number.isFinite(ageHours)) {
+            console.log('is_stale=unknown');
+            console.log('age_hours=unknown');
+            console.log(`last_run=${lastRun}`);
+            process.exit(0);
+          }
+          console.log(`is_stale=${ageHours > MAX_AGE_HOURS}`);
+          console.log(`age_hours=${ageHours.toFixed(1)}`);
+          console.log(`last_run=${lastRun}`);
+          EOF
+
+      - name: Alert on stale discovery
+        if: always() && steps.discover_fresh.outputs.is_stale != 'false'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🚨 DC Bills: weekly bill DISCOVERY is stalled (last healthy scan ${{ steps.discover_fresh.outputs.age_hours }}h ago) — human needed"
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: DC Bills Monitor <noreply@representdc.org>
+          html_body: |
+            <h2>Bill discovery appears stalled</h2>
+            <p>
+              The last fully healthy discovery scan was
+              <strong>${{ steps.discover_fresh.outputs.last_run }}</strong>
+              (${{ steps.discover_fresh.outputs.age_hours }} hours ago; threshold 192h).
+              Newly introduced DC bills are NOT being picked up.
+            </p>
+            <p>
+              Check the
+              <a href="https://github.com/${{ github.repository }}/actions/workflows/discover-bills.yml">
+                Discover New DC Bills run history
+              </a>
+              for failed or missing runs, then re-run it manually once fixed.
+            </p>
+
+      - name: Fail when discovery is stale
+        if: always() && steps.discover_fresh.outputs.is_stale != 'false'
+        run: |
+          echo "::error::Discovery last healthy scan: ${{ steps.discover_fresh.outputs.last_run }} (${{ steps.discover_fresh.outputs.age_hours }}h ago; threshold 192h)"
+          exit 1

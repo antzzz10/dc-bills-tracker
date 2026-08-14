@@ -1,15 +1,30 @@
 name: Discover New DC Bills
 
+# Weekly scan for DC-related bills not yet tracked. Restructured 2026-08-14 to the
+# monitor-bills.yml pattern after a 3-week silent outage: quality-gate failures used to
+# kill the job before ANY notification, so discovery was dead 07-27 → 08-14 with zero
+# signal while newly introduced anti-DC bills went untracked. Now the gates still block
+# commit + deploy, but a fail-closed resolver guarantees a loud email whenever the run
+# is unhealthy — and the review tier (score 20-39), previously buried in an artifact,
+# is emailed too. Design record: decisions/2026-08-14-discovery-alerting.md.
+
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run: real scan and real email (labeled DRY RUN), but no commit, deploy, or freshness stamp'
+        type: boolean
+        default: false
   schedule:
     - cron: '0 12 * * 1'  # Weekly on Mondays at noon UTC
 
 jobs:
   discover:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && 'true' || 'false' }}
 
     steps:
       - name: Checkout repository
@@ -23,51 +38,150 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # continue-on-error on this and every gate below: a failed step must still reach
+      # the resolver, which treats missing or failed outcomes as unhealthy and emails
+      # loudly. The failure mode being designed against is fail-open (a dead run with
+      # zero signal — exactly what happened for three weeks).
       - name: Run bill discovery script
+        id: discover
+        continue-on-error: true
         env:
           CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
-        run: node scripts/discover-bills.js --full --verbose > discovery-report.txt 2>&1
+        run: node scripts/discover-bills.js --full --verbose ${{ env.DRY_RUN == 'true' && '--dry-run' || '' }} > discovery-report.txt 2>&1
 
       - name: Show discovery report
-        run: cat discovery-report.txt
+        if: always()
+        run: cat discovery-report.txt || echo "no report produced"
 
-      # Data-quality gate: newly discovered bills are provisional (exempt from
-      # attackType checks) but must not break structure, duplicate IDs, or
-      # contradict golden labels. Fails before anything is committed or deployed.
+      # Data-quality gates: block commit + deploy when red, but never block the email.
       - name: Lint bill data (consistency + golden-label eval)
+        id: lint
+        continue-on-error: true
         run: node scripts/lint-bills.js
 
       - name: Regenerate stats for the claims check
+        id: stats
+        continue-on-error: true
         run: node scripts/generate-stats.js
 
-      # Claims gate: lint-bills.js validates the data's shape; this renders the sentences
-      # the page will actually show and asserts each against bills.json. Every falsehood
-      # this site has published came from well-formed data, so shape alone is not enough.
       - name: Check published claims (banner + summary)
+        id: claims
+        continue-on-error: true
         run: node scripts/check-published-claims.js
 
-      - name: Check for new bills
-        id: check_changes
+      - name: Read discovery meta
+        id: meta
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ ! -f discovery-meta.json ]; then
+            echo "meta_missing=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "meta_missing=false" >> "$GITHUB_OUTPUT"
+          echo "check_failed=$(jq -r '.checkFailed' discovery-meta.json)" >> "$GITHUB_OUTPUT"
+          echo "degraded=$(jq -r '.degraded' discovery-meta.json)" >> "$GITHUB_OUTPUT"
+          echo "validated_count=$(jq -r '.validatedAdds | length' discovery-meta.json)" >> "$GITHUB_OUTPUT"
+          echo "auto_add_candidates=$(jq -r '.autoAddCandidatesCount' discovery-meta.json)" >> "$GITHUB_OUTPUT"
+          echo "review_count=$(jq -r '.review | length' discovery-meta.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Check for changes
+        id: changes
+        if: always()
         run: |
           if git diff --quiet src/data/bills.json; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No new bills discovered"
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
           else
-            NEW_COUNT=$(git diff src/data/bills.json | grep -c '"autoDiscovered": true' || echo "0")
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "new_count=$NEW_COUNT" >> $GITHUB_OUTPUT
-            echo "Discovered $NEW_COUNT new bills"
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Upload discovery report
-        uses: actions/upload-artifact@v4
-        with:
-          name: discovery-report-${{ github.run_id }}
-          path: discovery-report.txt
-          retention-days: 90
+      # Fail-closed resolver (same pattern as the freshness watchdog): one step computes
+      # the single state every later step keys on. Anything missing or failed resolves
+      # to unhealthy, never to silence.
+      - name: Resolve outcome
+        id: resolve
+        if: always()
+        env:
+          DISCOVER_OUTCOME: ${{ steps.discover.outcome }}
+          LINT_OUTCOME: ${{ steps.lint.outcome }}
+          STATS_OUTCOME: ${{ steps.stats.outcome }}
+          CLAIMS_OUTCOME: ${{ steps.claims.outcome }}
+          META_MISSING: ${{ steps.meta.outputs.meta_missing }}
+          CHECK_FAILED: ${{ steps.meta.outputs.check_failed }}
+          DEGRADED: ${{ steps.meta.outputs.degraded }}
+          VALIDATED_COUNT: ${{ steps.meta.outputs.validated_count }}
+          AUTO_ADD_CANDIDATES: ${{ steps.meta.outputs.auto_add_candidates }}
+          REVIEW_COUNT: ${{ steps.meta.outputs.review_count }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          HEALTHY=true
+          for outcome in "$DISCOVER_OUTCOME" "$LINT_OUTCOME" "$STATS_OUTCOME" "$CLAIMS_OUTCOME"; do
+            [ "$outcome" = "success" ] || HEALTHY=false
+          done
+          [ "$META_MISSING" = "false" ] || HEALTHY=false
+          [ "$CHECK_FAILED" = "false" ] || HEALTHY=false
+          # A degraded scan (lost committee channel, failed detail fetches or
+          # validations) must not stamp, commit, or stay quiet either.
+          [ "$DEGRADED" = "false" ] || HEALTHY=false
 
-      - name: Commit and push new bills
-        if: steps.check_changes.outputs.has_changes == 'true'
+          VC="${VALIDATED_COUNT:-0}"; RC="${REVIEW_COUNT:-0}"; AC="${AUTO_ADD_CANDIDATES:-0}"
+          ADDED_COUNT="$VC"
+          [ "$DRY_RUN" = "true" ] && ADDED_COUNT="$AC"
+          if [ "$HEALTHY" != "true" ]; then
+            STATE=unhealthy
+          elif [ "$ADDED_COUNT" -gt 0 ]; then
+            STATE=added   # on a dry run: candidates found, nothing written; email is labeled
+          elif [ "$RC" -gt 0 ]; then
+            STATE=review_only
+          else
+            STATE=quiet
+          fi
+
+          PREFIX=""
+          [ "$DRY_RUN" = "true" ] && PREFIX="[DRY RUN] "
+          case "$STATE" in
+            unhealthy)   SUBJECT="🚨 ${PREFIX}DC Bills discovery UNHEALTHY — scan or data gates failed, nothing committed"; SEND=true ;;
+            added)       SUBJECT="🆕 ${PREFIX}New DC Bills Discovered - ${ADDED_COUNT} bill(s) (+ ${RC} to review)"; SEND=true ;;
+            review_only) SUBJECT="🟡 ${PREFIX}DC Bills discovery: ${RC} bill(s) need review (nothing auto-added)"; SEND=true ;;
+            quiet)       SUBJECT=""; SEND=false ;;
+          esac
+
+          echo "Resolved: healthy=$HEALTHY state=$STATE"
+          {
+            echo "healthy=$HEALTHY"
+            echo "state=$STATE"
+            echo "send_email=$SEND"
+            echo "subject=$SUBJECT"
+          } >> "$GITHUB_OUTPUT"
+
+          if [ "$SEND" = "true" ]; then
+            {
+              echo "<h2>DC bill discovery — ${STATE}</h2>"
+              if [ "$STATE" = "unhealthy" ]; then
+                echo "<p><strong>The scan or its data gates failed. Nothing was committed or deployed, and the freshness stamp was not advanced.</strong> Step outcomes: discovery=${DISCOVER_OUTCOME}, lint=${LINT_OUTCOME}, stats=${STATS_OUTCOME}, claims=${CLAIMS_OUTCOME}, meta_missing=${META_MISSING}, checkFailed=${CHECK_FAILED}.</p>"
+              fi
+              if [ -f discovery-meta.json ]; then
+                jq -r '
+                  def row: "<li><a href=\"" + .url + "\">" + .displayNumber + "</a> (score " + (.score|tostring) + "): " + .title + "</li>";
+                  (if .dryRun and ((.autoAddCandidates // []) | length) > 0 then "<h3>Would have been added (dry run — nothing written)</h3><ul>" + ([.autoAddCandidates[] | row] | join("")) + "</ul>" else "" end),
+                  (if (.validatedAdds | length) > 0 then "<h3>Added to the tracker (provisional — need review)</h3><ul>" + ([.validatedAdds[] | row] | join("")) + "</ul>" else "" end),
+                  (if (.review | length) > 0 then "<h3>Scored 20–39 — human review needed, NOT added</h3><ul>" + ([.review[] | row] | join("")) + "</ul>" else "" end),
+                  (if (.validationFailures | length) > 0 then "<h3>Failed Congress.gov validation</h3><ul>" + ([.validationFailures[] | row] | join("")) + "</ul>" else "" end),
+                  (if ((.channels.titleScan.errors | length) + (.channels.committees.errors | length)) > 0 then "<h3>Channel errors</h3><pre>" + ([.channels.titleScan.errors[], .channels.committees.errors[]] | tojson) + "</pre>" else "" end)
+                ' discovery-meta.json
+              else
+                echo "<p>discovery-meta.json was never written — the scan died before reporting. See the run log.</p>"
+              fi
+              echo "<p><a href=\"https://github.com/${REPO}/actions/runs/${RUN_ID}\">Full run and report artifact</a></p>"
+            } > discovery-email.html
+          fi
+
+      # Commit whenever the run is healthy and live — INCLUDING quiet weeks with no new
+      # bills, because .discover-last-run.json must advance for the staleness watchdog
+      # to see a healthy pipeline. Deploy only when bill data actually changed.
+      - name: Commit and push updates
+        if: always() && steps.resolve.outputs.healthy == 'true' && env.DRY_RUN != 'true'
         run: |
           git config --global user.name 'DC Bills Discovery'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -75,12 +189,12 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Auto-discover new DC bills - $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git commit -m "Bill discovery - $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             git push
           fi
 
       - name: Rebuild and deploy site
-        if: steps.check_changes.outputs.has_changes == 'true'
+        if: always() && steps.resolve.outputs.healthy == 'true' && steps.changes.outputs.has_changes == 'true' && env.DRY_RUN != 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # See monitor-bills.yml — publishable key, variable not secret.
@@ -92,8 +206,18 @@ jobs:
           npm run deploy
           echo "✅ Deployment complete"
 
+      - name: Upload discovery report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: discovery-report-${{ github.run_id }}
+          path: |
+            discovery-report.txt
+            discovery-meta.json
+          retention-days: 90
+
       - name: Send email notification
-        if: steps.check_changes.outputs.has_changes == 'true'
+        if: always() && steps.resolve.outputs.send_email == 'true'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -101,18 +225,15 @@ jobs:
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "🆕 New DC Bills Discovered - ${{ steps.check_changes.outputs.new_count }} bills"
+          subject: ${{ steps.resolve.outputs.subject }}
           to: ${{ secrets.NOTIFICATION_EMAIL }}
           from: DC Bills Discovery <noreply@representdc.org>
-          body: |
-            The weekly bill discovery scan found new DC-related bills.
+          html_body: file://discovery-email.html
 
-            ${{ steps.check_changes.outputs.new_count }} new bills were auto-added to the tracker.
-
-            ⚠️ These bills are marked as provisional and need manual review.
-            Please check bills.json for entries with "autoDiscovered": true.
-
-            Full report: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          attachments: discovery-report.txt
-          ignore_cert: false
-          convert_markdown: true
+      # Runs last so the artifact and email survive for debugging. An empty resolver
+      # output (resolver itself crashed) also lands here — fail-closed.
+      - name: Fail the run when unhealthy
+        if: always() && steps.resolve.outputs.healthy != 'true'
+        run: |
+          echo "::error::Discovery unhealthy (state: '${{ steps.resolve.outputs.state }}'). Nothing was committed or deployed; the freshness stamp was not advanced."
+          exit 1

@@ -29,6 +29,65 @@ const VERBOSE = args.includes('--verbose');
 // Paths
 const billsPath = join(__dirname, '../src/data/bills.json');
 const lastRunPath = join(__dirname, '../.discover-last-run.json');
+const metaPath = join(__dirname, '../discovery-meta.json');
+
+// Channel health. Discovery must fail CLOSED: a lost channel or truncated scan is a
+// failed run, never a quiet "zero candidates" run — that distinction is what let the
+// pipeline die silently for three weeks in 2026-07/08.
+const health = {
+  committees: { attempted: 0, completed: 0, errors: [] },
+  titleScan: { attempted: 0, completed: 0, errors: [], perType: {} },
+  detailFetchFailures: [],
+  validationFailures: [],
+  notes: []
+};
+
+// The title scan is the load-bearing channel: any error there fails the run.
+// Committee, detail-fetch, or validation failures degrade it. Both verdicts block
+// the freshness stamp and the workflow's commit/deploy — a partially-blind scan
+// must never look healthy to the staleness watchdog.
+function healthVerdict() {
+  const checkFailed = health.titleScan.errors.length > 0;
+  const degraded = checkFailed || health.committees.errors.length > 0
+    || health.detailFetchFailures.length > 0
+    || health.validationFailures.length > 0;
+  return { checkFailed, degraded };
+}
+
+// Written on EVERY exit path (healthy, degraded, early-exit, fatal) so the workflow
+// email always has something truthful to say. Counts of what was actually added come
+// from the validated list, never from pre-validation scoring.
+function writeMeta({ autoAddCandidates = [], validatedAdds = [], validationFailures = [],
+                     review = [], skipped = [], earlyExit = null, fatalError = null } = {}) {
+  const { checkFailed, degraded } = healthVerdict();
+  const tier = e => ({ displayNumber: e.displayNumber, title: e.title, score: e.score,
+    url: `https://www.congress.gov/bill/${CONGRESS_NUMBER}th-congress/${{
+      hr: 'house-bill', s: 'senate-bill', hjres: 'house-joint-resolution',
+      sjres: 'senate-joint-resolution', hconres: 'house-concurrent-resolution',
+      sconres: 'senate-concurrent-resolution', hres: 'house-resolution',
+      sres: 'senate-resolution'
+    }[e.billType] || e.billType}/${e.number}` });
+  writeFileSync(metaPath, JSON.stringify({
+    timestamp: new Date().toISOString(),
+    dryRun: DRY_RUN,
+    checkFailed: Boolean(checkFailed || fatalError),
+    degraded: Boolean(degraded || fatalError),
+    fatalError,
+    earlyExit,
+    channels: { committees: health.committees, titleScan: health.titleScan },
+    detailFetchFailures: health.detailFetchFailures,
+    autoAddCandidatesCount: autoAddCandidates.length,
+    // Full candidate rows, not just a count — a dry run has no validatedAdds, and its
+    // email must still show what WOULD have been added.
+    autoAddCandidates: autoAddCandidates.map(tier),
+    validatedAdds: validatedAdds.map(tier),
+    validationFailures: validationFailures.map(tier),
+    review: review.map(tier),
+    skippedCount: skipped.length,
+    notes: health.notes
+  }, null, 2));
+  console.log(`💾 Meta saved to: ${metaPath}`);
+}
 
 // DC-relevant committees (chamber required for correct API URL format)
 const DC_COMMITTEES = [
@@ -105,7 +164,9 @@ function formatBillType(billType) {
     hjres: 'H.J.Res.',
     sjres: 'S.J.Res.',
     hconres: 'H.Con.Res.',
-    sconres: 'S.Con.Res.'
+    sconres: 'S.Con.Res.',
+    hres: 'H.Res.',
+    sres: 'S.Res.'
   };
   return map[billType] || billType.toUpperCase();
 }
@@ -129,32 +190,56 @@ async function rateLimitedFetch(url) {
     if (response.status === 429) {
       console.log('  ⚠️  Rate limited, waiting 2s...');
       await new Promise(resolve => setTimeout(resolve, 2000));
-      return fetch(url);
+      const retry = await fetch(url);
+      if (!retry.ok) {
+        throw new Error(`API error after 429 retry: ${retry.status} ${retry.statusText}`);
+      }
+      return retry;
     }
     throw new Error(`API error: ${response.status} ${response.statusText}`);
   }
   return response;
 }
 
-// Build set of all tracked bill IDs
+// A tracked id must read as a real legislative identifier. This keeps non-bill
+// arrays (e.g. `categories`, whose ids are slugs like "crime") out of the set.
+const LEGISLATIVE_ID_RE = /^(hr|s|hjres|sjres|hconres|sconres|hres|sres)\d+$/;
+
+// Build set of all tracked bill IDs.
+//
+// Derived dynamically from EVERY top-level array in bills.json, judging each entry
+// on its own, instead of a hardcoded section list. The hardcoded list is how the
+// 2026-07/08 discovery outage happened: `routineBills` was added (2026-07-21)
+// without updating this function, so S. 1077 was "rediscovered" weekly, auto-added
+// as a duplicate, and the lint gate failed every run before commit or email.
 function buildTrackedSet(billsData) {
   const tracked = new Set();
 
-  const allBills = [
-    ...(billsData.bills || []),
-    ...(billsData.riders || []),
-    ...(billsData.supportBills || [])
-  ];
+  for (const [section, value] of Object.entries(billsData)) {
+    if (!Array.isArray(value)) continue;
 
-  for (const bill of allBills) {
-    // Add the bill id directly
-    tracked.add(bill.id);
+    for (const entry of value) {
+      if (typeof entry !== 'object' || entry === null) continue;
 
-    // Also parse each bill number and add normalized form
-    for (const bn of bill.billNumbers || []) {
-      const parsed = parseBillNumber(bn);
-      if (parsed) {
-        tracked.add(normalizeBillId(parsed.billType, parsed.number));
+      let usable = false;
+
+      if (typeof entry.id === 'string' && LEGISLATIVE_ID_RE.test(entry.id.toLowerCase())) {
+        tracked.add(entry.id.toLowerCase());
+        usable = true;
+      }
+
+      for (const bn of entry.billNumbers || []) {
+        const parsed = parseBillNumber(bn);
+        if (parsed) {
+          tracked.add(normalizeBillId(parsed.billType, parsed.number));
+          usable = true;
+        }
+      }
+
+      // Only warn for entries that look like bills (carry bill-ish fields) yet
+      // yielded no identity — a category or metadata entry stays silent.
+      if (!usable && (entry.billNumbers || entry.status || entry.position)) {
+        console.log(`  ⚠️  ${section}: entry without a usable bill identity (id: ${entry.id ?? 'none'})`);
       }
     }
   }
@@ -171,7 +256,9 @@ function getFromDate() {
       const lastRun = JSON.parse(readFileSync(lastRunPath, 'utf-8'));
       if (lastRun.lastRun) {
         log(`  Using last run date: ${lastRun.lastRun}`);
-        return lastRun.lastRun;
+        // Stamp may be a full ISO instant; the URL builder appends T00:00:00Z, so
+        // hand back the date part (conservatively re-scans the stamped day).
+        return lastRun.lastRun.split('T')[0];
       }
     }
   } catch {
@@ -184,9 +271,12 @@ function getFromDate() {
   return date.toISOString().split('T')[0];
 }
 
-// Save last run timestamp
+// Save last run timestamp — full ISO instant (a date-only stamp parses as midnight
+// UTC and overstates age ~12h against the noon-UTC cron). Callers must only invoke
+// this after a fully healthy LIVE scan: a dry, degraded, or failed run must not
+// advance freshness, or the staleness watchdog reads a broken pipeline as healthy.
 function saveLastRun() {
-  const data = { lastRun: new Date().toISOString().split('T')[0] };
+  const data = { lastRun: new Date().toISOString() };
   writeFileSync(lastRunPath, JSON.stringify(data, null, 2));
 }
 
@@ -199,17 +289,22 @@ async function discoverFromCommittees() {
 
   for (const committee of DC_COMMITTEES) {
     log(`  Checking ${committee.name} (${committee.code})...`);
+    health.committees.attempted++;
 
     let offset = 0;
     const limit = 250;
     let hasMore = true;
     let committeeBillCount = 0;
+    let committeeFailed = false;
 
     while (hasMore) {
       try {
         // No `sort` param — this endpoint doesn't support it — so we must paginate
         // through the whole list rather than assume recent bills sort first.
-        const url = `${API_BASE_URL}/committee/${CONGRESS_NUMBER}/${committee.chamber}/${committee.code}/bills?api_key=${CONGRESS_API_KEY}&limit=${limit}&offset=${offset}`;
+        // Route per the documented API: /committee/{chamber}/{code}/bills — there is
+        // NO congress segment on the bills sub-endpoint. The previous URL included
+        // one and 404'd for every committee, silently zeroing this whole channel.
+        const url = `${API_BASE_URL}/committee/${committee.chamber}/${committee.code}/bills?api_key=${CONGRESS_API_KEY}&limit=${limit}&offset=${offset}`;
         const response = await rateLimitedFetch(url);
         const data = await response.json();
         const bills = data.bills || [];
@@ -247,10 +342,30 @@ async function discoverFromCommittees() {
         }
       } catch (error) {
         console.log(`  ⚠️  Error querying ${committee.name} at offset ${offset}: ${error.message}`);
+        health.committees.errors.push({ committee: committee.code, offset, reason: error.message });
+        committeeFailed = true;
         hasMore = false;
+
+        // A 404 on a subcommittee code usually means the code itself is wrong or
+        // retired. Ask the parent committee what its subcommittees actually are, so
+        // the report shows the fix instead of a bare error.
+        if (/404/.test(error.message) && committee.code.length > 6) {
+          try {
+            const parentCode = committee.code.slice(0, 6).replace(/\d\d$/, '00');
+            const parentUrl = `${API_BASE_URL}/committee/${committee.chamber}/${parentCode}?api_key=${CONGRESS_API_KEY}`;
+            const parentRes = await rateLimitedFetch(parentUrl);
+            const parentData = await parentRes.json();
+            const subs = (parentData.committee?.subcommittees || []).map(s => `${s.systemCode}: ${s.name}`);
+            health.notes.push(`Subcommittees of ${parentCode}: ${subs.join('; ') || 'none listed'}`);
+            console.log(`    ℹ️  Valid subcommittees of ${parentCode}: ${subs.join('; ') || 'none listed'}`);
+          } catch {
+            log('    Could not fetch parent committee for subcommittee validation');
+          }
+        }
       }
     }
 
+    if (!committeeFailed) health.committees.completed++;
     log(`    Found ${committeeBillCount} bills`);
   }
 
@@ -261,20 +376,72 @@ async function discoverFromCommittees() {
 // ============================================================
 // DISCOVERY CHANNEL 2: Bill title scanning
 // ============================================================
+// Sort ASCENDING by updateDate. Under offset pagination with a mutating sort key,
+// desc order can silently SKIP a bill: any bill updated mid-scan jumps toward page 0,
+// behind the cursor, never seen. Under asc order an updated bill moves toward the END
+// (ahead of the cursor) — worst case it is seen twice, and the Map dedupes that.
+// Suspected cause of the S. 5147 miss on 2026-08-10 (present in the list, absent from
+// every scanned page).
+const TITLE_SCAN_SORT = 'updateDate+asc';
+
+// Verify the API actually honors ascending sort before trusting a scan to it — the
+// value is documented, but the OpenAPI spec doesn't attach `sort` to this path, so
+// fail closed rather than assume. Strictness requirements: every sampled bill must
+// carry a parseable updateDate, the sequence must be non-decreasing, and the sample
+// must contain at least two DISTINCT values — an all-equal (or empty-dated) sample
+// proves nothing about ordering.
+async function preflightAscSort(billType) {
+  const url = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}?api_key=${CONGRESS_API_KEY}&limit=20&sort=${TITLE_SCAN_SORT}`;
+  const response = await rateLimitedFetch(url);
+  const data = await response.json();
+  const bills = data.bills || [];
+  if (bills.length < 2) throw new Error(`${billType} preflight returned fewer than 2 bills`);
+  const dates = bills.map(b => b.updateDate);
+  if (dates.some(d => !d || Number.isNaN(Date.parse(d)))) {
+    throw new Error(`${billType} preflight: missing/unparseable updateDate in sample`);
+  }
+  for (let i = 1; i < dates.length; i++) {
+    if (dates[i] < dates[i - 1]) {
+      throw new Error(`${billType}: sort=${TITLE_SCAN_SORT} not honored (${dates[i - 1]} then ${dates[i]})`);
+    }
+  }
+  if (new Set(dates).size < 2) {
+    throw new Error(`${billType} preflight: sample has no distinct updateDates — cannot confirm ordering`);
+  }
+  log(`  Preflight OK (${billType}): ascending updateDate confirmed (${dates[0]} → ${dates[dates.length - 1]})`);
+}
+
 async function discoverFromTitleScan(fromDate) {
   console.log('\n🔍 Channel 2: Title scanning');
   const candidates = new Map();
 
   for (const billType of BILL_TYPES) {
     log(`  Scanning ${billType} bills...`);
+    health.titleScan.attempted++;
+
+    // Per-type preflight: each endpoint must prove it honors ascending sort before
+    // its scan is trusted; a failed preflight fails that type's scan closed.
+    try {
+      await preflightAscSort(billType);
+    } catch (error) {
+      console.log(`  ❌ ${billType} ascending-sort preflight failed: ${error.message}`);
+      health.titleScan.errors.push({ billType, phase: 'preflight', reason: error.message });
+      continue;
+    }
 
     let offset = 0;
     const limit = 250;
     let hasMore = true;
+    let scanFailed = false;
+    const seenIds = new Set();
+    let apiCount = null;
+    let pages = 0;
+    // Hard bound against a pagination loop; generous vs the ~11k bills/Congress.
+    const MAX_OFFSET = 30000;
 
     while (hasMore) {
       try {
-        let url = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}?api_key=${CONGRESS_API_KEY}&limit=${limit}&offset=${offset}&sort=updateDate+desc`;
+        let url = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}?api_key=${CONGRESS_API_KEY}&limit=${limit}&offset=${offset}&sort=${TITLE_SCAN_SORT}`;
         if (fromDate) {
           url += `&fromDateTime=${fromDate}T00:00:00Z`;
         }
@@ -282,18 +449,16 @@ async function discoverFromTitleScan(fromDate) {
         const response = await rateLimitedFetch(url);
         const data = await response.json();
         const bills = data.bills || [];
+        pages++;
+        if (apiCount === null) apiCount = data.pagination?.count ?? null;
 
         log(`    Fetched ${bills.length} ${billType} bills (offset ${offset})`);
-
-        if (bills.length === 0) {
-          hasMore = false;
-          break;
-        }
 
         for (const bill of bills) {
           const title = bill.title || '';
           const number = bill.number?.toString();
           if (!number) continue;
+          seenIds.add(normalizeBillId(billType, number));
 
           // Check if title matches DC patterns
           const matchesPositive = DC_POSITIVE_PATTERNS.some(p => p.test(title));
@@ -312,24 +477,38 @@ async function discoverFromTitleScan(fromDate) {
           }
         }
 
-        // Stop when a page comes back short (true end of data). The 1000-offset
-        // safety cap only applies to incremental (date-filtered) scans — a `--full`
-        // scan sorts by updateDate desc across the WHOLE Congress, and routine
-        // activity on thousands of unrelated bills pushes a quiet-since-introduction
-        // bill past offset 1000 within days. Capping there silently blinds full
-        // scans to exactly the dormant bills they exist to catch (e.g. H.R. 9720,
-        // referred and untouched since, missed by this cap on 2026-07-21).
-        const scanCap = FULL_SCAN ? 20000 : 1000;
-        if (bills.length < limit || offset >= scanCap) {
-          hasMore = false;
-        } else {
+        // Follow the API's own pagination signal rather than the short-page
+        // heuristic — Congress.gov has a documented history of list anomalies, and
+        // a malformed page that parses as [] must read as an error, not end-of-data.
+        if (data.pagination?.next && offset + limit < MAX_OFFSET) {
           offset += limit;
+        } else if (data.pagination?.next) {
+          throw new Error(`scan truncated at safety cap (offset ${offset}, pagination.next still present)`);
+        } else if (bills.length === 0 && offset === 0 && (apiCount ?? 0) > 0) {
+          throw new Error(`empty first page but pagination.count=${apiCount}`);
+        } else {
+          hasMore = false;
         }
       } catch (error) {
-        console.log(`  ⚠️  Error scanning ${billType} at offset ${offset}: ${error.message}`);
+        console.log(`  ❌ Error scanning ${billType} at offset ${offset}: ${error.message}`);
+        health.titleScan.errors.push({ billType, offset, reason: error.message });
+        scanFailed = true;
         hasMore = false;
       }
     }
+
+    // Invariant: we must have seen at least as many unique bills as the API said
+    // existed when we started (new bills arriving mid-scan can only add). Fewer
+    // means the walk lost data — fail closed.
+    if (!scanFailed && apiCount !== null && seenIds.size < apiCount) {
+      const msg = `unique bills seen (${seenIds.size}) < pagination.count (${apiCount})`;
+      console.log(`  ❌ ${billType}: ${msg}`);
+      health.titleScan.errors.push({ billType, reason: msg });
+      scanFailed = true;
+    }
+
+    health.titleScan.perType[billType] = { pages, apiCount, uniqueSeen: seenIds.size };
+    if (!scanFailed) health.titleScan.completed++;
   }
 
   console.log(`  Found ${candidates.size} candidates from title scanning`);
@@ -586,7 +765,9 @@ function buildBillEntry(billType, number, details, score) {
     hjres: 'house-joint-resolution',
     sjres: 'senate-joint-resolution',
     hconres: 'house-concurrent-resolution',
-    sconres: 'senate-concurrent-resolution'
+    sconres: 'senate-concurrent-resolution',
+    hres: 'house-resolution',
+    sres: 'senate-resolution'
   };
   const typeSlug = typeSlugMap[billType] || billType;
   const congressGovLink = `https://www.congress.gov/bill/${CONGRESS_NUMBER}th-congress/${typeSlug}/${number}`;
@@ -650,6 +831,7 @@ async function main() {
     console.log('\n📝 To get an API key:');
     console.log('   1. Visit: https://api.congress.gov/sign-up/');
     console.log('   2. Set environment variable: export CONGRESS_API_KEY=your_key_here\n');
+    writeMeta({ fatalError: 'CONGRESS_API_KEY not set' });
     process.exit(1);
   }
 
@@ -711,7 +893,13 @@ async function main() {
 
   if (newCandidates.size === 0) {
     console.log('\n🎉 No new DC-related bills found. Tracker is up to date!');
-    saveLastRun();
+    writeMeta({ earlyExit: 'no-new-candidates' });
+    const { degraded } = healthVerdict();
+    if (!DRY_RUN && !degraded) {
+      saveLastRun();
+    } else {
+      console.log('⚠️  Not stamping lastRun (dry run or degraded/unhealthy scan)');
+    }
     return;
   }
 
@@ -735,6 +923,7 @@ async function main() {
     const details = await fetchCandidateDetails(candidate.billType, candidate.number);
     if (!details) {
       console.log(`  ⚠️  Could not fetch details, skipping`);
+      health.detailFetchFailures.push({ bill: displayNumber });
       continue;
     }
 
@@ -807,22 +996,26 @@ async function main() {
   console.log(`\nSummary: ${results.autoAdd.length} auto-add | ${results.review.length} review | ${results.skipped.length} skipped`);
 
   // Auto-add high-confidence bills to bills.json
+  const validated = [];
+  const validationFailures = [];
   if (!DRY_RUN && results.autoAdd.length > 0) {
     console.log('\n🔍 Validating auto-add candidates against Congress.gov...');
 
-    const validated = [];
     for (const entry of results.autoAdd) {
       const url = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${entry.billType}/${entry.number}?api_key=${CONGRESS_API_KEY}`;
-      const res = await fetch(url);
-      if (res.ok) {
+      try {
+        // rateLimitedFetch, not raw fetch: it status-checks the 429 retry, and any
+        // non-OK response throws. A validation failure degrades the run (no stamp,
+        // loud email) — otherwise a transient outage here silently drops the very
+        // bills the scan exists to catch.
+        await rateLimitedFetch(url);
         console.log(`  ✅ ${entry.displayNumber}: confirmed on Congress.gov`);
         validated.push(entry);
-      } else if (res.status === 404) {
-        console.log(`  ❌ ${entry.displayNumber}: NOT found on Congress.gov — skipping`);
-      } else {
-        console.log(`  ⚠️  ${entry.displayNumber}: API error ${res.status} — skipping`);
+      } catch (error) {
+        console.log(`  ❌ ${entry.displayNumber}: validation failed (${error.message}) — not added`);
+        validationFailures.push(entry);
+        health.validationFailures.push({ bill: entry.displayNumber, reason: error.message });
       }
-      await new Promise(r => setTimeout(r, RATE_LIMIT_MS));
     }
 
     if (validated.length === 0) {
@@ -850,13 +1043,33 @@ async function main() {
     });
   }
 
-  // Save last run timestamp
-  saveLastRun();
+  writeMeta({
+    autoAddCandidates: results.autoAdd,
+    validatedAdds: validated,
+    validationFailures,
+    review: results.review,
+    skipped: results.skipped
+  });
+
+  // Stamp freshness only for a fully healthy live scan — the staleness watchdog
+  // reads this stamp, and advancing it on a dry, degraded, or failed run would make
+  // a broken pipeline look alive. `degraded` subsumes `checkFailed`.
+  const { degraded } = healthVerdict();
+  if (!DRY_RUN && !degraded) {
+    saveLastRun();
+  } else {
+    console.log('⚠️  Not stamping lastRun (dry run or degraded/unhealthy scan)');
+  }
 
   console.log('\n✅ Discovery complete!');
 }
 
 main().catch(error => {
   console.error('Fatal error:', error);
+  try {
+    writeMeta({ fatalError: error.message });
+  } catch (metaError) {
+    console.error('Also failed to write discovery-meta.json:', metaError.message);
+  }
   process.exit(1);
 });

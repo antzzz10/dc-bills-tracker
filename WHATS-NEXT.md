@@ -139,6 +139,13 @@ parked for focus, not rejected.
 
 ## Needs scoping before it can be built
 
+### Discovery follow-ups (from the 2026-08-14 outage RCA — see decisions/2026-08-14-discovery-alerting.md)
+- **Mace death-penalty bill watch item:** "Restoring the Death Penalty in DC Act" announced 2026-08-13, no Congress.gov number yet. The weekly scan will catch it once posted (title matches the DC patterns); if it hasn't appeared within two scans, look it up manually.
+- **Channel 3 (subject search)** is still a stub; the committee channel route was fixed but its coverage is unaudited — everything still leans on the title regex.
+- **Pagination reconciliation pass:** if the new uniqueSeen-vs-pagination.count invariant ever fails a scan, build the bounded re-scan Codex sketched rather than re-running blind.
+- **Discovery self-heal dispatch** was deliberately NOT built (failures so far are data bugs; retry fails identically). Revisit only if discovery ever hits runner starvation.
+
+
 ### ~~Monitor retry schedule~~ → SHIPPED as watchdog self-heal (2026-08-14)
 
 The retry-cron design previously recorded here was **rejected** (duplicate staleness
