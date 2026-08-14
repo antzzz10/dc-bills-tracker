@@ -2792,12 +2792,12 @@
         "Rep. Mace, Nancy [R-SC-1]"
       ],
       "description": "",
-      "category": "other",
+      "category": "crime",
       "position": "oppose",
       "type": "bill",
       "priority": "watching",
-      "prioritySource": "auto-discovered",
-      "provisional": true,
+      "prioritySource": "manual",
+      "provisional": false,
       "autoDiscovered": true,
       "discoveredDate": "2026-08-14",
       "relevanceScore": 45,
@@ -2818,7 +2818,7 @@
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown"
+      "attackType": "direct"
     },
     {
       "id": "s5147",
@@ -2830,12 +2830,12 @@
         "Sen. Moody, Ashley [R-FL]"
       ],
       "description": "A bill to establish requirements for patriotic observances in elementary and secondary schools of the District of Columbia.",
-      "category": "other",
+      "category": "education",
       "position": "oppose",
       "type": "bill",
       "priority": "watching",
       "prioritySource": "manual",
-      "provisional": true,
+      "provisional": false,
       "discoveredDate": "2026-08-14",
       "congress": 119,
       "congressValidated": true,
@@ -2853,30 +2853,31 @@
           "Homeland Security and Governmental Affairs Committee"
         ]
       },
-      "attackType": "unknown",
+      "attackType": "direct",
       "fullTitle": "A bill to establish requirements for patriotic observances in elementary and secondary schools of the District of Columbia."
     },
     {
-      "id": "hr10067",
+      "id": "hr10067-s5274",
       "billNumbers": [
-        "H.R. 10067"
+        "H.R. 10067",
+        "S. 5274"
       ],
       "title": "Ride in Freedom Act",
       "sponsors": [
-        "Rep. Van Orden, Derrick [R-WI-3]"
+        "Rep. Van Orden, Derrick [R-WI-3]",
+        "Sen. Sheehy, Tim [R-MT]"
       ],
       "description": "To prohibit the District of Columbia from requiring a person to wear a protective helmet to operate, or ride on, a motorcycle or motor-driven cycle.",
-      "category": "other",
+      "category": "transportation",
       "position": "oppose",
       "type": "bill",
       "priority": "watching",
       "prioritySource": "manual",
-      "provisional": true,
+      "provisional": false,
       "discoveredDate": "2026-08-14",
       "congress": 119,
       "congressValidated": true,
       "congressValidatedDate": "2026-08-14",
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/10067",
       "status": {
         "stage": null,
         "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
@@ -2886,47 +2887,11 @@
         "hasFloorVote": false,
         "cosponsors": 0,
         "committees": [
+          "Homeland Security and Governmental Affairs Committee",
           "Oversight and Government Reform Committee"
         ]
       },
-      "attackType": "unknown",
-      "fullTitle": "To prohibit the District of Columbia from requiring a person to wear a protective helmet to operate, or ride on, a motorcycle or motor-driven cycle."
-    },
-    {
-      "id": "s5274",
-      "billNumbers": [
-        "S. 5274"
-      ],
-      "title": "Ride in Freedom Act",
-      "sponsors": [
-        "Sen. Sheehy, Tim [R-MT]"
-      ],
-      "description": "A bill to prohibit the District of Columbia from requiring a person to wear a protective helmet to operate, or ride on, a motorcycle or motor-driven cycle.",
-      "category": "other",
-      "position": "oppose",
-      "type": "bill",
-      "priority": "watching",
-      "prioritySource": "manual",
-      "provisional": true,
-      "discoveredDate": "2026-08-14",
-      "congress": 119,
-      "congressValidated": true,
-      "congressValidatedDate": "2026-08-14",
-      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/5274",
-      "status": {
-        "stage": null,
-        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
-        "lastActionDate": "2026-08-06",
-        "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
-        "hasFloorVote": false,
-        "cosponsors": 0,
-        "committees": [
-          "Homeland Security and Governmental Affairs Committee"
-        ]
-      },
-      "attackType": "unknown",
-      "fullTitle": "A bill to prohibit the District of Columbia from requiring a person to wear a protective helmet to operate, or ride on, a motorcycle or motor-driven cycle."
+      "attackType": "direct"
     }
   ],
   "riders": [

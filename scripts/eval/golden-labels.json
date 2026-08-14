@@ -25,6 +25,9 @@
     "s487": { "position": "oppose", "attackType": "partial", "source": "scorecard-author-2026-07", "note": "Author lists as partial attack (*)" },
     "s3290": { "position": "oppose", "attackType": "partial", "source": "scorecard-author-2026-07", "note": "Author lists as partial attack (*)" },
     "s402": { "position": "support", "attackType": "direct", "source": "manual-review-2026-07-12", "note": "Documented divergence from scorecard author: structurally a prong-3 incursion (attackType direct) but content is benign and Norton sponsors the companion, so position is support. See METHODOLOGY.md edge case." },
-    "hr1022": { "position": "support", "attackType": "direct", "source": "manual-review-2026-07-21", "note": "House companion to S. 402 (same bill, same edge case) — auto-discovered 2026-07-20, reviewed via scripts/review-provisional.js" }
+    "hr1022": { "position": "support", "attackType": "direct", "source": "manual-review-2026-07-21", "note": "House companion to S. 402 (same bill, same edge case) — auto-discovered 2026-07-20, reviewed via scripts/review-provisional.js" },
+    "hr10098": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-08-14", "note": "Mace: imposes the federal death penalty for certain crimes committed in DC, overriding DC's local abolition — reviewed via scripts/review-provisional.js" },
+    "s5147": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-08-14", "note": "PLEDGE Act — mandates patriotic-observance requirements in DC's public schools, overriding local education policy — reviewed via scripts/review-provisional.js" },
+    "hr10067-s5274": { "position": "oppose", "attackType": "direct", "source": "manual-review-2026-08-14", "note": "Ride in Freedom Act — preempts DC's motorcycle helmet law; H.R. 10067/S. 5274 merged as identical House/Senate companions — reviewed via scripts/review-provisional.js" }
   }
 }
