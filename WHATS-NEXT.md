@@ -139,40 +139,17 @@ parked for focus, not rejected.
 
 ## Needs scoping before it can be built
 
-### Monitor retry schedule — self-heal a missed runner
-**Lane A (parallel-safe).** Small and self-contained; touches only `monitor-bills.yml`.
+### ~~Monitor retry schedule~~ → SHIPPED as watchdog self-heal (2026-08-14)
 
-**Why.** Twice in two weeks a scheduled monitor run never got a GitHub-hosted runner:
-
-| date | outcome |
-|---|---|
-| 2026-07-25 | sat `queued` 4h39m, no runner, cancelled |
-| 2026-08-06 | `"job was not acquired by Runner of type hosted"`, failed at 15m51s |
-
-Both times the data and the workflow were fine — GitHub simply had no capacity. Each cost
-~44 hours of freshness and needed a human to notice the watchdog email and re-dispatch by
-hand. A manual re-run picked up a runner in **9 seconds** (07-25) and **13 seconds**
-(08-07), so a second attempt is very likely to succeed.
-
-**Shape.** Add a second cron to `monitor-bills.yml` a few hours after the 14:00 UTC run
-(18:00 is reasonable — past the observed 2h scheduling drift, still same-day), plus a first
-step that exits successfully when `bills.json.lastChecked` is under ~4h old, so the retry is
-a no-op on a normal day and only does work when the primary run missed.
-
-**Lift the staleness check from `data-freshness-check.yml`** — it already computes exactly
-this against `lastChecked` and is the tested implementation. Do not write a second one.
-
-**Watch these:**
-- `concurrency: cancel-in-progress: true` means a retry would cancel a primary run still in
-  flight. Healthy runs take 2-3 min against an 18:00 retry, so this is not a live risk — but
-  it becomes one if the guard is ever removed.
-- The retry is itself a scheduled workflow, so it can miss a runner too. This reduces the
-  probability of a stall, it does not eliminate it. Keep the watchdog as the real backstop.
-- Skipping must exit **0**, not fail, or the no-op day turns into a red run and re-teaches
-  everyone to ignore red runs.
-
-**Why it is not urgent:** at two occurrences per fortnight the watchdog catches it and the
-fix is one dispatch. This buys back the human step, not correctness.
+The retry-cron design previously recorded here was **rejected** (duplicate staleness
+derivation, cancel-in-progress trap, quiet-day red runs). What shipped instead: the
+freshness watchdog (`data-freshness-check.yml`) now dispatches `monitor-bills.yml` itself
+when data is stale — at most once per stale episode — clearing a monitor run wedged in
+queue (>2h) first if one is blocking. Design + three rounds of Codex review:
+`docs/watchdog-self-heal-proposal.md`; decision note:
+`decisions/2026-08-14-watchdog-self-heal.md`. Both 2026 incident types (stuck-queued
+07-25, failed-run 08-06) now self-heal; the loud human-needed email is reserved for the
+cases automation genuinely cannot fix.
 
 ### 3. Remaining UI/UX changes
 **Lane B (serial).** Too broad to start. Known concrete items:

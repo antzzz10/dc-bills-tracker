@@ -1,27 +1,51 @@
 name: Data Freshness Check
 
-# Watchdog for the bill-monitoring pipeline.
+# Self-healing watchdog for the bill-monitoring pipeline.
 #
 # Every other alerting path in this repo is *inside* the monitor job: the summary email
 # only sends when `Monitor DC Bills` actually runs. So the failure modes that matter most
 # — the run never starts, sits queued without a runner, or is cancelled — produce no
 # signal at all. That is how monitoring can stall for days unnoticed while the site keeps
-# redeploying (fetch-news rebuilds twice a day) and therefore keeps looking healthy.
+# redeploying (fetch-news rebuilds when news changes) and therefore keeps looking healthy.
 #
 # This job checks the one fact that can't be faked: when bill data was last verified
 # against Congress.gov, as stamped in src/data/bills.json by scripts/monitor-bills.js.
+# When that stamp is stale it no longer just emails a human — it re-dispatches the
+# monitor itself, at most once per stale episode, clearing a wedged queued run first if
+# one is blocking the way. Full design record + reviewed failure analysis:
+# docs/watchdog-self-heal-proposal.md.
 
 on:
   workflow_dispatch:
+    inputs:
+      max_age_hours:
+        description: 'Staleness threshold override in hours (test hook: 0 forces the stale path)'
+        type: string
+        default: '36'
   schedule:
     # Twice daily, offset a few hours after the 14:00 UTC monitor run so a normal
     # run has time to finish before we judge it.
     - cron: '0 20 * * *'
     - cron: '0 8 * * *'
 
+# Dispatching monitor-bills requires actions: write; declaring it zeroes every other
+# permission, so contents: read must be restated for checkout.
+permissions:
+  actions: write
+  contents: read
+
 concurrency:
   group: data-freshness-check
   cancel-in-progress: true
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  # Must match the run-name monitor-bills.yml gives watchdog-dispatched runs — it is how
+  # past recoveries are identified (matched on displayTitle + event, never .name).
+  RECOVERY_TITLE: Monitor DC Bills (watchdog recovery)
+  # A monitor run queued longer than this is presumed wedged. Healthy runner acquisition
+  # here is 9-13 seconds; both real incidents (2026-07-25, 2026-08-06) lost 2h+.
+  STUCK_THRESHOLD_HOURS: '2'
 
 jobs:
   check:
@@ -32,13 +56,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # continue-on-error everywhere below: a crashed step must still reach the resolver,
+      # which treats missing outputs as "indeterminate" and alerts loudly. The failure
+      # mode being designed against is fail-open (staleness with zero emails).
       - name: Evaluate bill-data freshness
         id: freshness
+        continue-on-error: true
+        env:
+          MAX_AGE_HOURS: ${{ github.event.inputs.max_age_hours || '36' }}
         run: |
           node --input-type=module << 'EOF' >> $GITHUB_OUTPUT
           import { readFileSync } from 'fs';
 
-          const MAX_AGE_HOURS = 36;
+          const MAX_AGE_HOURS = Number(process.env.MAX_AGE_HOURS || 36);
           const data = JSON.parse(readFileSync('src/data/bills.json', 'utf-8'));
           const lastChecked = data.lastChecked;
 
@@ -52,19 +82,189 @@ jobs:
           }
 
           const ageHours = (Date.now() - new Date(lastChecked).getTime()) / 36e5;
+          if (!Number.isFinite(ageHours) || !Number.isFinite(MAX_AGE_HOURS)) {
+            // Unparseable stamp or threshold: refuse to claim freshness. The resolver
+            // maps anything that is not exactly true/false to a loud alert.
+            console.log('is_stale=unknown');
+            console.log('age_hours=unknown');
+            console.log(`last_checked=${lastChecked}`);
+            process.exit(0);
+          }
           console.log(`is_stale=${ageHours > MAX_AGE_HOURS}`);
           console.log(`age_hours=${ageHours.toFixed(1)}`);
           console.log(`last_checked=${lastChecked}`);
           EOF
 
-      - name: Report status
-        run: |
-          echo "Last checked: ${{ steps.freshness.outputs.last_checked }}"
-          echo "Age (hours):  ${{ steps.freshness.outputs.age_hours }}"
-          echo "Stale:        ${{ steps.freshness.outputs.is_stale }}"
+      # Classify the current stale episode: every monitor run created after lastChecked.
+      # Emits exactly one of: active | stuck | recovery_done | dispatchable | indeterminate.
+      # "Unable to determine" is never "safe to dispatch".
+      - name: Classify monitor state
+        id: monitor_state
+        if: steps.freshness.outputs.is_stale == 'true' && steps.freshness.outputs.last_checked != 'never'
+        continue-on-error: true
+        env:
+          LAST_CHECKED: ${{ steps.freshness.outputs.last_checked }}
+        run: bash scripts/watchdog-classify.sh | tee -a "$GITHUB_OUTPUT"
 
-      - name: Alert on stale data
-        if: steps.freshness.outputs.is_stale == 'true'
+      # A run queued past the threshold is wedged (see 2026-07-25: 4h39m in `queued`).
+      # Re-query by id immediately before acting, cancel only if still queued, confirm,
+      # then RECLASSIFY from scratch — dispatch happens only if the fresh classification
+      # says dispatchable. Residual race (run starts in the seconds between re-query and
+      # cancel) is accepted and bounded: the monitor is idempotent and the recovery
+      # dispatched right after redoes the same check. See design record §7.1.
+      - name: Clear stuck run and reclassify
+        id: clear_stuck
+        if: steps.monitor_state.outputs.state == 'stuck'
+        continue-on-error: true
+        env:
+          LAST_CHECKED: ${{ steps.freshness.outputs.last_checked }}
+          STUCK_RUN_ID: ${{ steps.monitor_state.outputs.stuck_run_id }}
+        run: |
+          if ! STATUS=$(gh run view "$STUCK_RUN_ID" --json status -q .status); then
+            echo "state=indeterminate" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$STATUS" != "in_progress" ] && [ "$STATUS" != "completed" ]; then
+            echo "Cancelling monitor run $STUCK_RUN_ID (status: $STATUS)"
+            if ! gh run cancel "$STUCK_RUN_ID"; then
+              echo "state=cancel_failed" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            for _ in $(seq 1 12); do
+              sleep 5
+              STATUS=$(gh run view "$STUCK_RUN_ID" --json status -q .status || echo unknown)
+              [ "$STATUS" = "completed" ] && break
+            done
+            if [ "$STATUS" != "completed" ]; then
+              echo "state=cancel_failed" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+          # In every non-error path — cancelled, already completed, or started running in
+          # the interim — the answer is a fresh full classification, never a guess.
+          bash scripts/watchdog-classify.sh | tee -a "$GITHUB_OUTPUT"
+
+      # At most one dispatch per stale episode; the recovery is identified later by its
+      # run name. After dispatch, wait until the created run is visible in the episode
+      # query — that visibility is what re-arms the recovery_done check for the next
+      # watchdog run.
+      - name: Dispatch recovery run
+        id: dispatch
+        if: steps.monitor_state.outputs.state == 'dispatchable' || steps.clear_stuck.outputs.state == 'dispatchable'
+        continue-on-error: true
+        env:
+          LAST_CHECKED: ${{ steps.freshness.outputs.last_checked }}
+        run: |
+          if ! gh workflow run monitor-bills.yml --ref main -f recovery_source=watchdog; then
+            echo "state=dispatch_failed" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          CREATED_AFTER=$(printf '%s' "$LAST_CHECKED" | sed -E 's/\.[0-9]+Z$/Z/')
+          RUN_URL=""
+          for _ in $(seq 1 10); do
+            sleep 6
+            RUN_URL=$(gh run list --workflow=monitor-bills.yml --branch main \
+              --created ">${CREATED_AFTER}" --limit 100 \
+              --json displayTitle,event,url,createdAt \
+              | jq -r --arg t "$RECOVERY_TITLE" \
+                  '[.[] | select(.displayTitle == $t and .event == "workflow_dispatch")] | sort_by(.createdAt) | last.url // empty' \
+              || true)
+            [ -n "$RUN_URL" ] && break
+          done
+          echo "state=dispatched" >> "$GITHUB_OUTPUT"
+          echo "run_url=${RUN_URL:-https://github.com/${{ github.repository }}/actions/workflows/monitor-bills.yml}" >> "$GITHUB_OUTPUT"
+
+      # Fail-closed resolver: computes the single final state every later step keys on.
+      # Missing or half-written outputs from a crashed step resolve to a loud alert,
+      # never to silence. Exactly one email per stale check follows from every email
+      # condition reading this one value.
+      - name: Resolve final state
+        id: resolve
+        if: always()
+        env:
+          IS_STALE: ${{ steps.freshness.outputs.is_stale }}
+          AGE_HOURS: ${{ steps.freshness.outputs.age_hours }}
+          LAST_CHECKED: ${{ steps.freshness.outputs.last_checked }}
+          MS_STATE: ${{ steps.monitor_state.outputs.state }}
+          CS_STATE: ${{ steps.clear_stuck.outputs.state }}
+          DS_STATE: ${{ steps.dispatch.outputs.state }}
+          MS_URL: ${{ steps.monitor_state.outputs.active_run_url }}
+          CS_URL: ${{ steps.clear_stuck.outputs.active_run_url }}
+          RUN_URL: ${{ steps.dispatch.outputs.run_url }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Strict values only: is_stale must be exactly true or false — a crashed or
+          # confused freshness step (empty, "unknown", NaN artifacts) is never "fresh".
+          if [ "$IS_STALE" = "false" ]; then
+            FINAL=fresh
+          elif [ "$IS_STALE" != "true" ]; then
+            FINAL=indeterminate
+          elif [ "$LAST_CHECKED" = "never" ]; then
+            FINAL=unstamped
+          elif [ -n "$DS_STATE" ]; then
+            FINAL="$DS_STATE"
+          else
+            EFF="${CS_STATE:-$MS_STATE}"
+            case "$EFF" in
+              active|recovery_done|cancel_failed|indeterminate) FINAL="$EFF" ;;
+              stuck) FINAL=cancel_failed ;;        # clear step died mid-flight
+              dispatchable|"") FINAL=indeterminate ;; # dispatch should have spoken and didn't
+              *) FINAL=indeterminate ;;
+            esac
+          fi
+          echo "Final state: $FINAL"
+          echo "final_state=$FINAL" >> "$GITHUB_OUTPUT"
+
+          if [ "$FINAL" = "fresh" ]; then
+            echo "send_email=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "send_email=true" >> "$GITHUB_OUTPUT"
+
+          HISTORY_URL="https://github.com/${REPO}/actions/workflows/monitor-bills.yml"
+          ACTIVE_URL="${CS_URL:-$MS_URL}"
+          case "$FINAL" in
+            active)
+              SUBJECT="⏳ DC Bills: data stale (${AGE_HOURS}h) — a monitor run is active, expected to self-heal"
+              MESSAGE="A monitor run is already <a href=\"${ACTIVE_URL:-$HISTORY_URL}\">in flight</a>. No action needed; if data is still stale at the next check, the watchdog escalates." ;;
+            dispatched)
+              SUBJECT="🔄 DC Bills: monitoring stalled (${AGE_HOURS}h) — recovery dispatched automatically"
+              MESSAGE="The watchdog dispatched a <a href=\"${RUN_URL:-$HISTORY_URL}\">recovery run</a>. No action needed; if data is still stale at the next check, you will get a loud alert instead." ;;
+            recovery_done)
+              SUBJECT="🚨 DC Bills: auto-recovery already attempted, data STILL stale (${AGE_HOURS}h) — human needed"
+              MESSAGE="A watchdog-dispatched recovery has already completed this episode without restoring freshness. A second automatic attempt is presumed doomed — investigate the run history." ;;
+            dispatch_failed)
+              SUBJECT="🚨 DC Bills: monitoring stalled (${AGE_HOURS}h) and auto-recovery dispatch FAILED — human needed"
+              MESSAGE="The watchdog tried to dispatch a recovery run and the dispatch itself failed. The self-heal path is broken; re-run the monitor by hand and check this watchdog run's log." ;;
+            cancel_failed)
+              SUBJECT="🚨 DC Bills: a wedged monitor run is blocking recovery (data stale ${AGE_HOURS}h) — human needed"
+              MESSAGE="A monitor run has been stuck in queue past the ${STUCK_THRESHOLD_HOURS}h threshold and the watchdog could not clear it. Cancel it manually, then re-run the monitor." ;;
+            unstamped)
+              SUBJECT="🚨 DC Bills: bill data has never been verified (no lastChecked stamp) — human needed"
+              MESSAGE="bills.json has no <code>lastChecked</code> stamp at all, so the watchdog cannot define a recovery episode. Needs a human." ;;
+            *)
+              SUBJECT="🚨 DC Bills: data stale (${AGE_HOURS:-?}h) and watchdog cannot determine monitor state — human needed"
+              MESSAGE="The watchdog could not read the monitor's run history (or one of its own steps crashed), so it declined to dispatch — \"unable to determine\" is never \"safe to dispatch\". Check this watchdog run's log." ;;
+          esac
+          echo "subject=$SUBJECT" >> "$GITHUB_OUTPUT"
+
+          cat > watchdog-email.html << HTMLEOF
+          <h2>Bill monitoring freshness alert</h2>
+          <p>
+            Bill data was last verified against Congress.gov at
+            <strong>${LAST_CHECKED}</strong> (${AGE_HOURS} hours ago).
+          </p>
+          <p>${MESSAGE}</p>
+          <p>
+            The site may still look current — it is redeployed by the news workflow
+            regardless of whether bills were checked — so this email and the red
+            watchdog run are the only reliable signals.
+          </p>
+          <p><a href="${HISTORY_URL}">Monitor DC Bills run history</a></p>
+          HTMLEOF
+
+      - name: Send email
+        if: always() && steps.resolve.outputs.send_email == 'true'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -72,32 +272,15 @@ jobs:
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "⚠️ DC Bills: monitoring appears stalled (last checked ${{ steps.freshness.outputs.age_hours }}h ago)"
+          subject: ${{ steps.resolve.outputs.subject }}
           to: ${{ secrets.NOTIFICATION_EMAIL }}
           from: DC Bills Monitor <noreply@representdc.org>
-          html_body: |
-            <h2>Bill monitoring appears stalled</h2>
-            <p>
-              Bill data was last verified against Congress.gov at
-              <strong>${{ steps.freshness.outputs.last_checked }}</strong>
-              (${{ steps.freshness.outputs.age_hours }} hours ago).
-            </p>
-            <p>
-              The site may still look current — it is redeployed twice daily by the news
-              workflow regardless of whether bills were checked — so this email is the
-              only reliable signal.
-            </p>
-            <p>
-              Check the
-              <a href="https://github.com/${{ github.repository }}/actions/workflows/monitor-bills.yml">
-                Monitor DC Bills run history
-              </a>
-              for a run that failed, was cancelled, or is stuck in <code>queued</code>.
-            </p>
+          html_body: file://watchdog-email.html
 
-      # Make the failure visible in the Actions UI too, not just by email.
+      # Make staleness visible in the Actions UI too, not just by email. An empty
+      # final_state (resolver itself crashed) also lands here — fail-closed.
       - name: Fail the run when data is stale
-        if: steps.freshness.outputs.is_stale == 'true'
+        if: always() && steps.resolve.outputs.final_state != 'fresh'
         run: |
-          echo "::error::Bill data last checked ${{ steps.freshness.outputs.age_hours }}h ago (threshold: 36h)"
+          echo "::error::Freshness check final state: '${{ steps.resolve.outputs.final_state }}' (last checked ${{ steps.freshness.outputs.age_hours }}h ago; threshold ${{ github.event.inputs.max_age_hours || '36' }}h)"
           exit 1

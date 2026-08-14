@@ -1,5 +1,15 @@
 name: Monitor DC Bills
 
+# Watchdog-dispatched recoveries get a distinct run name: the freshness watchdog
+# identifies its own past recovery attempts by displayTitle + event, which is what
+# bounds it to one automatic dispatch per stale episode. On schedule events `inputs`
+# is empty, so the expression falls through to the plain name. Design record:
+# docs/watchdog-self-heal-proposal.md.
+run-name: >-
+  ${{ github.event_name == 'workflow_dispatch' && inputs.recovery_source == 'watchdog'
+      && 'Monitor DC Bills (watchdog recovery)'
+      || 'Monitor DC Bills' }}
+
 on:
   workflow_dispatch:
     inputs:
@@ -7,15 +17,20 @@ on:
         description: 'Dry run: skip committing/pushing bill updates and skip the site deploy (still runs the real monitor check and sends the real email)'
         type: boolean
         default: false
+      recovery_source:
+        description: 'What triggered this dispatch (the freshness watchdog sets "watchdog")'
+        type: string
+        default: manual
   schedule:
     - cron: '0 14 * * *'
 
-# The daily check is idempotent, so a newer run should always win. On 2026-07-25 a
-# scheduled run sat in `queued` for 4h39m without ever being assigned a runner; without
-# this, such a run lingers and the next day's run queues up behind it.
+# false: a newly dispatched run — including the watchdog's recovery — queues behind an
+# in-progress run instead of cancelling it. The stuck-queued case this used to paper
+# over (2026-07-25: 4h39m in `queued`) is now handled explicitly by the freshness
+# watchdog, which cancels a monitor run queued past its threshold before re-dispatching.
 concurrency:
   group: monitor-bills
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   monitor:
