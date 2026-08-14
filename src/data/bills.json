@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-04",
+  "lastUpdated": "2026-08-14",
   "lastChecked": "2026-08-14T14:45:32.539Z",
   "categories": [
     {
@@ -2781,6 +2781,44 @@
       "congressValidated": true,
       "congressValidatedDate": "2026-07-21",
       "passage": {}
+    },
+    {
+      "id": "hr10098",
+      "billNumbers": [
+        "H.R. 10098"
+      ],
+      "title": "To provide for the imposition of the death penalty for certain crimes committed in the District of Columbia, and for other purposes.",
+      "sponsors": [
+        "Rep. Mace, Nancy [R-SC-1]"
+      ],
+      "description": "Auto-discovered.",
+      "category": "other",
+      "position": "oppose",
+      "type": "bill",
+      "priority": "watching",
+      "prioritySource": "auto-discovered",
+      "provisional": true,
+      "autoDiscovered": true,
+      "discoveredDate": "2026-08-14",
+      "relevanceScore": 45,
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-08-14",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/10098",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committee on the Judiciary, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+        "lastActionDate": "2026-08-13",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Judiciary Committee",
+          "Oversight and Government Reform Committee"
+        ]
+      },
+      "attackType": "unknown"
     }
   ],
   "riders": [
