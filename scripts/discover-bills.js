@@ -90,16 +90,15 @@ function writeMeta({ autoAddCandidates = [], validatedAdds = [], validationFailu
 }
 
 // DC-relevant committees (chamber required for correct API URL format).
-// `titleFilter`: the parent committees carry their ENTIRE dockets (the five together
-// listed 1,775 bills on 2026-08-14, which blew the job timeout evaluating them), so
-// their candidates must pass the DC title patterns before the expensive detail fetch.
-// Only the DC subcommittee's docket is inherently DC-relevant and goes through whole.
+//
+// Only the DC subcommittee is scanned. The parent committees (Oversight, HSGAC, both
+// Appropriations) were removed 2026-08-14: their dockets are huge (1,775 bills, which
+// blew the job timeout), and the committee-bills schema carries NO title field, so
+// there is nothing cheap to filter them by — a title filter here passes nothing, per
+// the official schema. Broad coverage of DC bills that lack "District of Columbia" in
+// their display title is the subject/policy-area channel's job — see WHATS-NEXT.md.
 const DC_COMMITTEES = [
-  { code: 'hsgo10', chamber: 'house', name: 'House Oversight - DC Subcommittee', titleFilter: false },
-  { code: 'hsgo00', chamber: 'house', name: 'House Oversight (parent)', titleFilter: true },
-  { code: 'ssga00', chamber: 'senate', name: 'Senate HSGAC', titleFilter: true },
-  { code: 'hsap00', chamber: 'house', name: 'House Appropriations', titleFilter: true },
-  { code: 'ssap00', chamber: 'senate', name: 'Senate Appropriations', titleFilter: true }
+  { code: 'hsgo10', chamber: 'house', name: 'House Oversight - DC Subcommittee' }
 ];
 
 // Bill types to scan
@@ -325,15 +324,6 @@ async function discoverFromCommittees() {
           const number = bill.number?.toString();
           if (!billType || !number) continue;
 
-          // Parent-committee dockets are mostly not DC bills — gate them on the DC
-          // title patterns so evaluation stays bounded.
-          if (committee.titleFilter) {
-            const title = bill.title || '';
-            const positive = DC_POSITIVE_PATTERNS.some(p => p.test(title));
-            const negative = DC_NEGATIVE_PATTERNS.some(p => p.test(title));
-            if (!positive || negative) continue;
-          }
-
           const id = normalizeBillId(billType, number);
           if (!candidates.has(id)) {
             candidates.set(id, {
@@ -473,13 +463,22 @@ async function reconcileTitleScan(billType, seenNumbers, candidates) {
   for (const n of gaps) {
     const url = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${n}?api_key=${CONGRESS_API_KEY}`;
     await new Promise(r => setTimeout(r, RATE_LIMIT_MS));
-    const res = await fetch(url);
+    let res = await fetch(url);
+    if (res.status === 429) {
+      await new Promise(r => setTimeout(r, 2000));
+      res = await fetch(url);
+    }
     if (res.status === 404) continue; // number never used
     if (!res.ok) throw new Error(`probe of ${billType} ${n} failed: HTTP ${res.status}`);
     const bill = (await res.json()).bill;
+    // A 200 only counts if it is actually the requested bill — a malformed or
+    // mismatched record must not satisfy the completeness invariant.
+    if (!bill || String(bill.number) !== String(n) || bill.type?.toLowerCase() !== billType) {
+      throw new Error(`probe of ${billType} ${n} returned a mismatched record (${bill?.type} ${bill?.number})`);
+    }
     seenNumbers.add(n);
     recovered++;
-    considerTitleCandidate(candidates, billType, n, bill?.title || '', 'title-scan-reconcile');
+    considerTitleCandidate(candidates, billType, n, bill.title || '', 'title-scan-reconcile');
   }
   log(`    Reconciled ${billType}: probed ${gaps.length} gaps, recovered ${recovered} dropped bills`);
   return { probed: gaps.length, recovered };
@@ -488,6 +487,13 @@ async function reconcileTitleScan(billType, seenNumbers, candidates) {
 async function discoverFromTitleScan(fromDate) {
   console.log('\n🔍 Channel 2: Title scanning');
   const candidates = new Map();
+
+  if (fromDate) {
+    // Gap reconciliation needs dense bill numbers, which a date-filtered window
+    // doesn't have — so incremental scans (local dev convenience; CI always runs
+    // --full) cannot prove completeness. Say so in the record.
+    health.notes.push('Incremental (date-filtered) scan: completeness not guaranteed — list-endpoint drops are only reconciled on full scans.');
+  }
 
   for (const billType of BILL_TYPES) {
     log(`  Scanning ${billType} bills...`);
