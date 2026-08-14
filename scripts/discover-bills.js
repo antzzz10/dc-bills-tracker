@@ -89,13 +89,17 @@ function writeMeta({ autoAddCandidates = [], validatedAdds = [], validationFailu
   console.log(`💾 Meta saved to: ${metaPath}`);
 }
 
-// DC-relevant committees (chamber required for correct API URL format)
+// DC-relevant committees (chamber required for correct API URL format).
+// `titleFilter`: the parent committees carry their ENTIRE dockets (the five together
+// listed 1,775 bills on 2026-08-14, which blew the job timeout evaluating them), so
+// their candidates must pass the DC title patterns before the expensive detail fetch.
+// Only the DC subcommittee's docket is inherently DC-relevant and goes through whole.
 const DC_COMMITTEES = [
-  { code: 'hsgo10', chamber: 'house', name: 'House Oversight - DC Subcommittee' },
-  { code: 'hsgo00', chamber: 'house', name: 'House Oversight (parent)' },
-  { code: 'ssga00', chamber: 'senate', name: 'Senate HSGAC' },
-  { code: 'hsap00', chamber: 'house', name: 'House Appropriations' },
-  { code: 'ssap00', chamber: 'senate', name: 'Senate Appropriations' }
+  { code: 'hsgo10', chamber: 'house', name: 'House Oversight - DC Subcommittee', titleFilter: false },
+  { code: 'hsgo00', chamber: 'house', name: 'House Oversight (parent)', titleFilter: true },
+  { code: 'ssga00', chamber: 'senate', name: 'Senate HSGAC', titleFilter: true },
+  { code: 'hsap00', chamber: 'house', name: 'House Appropriations', titleFilter: true },
+  { code: 'ssap00', chamber: 'senate', name: 'Senate Appropriations', titleFilter: true }
 ];
 
 // Bill types to scan
@@ -320,6 +324,15 @@ async function discoverFromCommittees() {
           const billType = bill.type?.toLowerCase();
           const number = bill.number?.toString();
           if (!billType || !number) continue;
+
+          // Parent-committee dockets are mostly not DC bills — gate them on the DC
+          // title patterns so evaluation stays bounded.
+          if (committee.titleFilter) {
+            const title = bill.title || '';
+            const positive = DC_POSITIVE_PATTERNS.some(p => p.test(title));
+            const negative = DC_NEGATIVE_PATTERNS.some(p => p.test(title));
+            if (!positive || negative) continue;
+          }
 
           const id = normalizeBillId(billType, number);
           if (!candidates.has(id)) {
