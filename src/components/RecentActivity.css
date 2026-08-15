@@ -174,9 +174,9 @@
   color: var(--slate-500);
   font-size: 0.75rem;
   line-height: 1.3;
-  margin-left: auto;
   font-style: italic;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .activity-footer {
@@ -214,11 +214,6 @@
 
   .activity-details {
     gap: 0.35rem;
-  }
-
-  .activity-description {
-    margin-left: 0;
-    white-space: normal;
   }
 }
 
