@@ -146,12 +146,16 @@ async function summarizeArticles(client, articles) {
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 200,
+    max_tokens: 300,
     messages: [{
       role: 'user',
       content: `You write a short neutral news-digest summary for a DC statehood advocacy website (billtracker.representdc.org). Below are today's top DC statehood/home-rule headlines.
 
 Write 2-3 sentences summarizing what's happening across these stories, for a reader who wants the gist before deciding which to read in full. Use ONLY information present in the titles below — do not infer or invent specifics (numbers, names, outcomes) that aren't stated in a title. If titles don't give enough to summarize substantively, write a shorter, more general sentence rather than guessing. Plain prose, no headers, no bullet points, no preamble like "Here is a summary."
+
+Then add one final sentence naming the specific power D.C. lacks because it is not a state, chosen to match what these particular headlines are about. For example, for National Guard coverage: "Without statehood, D.C. does not control its own National Guard and cannot refuse the deployment of other states' troops within its borders." For budget coverage: "Without statehood, D.C. cannot spend its own local tax revenue until Congress approves its budget."
+
+That final sentence must state a standing fact about D.C.'s legal status — it is true regardless of how these particular events turn out. Do not use it to characterize the outcome of the stories, predict what happens next, or claim the coverage proves anything. If the headlines don't map cleanly to a specific power, use the general one: "Without statehood, D.C. residents have no voting representation in Congress, and Congress can override any law the District passes."
 
 Headlines:
 ${listBlock}`,
