@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-08-14",
-  "lastChecked": "2026-08-23T14:14:32.676Z",
+  "lastUpdated": "2026-08-23",
+  "lastChecked": "2026-08-23T20:59:35.396Z",
   "categories": [
     {
       "id": "abolishing",
@@ -265,7 +265,9 @@
                 "nays": 174
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/2025162",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -316,7 +318,9 @@
                 "nays": 194
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/2025171",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -367,7 +371,9 @@
                 "nays": 178
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/2025270",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -540,7 +546,9 @@
                 "nays": 202
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/2025271",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -589,7 +597,9 @@
                 "nays": 182
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/2025275",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -641,7 +651,9 @@
                 "nays": 190
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/2025299",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -722,7 +734,9 @@
                 "nays": 179
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/2025298",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -928,7 +942,9 @@
                 "nays": 211
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/2025274",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -1010,7 +1026,9 @@
                 "nays": 148
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/2025163",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -1185,7 +1203,9 @@
                 "nays": 212
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/202570",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -1329,7 +1349,9 @@
                 "nays": 212
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/202570",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -1799,7 +1821,9 @@
                 "nays": 212
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/202570",
+          "verifiedOn": "2026-08-23"
         }
       },
       "attackType": "direct",
@@ -2518,7 +2542,9 @@
                 "nays": 0
               }
             }
-          }
+          },
+          "source": "https://clerk.house.gov/Votes/2026101",
+          "verifiedOn": "2026-08-23"
         }
       },
       "congress": 119,
