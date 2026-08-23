@@ -106,6 +106,12 @@ function BillCard({ bill }) {
               {' - '}
               <span className="vote-nays">{vote.vote.nays}</span>
             </div>
+            {vote.source && (
+              <a href={vote.source} target="_blank" rel="noopener noreferrer"
+                 className="vote-source-link" onClick={e => e.stopPropagation()}>
+                Official roll call record ↗
+              </a>
+            )}
             {vote.vote.byParty && (
               <div className="vote-breakdown">
                 {/* Rendered from whichever caucuses are present, and only when

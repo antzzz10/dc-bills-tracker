@@ -60,6 +60,19 @@ function parseBillNumber(billNumber) {
 // year, session 2 the second.
 const CONGRESS_START_YEAR = 1789 + (CONGRESS_NUMBER - 1) * 2;
 
+// Build a resolvable link to the official roll call record — the Clerk of the House or
+// the Senate's own vote page, not Congress.gov — so a reader can independently verify a
+// vote tally instead of taking the site's word for it. Formats confirmed against live
+// pages: clerk.house.gov/Votes/{year}{roll} (no zero-padding) and
+// senate.gov/legislative/LIS/roll_call_votes/vote{congress}{session}/vote_{congress}_{session}_{roll, 5-digit}.htm
+function buildVoteSourceUrl(chamber, year, session, rollCallNumber) {
+  if (chamber === 'house') {
+    return `https://clerk.house.gov/Votes/${year}${rollCallNumber}`;
+  }
+  const roll = String(rollCallNumber).padStart(5, '0');
+  return `https://www.senate.gov/legislative/LIS/roll_call_votes/vote${CONGRESS_NUMBER}${session}/vote_${CONGRESS_NUMBER}_${session}_${roll}.htm`;
+}
+
 // Fetch roll call vote details.
 //
 // `expected` ({ billType, number }) is required: roll call numbers restart every session,
@@ -148,7 +161,8 @@ async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
         ...(partyVotes.independent && (partyVotes.independent.yeas || partyVotes.independent.nays)
           ? { independent: partyVotes.independent }
           : {})
-      }
+      },
+      source: buildVoteSourceUrl(chamber, year, session, rollCallNumber)
     };
   } catch (error) {
     console.log(`  ⚠️  Error fetching roll call vote: ${error.message}`);
@@ -534,10 +548,15 @@ function updateBillsJson(billId, passageInfo, status) {
 
     if (passageInfo.houseVote) {
       const existingVote = bill.passage.house;
+      // A missing `source` also counts as needing an update — this is how the phase-1
+      // provenance backfill reaches records that already have a correct tally (see
+      // decisions/2026-08-23-vote-provenance-phase1.md). Once `source` is set it never
+      // triggers again on its own, so this does not add to bills.json's daily diff churn.
       const needsUpdate = !existingVote ||
                           existingVote.vote.yeas !== passageInfo.houseVote.yeas ||
                           existingVote.vote.nays !== passageInfo.houseVote.nays ||
-                          existingVote.date !== passageInfo.houseVote.date;
+                          existingVote.date !== passageInfo.houseVote.date ||
+                          !existingVote.source;
 
       if (needsUpdate) {
         bill.passage.house = {
@@ -546,7 +565,9 @@ function updateBillsJson(billId, passageInfo, status) {
             yeas: passageInfo.houseVote.yeas,
             nays: passageInfo.houseVote.nays,
             byParty: passageInfo.houseVote.byParty
-          }
+          },
+          source: passageInfo.houseVote.source,
+          verifiedOn: new Date().toISOString().split('T')[0]
         };
         updated = true;
         const action = existingVote ? 'Updated' : 'Added';
@@ -559,7 +580,8 @@ function updateBillsJson(billId, passageInfo, status) {
       const needsUpdate = !existingVote ||
                           existingVote.vote.yeas !== passageInfo.senateVote.yeas ||
                           existingVote.vote.nays !== passageInfo.senateVote.nays ||
-                          existingVote.date !== passageInfo.senateVote.date;
+                          existingVote.date !== passageInfo.senateVote.date ||
+                          !existingVote.source;
 
       if (needsUpdate) {
         bill.passage.senate = {
@@ -568,7 +590,9 @@ function updateBillsJson(billId, passageInfo, status) {
             yeas: passageInfo.senateVote.yeas,
             nays: passageInfo.senateVote.nays,
             byParty: passageInfo.senateVote.byParty
-          }
+          },
+          source: passageInfo.senateVote.source,
+          verifiedOn: new Date().toISOString().split('T')[0]
         };
         updated = true;
         const action = existingVote ? 'Updated' : 'Added';

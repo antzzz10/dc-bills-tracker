@@ -19,6 +19,10 @@
  *   6. bills.json matches scripts/eval/golden-labels.json
  *   7. public/api/stats.json totalBills matches what the site renders
  *      (non-provisional only) — main fetches that number and publishes it
+ *   8. Passage vote tallies are internally possible (yeas > nays, party rows
+ *      don't exceed totals, vote date not before introduction)
+ *   9-10. Hand-set highlight flags don't contradict status.stage and expire (30d TTL)
+ *   11. Passage vote records carry provenance (source URL + verifiedOn date)
  *
  * Exits 1 on any error. See METHODOLOGY.md ("Quality control").
  */
@@ -216,6 +220,28 @@ for (const [section, items] of sections) {
           `${label}: highlight "${bill.highlight}" was set ${ageDays} days ago ` +
           `(max ${HIGHLIGHT_TTL_DAYS}). Re-confirm it against Congress.gov or remove it.`
         );
+      }
+    }
+  }
+}
+
+// 11. Vote records must carry provenance — a resolvable link to the official roll call
+//     record plus the date it was confirmed there. Phase 1 of provenance-per-fact
+//     (decisions/2026-08-23-vote-provenance-phase1.md): the passage vote is the exact
+//     class of claim that has twice shipped wrong (H.R. 5103's inverted, session-mismatched
+//     tally), and it's the one thing on the page a reader can independently verify by
+//     clicking through. A vote without a source is not phase-1 complete.
+for (const [section, items] of sections) {
+  for (const bill of items) {
+    const label = `${section}/${bill.id}`;
+    for (const chamber of ['house', 'senate']) {
+      const record = bill.passage?.[chamber];
+      if (!record) continue;
+      if (!record.source) {
+        errors.push(`${label}: ${chamber} passage vote has no "source" (resolvable roll call URL)`);
+      }
+      if (!record.verifiedOn) {
+        errors.push(`${label}: ${chamber} passage vote has no "verifiedOn" date`);
       }
     }
   }

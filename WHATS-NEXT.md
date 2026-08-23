@@ -60,10 +60,13 @@ urgency-claim expiry) and `check-published-claims.js` (the sentences the page sh
 Rationale and the six incidents that prompted them:
 `decisions/2026-08-03-claims-verification-gates.md`.
 
-### Next: provenance per fact — do it in phases, start with the votes
-**Lane A (parallel-safe for phase 1).** The highest-value item left, because it is the only
-one that turns internal checking into something a *reader* can verify. Everything else here
-protects us from shipping a falsehood; this lets someone else catch it.
+### Provenance per fact — do it in phases, start with the votes
+**Phase 1 shipped 2026-08-23** — `decisions/2026-08-23-vote-provenance-phase1.md`. Phases 2
+and 3 below are still open.
+
+The highest-value item in this thread, because it is the only one that turns internal
+checking into something a *reader* can verify. Everything else here protects us from
+shipping a falsehood; this lets someone else catch it.
 
 **The gap it closes:** a bill card presents "passed the House 218-206" and "this is a direct
 attack on home rule" in identical visual weight. One is a Congress.gov record, the other is
@@ -83,11 +86,11 @@ our editorial judgment under the three-prong test. Nothing on the page distingui
 
 The work is consolidating and surfacing these, not inventing them.
 
-**Phase 1 — the passage votes only.** There are just **15 vote records across 14 bills**. Add
-`source` (resolvable roll-call URL) + `verifiedOn`, render as a link on the passed-bills
-cards. Negligible bundle, no daily churn (a recorded vote does not change), and it covers the
-exact class that has produced two live errors. It would also have made the session bug
-self-evident: `house-vote/119/1/101` on a vote dated 2026 is visibly wrong on sight.
+**Phase 1 — the passage votes only. SHIPPED 2026-08-23.** `source` (resolvable roll-call
+URL) + `verifiedOn` now render as a link on every passed-bill card. `monitor-bills.js`
+constructs the source URL from data it already fetches — no new API call — and the existing
+churn-avoidance check (only write on real change) now also catches a missing `source`, so
+the one-time backfill rides the very next monitor run at no ongoing cost.
 
 **Phase 2 — surface judgments already recorded.** `reviewMethod: "manual-three-prong"` and
 `reviewedDate` exist on 13 entries. Showing them costs nothing new and directly addresses the
