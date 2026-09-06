@@ -1,11 +1,23 @@
 {
-  "lastUpdated": "2026-09-06T09:45:37.674Z",
-  "summary": "More than a year after National Guard troops were deployed to D.C., the troops remain in the District as advocates call for their removal and emphasize the need for statehood, while statehood supporters are taking their push to other states ahead of the midterm elections and securing commitments from elected officials. Without statehood, D.C. does not control its own National Guard and cannot refuse the deployment of other states' troops within its borders.",
+  "lastUpdated": "2026-09-06T19:39:26.440Z",
+  "summary": "D.C. is advancing on multiple fronts related to local control and representation, including efforts to manage armory land near RFK Stadium while National Guard troops remain deployed in the district more than a year after their arrival. As midterm elections approach, statehood advocates are intensifying their campaign both locally and in other states, with at least one senator committing to prioritize the issue. Without statehood, D.C. residents have no voting representation in Congress, and Congress can override any law the District passes.",
   "articles": [
+    {
+      "title": "D.C. Is on Track to Control Armory Land Near RFK Stadium",
+      "link": "https://www.notus.org/metro/dc-armory-land-rfk-stadium",
+      "pubDate": "Fri, 04 Sep 2026 17:53:25 GMT",
+      "source": "NOTUS"
+    },
     {
       "title": "More Than a Year Later, National Guard Troops Still Patrol D.C. as ACLU Demands Their Exit",
       "link": "https://www.washingtoninformer.com/dc-national-guard-deployment-cost/",
       "pubDate": "Thu, 03 Sep 2026 18:34:00 +0000",
+      "source": "Washington Informer"
+    },
+    {
+      "title": "The March Returns. So Does the Fight for the Vote",
+      "link": "https://www.washingtoninformer.com/march-washington-defend-vote/",
+      "pubDate": "Wed, 02 Sep 2026 18:00:00 +0000",
       "source": "Washington Informer"
     },
     {
@@ -19,18 +31,6 @@
       "link": "https://www.dcvote.org/video-senator-slotkin-commits-to-making-dc-statehood-a-top-priority/",
       "pubDate": "Mon, 24 Aug 2026 15:05:27 +0000",
       "source": "DC Vote"
-    },
-    {
-      "title": "One Year Later, DC Vote Says Federal Takeover Underscores the Urgency of DC Statehood",
-      "link": "https://www.dcvote.org/one-year-later-dc-vote-says-federal-takeover-underscores-the-urgency-of-dc-statehood/",
-      "pubDate": "Mon, 10 Aug 2026 13:16:45 +0000",
-      "source": "DC Vote"
-    },
-    {
-      "title": "One Year After President Trump Deployed National Guard Troops to Washington, D.C., Statehood is More Important Than Ever",
-      "link": "https://www.acludc.org/news/one-year-after-president-trump-deployed-national-guard-troops-to-washington-d-c-statehood-is-more-important-than-ever-3/",
-      "pubDate": "Wed, 05 Aug 2026 19:12:55 +0000",
-      "source": "ACLU DC"
     }
   ]
 }
