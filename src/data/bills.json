@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-09-04",
-  "lastChecked": "2026-09-08T17:40:51.323Z",
+  "lastUpdated": "2026-09-09",
+  "lastChecked": "2026-09-09T17:25:53.461Z",
   "categories": [
     {
       "id": "abolishing",
@@ -1153,7 +1153,7 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 119,
+        "cosponsors": 120,
         "committees": []
       },
       "attackType": "partial",
