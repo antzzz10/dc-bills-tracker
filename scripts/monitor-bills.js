@@ -19,6 +19,19 @@ const CONGRESS_API_KEY = process.env.CONGRESS_API_KEY;
 const CONGRESS_NUMBER = CURRENT_CONGRESS;
 const API_BASE_URL = 'https://api.congress.gov/v3';
 
+// How far along a bill is. Used only to stop the nightly sweep from moving a bill
+// backwards: an enacted bill still has its House and Senate passage actions in the
+// Congress.gov action list, so a detector that only looks for those will keep
+// concluding "passed-both" for the rest of time. Ranks, not an ordering of the
+// legislative process — passed-house and passed-senate are deliberately equal,
+// since a bill in one chamber has not advanced past a bill in the other.
+const STAGE_RANK = {
+  'passed-house': 1,
+  'passed-senate': 1,
+  'passed-both': 2,
+  'enacted': 3
+};
+
 // Load bills data
 const billsPath = join(__dirname, '../src/data/bills.json');
 const billsData = JSON.parse(readFileSync(billsPath, 'utf-8'));
@@ -175,6 +188,7 @@ async function detectPassage(actions, chamber, expected) {
   const passageInfo = {
     hasPassedHouse: false,
     hasPassedSenate: false,
+    hasBecomeLaw: false,
     houseVote: null,
     senateVote: null,
     stage: null
@@ -190,6 +204,14 @@ async function detectPassage(actions, chamber, expected) {
   for (const action of sortedActions) {
     const actionText = action.text || '';
     const actionDate = action.actionDate;
+
+    // Detect enactment. Congress.gov emits "Signed by President" and then
+    // "Became Public Law No: 119-XX"; both mean the bill is law. "Presented to
+    // President" deliberately does not match — presentment is not enactment.
+    if (/Became Public Law No/i.test(actionText) ||
+        /Signed by President/i.test(actionText)) {
+      passageInfo.hasBecomeLaw = true;
+    }
 
     // Detect House passage
     if (actionText.includes('On passage Passed by recorded vote') ||
@@ -255,8 +277,12 @@ async function detectPassage(actions, chamber, expected) {
     }
   }
 
-  // Determine stage
-  if (passageInfo.hasPassedHouse && passageInfo.hasPassedSenate) {
+  // Determine stage. Enactment is checked first: a bill that became law still carries
+  // its earlier chamber-passage actions, so the passed-* checks below would otherwise
+  // describe a law as merely having passed both chambers.
+  if (passageInfo.hasBecomeLaw) {
+    passageInfo.stage = 'enacted';
+  } else if (passageInfo.hasPassedHouse && passageInfo.hasPassedSenate) {
     passageInfo.stage = 'passed-both';
   } else if (passageInfo.hasPassedHouse) {
     passageInfo.stage = 'passed-house';
@@ -531,10 +557,23 @@ function updateBillsJson(billId, passageInfo, status) {
       return { updated, stageChanged: false };
     }
 
-    // Update status stage
-    if (passageInfo.stage && bill.status.stage !== passageInfo.stage) {
+    // Update status stage, but never move a bill backwards. An enacted bill keeps its
+    // chamber-passage actions in the Congress.gov action list forever, so without this
+    // guard every nightly run rewrites "enacted" back to "passed-both" — and because
+    // that also sets stageChanged, it announces a bill that is already law as though it
+    // had just passed both chambers. Today the only enacted bill happens to carry
+    // manualOverride and returns above; that is convention, not protection, and nothing
+    // requires the next one to be hand-flagged the same way.
+    const currentRank = STAGE_RANK[bill.status.stage] || 0;
+    const detectedRank = STAGE_RANK[passageInfo.stage] || 0;
+
+    if (passageInfo.stage && detectedRank < currentRank) {
+      console.log(`  ⏸️  Keeping stage "${bill.status.stage}"; detected "${passageInfo.stage}" is earlier`);
+    } else if (passageInfo.stage && bill.status.stage !== passageInfo.stage) {
       bill.status.stage = passageInfo.stage;
-      bill.status.lastAction = passageInfo.hasPassedHouse ? 'Passed House' : 'Passed Senate';
+      bill.status.lastAction = passageInfo.hasBecomeLaw
+        ? 'Became law'
+        : (passageInfo.hasPassedHouse ? 'Passed House' : 'Passed Senate');
       bill.status.lastActionDate = new Date().toISOString().split('T')[0];
       updated = true;
       stageChanged = true;
