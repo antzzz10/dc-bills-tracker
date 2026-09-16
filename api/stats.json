@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-09-11",
-  "lastChecked": "2026-09-14T18:58:12.351Z",
+  "lastUpdated": "2026-09-16",
+  "lastChecked": "2026-09-16T13:23:43.417Z",
   "totalBills": 97,
   "pendingBills": 82,
   "passedBills": 15,
@@ -69,13 +69,13 @@
       "id": "hr1968-abortion",
       "number": "H.R. 1968",
       "title": "Full-Year Continuing Appropriations 2025 - Abortion",
-      "stage": "passed-both"
+      "stage": "enacted"
     },
     {
       "id": "hr1968-marijuana",
       "number": "H.R. 1968",
       "title": "Full-Year Continuing Appropriations 2025 - Marijuana",
-      "stage": "passed-both"
+      "stage": "enacted"
     },
     {
       "id": "hr5525",
@@ -87,7 +87,7 @@
       "id": "hr1968-budget",
       "number": "H.R. 1968",
       "title": "Full-Year Continuing Appropriations 2025 - Budget Cut",
-      "stage": "passed-both"
+      "stage": "enacted"
     },
     {
       "id": "hjres142-sjres102",
