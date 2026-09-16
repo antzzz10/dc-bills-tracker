@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-09-11",
-  "lastChecked": "2026-09-14T18:58:12.351Z",
+  "lastUpdated": "2026-09-16",
+  "lastChecked": "2026-09-16T13:23:43.417Z",
   "categories": [
     {
       "id": "abolishing",
@@ -1153,7 +1153,7 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 122,
+        "cosponsors": 125,
         "committees": []
       },
       "attackType": "partial",
@@ -1178,9 +1178,9 @@
       "priority": "low",
       "prioritySource": "manual",
       "status": {
-        "stage": "passed-both",
-        "lastAction": "Passed House",
-        "lastActionDate": "2025-11-28",
+        "stage": "enacted",
+        "lastAction": "Became law",
+        "lastActionDate": "2026-09-16",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": true,
@@ -1324,9 +1324,9 @@
       "priority": "low",
       "prioritySource": "manual",
       "status": {
-        "stage": "passed-both",
-        "lastAction": "Passed House",
-        "lastActionDate": "2025-11-28",
+        "stage": "enacted",
+        "lastAction": "Became law",
+        "lastActionDate": "2026-09-16",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": true,
@@ -1796,9 +1796,9 @@
       "priority": "low",
       "prioritySource": "manual",
       "status": {
-        "stage": "passed-both",
-        "lastAction": "Passed House",
-        "lastActionDate": "2025-11-28",
+        "stage": "enacted",
+        "lastAction": "Became law",
+        "lastActionDate": "2026-09-16",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": true,
