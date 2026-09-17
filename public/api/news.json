@@ -1,19 +1,7 @@
 {
-  "lastUpdated": "2026-09-17T10:31:17.942Z",
-  "summary": "Federal agencies are proceeding with plans affecting D.C. landmarks, including Park Service contracts related to a golf course project and a Kennedy Center closure that has generated legal disputes over authority and congressional oversight. Meanwhile, statehood advocates are pointing to these federal interventions as examples of why D.C. needs greater local control, with at least one senator pledging to prioritize statehood legislation.\n\nWithout statehood, D.C. residents have no voting representation in Congress, and Congress can override any law the District passes.",
+  "lastUpdated": "2026-09-17T20:37:19.327Z",
+  "summary": "Recent headlines highlight ongoing congressional constraints on D.C.'s local governance, from naming authority over federal buildings to budget autonomy, alongside renewed advocacy for statehood. A senator has committed to prioritizing D.C. statehood, while advocates reference federal intervention in the District's affairs as evidence that statehood is urgently needed. Without statehood, D.C. cannot spend its own local tax revenue until Congress approves its budget, and Congress retains veto power over D.C.'s local laws and policies.",
   "articles": [
-    {
-      "title": "Park Service Quietly Awards Contracts for Trump's East Potomac Golf Course Takeover Plans",
-      "link": "https://www.washingtonsun.com/metro/park-service-contracts-trump-east-potomac-golf-course",
-      "pubDate": "Wed, 16 Sep 2026 22:28:28 GMT",
-      "source": "NOTUS"
-    },
-    {
-      "title": "Beatty Says Kennedy Center Closure Violated Another Court Order in New Filing",
-      "link": "https://www.washingtonsun.com/metro/kennedy-center-close-joyce-beatty",
-      "pubDate": "Wed, 16 Sep 2026 19:12:04 GMT",
-      "source": "NOTUS"
-    },
     {
       "title": "Board Votes to Temporarily Close Kennedy Center, Judge Says Congress Controls Building Naming",
       "link": "https://www.washingtoninformer.com/kennedy-center-renovation-funding-threat/",
@@ -30,6 +18,18 @@
       "title": "One Year Later, DC Vote Says Federal Takeover Underscores the Urgency of DC Statehood",
       "link": "https://www.dcvote.org/one-year-later-dc-vote-says-federal-takeover-underscores-the-urgency-of-dc-statehood/",
       "pubDate": "Mon, 10 Aug 2026 13:16:45 +0000",
+      "source": "DC Vote"
+    },
+    {
+      "title": "One Year After President Trump Deployed National Guard Troops to Washington, D.C., Statehood is More Important Than Ever",
+      "link": "https://www.acludc.org/news/one-year-after-president-trump-deployed-national-guard-troops-to-washington-d-c-statehood-is-more-important-than-ever-3/",
+      "pubDate": "Wed, 05 Aug 2026 19:12:55 +0000",
+      "source": "ACLU DC"
+    },
+    {
+      "title": "DC Vote Urges House Committee to Reject Sweeping Attack on DC’s Fiscal Independence",
+      "link": "https://www.dcvote.org/dc-vote-urges-house-committee-to-reject-sweeping-attack-on-dcs-fiscal-independence/",
+      "pubDate": "Tue, 21 Jul 2026 11:38:51 +0000",
       "source": "DC Vote"
     }
   ]
