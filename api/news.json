@@ -1,36 +1,24 @@
 {
-  "lastUpdated": "2026-09-20T10:10:32.388Z",
-  "summary": "Recent disputes over naming conventions at major D.C. institutions have highlighted questions about who holds authority over the District's landmarks and public spaces, while a senator has pledged to prioritize statehood legislation. Without statehood, D.C. residents have no voting representation in Congress, and Congress can override any law the District passes.",
+  "lastUpdated": "2026-09-20T19:52:24.210Z",
+  "summary": "A U.S. Senator has committed to prioritizing D.C. statehood, while advocacy groups continue pointing to federal interventions in the District as evidence for why local control matters. The headlines reference both a federal takeover and a National Guard deployment as recent events underscoring the case for statehood. Without statehood, D.C. does not control its own National Guard and cannot refuse the deployment of other states' troops within its borders.",
   "articles": [
-    {
-      "title": "Trump Defends Bid to Put His Name on the Kennedy Center",
-      "link": "https://www.washingtonsun.com/metro/trump-defends-bid-name-kennedy-center",
-      "pubDate": "Fri, 18 Sep 2026 22:37:24 GMT",
-      "source": "NOTUS"
-    },
-    {
-      "title": "D.C. Preservation Official Says Trump Needs to Scrap His Arch for a Smaller Monument",
-      "link": "https://www.washingtonsun.com/metro/preservation-official-trump-scrap-arch-pillars",
-      "pubDate": "Fri, 18 Sep 2026 18:39:11 GMT",
-      "source": "NOTUS"
-    },
-    {
-      "title": "New Legal Fight: Should Trump's Name Be Etched on the Institute of Peace?",
-      "link": "https://www.washingtonsun.com/metro/institute-of-peace-filing-donald-trump-name",
-      "pubDate": "Fri, 18 Sep 2026 13:40:07 GMT",
-      "source": "NOTUS"
-    },
-    {
-      "title": "Board Votes to Temporarily Close Kennedy Center, Judge Says Congress Controls Building Naming",
-      "link": "https://www.washingtoninformer.com/kennedy-center-renovation-funding-threat/",
-      "pubDate": "Wed, 16 Sep 2026 14:49:00 +0000",
-      "source": "Washington Informer"
-    },
     {
       "title": "VIDEO: Senator Slotkin Commits to Making DC Statehood a Top Priority",
       "link": "https://www.dcvote.org/video-senator-slotkin-commits-to-making-dc-statehood-a-top-priority/",
       "pubDate": "Mon, 24 Aug 2026 15:05:27 +0000",
       "source": "DC Vote"
+    },
+    {
+      "title": "One Year Later, DC Vote Says Federal Takeover Underscores the Urgency of DC Statehood",
+      "link": "https://www.dcvote.org/one-year-later-dc-vote-says-federal-takeover-underscores-the-urgency-of-dc-statehood/",
+      "pubDate": "Mon, 10 Aug 2026 13:16:45 +0000",
+      "source": "DC Vote"
+    },
+    {
+      "title": "One Year After President Trump Deployed National Guard Troops to Washington, D.C., Statehood is More Important Than Ever",
+      "link": "https://www.acludc.org/news/one-year-after-president-trump-deployed-national-guard-troops-to-washington-d-c-statehood-is-more-important-than-ever-3/",
+      "pubDate": "Wed, 05 Aug 2026 19:12:55 +0000",
+      "source": "ACLU DC"
     }
   ]
 }
