@@ -1,0 +1,242 @@
+name: News Feed Watchdog
+
+# Alert-only dead-man's switch for representdc-main's news pipeline.
+#
+# That pipeline (NEWS-AND-ANALYSIS-PRD.md in representdc-main) is unattended by design:
+# no regular human review, alerts only on exception. But its own alerting lives INSIDE
+# the fetch-news job — if the job never starts, sits queued, or GitHub silently drops the
+# scheduled run, nothing fires. This job checks the one fact that can't be faked: when
+# api/news.json was last published, read from the live public URL (not from a repo
+# checkout — this pipeline lives in a different repo, and the point is to watch it from
+# outside its own scheduler as far as GitHub Actions allows).
+#
+# Deliberately simpler than data-freshness-check.yml in this repo: alert-only, no
+# self-heal/recovery-dispatch. That complexity was earned by this repo's own incident
+# history (2026-07-25, 2026-08-06 wedged runners); nothing like that has been observed
+# for the news pipeline, and it was not part of what was decided
+# (decisions/2026-09-11-news-pipeline-to-main-site.md item 4, in representdc-main). Add
+# it later if a real incident justifies it — don't build it speculatively.
+#
+# Known, accepted limitation: this runs on the same GitHub Actions scheduler it is
+# watching, so it cannot catch GitHub dropping every scheduled job repo-wide. An external
+# dead-man's switch would close that gap but needs a new vendor and secret; rejected for
+# now (same decision note). If this watchdog job itself silently stops, there is
+# currently no second layer behind it — an accepted gap, not an oversight.
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_age_hours:
+        description: 'Staleness threshold override in hours (test hook: 0 forces the stale path)'
+        type: string
+        default: '36'
+  schedule:
+    # A few hours after each of the news pipeline's own publish times (06:17/18:17 UTC),
+    # so a normal run has time to land before this judges it. Off the hour for the same
+    # reason fetch-news.yml is: GitHub delays and sometimes drops jobs queued at minute 0.
+    - cron: '11 9,21 * * *'
+
+env:
+  FEED_URL: https://www.representdc.org/api/news.json
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      # continue-on-error so a transient fetch failure still reaches the resolver below,
+      # which treats missing output as "indeterminate" and alerts — never silently passes.
+      - name: Check the live feed's lastUpdated stamp
+        id: freshness
+        continue-on-error: true
+        env:
+          MAX_AGE_HOURS: ${{ github.event.inputs.max_age_hours || '36' }}
+        run: |
+          node --input-type=module << 'EOF' >> "$GITHUB_OUTPUT"
+          const MAX_AGE_HOURS = Number(process.env.MAX_AGE_HOURS || 36);
+          const url = `${process.env.FEED_URL}?cb=${Date.now()}`;
+
+          // Every value below that reaches GITHUB_OUTPUT or a later shell command must
+          // be either a fixed literal or pass this check first (Codex review, pre-push):
+          // an unvalidated string can inject extra "key=value" lines into $GITHUB_OUTPUT
+          // (a newline followed by another assignment overrides an earlier one), and a
+          // later step interpolates last_updated directly into a run: script, where
+          // shell metacharacters like $(...) would execute. The feed is meant to be
+          // written only by our own pipeline's clean ISO timestamp, but the watchdog's
+          // whole job is to not trust that assumption.
+          const ISO_TIMESTAMP_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/;
+          function isWellFormedTimestamp(value) {
+            return typeof value === 'string' && ISO_TIMESTAMP_RE.test(value) && !Number.isNaN(new Date(value).getTime());
+          }
+
+          // Fetch and JSON-parse the body under one deadline. Without this, a stalled
+          // connection or a slow-trickling response can consume the whole job's 5-minute
+          // budget — continue-on-error handles a step that finishes badly, it does not
+          // reserve time for the alert steps after it, so a hang here would silence the
+          // watchdog instead of triggering it.
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 30_000);
+          let body;
+          try {
+            const res = await fetch(url, { cache: 'no-store', signal: controller.signal });
+            if (!res.ok) {
+              console.log(`is_stale=unknown`);
+              console.log(`age_hours=unknown`);
+              console.log(`last_updated=unreachable`);
+              console.log(`detail=HTTP ${res.status} fetching feed`);
+              process.exit(0);
+            }
+            body = await res.json();
+          } catch (err) {
+            // Covers a network failure, an abort from the timeout above, and a non-JSON
+            // response (e.g. the site's 404/SPA shell if the feed was never published) —
+            // either way, refuse to claim freshness rather than guess.
+            console.log(`is_stale=unknown`);
+            console.log(`age_hours=unknown`);
+            console.log(`last_updated=unreadable`);
+            console.log(`detail=${String(err.message ?? err).replace(/\n/g, ' ').slice(0, 200)}`);
+            process.exit(0);
+          } finally {
+            clearTimeout(timer);
+          }
+
+          const lastUpdated = body.lastUpdated;
+          if (!lastUpdated) {
+            console.log(`is_stale=true`);
+            console.log(`age_hours=unknown`);
+            console.log(`last_updated=missing`);
+            console.log(`detail=feed JSON has no lastUpdated field`);
+            process.exit(0);
+          }
+
+          // Rejects anything that isn't a plain ISO-8601 string outright — including the
+          // one-element-array case, where JS's Date constructor coerces the array to its
+          // lone element's string form and can silently accept it as a valid date.
+          if (!isWellFormedTimestamp(lastUpdated)) {
+            console.log(`is_stale=unknown`);
+            console.log(`age_hours=unknown`);
+            console.log(`last_updated=malformed`);
+            console.log(`detail=lastUpdated is not a well-formed ISO-8601 timestamp string`);
+            process.exit(0);
+          }
+
+          const ageHours = (Date.now() - new Date(lastUpdated).getTime()) / 36e5;
+
+          // A timestamp meaningfully ahead of "now" (clock skew, a typo, a bad write)
+          // would otherwise produce a negative age that always reads as fresh — possibly
+          // suppressing every future alert. Small skew is tolerated; anything past that
+          // is treated the same as a malformed timestamp, not as "very fresh".
+          const CLOCK_SKEW_TOLERANCE_HOURS = 0.25;
+          if (ageHours < -CLOCK_SKEW_TOLERANCE_HOURS) {
+            console.log(`is_stale=unknown`);
+            console.log(`age_hours=unknown`);
+            console.log(`last_updated=malformed`);
+            console.log(`detail=lastUpdated is ${(-ageHours).toFixed(1)}h in the future`);
+            process.exit(0);
+          }
+
+          if (!Number.isFinite(ageHours) || !Number.isFinite(MAX_AGE_HOURS)) {
+            console.log(`is_stale=unknown`);
+            console.log(`age_hours=unknown`);
+            console.log(`last_updated=malformed`);
+            console.log(`detail=unparseable timestamp or threshold`);
+            process.exit(0);
+          }
+          // Safe to emit verbatim only here: isWellFormedTimestamp() already constrained
+          // this to the strict ISO-8601 shape, so it cannot contain a newline or shell
+          // metacharacters.
+          console.log(`is_stale=${ageHours > MAX_AGE_HOURS}`);
+          console.log(`age_hours=${ageHours.toFixed(1)}`);
+          console.log(`last_updated=${lastUpdated}`);
+          console.log(`detail=`);
+          EOF
+
+      # Fail-closed: anything other than an explicit "false" is treated as needing an
+      # alert. A crashed step, an empty output, or "unknown" must never read as healthy.
+      - name: Resolve and alert
+        id: resolve
+        if: always()
+        env:
+          IS_STALE: ${{ steps.freshness.outputs.is_stale }}
+          AGE_HOURS: ${{ steps.freshness.outputs.age_hours }}
+          LAST_UPDATED: ${{ steps.freshness.outputs.last_updated }}
+          DETAIL: ${{ steps.freshness.outputs.detail }}
+          # Step-level env doesn't carry over between steps, so this is re-derived from
+          # the same source as the freshness step rather than assumed — a manual run
+          # with a custom max_age_hours override must show its real threshold in the
+          # alert email, not silently fall back to the default's display value.
+          MAX_AGE_HOURS: ${{ github.event.inputs.max_age_hours || '36' }}
+        run: |
+          if [ "$IS_STALE" = "false" ]; then
+            echo "Feed is fresh (${AGE_HOURS}h old). No alert."
+            echo "send_email=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "send_email=true" >> "$GITHUB_OUTPUT"
+
+          # Set before the branch below, not just inside it: if a future LAST_UPDATED
+          # value doesn't match any case here, the alert must still say something useful
+          # and the email step must still get a non-empty subject and a real file to
+          # read, rather than silently ending up with neither (Codex review, pre-push).
+          SUBJECT="🚨 News feed watchdog: alert (unrecognized state — see run log)"
+          MESSAGE="The watchdog flagged a problem but could not classify it. Raw values from this run: is_stale=${IS_STALE}, last_updated=${LAST_UPDATED}, detail=${DETAIL}."
+
+          if [ "$LAST_UPDATED" = "unreachable" ] || [ "$LAST_UPDATED" = "unreadable" ]; then
+            SUBJECT="🚨 News feed watchdog: could not read the feed at all — human needed"
+            MESSAGE="The watchdog could not fetch or parse <code>${FEED_URL}</code>.<br>${DETAIL}"
+          elif [ "$LAST_UPDATED" = "missing" ]; then
+            SUBJECT="🚨 News feed watchdog: feed has no lastUpdated stamp — human needed"
+            MESSAGE="<code>${FEED_URL}</code> returned JSON with no <code>lastUpdated</code> field. That should not be possible from a healthy publish — investigate the pipeline's schema or the last run's output."
+          elif [ "$LAST_UPDATED" = "malformed" ]; then
+            SUBJECT="🚨 News feed watchdog: lastUpdated is not a valid timestamp — human needed"
+            MESSAGE="<code>${FEED_URL}</code>'s <code>lastUpdated</code> field did not parse as a well-formed, non-future ISO-8601 timestamp.<br>${DETAIL}"
+          elif [ "$LAST_UPDATED" != "" ]; then
+            SUBJECT="🚨 News feed stalled (${AGE_HOURS}h since last publish) — human needed"
+            MESSAGE="The news feed at <code>${FEED_URL}</code> was last updated <strong>${LAST_UPDATED}</strong> (${AGE_HOURS} hours ago; threshold ${MAX_AGE_HOURS}h).<br>This means fetch-news.yml in representdc-main has not completed a successful run in that window — it may be failing, queued without a runner, or the schedule was dropped."
+          fi
+          echo "subject=$SUBJECT" >> "$GITHUB_OUTPUT"
+
+          cat > watchdog-email.html << HTMLEOF
+          <h2>News feed freshness alert</h2>
+          <p>${MESSAGE}</p>
+          <p>
+            <a href="https://github.com/antzzz10/representdc-main/actions/workflows/fetch-news.yml">fetch-news.yml run history</a>
+            &middot;
+            <a href="${FEED_URL}">live feed</a>
+          </p>
+          <p>
+            This check runs on GitHub's own scheduler, same as the pipeline it watches —
+            if GitHub drops scheduled jobs repo-wide, this alert may not fire either. See
+            this workflow's header comment for the accepted limitation.
+          </p>
+          HTMLEOF
+
+      - name: Send email
+        if: always() && steps.resolve.outputs.send_email == 'true'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: ${{ steps.resolve.outputs.subject }}
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: News Feed Watchdog <noreply@representdc.org>
+          html_body: file://watchdog-email.html
+
+      # Visible in the Actions UI too, not just by email. Values pass through env, not
+      # direct ${{ }} interpolation into the script text — interpolating untrusted output
+      # straight into a run: block is a script-injection vector (a value containing
+      # $(...) would execute); env-var substitution is not.
+      - name: Fail the run when the feed is stale
+        if: always() && steps.freshness.outputs.is_stale != 'false'
+        env:
+          IS_STALE: ${{ steps.freshness.outputs.is_stale }}
+          AGE_HOURS: ${{ steps.freshness.outputs.age_hours }}
+          LAST_UPDATED: ${{ steps.freshness.outputs.last_updated }}
+          DETAIL: ${{ steps.freshness.outputs.detail }}
+        run: |
+          echo "::error::News feed watchdog: is_stale='$IS_STALE' age=${AGE_HOURS}h last_updated='$LAST_UPDATED' detail='$DETAIL'"
+          exit 1
