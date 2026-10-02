@@ -1,13 +1,7 @@
 {
-  "lastUpdated": "2026-10-02T11:26:07.055Z",
-  "summary": "Recent headlines highlight challenges facing D.C. residents across multiple policy areas, from workplace protections to voting access and security concerns, while also documenting continued advocacy efforts for statehood. Senator Slotkin has pledged to prioritize D.C. statehood, and DC Vote is expanding its organizing capacity. Without statehood, D.C. residents have no voting representation in Congress, and Congress can override any law the District passes.",
+  "lastUpdated": "2026-10-02T21:28:53.103Z",
+  "summary": "Recent coverage highlights concerns about federal control of the National Guard in D.C., with advocates pointing to past deployments as evidence of why local autonomy matters. A senator has meanwhile pledged to prioritize D.C. statehood legislation. Without statehood, D.C. does not control its own National Guard and cannot refuse the deployment of other states' troops within its borders.",
   "articles": [
-    {
-      "title": "D.C. Workers Lose Half Their Family Leave as New Laws Take Effect",
-      "link": "https://www.washingtoninformer.com/dc-cuts-family-paid-leave/",
-      "pubDate": "Thu, 01 Oct 2026 14:50:00 +0000",
-      "source": "Washington Informer"
-    },
     {
       "title": "Why we shouldn’t have National Guard Troops in D.C.",
       "link": "https://www.acludc.org/news/why-we-shouldnt-have-national-guard-troops-in-d-c/",
@@ -15,22 +9,22 @@
       "source": "ACLU DC"
     },
     {
-      "title": "White House Grant Rule Could Threaten Voting Access for Disabled D.C. Residents",
-      "link": "https://www.washingtoninformer.com/federal-funding-voter-registration/",
-      "pubDate": "Wed, 30 Sep 2026 11:37:00 +0000",
-      "source": "Washington Informer"
-    },
-    {
-      "title": "DC Vote is Hiring!",
-      "link": "https://www.dcvote.org/dc-vote-is-hiring/",
-      "pubDate": "Tue, 29 Sep 2026 16:07:26 +0000",
-      "source": "DC Vote"
-    },
-    {
       "title": "VIDEO: Senator Slotkin Commits to Making DC Statehood a Top Priority",
       "link": "https://www.dcvote.org/video-senator-slotkin-commits-to-making-dc-statehood-a-top-priority/",
       "pubDate": "Mon, 24 Aug 2026 15:05:27 +0000",
       "source": "DC Vote"
+    },
+    {
+      "title": "One Year Later, DC Vote Says Federal Takeover Underscores the Urgency of DC Statehood",
+      "link": "https://www.dcvote.org/one-year-later-dc-vote-says-federal-takeover-underscores-the-urgency-of-dc-statehood/",
+      "pubDate": "Mon, 10 Aug 2026 13:16:45 +0000",
+      "source": "DC Vote"
+    },
+    {
+      "title": "One Year After President Trump Deployed National Guard Troops to Washington, D.C., Statehood is More Important Than Ever",
+      "link": "https://www.acludc.org/news/one-year-after-president-trump-deployed-national-guard-troops-to-washington-d-c-statehood-is-more-important-than-ever-3/",
+      "pubDate": "Wed, 05 Aug 2026 19:12:55 +0000",
+      "source": "ACLU DC"
     }
   ]
 }
