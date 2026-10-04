@@ -1,7 +1,13 @@
 {
-  "lastUpdated": "2026-10-04T11:23:33.144Z",
-  "summary": "A U.S. senator has committed to prioritizing D.C. statehood, while advocacy groups are highlighting recent federal interventions in the District—including a federal takeover and the deployment of National Guard troops—as evidence of why local control matters. These developments underscore ongoing debates about D.C.'s governance and autonomy.\n\nWithout statehood, D.C. does not control its own National Guard and cannot refuse the deployment of other states' troops within its borders.",
+  "lastUpdated": "2026-10-04T20:32:24.122Z",
+  "summary": "Recent coverage highlights concerns about federal control over D.C.'s security forces and renewed commitments to advancing statehood among some lawmakers. The articles underscore advocacy arguments that D.C.'s lack of local autonomy over key institutions creates ongoing governance challenges. Without statehood, D.C. does not control its own National Guard and cannot refuse the deployment of other states' troops within its borders.",
   "articles": [
+    {
+      "title": "Why we shouldn’t have National Guard Troops in D.C.",
+      "link": "https://www.acludc.org/news/why-we-shouldnt-have-national-guard-troops-in-d-c/",
+      "pubDate": "Thu, 01 Oct 2026 13:00:13 +0000",
+      "source": "ACLU DC"
+    },
     {
       "title": "VIDEO: Senator Slotkin Commits to Making DC Statehood a Top Priority",
       "link": "https://www.dcvote.org/video-senator-slotkin-commits-to-making-dc-statehood-a-top-priority/",
@@ -13,12 +19,6 @@
       "link": "https://www.dcvote.org/one-year-later-dc-vote-says-federal-takeover-underscores-the-urgency-of-dc-statehood/",
       "pubDate": "Mon, 10 Aug 2026 13:16:45 +0000",
       "source": "DC Vote"
-    },
-    {
-      "title": "One Year After President Trump Deployed National Guard Troops to Washington, D.C., Statehood is More Important Than Ever",
-      "link": "https://www.acludc.org/news/one-year-after-president-trump-deployed-national-guard-troops-to-washington-d-c-statehood-is-more-important-than-ever-3/",
-      "pubDate": "Wed, 05 Aug 2026 19:12:55 +0000",
-      "source": "ACLU DC"
     }
   ]
 }
