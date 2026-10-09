@@ -64,7 +64,7 @@ env:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       WORKFLOW_FILE: monitor-bills.yml
@@ -75,7 +75,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # continue-on-error everywhere below: a crashed step must still reach the resolver,
       # which treats missing outputs as "indeterminate" and alerts loudly. The failure
@@ -179,7 +179,7 @@ jobs:
         id: fence
         if: (steps.monitor_state.outputs.state == 'dispatchable' || steps.clear_stuck.outputs.state == 'dispatchable') && steps.live.outputs.advanced == 'false' && steps.fence_file.outcome == 'success'
         continue-on-error: true
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.fence_file.outputs.name }}
           path: recovery-fence.json
@@ -340,7 +340,7 @@ jobs:
 
       - name: Send email
         if: always() && steps.resolve.outputs.actionable != 'false'
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v22
         with:
           server_address: smtp.gmail.com
           server_port: 465
@@ -368,7 +368,7 @@ jobs:
   # (scripts/discovery-recovery-gate.sh). A scan that ran and failed escalates at once.
   # Fail-closed throughout: a missing or unparseable stamp alerts rather than passing.
   discovery-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       WORKFLOW_FILE: discover-bills.yml
@@ -377,7 +377,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Stale = no healthy scan since the most recent Monday 12:23 UTC slot whose grace
       # period has passed. 18h grace puts the deadline at Tue 06:23 UTC, so the Tue 08:17
@@ -502,7 +502,7 @@ jobs:
         id: fence
         if: steps.gate.outputs.gate == 'dispatch' && steps.live.outputs.advanced == 'false' && steps.fence_file.outcome == 'success'
         continue-on-error: true
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.fence_file.outputs.name }}
           path: recovery-fence.json
@@ -665,7 +665,7 @@ jobs:
 
       - name: Send email
         if: always() && steps.resolve.outputs.actionable != 'false'
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v22
         with:
           server_address: smtp.gmail.com
           server_port: 465

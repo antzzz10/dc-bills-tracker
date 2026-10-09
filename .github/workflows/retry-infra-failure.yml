@@ -41,7 +41,7 @@ jobs:
       && github.event.workflow_run.head_branch == 'main'
       && (github.event.workflow_run.conclusion == 'failure'
           || github.event.workflow_run.conclusion == 'cancelled')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     # Shared with data-freshness-check.yml so the two controllers never classify and
     # dispatch at the same time. Job-level on purpose: this workflow fires on EVERY
@@ -55,7 +55,7 @@ jobs:
       # workflow_run executes default-branch code with a privileged token; it checks out
       # main (trusted code), never the triggering run's head.
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: main
 
@@ -162,7 +162,7 @@ jobs:
         id: fence
         if: steps.classify.outputs.state == 'dispatchable' && steps.recheck.outputs.state == 'still_open' && steps.fence_file.outcome == 'success'
         continue-on-error: true
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.fence_file.outputs.name }}
           path: recovery-fence.json
