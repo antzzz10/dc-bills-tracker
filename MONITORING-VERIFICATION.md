@@ -202,7 +202,7 @@ You can create a GitHub Action to run this daily:
 name: Monitor Bills
 on:
   schedule:
-    - cron: '0 14 * * *'  # Daily at 2 PM UTC (9 AM EST)
+    - cron: '41 13 * * *'  # Daily at 13:41 UTC (moved off :00 on 2026-10-08)
   workflow_dispatch:  # Allow manual trigger
 
 jobs:

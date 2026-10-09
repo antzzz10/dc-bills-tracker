@@ -101,7 +101,7 @@ When a bill passes, the script adds this to `bills.json`:
 
 ## Automated Monitoring
 
-The GitHub Actions workflow runs this script daily at 2 PM UTC. When bills pass, the workflow:
+The GitHub Actions workflow runs this script daily at 13:41 UTC (GitHub often fires scheduled runs hours late). When bills pass, the workflow:
 1. Detects the passage automatically
 2. Updates `bills.json` with vote data
 3. Commits the changes to the repository

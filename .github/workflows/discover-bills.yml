@@ -8,6 +8,16 @@ name: Discover New DC Bills
 # is unhealthy — and the review tier (score 20-39), previously buried in an artifact,
 # is emailed too. Design record: decisions/2026-08-14-discovery-alerting.md.
 
+# Automatic recoveries (freshness watchdog or infra-failure retrier) get a distinct run
+# name: that is how both controllers recognise a past recovery and keep to ONE automatic
+# recovery per stale episode (decisions/2026-10-08-infra-failure-auto-recovery.md). On
+# schedule events `inputs` is empty, so the expression falls through to the plain name.
+run-name: >-
+  ${{ github.event_name == 'workflow_dispatch'
+      && (inputs.recovery_source == 'watchdog' || inputs.recovery_source == 'infra-retry')
+      && 'Discover New DC Bills (watchdog recovery)'
+      || 'Discover New DC Bills' }}
+
 on:
   workflow_dispatch:
     inputs:
@@ -15,8 +25,21 @@ on:
         description: 'Dry run: real scan and real email (labeled DRY RUN), but no commit, deploy, or freshness stamp'
         type: boolean
         default: false
+      recovery_source:
+        description: 'What triggered this dispatch (automatic recoveries set "watchdog" or "infra-retry")'
+        type: string
+        default: manual
   schedule:
-    - cron: '0 12 * * 1'  # Weekly on Mondays at noon UTC
+    # Mondays 12:23 UTC. Off the hour: GitHub's scheduler is most congested at :00 and
+    # delays or drops those runs (this one fired 8h late on 2026-10-05, then never got a
+    # runner). The watchdog's discovery deadline is derived from this slot — change both.
+    - cron: '23 12 * * 1'
+
+# Two discovery scans must never overlap: each dedupes against its own checkout, so
+# concurrent scans can pick the same bills. Queue, never cancel a running scan.
+concurrency:
+  group: discover-bills
+  cancel-in-progress: false
 
 jobs:
   discover:
@@ -181,6 +204,7 @@ jobs:
       # bills, because .discover-last-run.json must advance for the staleness watchdog
       # to see a healthy pipeline. Deploy only when bill data actually changed.
       - name: Commit and push updates
+        id: commit
         if: always() && steps.resolve.outputs.healthy == 'true' && env.DRY_RUN != 'true'
         run: |
           git config --global user.name 'DC Bills Discovery'
@@ -193,8 +217,11 @@ jobs:
             git push
           fi
 
+      # Deploy only what was actually saved to main. Before 2026-10-08 this keyed on the
+      # resolver alone, so a push that lost a race with another workflow still published
+      # this run's unsaved local snapshot.
       - name: Rebuild and deploy site
-        if: always() && steps.resolve.outputs.healthy == 'true' && steps.changes.outputs.has_changes == 'true' && env.DRY_RUN != 'true'
+        if: always() && steps.commit.outcome == 'success' && steps.changes.outputs.has_changes == 'true' && env.DRY_RUN != 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # See monitor-bills.yml — publishable key, variable not secret.
@@ -216,8 +243,25 @@ jobs:
             discovery-meta.json
           retention-days: 90
 
+      # The resolver ran before the save; if the save then failed, say so and make sure
+      # an email goes out even on an otherwise quiet week.
+      - name: Report a failed save
+        id: save_failed
+        if: always() && steps.commit.outcome == 'failure'
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          {
+            echo "<h2>Discovery scanned fine, but saving the results to main FAILED</h2>"
+            echo "<p><strong>Nothing was deployed and the freshness stamp did not advance.</strong> This is almost always a collision with another workflow saving at the same moment. Re-running discovery is safe: <a href=\"https://github.com/${REPO}/actions/workflows/discover-bills.yml\">Run workflow</a>.</p>"
+            # Quiet weeks write no report email; that must not abort this one.
+            if [ -f discovery-email.html ]; then cat discovery-email.html; fi
+          } > discovery-email.tmp
+          mv discovery-email.tmp discovery-email.html
+          echo "subject=🚨 DC Bills discovery: scan OK but saving results FAILED — safe to re-run" >> "$GITHUB_OUTPUT"
+
       - name: Send email notification
-        if: always() && steps.resolve.outputs.send_email == 'true'
+        if: always() && (steps.resolve.outputs.send_email == 'true' || steps.save_failed.outcome == 'success')
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -225,7 +269,7 @@ jobs:
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: ${{ steps.resolve.outputs.subject }}
+          subject: ${{ steps.save_failed.outputs.subject || steps.resolve.outputs.subject }}
           to: ${{ secrets.NOTIFICATION_EMAIL }}
           from: DC Bills Discovery <noreply@representdc.org>
           html_body: file://discovery-email.html

@@ -1,6 +1,9 @@
 # Watchdog self-heal — design v4 (final)
 
-**Status:** Design record, implemented 2026-08-14. v1–v3 were reviewed by Codex
+**Status:** Design record, implemented 2026-08-14. **Extended 2026-10-08** to discovery, an
+immediate infra-failure retrier, and audit-only (no email) reporting of in-flight recoveries —
+see `decisions/2026-10-08-infra-failure-auto-recovery.md`; the logic below now lives in
+`scripts/watchdog-*.sh`, and cron times quoted below predate the move off :00. v1–v3 were reviewed by Codex
 (read-only sandbox, web search enabled) on 2026-08-14; v4 incorporates all findings from
 all three rounds plus three owner decisions. Written to be readable with no prior context
 on the conversations that produced it.

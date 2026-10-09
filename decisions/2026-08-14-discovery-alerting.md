@@ -34,6 +34,10 @@ Congress.gov number yet and cannot be tracked until posted.
    fail-closed resolver; review tier now emailed), plus a `discovery-check` job in
    `data-freshness-check.yml` alerting at 192h. Auto-dispatch was declined because the
    observed failures were data bugs where a retry fails identically.
+   **Revised 2026-10-08** (`decisions/2026-10-08-infra-failure-auto-recovery.md`): after a
+   runner-starvation miss, discovery now gets ONE automatic recovery per episode — but only
+   when the scheduled scan never ran or GitHub never gave it a runner. A scan that ran and
+   failed (the class this decision was about) still escalates without a retry.
 
 ## Key mechanism shipped
 

@@ -1,56 +1,77 @@
 name: Data Freshness Check
 
-# Self-healing watchdog for the bill-monitoring pipeline.
+# Self-healing watchdog for the bill-monitoring and bill-discovery pipelines.
 #
-# Every other alerting path in this repo is *inside* the monitor job: the summary email
-# only sends when `Monitor DC Bills` actually runs. So the failure modes that matter most
-# — the run never starts, sits queued without a runner, or is cancelled — produce no
+# Every other alerting path in this repo is *inside* the job it reports on: the summary
+# email only sends when `Monitor DC Bills` actually runs. So the failure modes that matter
+# most — the run never starts, sits queued without a runner, or is cancelled — produce no
 # signal at all. That is how monitoring can stall for days unnoticed while the site keeps
 # redeploying (fetch-news rebuilds when news changes) and therefore keeps looking healthy.
 #
-# This job checks the one fact that can't be faked: when bill data was last verified
-# against Congress.gov, as stamped in src/data/bills.json by scripts/monitor-bills.js.
-# When that stamp is stale it no longer just emails a human — it re-dispatches the
-# monitor itself, at most once per stale episode, clearing a wedged queued run first if
-# one is blocking the way. Full design record + reviewed failure analysis:
-# docs/watchdog-self-heal-proposal.md.
+# Each job checks the one fact that can't be faked — the health stamp its pipeline writes
+# only on a fully healthy run — and when that stamp is stale it does not just email a
+# human: it recovers automatically, at most once per stale episode, and emails only when
+# a human is actually needed. A recovery already in flight is reported in the run summary
+# and as a warning, not by email or a red run. Design records:
+# docs/watchdog-self-heal-proposal.md (monitor, 2026-08-14) and
+# decisions/2026-10-08-infra-failure-auto-recovery.md (discovery + shared budget).
+#
+# Companion: retry-infra-failure.yml retries a run GitHub never gave a runner within
+# minutes of the failure. It shares this workflow's concurrency group and recovery
+# run-names, so the two can never both recover the same episode. This watchdog remains
+# the backstop for what that retrier can't see: scheduled runs GitHub never created, and
+# runs stuck in the queue.
 
 on:
   workflow_dispatch:
     inputs:
       max_age_hours:
-        description: 'Staleness threshold override in hours (test hook: 0 forces the stale path)'
+        description: 'Monitor staleness threshold override in hours (test hook: 0 forces the stale path)'
         type: string
         default: '36'
+      discovery_force_stale:
+        description: 'Test hook: treat discovery as stale (fires a real discovery recovery run)'
+        type: boolean
+        default: false
   schedule:
-    # Twice daily, offset a few hours after the 14:00 UTC monitor run so a normal
-    # run has time to finish before we judge it.
-    - cron: '0 20 * * *'
-    - cron: '0 8 * * *'
+    # Twice daily, off the hour (GitHub congestion at :00). Ordering against the monitor
+    # (13:41) and discovery (Mon 12:23) is best effort only — scheduled runs were firing
+    # 3-8h late in October 2026 — so every decision below rests on timestamps and live
+    # run state, never on "the monitor should have finished by now".
+    - cron: '17 8 * * *'
+    - cron: '17 20 * * *'
 
-# Dispatching monitor-bills requires actions: write; declaring it zeroes every other
-# permission, so contents: read must be restated for checkout.
+# Dispatching requires actions: write; reading GitHub's runner-acquisition annotations
+# requires checks: read; declaring any permission zeroes the rest, so contents: read
+# must be restated for checkout.
 permissions:
   actions: write
+  checks: read
   contents: read
 
+# Shared with retry-infra-failure.yml: the two recovery controllers run one at a time, so
+# one can't classify an episode while the other is mid-dispatch. Queue, never cancel a
+# controller part-way through a dispatch.
 concurrency:
-  group: data-freshness-check
-  cancel-in-progress: true
+  group: automatic-recovery
+  cancel-in-progress: false
 
 env:
   GH_TOKEN: ${{ github.token }}
-  # Must match the run-name monitor-bills.yml gives watchdog-dispatched runs — it is how
-  # past recoveries are identified (matched on displayTitle + event, never .name).
-  RECOVERY_TITLE: Monitor DC Bills (watchdog recovery)
-  # A monitor run queued longer than this is presumed wedged. Healthy runner acquisition
-  # here is 9-13 seconds; both real incidents (2026-07-25, 2026-08-06) lost 2h+.
+  # A run queued longer than this is presumed wedged. Healthy runner acquisition here is
+  # 9-13 seconds; both real incidents (2026-07-25, 2026-08-06) lost 2h+.
   STUCK_THRESHOLD_HOURS: '2'
 
 jobs:
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      WORKFLOW_FILE: monitor-bills.yml
+      FENCE_PREFIX: recovery-fence-monitor
+      # Must match the run-name monitor-bills.yml gives automatic recoveries — it is how
+      # past recoveries are identified (matched on displayTitle + event, never .name).
+      RECOVERY_TITLE: Monitor DC Bills (watchdog recovery)
 
     steps:
       - name: Checkout repository
@@ -106,12 +127,6 @@ jobs:
           LAST_CHECKED: ${{ steps.freshness.outputs.last_checked }}
         run: bash scripts/watchdog-classify.sh | tee -a "$GITHUB_OUTPUT"
 
-      # A run queued past the threshold is wedged (see 2026-07-25: 4h39m in `queued`).
-      # Re-query by id immediately before acting, cancel only if still queued, confirm,
-      # then RECLASSIFY from scratch — dispatch happens only if the fresh classification
-      # says dispatchable. Residual race (run starts in the seconds between re-query and
-      # cancel) is accepted and bounded: the monitor is idempotent and the recovery
-      # dispatched right after redoes the same check. See design record §7.1.
       - name: Clear stuck run and reclassify
         id: clear_stuck
         if: steps.monitor_state.outputs.state == 'stuck'
@@ -119,65 +134,82 @@ jobs:
         env:
           LAST_CHECKED: ${{ steps.freshness.outputs.last_checked }}
           STUCK_RUN_ID: ${{ steps.monitor_state.outputs.stuck_run_id }}
-        run: |
-          if ! STATUS=$(gh run view "$STUCK_RUN_ID" --json status -q .status); then
-            echo "state=indeterminate" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          if [ "$STATUS" != "in_progress" ] && [ "$STATUS" != "completed" ]; then
-            echo "Cancelling monitor run $STUCK_RUN_ID (status: $STATUS)"
-            if ! gh run cancel "$STUCK_RUN_ID"; then
-              echo "state=cancel_failed" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-            for _ in $(seq 1 12); do
-              sleep 5
-              STATUS=$(gh run view "$STUCK_RUN_ID" --json status -q .status || echo unknown)
-              [ "$STATUS" = "completed" ] && break
-            done
-            if [ "$STATUS" != "completed" ]; then
-              echo "state=cancel_failed" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-          fi
-          # In every non-error path — cancelled, already completed, or started running in
-          # the interim — the answer is a fresh full classification, never a guess.
-          bash scripts/watchdog-classify.sh | tee -a "$GITHUB_OUTPUT"
+        run: bash scripts/watchdog-clear-stuck.sh | tee -a "$GITHUB_OUTPUT"
 
-      # At most one dispatch per stale episode; the recovery is identified later by its
-      # run name. After dispatch, wait until the created run is visible in the episode
-      # query — that visibility is what re-arms the recovery_done check for the next
-      # watchdog run.
+      # The checkout can be minutes old. Before dispatching or escalating, re-read the
+      # stamp from main: if a run made it healthy meanwhile, there is nothing to do.
+      - name: Re-read stamp from main
+        id: live
+        if: steps.freshness.outputs.is_stale == 'true' && steps.freshness.outputs.last_checked != 'never'
+        continue-on-error: true
+        env:
+          CHECKOUT_STAMP: ${{ steps.freshness.outputs.last_checked }}
+          MAX_AGE_HOURS: ${{ github.event.inputs.max_age_hours || '36' }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          if ! LIVE=$(bash scripts/read-live-stamp.sh monitor); then
+            echo "advanced=unknown" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          echo "live_stamp=$LIVE" >> "$GITHUB_OUTPUT"
+          # advanced = main moved past the checkout; live_stale = judged on main's stamp.
+          node -e '
+            const [live, co, max] = process.argv.slice(1);
+            const adv = Date.parse(live) > Date.parse(co);
+            const stale = (Date.now() - Date.parse(live)) / 36e5 > Number(max);
+            console.log(`advanced=${adv}`); console.log(`live_stale=${stale}`);
+          ' "$LIVE" "$CHECKOUT_STAMP" "$MAX_AGE_HOURS" >> "$GITHUB_OUTPUT"
+
+      # Spend the episode's recovery budget BEFORE dispatching (see watchdog-classify.sh).
+      # If the fence can't be written, nothing is dispatched and the resolver alerts.
+      - name: Write recovery fence
+        id: fence_file
+        if: (steps.monitor_state.outputs.state == 'dispatchable' || steps.clear_stuck.outputs.state == 'dispatchable') && steps.live.outputs.advanced == 'false'
+        continue-on-error: true
+        env:
+          EPISODE_START: ${{ steps.freshness.outputs.last_checked }}
+          FENCE_PREFIX: ${{ env.FENCE_PREFIX }}
+        run: |
+          # Name = prefix + episode start (epoch s): the same key watchdog-classify.sh reads.
+          KEY=$(printf '%s' "$EPISODE_START" | sed -E 's/\.[0-9]+Z$/Z/' | jq -Rre 'fromdate')
+          printf '{"workflow":"%s","episodeStart":"%s","controllerRun":"%s"}\n' \
+            "$WORKFLOW_FILE" "$EPISODE_START" "${{ github.run_id }}" > recovery-fence.json
+          echo "name=${FENCE_PREFIX}-${KEY}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload recovery fence
+        id: fence
+        if: (steps.monitor_state.outputs.state == 'dispatchable' || steps.clear_stuck.outputs.state == 'dispatchable') && steps.live.outputs.advanced == 'false' && steps.fence_file.outcome == 'success'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.fence_file.outputs.name }}
+          path: recovery-fence.json
+          retention-days: 30
+          if-no-files-found: error
+
       - name: Dispatch recovery run
         id: dispatch
-        if: steps.monitor_state.outputs.state == 'dispatchable' || steps.clear_stuck.outputs.state == 'dispatchable'
+        if: (steps.monitor_state.outputs.state == 'dispatchable' || steps.clear_stuck.outputs.state == 'dispatchable') && steps.live.outputs.advanced == 'false' && steps.fence.outcome == 'success'
         continue-on-error: true
         env:
           LAST_CHECKED: ${{ steps.freshness.outputs.last_checked }}
-        run: |
-          if ! gh workflow run monitor-bills.yml --ref main -f recovery_source=watchdog; then
-            echo "state=dispatch_failed" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          CREATED_AFTER=$(printf '%s' "$LAST_CHECKED" | sed -E 's/\.[0-9]+Z$/Z/')
-          RUN_URL=""
-          for _ in $(seq 1 10); do
-            sleep 6
-            RUN_URL=$(gh run list --workflow=monitor-bills.yml --branch main \
-              --created ">${CREATED_AFTER}" --limit 100 \
-              --json displayTitle,event,url,createdAt \
-              | jq -r --arg t "$RECOVERY_TITLE" \
-                  '[.[] | select(.displayTitle == $t and .event == "workflow_dispatch")] | sort_by(.createdAt) | last.url // empty' \
-              || true)
-            [ -n "$RUN_URL" ] && break
-          done
-          echo "state=dispatched" >> "$GITHUB_OUTPUT"
-          echo "run_url=${RUN_URL:-https://github.com/${{ github.repository }}/actions/workflows/monitor-bills.yml}" >> "$GITHUB_OUTPUT"
+          RECOVERY_SOURCE: watchdog
+        run: bash scripts/watchdog-dispatch.sh | tee -a "$GITHUB_OUTPUT"
+
+      # Why did this episode's automatic recovery not fix it? Feeds the escalation email.
+      - name: Diagnose failed recovery
+        id: diagnose
+        if: steps.monitor_state.outputs.state == 'recovery_done' || steps.clear_stuck.outputs.state == 'recovery_done'
+        continue-on-error: true
+        env:
+          RECOVERY_RUN_ID: ${{ steps.clear_stuck.outputs.recovery_run_id || steps.monitor_state.outputs.recovery_run_id }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: bash scripts/infra-failure-check.sh "$RECOVERY_RUN_ID" | tee -a "$GITHUB_OUTPUT"
 
       # Fail-closed resolver: computes the single final state every later step keys on.
       # Missing or half-written outputs from a crashed step resolve to a loud alert,
-      # never to silence. Exactly one email per stale check follows from every email
-      # condition reading this one value.
+      # never to silence. `actionable` decides email + red run: a recovery in flight is
+      # neither — it is reported in the run summary, and if it fails, the next check
+      # escalates (recovery_done).
       - name: Resolve final state
         id: resolve
         if: always()
@@ -185,12 +217,18 @@ jobs:
           IS_STALE: ${{ steps.freshness.outputs.is_stale }}
           AGE_HOURS: ${{ steps.freshness.outputs.age_hours }}
           LAST_CHECKED: ${{ steps.freshness.outputs.last_checked }}
+          LIVE_ADVANCED: ${{ steps.live.outputs.advanced }}
+          LIVE_STALE: ${{ steps.live.outputs.live_stale }}
+          LIVE_STAMP: ${{ steps.live.outputs.live_stamp }}
           MS_STATE: ${{ steps.monitor_state.outputs.state }}
           CS_STATE: ${{ steps.clear_stuck.outputs.state }}
           DS_STATE: ${{ steps.dispatch.outputs.state }}
           MS_URL: ${{ steps.monitor_state.outputs.active_run_url }}
           CS_URL: ${{ steps.clear_stuck.outputs.active_run_url }}
           RUN_URL: ${{ steps.dispatch.outputs.run_url }}
+          RECOVERY_URL: ${{ steps.clear_stuck.outputs.recovery_run_url || steps.monitor_state.outputs.recovery_run_url }}
+          DIAG_INFRA: ${{ steps.diagnose.outputs.infra }}
+          DIAG_STEP: ${{ steps.diagnose.outputs.failed_step }}
           REPO: ${{ github.repository }}
         run: |
           # Strict values only: is_stale must be exactly true or false — a crashed or
@@ -201,6 +239,12 @@ jobs:
             FINAL=indeterminate
           elif [ "$LAST_CHECKED" = "never" ]; then
             FINAL=unstamped
+          elif [ "$LIVE_ADVANCED" = "true" ] && [ "$LIVE_STALE" = "false" ]; then
+            FINAL=recovered          # a healthy run landed on main during this check
+          elif [ "$LIVE_ADVANCED" = "true" ]; then
+            FINAL=indeterminate      # main moved but is still stale: decisions above used the old stamp
+          elif [ "$LIVE_ADVANCED" != "false" ]; then
+            FINAL=indeterminate      # couldn't confirm main's stamp: never act blind
           elif [ -n "$DS_STATE" ]; then
             FINAL="$DS_STATE"
           else
@@ -215,30 +259,51 @@ jobs:
           echo "Final state: $FINAL"
           echo "final_state=$FINAL" >> "$GITHUB_OUTPUT"
 
-          if [ "$FINAL" = "fresh" ]; then
-            echo "send_email=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "send_email=true" >> "$GITHUB_OUTPUT"
-
           HISTORY_URL="https://github.com/${REPO}/actions/workflows/monitor-bills.yml"
           ACTIVE_URL="${CS_URL:-$MS_URL}"
           case "$FINAL" in
+            fresh)
+              echo "actionable=false" >> "$GITHUB_OUTPUT"
+              echo "Bill data fresh (last verified ${LAST_CHECKED}, ${AGE_HOURS}h ago)." >> "$GITHUB_STEP_SUMMARY"
+              exit 0 ;;
+            recovered)
+              echo "actionable=false" >> "$GITHUB_OUTPUT"
+              echo "Checkout stamp was stale (${LAST_CHECKED}) but main now has ${LIVE_STAMP}: a healthy run landed during this check. Nothing to do." >> "$GITHUB_STEP_SUMMARY"
+              exit 0 ;;
             active)
-              SUBJECT="⏳ DC Bills: data stale (${AGE_HOURS}h) — a monitor run is active, expected to self-heal"
-              MESSAGE="A monitor run is already <a href=\"${ACTIVE_URL:-$HISTORY_URL}\">in flight</a>. No action needed; if data is still stale at the next check, the watchdog escalates." ;;
+              echo "actionable=false" >> "$GITHUB_OUTPUT"
+              echo "::warning::Bill data stale (${AGE_HOURS}h) — a monitor run is in flight; no action needed."
+              echo "Bill data stale (${AGE_HOURS}h); a monitor run is [in flight](${ACTIVE_URL:-$HISTORY_URL}). No email sent; the next check escalates if it doesn't fix it." >> "$GITHUB_STEP_SUMMARY"
+              exit 0 ;;
             dispatched)
-              SUBJECT="🔄 DC Bills: monitoring stalled (${AGE_HOURS}h) — recovery dispatched automatically"
-              MESSAGE="The watchdog dispatched a <a href=\"${RUN_URL:-$HISTORY_URL}\">recovery run</a>. No action needed; if data is still stale at the next check, you will get a loud alert instead." ;;
+              echo "actionable=false" >> "$GITHUB_OUTPUT"
+              echo "::warning::Bill data stale (${AGE_HOURS}h) — recovery run dispatched automatically."
+              echo "Bill data stale (${AGE_HOURS}h); [recovery run](${RUN_URL:-$HISTORY_URL}) dispatched automatically. No email sent; the next check escalates if it doesn't fix it." >> "$GITHUB_STEP_SUMMARY"
+              exit 0 ;;
+          esac
+          echo "actionable=true" >> "$GITHUB_OUTPUT"
+
+          case "$FINAL" in
             recovery_done)
-              SUBJECT="🚨 DC Bills: auto-recovery already attempted, data STILL stale (${AGE_HOURS}h) — human needed"
-              MESSAGE="A watchdog-dispatched recovery has already completed this episode without restoring freshness. A second automatic attempt is presumed doomed — investigate the run history." ;;
+              if [ "$DIAG_INFRA" = "true" ]; then
+                SUBJECT="🚨 DC Bills: GitHub still has no runners for bill monitoring (data ${AGE_HOURS}h old) — auto-retry also failed"
+                MESSAGE="<strong>Cause: GitHub, not our code.</strong> The automatic <a href=\"${RECOVERY_URL:-$HISTORY_URL}\">recovery run</a> was also never given a runner. Nothing needs fixing on our side. Either wait (tomorrow's scheduled run tries again) or press <em>Run workflow</em> on the <a href=\"${HISTORY_URL}\">monitor page</a> once <a href=\"https://www.githubstatus.com/\">GitHub Status</a> shows Actions healthy."
+              elif [ "$DIAG_INFRA" = "false" ]; then
+                SUBJECT="🚨 DC Bills: bill monitoring failed in our code/data at \"${DIAG_STEP}\" (data ${AGE_HOURS}h old) — human needed"
+                MESSAGE="<strong>Cause: our code or data.</strong> The automatic <a href=\"${RECOVERY_URL:-$HISTORY_URL}\">recovery run</a> ran and failed at step <strong>${DIAG_STEP}</strong>. Another retry would fail the same way; open that run's log for the error."
+              else
+                SUBJECT="🚨 DC Bills: auto-recovery already attempted, data STILL stale (${AGE_HOURS}h) — human needed"
+                MESSAGE="The automatic <a href=\"${RECOVERY_URL:-$HISTORY_URL}\">recovery run</a> completed this episode without restoring freshness, and its cause could not be determined automatically. Open that run's log."
+              fi ;;
+            dispatch_unconfirmed)
+              SUBJECT="🚨 DC Bills: monitoring stalled (${AGE_HOURS}h) — recovery dispatched but could not be confirmed"
+              MESSAGE="The watchdog dispatched a recovery run but could not see it start within 2 minutes. Check the <a href=\"${HISTORY_URL}\">monitor page</a>: if no <em>watchdog recovery</em> run is there, press <em>Run workflow</em>." ;;
             dispatch_failed)
               SUBJECT="🚨 DC Bills: monitoring stalled (${AGE_HOURS}h) and auto-recovery dispatch FAILED — human needed"
-              MESSAGE="The watchdog tried to dispatch a recovery run and the dispatch itself failed. The self-heal path is broken; re-run the monitor by hand and check this watchdog run's log." ;;
+              MESSAGE="The watchdog tried to dispatch a recovery run and the dispatch itself failed. The self-heal path is broken; press <em>Run workflow</em> on the <a href=\"${HISTORY_URL}\">monitor page</a> and check this watchdog run's log." ;;
             cancel_failed)
               SUBJECT="🚨 DC Bills: a wedged monitor run is blocking recovery (data stale ${AGE_HOURS}h) — human needed"
-              MESSAGE="A monitor run has been stuck in queue past the ${STUCK_THRESHOLD_HOURS}h threshold and the watchdog could not clear it. Cancel it manually, then re-run the monitor." ;;
+              MESSAGE="A monitor run has been stuck in queue past the ${STUCK_THRESHOLD_HOURS}h threshold and the watchdog could not clear it. Cancel it on the <a href=\"${HISTORY_URL}\">monitor page</a>, then press <em>Run workflow</em>." ;;
             unstamped)
               SUBJECT="🚨 DC Bills: bill data has never been verified (no lastChecked stamp) — human needed"
               MESSAGE="bills.json has no <code>lastChecked</code> stamp at all, so the watchdog cannot define a recovery episode. Needs a human." ;;
@@ -247,6 +312,7 @@ jobs:
               MESSAGE="The watchdog could not read the monitor's run history (or one of its own steps crashed), so it declined to dispatch — \"unable to determine\" is never \"safe to dispatch\". Check this watchdog run's log." ;;
           esac
           echo "subject=$SUBJECT" >> "$GITHUB_OUTPUT"
+          echo "**Human needed** ($FINAL): $SUBJECT" >> "$GITHUB_STEP_SUMMARY"
 
           cat > watchdog-email.html << HTMLEOF
           <h2>Bill monitoring freshness alert</h2>
@@ -263,8 +329,17 @@ jobs:
           <p><a href="${HISTORY_URL}">Monitor DC Bills run history</a></p>
           HTMLEOF
 
+      # The mail action fails outright on a missing body file, so a resolver that crashed
+      # before composing one would otherwise produce a red run and NO email.
+      - name: Ensure an email body exists
+        if: always() && steps.resolve.outputs.actionable != 'false'
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          [ -f watchdog-email.html ] || echo "<p>The freshness watchdog failed before it could describe the problem. See <a href=\"$RUN_URL\">its run log</a>.</p>" > watchdog-email.html
+
       - name: Send email
-        if: always() && steps.resolve.outputs.send_email == 'true'
+        if: always() && steps.resolve.outputs.actionable != 'false'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -272,41 +347,54 @@ jobs:
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: ${{ steps.resolve.outputs.subject }}
+          subject: "${{ steps.resolve.outputs.subject || '🚨 DC Bills — freshness watchdog crashed before deciding — check its run log' }}"
           to: ${{ secrets.NOTIFICATION_EMAIL }}
           from: DC Bills Monitor <noreply@representdc.org>
           html_body: file://watchdog-email.html
 
-      # Make staleness visible in the Actions UI too, not just by email. An empty
-      # final_state (resolver itself crashed) also lands here — fail-closed.
-      - name: Fail the run when data is stale
-        if: always() && steps.resolve.outputs.final_state != 'fresh'
+      # Red only when a human is needed. An empty `actionable` (resolver itself crashed)
+      # also lands here — fail-closed.
+      - name: Fail the run when a human is needed
+        if: always() && steps.resolve.outputs.actionable != 'false'
         run: |
           echo "::error::Freshness check final state: '${{ steps.resolve.outputs.final_state }}' (last checked ${{ steps.freshness.outputs.age_hours }}h ago; threshold ${{ github.event.inputs.max_age_hours || '36' }}h)"
           exit 1
 
-  # Discovery staleness (alert-only, no self-heal by decision 2026-08-14): the weekly
-  # Monday-noon discovery scan stamps .discover-last-run.json only when fully healthy.
-  # 192h (8 days) means a missed or unhealthy Monday scan alerts at Tuesday's 20:00
-  # check. Discovery failed silently for three weeks in 2026-07/08; this job is the
-  # guarantee that can never happen again. Fail-closed: a missing or unparseable stamp
-  # alerts rather than passing.
+  # Discovery staleness + narrow self-heal. Decision 2026-08-14 made this alert-only
+  # because discovery's failures had been code/data bugs that a retry repeats; the
+  # 2026-10-05 runner-starvation miss showed the other class. So recovery here is
+  # deliberately narrower than the monitor's: one automatic dispatch per episode, and
+  # ONLY when the scheduled scan never ran or GitHub never gave it a runner
+  # (scripts/discovery-recovery-gate.sh). A scan that ran and failed escalates at once.
+  # Fail-closed throughout: a missing or unparseable stamp alerts rather than passing.
   discovery-check:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      WORKFLOW_FILE: discover-bills.yml
+      FENCE_PREFIX: recovery-fence-discovery
+      RECOVERY_TITLE: Discover New DC Bills (watchdog recovery)
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Stale = no healthy scan since the most recent Monday 12:23 UTC slot whose grace
+      # period has passed. 18h grace puts the deadline at Tue 06:23 UTC, so the Tue 08:17
+      # check is the first that can judge Monday's scan (later if GitHub fires it late).
+      # An unresolved missed slot stays stale across later Mondays: the stamp is older
+      # than every slot after it. Keep SLOT in step with discover-bills.yml's cron.
       - name: Evaluate discovery freshness
         id: discover_fresh
         continue-on-error: true
+        env:
+          FORCE_STALE: ${{ github.event.inputs.discovery_force_stale || 'false' }}
         run: |
           node --input-type=module << 'EOF' >> $GITHUB_OUTPUT
           import { readFileSync } from 'fs';
 
-          const MAX_AGE_HOURS = 192; // weekly Monday cron + ~1 day grace
+          const SLOT = { weekday: 1, hour: 12, minute: 23 }; // Monday 12:23 UTC
+          const GRACE_HOURS = 18;
           let lastRun;
           try {
             lastRun = JSON.parse(readFileSync('.discover-last-run.json', 'utf-8')).lastRun;
@@ -316,20 +404,267 @@ jobs:
             console.log('last_run=unreadable');
             process.exit(0);
           }
-          const ageHours = (Date.now() - new Date(lastRun).getTime()) / 36e5;
+          const now = Date.now();
+          const lastRunMs = new Date(lastRun).getTime();
+          const ageHours = (now - lastRunMs) / 36e5;
           if (!Number.isFinite(ageHours)) {
             console.log('is_stale=unknown');
             console.log('age_hours=unknown');
             console.log(`last_run=${lastRun}`);
             process.exit(0);
           }
-          console.log(`is_stale=${ageHours > MAX_AGE_HOURS}`);
+
+          // Most recent slot whose grace period has fully passed.
+          const cutoff = new Date(now - GRACE_HOURS * 36e5);
+          let slot = Date.UTC(cutoff.getUTCFullYear(), cutoff.getUTCMonth(), cutoff.getUTCDate(),
+                              SLOT.hour, SLOT.minute);
+          slot -= ((new Date(slot).getUTCDay() - SLOT.weekday + 7) % 7) * 864e5;
+          if (slot > cutoff.getTime()) slot -= 7 * 864e5;
+
+          const forced = process.env.FORCE_STALE === 'true';
+          console.log(`is_stale=${forced || lastRunMs < slot}`);
           console.log(`age_hours=${ageHours.toFixed(1)}`);
           console.log(`last_run=${lastRun}`);
+          console.log(`missed_slot=${new Date(slot).toISOString()}`);
+          console.log(`forced=${forced}`);
           EOF
 
-      - name: Alert on stale discovery
-        if: always() && steps.discover_fresh.outputs.is_stale != 'false'
+      - name: Classify discovery state
+        id: disc_state
+        if: steps.discover_fresh.outputs.is_stale == 'true'
+        continue-on-error: true
+        env:
+          LAST_CHECKED: ${{ steps.discover_fresh.outputs.last_run }}
+        run: bash scripts/watchdog-classify.sh | tee -a "$GITHUB_OUTPUT"
+
+      - name: Clear stuck run and reclassify
+        id: clear_stuck
+        if: steps.disc_state.outputs.state == 'stuck'
+        continue-on-error: true
+        env:
+          LAST_CHECKED: ${{ steps.discover_fresh.outputs.last_run }}
+          STUCK_RUN_ID: ${{ steps.disc_state.outputs.stuck_run_id }}
+        run: bash scripts/watchdog-clear-stuck.sh | tee -a "$GITHUB_OUTPUT"
+
+      # Only for an episode with no recovery yet and nothing in flight: is this the kind
+      # of failure a retry can fix?
+      - name: Decide whether a retry can help
+        id: gate
+        if: steps.disc_state.outputs.state == 'dispatchable' || steps.clear_stuck.outputs.state == 'dispatchable'
+        continue-on-error: true
+        env:
+          LAST_CHECKED: ${{ steps.discover_fresh.outputs.last_run }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          # A run this watchdog just cancelled as wedged counts as "GitHub never ran it".
+          CLEARED_RUN_ID: ${{ steps.clear_stuck.outputs.cancelled_run_id }}
+        run: bash scripts/discovery-recovery-gate.sh | tee -a "$GITHUB_OUTPUT"
+
+      # The checkout can be minutes old. Before dispatching or escalating, re-read the
+      # stamp from main: if a scan made it healthy meanwhile, there is nothing to do.
+      - name: Re-read stamp from main
+        id: live
+        if: steps.discover_fresh.outputs.is_stale == 'true'
+        continue-on-error: true
+        env:
+          CHECKOUT_STAMP: ${{ steps.discover_fresh.outputs.last_run }}
+          MISSED_SLOT: ${{ steps.discover_fresh.outputs.missed_slot }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          if ! LIVE=$(bash scripts/read-live-stamp.sh discovery); then
+            echo "advanced=unknown" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          echo "live_stamp=$LIVE" >> "$GITHUB_OUTPUT"
+          # advanced = main moved past the checkout; live_stale = main's stamp still
+          # predates the slot that made this check stale.
+          node -e '
+            const [live, co, slot] = process.argv.slice(1);
+            console.log(`advanced=${Date.parse(live) > Date.parse(co)}`);
+            console.log(`live_stale=${!(Date.parse(live) >= Date.parse(slot))}`);
+          ' "$LIVE" "$CHECKOUT_STAMP" "$MISSED_SLOT" >> "$GITHUB_OUTPUT"
+
+      # Spend the episode's recovery budget BEFORE dispatching (see watchdog-classify.sh).
+      # If the fence can't be written, nothing is dispatched and the resolver alerts.
+      - name: Write recovery fence
+        id: fence_file
+        if: steps.gate.outputs.gate == 'dispatch' && steps.live.outputs.advanced == 'false'
+        continue-on-error: true
+        env:
+          EPISODE_START: ${{ steps.discover_fresh.outputs.last_run }}
+          FENCE_PREFIX: ${{ env.FENCE_PREFIX }}
+        run: |
+          # Name = prefix + episode start (epoch s): the same key watchdog-classify.sh reads.
+          KEY=$(printf '%s' "$EPISODE_START" | sed -E 's/\.[0-9]+Z$/Z/' | jq -Rre 'fromdate')
+          printf '{"workflow":"%s","episodeStart":"%s","controllerRun":"%s"}\n' \
+            "$WORKFLOW_FILE" "$EPISODE_START" "${{ github.run_id }}" > recovery-fence.json
+          echo "name=${FENCE_PREFIX}-${KEY}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload recovery fence
+        id: fence
+        if: steps.gate.outputs.gate == 'dispatch' && steps.live.outputs.advanced == 'false' && steps.fence_file.outcome == 'success'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.fence_file.outputs.name }}
+          path: recovery-fence.json
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Dispatch recovery run
+        id: dispatch
+        if: steps.gate.outputs.gate == 'dispatch' && steps.live.outputs.advanced == 'false' && steps.fence.outcome == 'success'
+        continue-on-error: true
+        env:
+          LAST_CHECKED: ${{ steps.discover_fresh.outputs.last_run }}
+          RECOVERY_SOURCE: watchdog
+        run: bash scripts/watchdog-dispatch.sh | tee -a "$GITHUB_OUTPUT"
+
+      - name: Diagnose failed recovery
+        id: diagnose
+        if: steps.disc_state.outputs.state == 'recovery_done' || steps.clear_stuck.outputs.state == 'recovery_done'
+        continue-on-error: true
+        env:
+          RECOVERY_RUN_ID: ${{ steps.clear_stuck.outputs.recovery_run_id || steps.disc_state.outputs.recovery_run_id }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: bash scripts/infra-failure-check.sh "$RECOVERY_RUN_ID" | tee -a "$GITHUB_OUTPUT"
+
+      - name: Resolve final state
+        id: resolve
+        if: always()
+        env:
+          IS_STALE: ${{ steps.discover_fresh.outputs.is_stale }}
+          AGE_HOURS: ${{ steps.discover_fresh.outputs.age_hours }}
+          LAST_RUN: ${{ steps.discover_fresh.outputs.last_run }}
+          LIVE_ADVANCED: ${{ steps.live.outputs.advanced }}
+          LIVE_STALE: ${{ steps.live.outputs.live_stale }}
+          LIVE_STAMP: ${{ steps.live.outputs.live_stamp }}
+          MISSED_SLOT: ${{ steps.discover_fresh.outputs.missed_slot }}
+          FORCED: ${{ steps.discover_fresh.outputs.forced }}
+          DS_STATE: ${{ steps.disc_state.outputs.state }}
+          CS_STATE: ${{ steps.clear_stuck.outputs.state }}
+          GATE: ${{ steps.gate.outputs.gate }}
+          CAUSE: ${{ steps.gate.outputs.cause }}
+          GATE_REASON: ${{ steps.gate.outputs.reason }}
+          FAILED_RUN_URL: ${{ steps.gate.outputs.failed_run_url }}
+          FAILED_STEP: ${{ steps.gate.outputs.failed_step }}
+          DISPATCH_STATE: ${{ steps.dispatch.outputs.state }}
+          RUN_URL: ${{ steps.dispatch.outputs.run_url }}
+          ACTIVE_URL: ${{ steps.clear_stuck.outputs.active_run_url || steps.disc_state.outputs.active_run_url }}
+          RECOVERY_URL: ${{ steps.clear_stuck.outputs.recovery_run_url || steps.disc_state.outputs.recovery_run_url }}
+          DIAG_INFRA: ${{ steps.diagnose.outputs.infra }}
+          DIAG_STEP: ${{ steps.diagnose.outputs.failed_step }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ "$IS_STALE" = "false" ]; then
+            FINAL=fresh
+          elif [ "$IS_STALE" != "true" ]; then
+            FINAL=indeterminate
+          elif [ "$LIVE_ADVANCED" = "true" ] && [ "$LIVE_STALE" = "false" ]; then
+            FINAL=recovered          # a healthy scan landed on main during this check
+          elif [ "$LIVE_ADVANCED" = "true" ]; then
+            FINAL=indeterminate      # main moved but is still stale: decisions above used the old stamp
+          elif [ "$LIVE_ADVANCED" != "false" ]; then
+            FINAL=indeterminate      # couldn't confirm main's stamp: never act blind
+          elif [ -n "$DISPATCH_STATE" ]; then
+            FINAL="$DISPATCH_STATE"
+          elif [ "$GATE" = "escalate" ]; then
+            case "$CAUSE" in code_failure) FINAL=code_failure ;; *) FINAL=unknown_cause ;; esac
+          else
+            EFF="${CS_STATE:-$DS_STATE}"
+            case "$EFF" in
+              active|recovery_done|cancel_failed|indeterminate) FINAL="$EFF" ;;
+              stuck) FINAL=cancel_failed ;;
+              *) FINAL=indeterminate ;;   # dispatchable with no gate/dispatch answer, or empty
+            esac
+          fi
+          echo "Final state: $FINAL"
+          echo "final_state=$FINAL" >> "$GITHUB_OUTPUT"
+
+          HISTORY_URL="https://github.com/${REPO}/actions/workflows/discover-bills.yml"
+          SINCE="last healthy scan ${LAST_RUN} (${AGE_HOURS}h ago)"
+          [ "$FORCED" = "true" ] && SINCE="${SINCE}; staleness FORCED by test hook"
+          case "$FINAL" in
+            fresh)
+              echo "actionable=false" >> "$GITHUB_OUTPUT"
+              echo "Discovery fresh (${SINCE})." >> "$GITHUB_STEP_SUMMARY"
+              exit 0 ;;
+            recovered)
+              echo "actionable=false" >> "$GITHUB_OUTPUT"
+              echo "Checkout stamp was stale (${LAST_RUN}) but main now has ${LIVE_STAMP}: a healthy scan landed during this check. Nothing to do." >> "$GITHUB_STEP_SUMMARY"
+              exit 0 ;;
+            active)
+              echo "actionable=false" >> "$GITHUB_OUTPUT"
+              echo "::warning::Discovery overdue (${SINCE}) — a scan is in flight; no action needed."
+              echo "Discovery overdue (${SINCE}); a scan is [in flight](${ACTIVE_URL:-$HISTORY_URL}). No email sent." >> "$GITHUB_STEP_SUMMARY"
+              exit 0 ;;
+            dispatched)
+              echo "actionable=false" >> "$GITHUB_OUTPUT"
+              echo "::warning::Discovery overdue (${SINCE}) — recovery dispatched (${CAUSE}): ${GATE_REASON}"
+              echo "Discovery overdue (${SINCE}). Cause: ${GATE_REASON}. [Recovery run](${RUN_URL:-$HISTORY_URL}) dispatched automatically; no email sent. The next check escalates if it doesn't fix it." >> "$GITHUB_STEP_SUMMARY"
+              exit 0 ;;
+          esac
+          echo "actionable=true" >> "$GITHUB_OUTPUT"
+
+          case "$FINAL" in
+            code_failure)
+              if [ "$FAILED_STEP" = "Commit and push updates" ]; then
+                SUBJECT="🚨 DC Bills: weekly discovery couldn't save its results — safe to re-run"
+                MESSAGE="The <a href=\"${FAILED_RUN_URL}\">scheduled scan</a> ran but failed to save to main — almost always a collision with another workflow saving at the same moment. Press <em>Run workflow</em> on the <a href=\"${HISTORY_URL}\">discovery page</a>."
+              else
+                SUBJECT="🚨 DC Bills: weekly discovery failed in our code/data at \"${FAILED_STEP}\" — human needed"
+                MESSAGE="<strong>Cause: our code or data, not GitHub.</strong> The <a href=\"${FAILED_RUN_URL}\">scheduled scan</a> ran and failed at step <strong>${FAILED_STEP}</strong>. It was not retried automatically because a retry would fail the same way. Open that run's log (and its emailed UNHEALTHY report) for the error."
+              fi ;;
+            unknown_cause)
+              SUBJECT="🚨 DC Bills: weekly discovery missed and the cause is unclear — human needed"
+              MESSAGE="Not retried automatically: ${GATE_REASON}. ${FAILED_RUN_URL:+See the <a href=\"${FAILED_RUN_URL}\">latest scheduled run</a>.}" ;;
+            recovery_done)
+              if [ "$DIAG_INFRA" = "true" ]; then
+                SUBJECT="🚨 DC Bills: GitHub still has no runners for weekly discovery — auto-retry also failed"
+                MESSAGE="<strong>Cause: GitHub, not our code.</strong> The automatic <a href=\"${RECOVERY_URL:-$HISTORY_URL}\">recovery run</a> was also never given a runner. Nothing needs fixing on our side. Press <em>Run workflow</em> on the <a href=\"${HISTORY_URL}\">discovery page</a> once <a href=\"https://www.githubstatus.com/\">GitHub Status</a> shows Actions healthy, or wait for next Monday's scan."
+              elif [ "$DIAG_INFRA" = "false" ]; then
+                SUBJECT="🚨 DC Bills: discovery recovery failed in our code/data at \"${DIAG_STEP}\" — human needed"
+                MESSAGE="<strong>Cause: our code or data.</strong> The automatic <a href=\"${RECOVERY_URL:-$HISTORY_URL}\">recovery run</a> ran and failed at step <strong>${DIAG_STEP}</strong>. Open that run's log for the error."
+              else
+                SUBJECT="🚨 DC Bills: discovery auto-recovery already attempted, still stale — human needed"
+                MESSAGE="The automatic <a href=\"${RECOVERY_URL:-$HISTORY_URL}\">recovery run</a> completed without a healthy scan, and the cause could not be determined automatically. Open that run's log."
+              fi ;;
+            dispatch_unconfirmed)
+              SUBJECT="🚨 DC Bills: weekly discovery missed — recovery dispatched but could not be confirmed"
+              MESSAGE="Cause of the miss: ${GATE_REASON}. The watchdog dispatched a recovery scan but could not see it start within 2 minutes. Check the <a href=\"${HISTORY_URL}\">discovery page</a>: if no <em>watchdog recovery</em> run is there, press <em>Run workflow</em>." ;;
+            dispatch_failed)
+              SUBJECT="🚨 DC Bills: weekly discovery missed and auto-recovery dispatch FAILED — human needed"
+              MESSAGE="Cause of the miss: ${GATE_REASON}. The watchdog's own dispatch failed; press <em>Run workflow</em> on the <a href=\"${HISTORY_URL}\">discovery page</a> and check this watchdog run's log." ;;
+            cancel_failed)
+              SUBJECT="🚨 DC Bills: a wedged discovery run is blocking recovery — human needed"
+              MESSAGE="A discovery run has been stuck in queue past the ${STUCK_THRESHOLD_HOURS}h threshold and the watchdog could not clear it. Cancel it on the <a href=\"${HISTORY_URL}\">discovery page</a>, then press <em>Run workflow</em>." ;;
+            *)
+              SUBJECT="🚨 DC Bills: discovery overdue and the watchdog cannot determine its state — human needed"
+              MESSAGE="The watchdog could not read discovery's stamp or run history (or one of its own steps crashed), so it declined to dispatch. Check this watchdog run's log." ;;
+          esac
+          echo "subject=$SUBJECT" >> "$GITHUB_OUTPUT"
+          echo "**Human needed** ($FINAL): $SUBJECT" >> "$GITHUB_STEP_SUMMARY"
+
+          cat > discovery-watchdog-email.html << HTMLEOF
+          <h2>Weekly bill discovery is overdue</h2>
+          <p>
+            The last fully healthy discovery scan was <strong>${LAST_RUN}</strong>
+            (${AGE_HOURS} hours ago); the scan due ${MISSED_SLOT:-this week} has not completed
+            healthily. Newly introduced DC bills are NOT being picked up until it does.
+          </p>
+          <p>${MESSAGE}</p>
+          <p><a href="${HISTORY_URL}">Discover New DC Bills run history</a></p>
+          HTMLEOF
+
+      # The mail action fails outright on a missing body file, so a resolver that crashed
+      # before composing one would otherwise produce a red run and NO email.
+      - name: Ensure an email body exists
+        if: always() && steps.resolve.outputs.actionable != 'false'
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          [ -f discovery-watchdog-email.html ] || echo "<p>The discovery watchdog failed before it could describe the problem. See <a href=\"$RUN_URL\">its run log</a>.</p>" > discovery-watchdog-email.html
+
+      - name: Send email
+        if: always() && steps.resolve.outputs.actionable != 'false'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -337,27 +672,13 @@ jobs:
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "🚨 DC Bills: weekly bill DISCOVERY is stalled (last healthy scan ${{ steps.discover_fresh.outputs.age_hours }}h ago) — human needed"
+          subject: "${{ steps.resolve.outputs.subject || '🚨 DC Bills — discovery watchdog crashed before deciding — check its run log' }}"
           to: ${{ secrets.NOTIFICATION_EMAIL }}
           from: DC Bills Monitor <noreply@representdc.org>
-          html_body: |
-            <h2>Bill discovery appears stalled</h2>
-            <p>
-              The last fully healthy discovery scan was
-              <strong>${{ steps.discover_fresh.outputs.last_run }}</strong>
-              (${{ steps.discover_fresh.outputs.age_hours }} hours ago; threshold 192h).
-              Newly introduced DC bills are NOT being picked up.
-            </p>
-            <p>
-              Check the
-              <a href="https://github.com/${{ github.repository }}/actions/workflows/discover-bills.yml">
-                Discover New DC Bills run history
-              </a>
-              for failed or missing runs, then re-run it manually once fixed.
-            </p>
+          html_body: file://discovery-watchdog-email.html
 
-      - name: Fail when discovery is stale
-        if: always() && steps.discover_fresh.outputs.is_stale != 'false'
+      - name: Fail the run when a human is needed
+        if: always() && steps.resolve.outputs.actionable != 'false'
         run: |
-          echo "::error::Discovery last healthy scan: ${{ steps.discover_fresh.outputs.last_run }} (${{ steps.discover_fresh.outputs.age_hours }}h ago; threshold 192h)"
+          echo "::error::Discovery final state: '${{ steps.resolve.outputs.final_state }}' (last healthy scan ${{ steps.discover_fresh.outputs.last_run }}, ${{ steps.discover_fresh.outputs.age_hours }}h ago)"
           exit 1

@@ -197,7 +197,7 @@ Use `scripts/monitor-bills.js` to:
 3. Run: `node scripts/monitor-bills.js`
 4. See detailed docs: `scripts/README-MONITORING.md`
 
-**GitHub Actions:** Monitoring runs daily at 2 PM UTC via `.github/workflows/monitor-bills.yml`
+**GitHub Actions:** Monitoring runs daily at 13:41 UTC via `.github/workflows/monitor-bills.yml`
 
 When the script detects passage, it automatically:
 - Updates `status.stage` to "passed-house" or "passed-senate"

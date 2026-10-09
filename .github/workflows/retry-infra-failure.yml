@@ -1,0 +1,212 @@
+name: Retry Infra Failures
+
+# Re-dispatch a scheduled monitor or discovery run that GitHub never gave a runner —
+# within minutes of the failure, instead of at the freshness watchdog's next twice-daily
+# check (which for weekly discovery meant ~1.5 days). Three such incidents so far:
+# 2026-07-25, 2026-08-06 (monitor), 2026-10-05 (discovery).
+#
+# Deliberately narrow (decisions/2026-10-08-infra-failure-auto-recovery.md):
+#   - scheduled runs on main only — a manual or test run is never revived, so a dry run
+#     can't come back as a live commit + deploy;
+#   - only with positive evidence that GitHub never started the job
+#     (scripts/infra-failure-check.sh) — a run that executed steps and failed is a
+#     code/data failure and is left to its own alert email;
+#   - ONE automatic recovery per stale episode, shared with data-freshness-check.yml:
+#     both dispatch under the same run-name and run in the same concurrency group, and
+#     both classify through scripts/watchdog-classify.sh.
+# Audit-only: it never emails. A successful recovery is visible as the target's normal
+# run (and the monitor's normal summary email); a failed one is escalated by the
+# freshness watchdog. Recovery runs are workflow_dispatch events, so they never re-enter
+# this workflow.
+
+on:
+  workflow_run:
+    workflows: [Monitor DC Bills, Discover New DC Bills]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  actions: write
+  checks: read
+  contents: read
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  STUCK_THRESHOLD_HOURS: '2'
+
+jobs:
+  retry:
+    if: >-
+      github.event.workflow_run.event == 'schedule'
+      && github.event.workflow_run.head_branch == 'main'
+      && (github.event.workflow_run.conclusion == 'failure'
+          || github.event.workflow_run.conclusion == 'cancelled')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Shared with data-freshness-check.yml so the two controllers never classify and
+    # dispatch at the same time. Job-level on purpose: this workflow fires on EVERY
+    # monitor/discovery completion, and a workflow-level group would let those skipped
+    # no-op runs displace a pending watchdog run from the queue.
+    concurrency:
+      group: automatic-recovery
+      cancel-in-progress: false
+
+    steps:
+      # workflow_run executes default-branch code with a privileged token; it checks out
+      # main (trusted code), never the triggering run's head.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Identify target workflow
+        id: target
+        env:
+          WF_PATH: ${{ github.event.workflow_run.path }}
+        run: |
+          case "$WF_PATH" in
+            .github/workflows/monitor-bills.yml)
+              echo "workflow_file=monitor-bills.yml" >> "$GITHUB_OUTPUT"
+              echo "recovery_title=Monitor DC Bills (watchdog recovery)" >> "$GITHUB_OUTPUT"
+              echo "kind=monitor" >> "$GITHUB_OUTPUT"
+              echo "fence_prefix=recovery-fence-monitor" >> "$GITHUB_OUTPUT" ;;
+            .github/workflows/discover-bills.yml)
+              echo "workflow_file=discover-bills.yml" >> "$GITHUB_OUTPUT"
+              echo "recovery_title=Discover New DC Bills (watchdog recovery)" >> "$GITHUB_OUTPUT"
+              echo "kind=discovery" >> "$GITHUB_OUTPUT"
+              echo "fence_prefix=recovery-fence-discovery" >> "$GITHUB_OUTPUT" ;;
+            *)
+              echo "::error::Unexpected workflow path '$WF_PATH' — not on the retry allowlist."
+              exit 1 ;;
+          esac
+
+      - name: Was this a runner-acquisition failure?
+        id: infra
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          bash scripts/infra-failure-check.sh \
+            "${{ github.event.workflow_run.id }}" "${{ github.event.workflow_run.run_attempt }}" \
+            | tee -a "$GITHUB_OUTPUT"
+
+      # The failed run must belong to the CURRENT unhealthy episode. If a later healthy run
+      # (e.g. a manual re-run) already advanced the stamp, there is nothing to recover —
+      # and an empty episode would otherwise classify as dispatchable. The stamp is read
+      # from main now, not from this job's checkout, which may already be out of date.
+      - name: Is the failure still unrecovered?
+        id: episode
+        if: steps.infra.outputs.infra == 'true'
+        env:
+          KIND: ${{ steps.target.outputs.kind }}
+          RUN_CREATED: ${{ github.event.workflow_run.created_at }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          if ! STAMP=$(bash scripts/read-live-stamp.sh "$KIND"); then
+            echo "open=unknown" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "stamp=$STAMP" >> "$GITHUB_OUTPUT"
+          if [ "$(date -u -d "$RUN_CREATED" +%s)" -gt "$(date -u -d "$STAMP" +%s)" ]; then
+            echo "open=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "open=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Classify recovery state
+        id: classify
+        if: steps.episode.outputs.open == 'true'
+        env:
+          WORKFLOW_FILE: ${{ steps.target.outputs.workflow_file }}
+          RECOVERY_TITLE: ${{ steps.target.outputs.recovery_title }}
+          FENCE_PREFIX: ${{ steps.target.outputs.fence_prefix }}
+          LAST_CHECKED: ${{ steps.episode.outputs.stamp }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: bash scripts/watchdog-classify.sh | tee -a "$GITHUB_OUTPUT"
+
+      # Spend the episode's recovery budget BEFORE dispatching (see watchdog-classify.sh).
+      # If the fence can't be written, nothing is dispatched and the resolver alerts.
+      # Last look at main immediately before committing to a recovery: a healthy run may
+      # have landed since the episode check above. Runs BEFORE the fence, so a fence is
+      # only ever written for an episode that is still open.
+      - name: Re-check stamp on main
+        id: recheck
+        if: steps.classify.outputs.state == 'dispatchable'
+        env:
+          KIND: ${{ steps.target.outputs.kind }}
+          EPISODE_STAMP: ${{ steps.episode.outputs.stamp }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          if ! NOW_STAMP=$(bash scripts/read-live-stamp.sh "$KIND"); then
+            echo "state=recheck_failed" | tee -a "$GITHUB_OUTPUT"
+          elif [ "$NOW_STAMP" != "$EPISODE_STAMP" ]; then
+            echo "state=recovered" | tee -a "$GITHUB_OUTPUT"
+          else
+            echo "state=still_open" | tee -a "$GITHUB_OUTPUT"
+          fi
+
+      - name: Write recovery fence
+        id: fence_file
+        if: steps.classify.outputs.state == 'dispatchable' && steps.recheck.outputs.state == 'still_open'
+        continue-on-error: true
+        env:
+          EPISODE_START: ${{ steps.episode.outputs.stamp }}
+          FENCE_PREFIX: ${{ steps.target.outputs.fence_prefix }}
+        run: |
+          # Name = prefix + episode start (epoch s): the same key watchdog-classify.sh reads.
+          KEY=$(printf '%s' "$EPISODE_START" | sed -E 's/\.[0-9]+Z$/Z/' | jq -Rre 'fromdate')
+          printf '{"workflow":"%s","episodeStart":"%s","controllerRun":"%s"}\n' \
+            "${{ steps.target.outputs.workflow_file }}" "$EPISODE_START" "${{ github.run_id }}" > recovery-fence.json
+          echo "name=${FENCE_PREFIX}-${KEY}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload recovery fence
+        id: fence
+        if: steps.classify.outputs.state == 'dispatchable' && steps.recheck.outputs.state == 'still_open' && steps.fence_file.outcome == 'success'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.fence_file.outputs.name }}
+          path: recovery-fence.json
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Dispatch recovery run
+        id: dispatch
+        if: steps.classify.outputs.state == 'dispatchable' && steps.recheck.outputs.state == 'still_open' && steps.fence.outcome == 'success'
+        env:
+          WORKFLOW_FILE: ${{ steps.target.outputs.workflow_file }}
+          RECOVERY_TITLE: ${{ steps.target.outputs.recovery_title }}
+          LAST_CHECKED: ${{ steps.episode.outputs.stamp }}
+          RECOVERY_SOURCE: infra-retry
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: bash scripts/watchdog-dispatch.sh | tee -a "$GITHUB_OUTPUT"
+
+      # Everything else is the freshness watchdog's job: stuck runs, a recovery already
+      # spent, unknown causes. Red only when this controller itself failed to act on a
+      # confirmed infra failure — the watchdog still backstops that, no email from here.
+      - name: Summarise
+        if: always()
+        env:
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+          WF: ${{ steps.target.outputs.workflow_file }}
+          INFRA: ${{ steps.infra.outputs.infra }}
+          REASON: ${{ steps.infra.outputs.reason }}
+          OPEN: ${{ steps.episode.outputs.open }}
+          STATE: ${{ steps.classify.outputs.state }}
+          DISPATCH: ${{ steps.dispatch.outputs.state || steps.recheck.outputs.state }}
+          RECOVERY_URL: ${{ steps.dispatch.outputs.run_url }}
+        run: |
+          {
+            echo "Failed run: ${RUN_URL} (${WF:-unknown workflow})"
+            echo ""
+            echo "- Runner-acquisition failure: **${INFRA:-not evaluated}** — ${REASON:-n/a}"
+            [ -n "$OPEN" ] && echo "- Still unrecovered: ${OPEN}"
+            [ -n "$STATE" ] && echo "- Recovery state: ${STATE}"
+            [ -n "$DISPATCH" ] && echo "- Dispatch: ${DISPATCH} ${RECOVERY_URL}"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$INFRA" = "true" ] && [ "$OPEN" != "false" ] \
+             && [ "$DISPATCH" != "dispatched" ] && [ "$DISPATCH" != "recovered" ] \
+             && [ "$STATE" != "active" ] \
+             && [ "$STATE" != "recovery_done" ] && [ "$STATE" != "stuck" ]; then
+            echo "::error::Confirmed runner-acquisition failure but no recovery was dispatched (open=${OPEN}, state=${STATE}, dispatch=${DISPATCH}). The freshness watchdog will backstop."
+            exit 1
+          fi

@@ -9,7 +9,7 @@ This repo is the bill tracker of **representdc.org**, a three-app DC statehood a
 | Candidate Tracker | `../dc-statehood-pledge/` | candidates.representdc.org | 2026 candidate questionnaire responses |
 
 **Stack:** React 19, Vite 7, ESLint 9, gh-pages.
-**Automation:** `.github/workflows/monitor-bills.yml` runs daily at 2 PM UTC, fetching bill status from the Congress.gov API.
+**Automation:** `.github/workflows/monitor-bills.yml` runs daily at 13:41 UTC (GitHub often fires it hours late), fetching bill status from the Congress.gov API. `data-freshness-check.yml` + `retry-infra-failure.yml` recover monitor and discovery runs automatically when GitHub fails to run them; see `decisions/2026-10-08-infra-failure-auto-recovery.md`.
 **Methodology:** `METHODOLOGY.md` defines inclusion (broad, per Free DC), the two-axis classification (`position` × `attackType` via the Statehood Scorecard's three-prong test), and momentum-based priority with the partial-attack cap. Run `node scripts/lint-bills.js` (offline lint + golden-label eval) before deploying data changes; decision history lives in `decisions/`.
 **Cross-site links:** all three sites link to each other in navigation/footers — keep links intact when editing nav.
 
