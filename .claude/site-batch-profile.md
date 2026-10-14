@@ -56,7 +56,7 @@ npm run deploy        # gh-pages -d dist --dotfiles  → billtracker.representdc
 
 ## Known traps
 
-- **Daily bot commits.** GitHub Actions writes `bills.json`, `news.json`,
+- **Daily bot commits.** GitHub Actions writes `bills.json`,
   `bill-status-history.json` on a schedule. Always `git fetch` and merge before
   pushing, and re-verify your data edits survived the merge.
 - **Parallel human sessions.** This repo is sometimes worked from more than one

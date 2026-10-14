@@ -22,7 +22,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import nodemailer from 'nodemailer';
 import { execSync, execFileSync } from 'child_process';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -48,10 +48,21 @@ function loadBillsData() {
   return JSON.parse(readFileSync(join(ROOT, 'src/data/bills.json'), 'utf8'));
 }
 
-function loadNewsData() {
-  const path = join(ROOT, 'public/api/news.json');
-  if (!existsSync(path)) return { articles: [] };
-  return JSON.parse(readFileSync(path, 'utf8'));
+// The news pipeline moved to representdc-main (2026-09); this repo no longer keeps a
+// copy, so read the live feed. A digest without news beats no digest, so any failure
+// degrades to an empty list — as a missing local file used to.
+const NEWS_URL = 'https://www.representdc.org/api/news.json';
+
+async function loadNewsData() {
+  try {
+    const res = await fetch(NEWS_URL, { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return { articles: Array.isArray(data.articles) ? data.articles : [] };
+  } catch (err) {
+    console.warn(`News feed unavailable (${err.message}) — digest will have no news.`);
+    return { articles: [] };
+  }
 }
 
 // ── Git diff ──────────────────────────────────────────────────────────────────
@@ -314,7 +325,7 @@ async function main() {
   if (!isSelf && !process.env.KIT_API_KEY) throw new Error('KIT_API_KEY not set');
 
   const data = loadBillsData();
-  const news = loadNewsData();
+  const news = await loadNewsData();
   const stats = getStats(data);
   const changes = getWeeklyChanges();
   const featuredBill = pickFeaturedBill(data, changes);

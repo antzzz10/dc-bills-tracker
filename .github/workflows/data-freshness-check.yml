@@ -5,8 +5,8 @@ name: Data Freshness Check
 # Every other alerting path in this repo is *inside* the job it reports on: the summary
 # email only sends when `Monitor DC Bills` actually runs. So the failure modes that matter
 # most — the run never starts, sits queued without a runner, or is cancelled — produce no
-# signal at all. That is how monitoring can stall for days unnoticed while the site keeps
-# redeploying (fetch-news rebuilds when news changes) and therefore keeps looking healthy.
+# signal at all. That is how monitoring once stalled for days unnoticed while the site kept
+# redeploying (a news job, removed 2026-10-14, rebuilt it twice a day) and looked healthy.
 #
 # Each job checks the one fact that can't be faked — the health stamp its pipeline writes
 # only on a fully healthy run — and when that stamp is stale it does not just email a
@@ -322,9 +322,8 @@ jobs:
           </p>
           <p>${MESSAGE}</p>
           <p>
-            The site may still look current — it is redeployed by the news workflow
-            regardless of whether bills were checked — so this email and the red
-            watchdog run are the only reliable signals.
+            The site's "last checked" line will show the stale date, but this email
+            and the red watchdog run are the reliable signals.
           </p>
           <p><a href="${HISTORY_URL}">Monitor DC Bills run history</a></p>
           HTMLEOF

@@ -20,8 +20,8 @@ import RecentActivity from './components/RecentActivity'
 // Bill-data freshness. `lastChecked` is stamped by scripts/monitor-bills.js on every
 // run that successfully reaches Congress.gov, so it reflects when the DATA was verified
 // — not when the bundle was built. The old build-date display kept reading "today" even
-// when monitoring had stalled, because fetch-news rebuilds and redeploys the whole site
-// twice a day regardless of whether any bill was checked.
+// when monitoring had stalled, because the (since removed) news job rebuilt and
+// redeployed the whole site twice a day regardless of whether any bill was checked.
 const STALE_AFTER_MS = 48 * 60 * 60 * 1000
 const LAST_CHECKED = billsData.lastChecked || null
 const IS_DATA_STALE = LAST_CHECKED
@@ -259,11 +259,8 @@ function App() {
           />
         )}
 
-        {/* The news feed moved to representdc.org/news (2026-07-26). The data
-            pipeline stays: scripts/fetch-news.js still publishes
-            public/api/news.json, which main's News.jsx fetches from
-            https://billtracker.representdc.org/api/news.json. Do not remove
-            fetch-news.js or its workflow — that would break main's /news page. */}
+        {/* The news feed lives at representdc.org/news. Its pipeline moved to the
+            representdc-main repo (2026-09) and this repo's copy was removed 2026-10-14. */}
 
         <div className="results-header">
           <h2>
