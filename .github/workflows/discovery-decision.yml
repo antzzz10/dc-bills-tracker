@@ -1,0 +1,135 @@
+name: Record Discovery Decision
+
+# Two-click triage for the weekly discovery email. Each bill the scan scores 20-39
+# ("needs review") carries three links. Each opens a pre-filled GitHub issue titled
+# "Discovery decision: <not_relevant|support_parked|track> <billId>"; submitting it
+# lands here. The decision is saved to scripts/discovery-decisions.json, so the scan
+# never lists that bill for review again, and the issue is closed with a confirmation.
+# "track" also starts a discovery run, so the bill is added (provisional) right away
+# rather than next Monday. Before this, the same borderline bills were re-emailed every
+# week with no way to say "seen it". Decision: decisions/2026-10-09-discovery-review-decisions.md.
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write   # commit the decision
+  issues: write     # confirm and close the issue
+  actions: write    # "track": dispatch discover-bills.yml
+
+# No concurrency group on purpose: a shared group keeps only ONE pending run, so a third
+# quick click would cancel the second decision. Concurrent decisions are made safe by
+# the fetch/reset/retry loop below instead: each attempt re-applies its decision on top
+# of the latest main.
+
+jobs:
+  record:
+    # The repo is public: only the owner's issues, with this exact title prefix, run
+    # anything. Every other issue skips the job entirely.
+    if: >-
+      github.event.issue.author_association == 'OWNER' &&
+      startsWith(github.event.issue.title, 'Discovery decision: ')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      ISSUE: ${{ github.event.issue.number }}
+    steps:
+      # The title is user input: it reaches the shell only through env and must match
+      # the full pattern; record-discovery-decision.js validates it again.
+      - name: Parse issue title
+        id: parse
+        env:
+          TITLE: ${{ github.event.issue.title }}
+        run: |
+          re='^Discovery decision: (not_relevant|support_parked|track) ((hr|s|hjres|sjres|hconres|sconres|hres|sres)[1-9][0-9]{0,4})( as of ([0-9]{4}-[0-9]{2}-[0-9]{2}))?$'
+          if [[ "$TITLE" =~ $re ]]; then
+            echo "decision=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+            echo "bill_id=${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
+            echo "as_of=${BASH_REMATCH[5]}" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::Title must be 'Discovery decision: <not_relevant|support_parked|track> <billId>[ as of YYYY-MM-DD]'"
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      # Retry on top of the latest main: other decisions, monitor and discovery
+      # also push there.
+      - name: Record decision and push
+        id: record
+        env:
+          DECISION: ${{ steps.parse.outputs.decision }}
+          BILL_ID: ${{ steps.parse.outputs.bill_id }}
+          SOURCE: ${{ github.event.issue.html_url }}
+          AS_OF: ${{ steps.parse.outputs.as_of }}
+        run: |
+          git config user.name 'DC Bills Discovery'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4 5 6; do
+            git fetch -q origin main
+            git reset -q --hard origin/main
+            node scripts/record-discovery-decision.js "$DECISION" "$BILL_ID" "$ISSUE" "$SOURCE" "$AS_OF" > record.out
+            git add scripts/discovery-decisions.json
+            # Nothing to commit = already recorded (a re-run of this issue) or superseded
+            # by a newer issue: both are success, so a re-run can finish closing the issue.
+            if git diff --staged --quiet; then
+              cat record.out >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git commit -q -m "Discovery decision: $DECISION $BILL_ID (#$ISSUE)"
+            if git push -q origin HEAD:main; then
+              cat record.out >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep $((attempt * 5))
+          done
+          echo "::error::Could not push the decision after 6 attempts"
+          exit 1
+
+      - name: Start discovery so the bill is added now
+        id: dispatch
+        if: steps.parse.outputs.decision == 'track' && steps.record.outputs.superseded_by == ''
+        run: gh workflow run discover-bills.yml --ref main -f dry_run=false -f recovery_source=review-decision
+
+      - name: Confirm and close the issue
+        env:
+          DECISION: ${{ steps.parse.outputs.decision }}
+          DISPLAY: ${{ steps.record.outputs.display }}
+          SUPERSEDED_BY: ${{ steps.record.outputs.superseded_by }}
+        run: |
+          if [ -n "$SUPERSEDED_BY" ]; then
+            gh issue close "$ISSUE" --comment "Not applied: a newer decision on **${DISPLAY}** (#${SUPERSEDED_BY}) already stands. Open a new decision from the email if you want to change it."
+            exit 0
+          fi
+          case "$DECISION" in
+            not_relevant)   MSG="Recorded: **${DISPLAY}** is not relevant. It won't be listed for review again (it would still be auto-added if it ever scores 40+)." ;;
+            support_parked) MSG="Recorded: **${DISPLAY}** is pro-DC and parked (the tracker is oppose-only). It won't be listed for review again." ;;
+            track)          MSG="Recorded: **${DISPLAY}** will be tracked. A discovery run has started and saves it as provisional (hidden on the site until classified) within about 10 minutes; its email confirms it." ;;
+          esac
+          gh issue close "$ISSUE" --comment "$MSG"
+
+      # Leave the issue open with a pointer, so a failed click is never silent. Say
+      # precisely whether the decision itself was saved.
+      - name: Report failure on the issue
+        if: failure()
+        env:
+          SAVED: ${{ steps.record.outcome == 'success' }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ "$SAVED" = "true" ]; then
+            BODY="⚠️ The decision **was saved**, but a follow-up step failed (starting discovery or closing this issue). Re-running the workflow is safe: ${RUN_URL}"
+          else
+            BODY="⚠️ This decision was **not** saved. Re-running the workflow, or re-submitting the same link, is safe: ${RUN_URL}"
+          fi
+          gh issue comment "$ISSUE" --body "$BODY" || true

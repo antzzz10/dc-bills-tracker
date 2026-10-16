@@ -1,7 +1,7 @@
 # Decision: automatic recovery from GitHub infrastructure failures (monitor + discovery)
 
 **Date:** 2026-10-08
-**Status:** Implemented on branch `automation-self-heal`; pending live verification
+**Status:** Shipped 2026-10-09 (`d5d5e03`). Live-verified: watchdog recovery of discovery and of the monitor (one recovery each, fence written, no email, green). Not yet observed live: the retrier on a real runner starvation (`workflow_run` never fires for GITHUB_TOKEN-started runs, so recovery runs can't trigger it, by design).
 **Trigger:** The 2026-10-05 weekly discovery scan was created 8h late, then GitHub never
 gave it a runner ("The job was not acquired by Runner of type hosted even after multiple
 attempts"). None of our code ran. The discovery watchdog, which only sends alerts by

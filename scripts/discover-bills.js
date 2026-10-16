@@ -30,6 +30,56 @@ const VERBOSE = args.includes('--verbose');
 const billsPath = join(__dirname, '../src/data/bills.json');
 const lastRunPath = join(__dirname, '../.discover-last-run.json');
 const metaPath = join(__dirname, '../discovery-meta.json');
+const decisionsPath = join(__dirname, 'discovery-decisions.json');
+
+// Human decisions on review-tier bills (score 20-39), recorded by
+// .github/workflows/discovery-decision.yml from the links in the discovery email.
+// Without this, every weekly scan re-scored the same borderline bills and emailed
+// them again, indefinitely. A missing file means no decisions; an unreadable one is
+// fatal, because silently ignoring it would resume the weekly re-emails.
+// Decisions are scoped to one Congress: bill numbers restart every Congress, so a
+// 119th-Congress dismissal must never silence a different 120th-Congress bill.
+const DECISIONS = new Set(['not_relevant', 'support_parked', 'track']);
+const DECISION_ID_RE = /^(hr|s|hjres|sjres|hconres|sconres|hres|sres)([1-9][0-9]{0,4})$/;
+const isCalendarDate = d => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d)
+  && !Number.isNaN(Date.parse(d)) && new Date(d).toISOString().slice(0, 10) === d;
+function loadDecisions() {
+  if (!existsSync(decisionsPath)) return new Map();
+  const raw = JSON.parse(readFileSync(decisionsPath, 'utf-8'));
+  const bad = msg => { throw new Error(`discovery-decisions.json: ${msg}`); };
+  if (!raw || typeof raw.decisions !== 'object' || Array.isArray(raw.decisions) || raw.decisions === null) {
+    bad('"decisions" must be an object keyed by bill id');
+  }
+  const decisions = new Map();
+  for (const [id, record] of Object.entries(raw.decisions)) {
+    if (!DECISION_ID_RE.test(id)) bad(`unsupported bill id "${id}"`);
+    if (!DECISIONS.has(record?.decision)) bad(`${id} has unknown decision "${record?.decision}"`);
+    if (!Number.isInteger(record.congress)) bad(`${id} has no congress number`);
+    if (!isCalendarDate(record.decidedAt)) bad(`${id} has no valid decidedAt date`);
+    if (record.actionDateReviewed !== undefined && !isCalendarDate(record.actionDateReviewed)) {
+      bad(`${id} has an invalid actionDateReviewed`);
+    }
+    if (record.congress === CONGRESS_NUMBER) decisions.set(id, record);
+  }
+  return decisions;
+}
+
+// A not_relevant/support_parked decision silences a review-tier bill only while the
+// evidence is what was reviewed. It returns to the review list (with the reason, at any
+// score) when scoring data was incomplete this run, or the bill has had a newer action
+// than the one shown when it was decided (e.g. amended, marked up): the review
+// threshold measures DC relevance, not hostility. actionDateReviewed is the bill's
+// latest-action date carried in the email link; older records fall back to decidedAt.
+function reviewAgainReason(record, details) {
+  if (details.missing?.length) return `scoring data incomplete this run (${details.missing.join(', ')})`;
+  const baseline = record.actionDateReviewed || record.decidedAt;
+  if (details.latestActionDate && details.latestActionDate > baseline) {
+    return record.actionDateReviewed
+      ? `new action on ${details.latestActionDate}, after the ${baseline} action you reviewed (${record.decision} on ${record.decidedAt})`
+      : `new action on ${details.latestActionDate}, after your ${record.decision} decision on ${record.decidedAt}`;
+  }
+  return null;
+}
 
 // Channel health. Discovery must fail CLOSED: a lost channel or truncated scan is a
 // failed run, never a quiet "zero candidates" run — that distinction is what let the
@@ -58,9 +108,12 @@ function healthVerdict() {
 // email always has something truthful to say. Counts of what was actually added come
 // from the validated list, never from pre-validation scoring.
 function writeMeta({ autoAddCandidates = [], validatedAdds = [], validationFailures = [],
-                     review = [], skipped = [], earlyExit = null, fatalError = null } = {}) {
+                     review = [], skipped = [], dismissed = [],
+                     earlyExit = null, fatalError = null } = {}) {
   const { checkFailed, degraded } = healthVerdict();
-  const tier = e => ({ displayNumber: e.displayNumber, title: e.title, score: e.score,
+  const tier = e => ({ id: normalizeBillId(e.billType, e.number), ...(e.reviewAgain ? { reviewAgain: e.reviewAgain } : {}),
+    ...(e.details?.latestActionDate ? { latestActionDate: e.details.latestActionDate } : {}),
+    displayNumber: e.displayNumber, title: e.title, score: e.score,
     url: `https://www.congress.gov/bill/${CONGRESS_NUMBER}th-congress/${{
       hr: 'house-bill', s: 'senate-bill', hjres: 'house-joint-resolution',
       sjres: 'senate-joint-resolution', hconres: 'house-concurrent-resolution',
@@ -84,6 +137,8 @@ function writeMeta({ autoAddCandidates = [], validatedAdds = [], validationFailu
     validationFailures: validationFailures.map(tier),
     review: review.map(tier),
     skippedCount: skipped.length,
+    // Review-tier bills silenced by a recorded decision (not emailed).
+    dismissed: dismissed.map(tier),
     notes: health.notes
   }, null, 2));
   console.log(`💾 Meta saved to: ${metaPath}`);
@@ -670,6 +725,10 @@ async function fetchCandidateDetails(billType, number) {
     const data = await response.json();
     const bill = data.bill;
 
+    // A failed sub-request lowers the score without failing the fetch. Record it: a
+    // bill with a recorded decision is only silenced on complete data.
+    const missing = [];
+
     // Fetch subjects
     let subjects = [];
     try {
@@ -682,6 +741,7 @@ async function fetchCandidateDetails(billType, number) {
       }
     } catch {
       log(`    ⚠️  Could not fetch subjects`);
+      missing.push('subjects');
     }
 
     // Fetch summary
@@ -697,6 +757,7 @@ async function fetchCandidateDetails(billType, number) {
       }
     } catch {
       log(`    ⚠️  Could not fetch summary`);
+      missing.push('summary');
     }
 
     // Fetch cosponsors count
@@ -708,6 +769,7 @@ async function fetchCandidateDetails(billType, number) {
       cosponsorsCount = cosponsorsData.pagination?.count || 0;
     } catch {
       log(`    ⚠️  Could not fetch cosponsors`);
+      missing.push('cosponsors');
     }
 
     // Fetch committees from sub-endpoint (main bill endpoint returns a reference object, not an array)
@@ -719,6 +781,7 @@ async function fetchCandidateDetails(billType, number) {
       committees = (committeesData.committees || []).map(c => c.name).filter(Boolean);
     } catch {
       log(`    ⚠️  Could not fetch committees`);
+      missing.push('committees');
     }
 
     return {
@@ -731,6 +794,7 @@ async function fetchCandidateDetails(billType, number) {
       subjects,
       summary,
       cosponsorsCount,
+      missing,
       congressUrl: bill.url || `https://www.congress.gov/bill/${CONGRESS_NUMBER}th-congress/${billType}/${number}`
     };
   } catch (error) {
@@ -923,6 +987,8 @@ async function main() {
   const billsData = JSON.parse(readFileSync(billsPath, 'utf-8'));
   const trackedSet = buildTrackedSet(billsData);
   console.log(`\n📊 Currently tracking ${trackedSet.size} bill identifiers`);
+  const decisions = loadDecisions();
+  console.log(`🗂️  ${decisions.size} recorded review decision(s)`);
 
   const fromDate = getFromDate();
   if (fromDate) {
@@ -972,6 +1038,15 @@ async function main() {
     }
   }
 
+  // A "track" decision adds the bill even if no channel surfaced it this week (an
+  // incremental scan only sees recently updated bills). Already-tracked bills are
+  // skipped: the decision has been carried out.
+  for (const [id, record] of decisions) {
+    if (record.decision !== 'track' || trackedSet.has(id) || newCandidates.has(id)) continue;
+    const m = DECISION_ID_RE.exec(id);
+    newCandidates.set(id, { billType: m[1], number: m[2], title: record.title || '', source: ['review decision: track'] });
+  }
+
   console.log(`\n✅ Already tracked: ${alreadyTrackedCount}`);
   console.log(`🆕 New candidates to evaluate: ${newCandidates.size}`);
 
@@ -993,7 +1068,8 @@ async function main() {
   const results = {
     autoAdd: [],    // Score 40+
     review: [],     // Score 20-39
-    skipped: []     // Score <20
+    skipped: [],    // Score <20
+    dismissed: []   // Score 20-39, already decided by a human: not emailed again
   };
 
   let i = 0;
@@ -1029,10 +1105,25 @@ async function main() {
       candidate
     };
 
-    if (score >= 40) {
-      console.log(`  🟢 AUTO-ADD (score ${score})`);
+    const record = decisions.get(id);
+    const decision = record?.decision;
+    const againReason = record ? reviewAgainReason(record, details) : null;
+    if (decision === 'track') {
+      console.log(`  🟢 AUTO-ADD (score ${score}; human decision: track)`);
+      entry.reasons.push('Human review decision: track');
       results.autoAdd.push(entry);
-    } else if (score >= 20) {
+    } else if (score >= 40) {
+      // A not_relevant/support_parked decision only silences the review tier: a bill
+      // that has since gained enough DC signal to auto-add is added regardless.
+      console.log(`  🟢 AUTO-ADD (score ${score})${decision ? ` — previously decided ${decision}` : ''}`);
+      results.autoAdd.push(entry);
+    } else if (score >= 20 && decision && !againReason) {
+      console.log(`  ⚫ DECIDED (score ${score}; ${decision}) — not listed for review`);
+      results.dismissed.push(entry);
+    } else if (score >= 20 || againReason) {
+      // A decided bill with new evidence (or incomplete data) is shown at any score:
+      // an amendment can lower the DC-relevance score while making a bill worse.
+      if (againReason) entry.reviewAgain = againReason;
       console.log(`  🟡 REVIEW NEEDED (score ${score})`);
       results.review.push(entry);
     } else {
@@ -1077,7 +1168,7 @@ async function main() {
     });
   }
 
-  console.log(`\nSummary: ${results.autoAdd.length} auto-add | ${results.review.length} review | ${results.skipped.length} skipped`);
+  console.log(`\nSummary: ${results.autoAdd.length} auto-add | ${results.review.length} review | ${results.dismissed.length} already decided | ${results.skipped.length} skipped`);
 
   // Auto-add high-confidence bills to bills.json
   const validated = [];
@@ -1132,7 +1223,8 @@ async function main() {
     validatedAdds: validated,
     validationFailures,
     review: results.review,
-    skipped: results.skipped
+    skipped: results.skipped,
+    dismissed: results.dismissed
   });
 
   // Stamp freshness only for a fully healthy live scan — the staleness watchdog

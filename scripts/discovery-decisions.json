@@ -1,0 +1,101 @@
+{
+  "_about": "Human decisions on bills the weekly discovery scan scored 20-39 ('needs review'). A decided bill is never listed for review again. not_relevant / support_parked only silence the review list: a bill that later scores 40+ is still auto-added. track forces the bill in as provisional on the next scan. Decisions apply to one Congress, and a dismissed bill returns to review if it has a new action after decidedAt or its scoring data was incomplete. Written by .github/workflows/discovery-decision.yml from the links in the discovery email; see decisions/2026-10-09-discovery-review-decisions.md.",
+  "decisions": {
+    "hr3012": {
+      "decision": "support_parked",
+      "congress": 119,
+      "displayNumber": "H.R. 3012",
+      "title": "Improving Reentry for District of Columbia Residents in the Bureau of Prisons Act of 2025",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "hr4013": {
+      "decision": "support_parked",
+      "congress": 119,
+      "displayNumber": "H.R. 4013",
+      "title": "Half-staff flag on the death of the Mayor of the District of Columbia",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "hr5003": {
+      "decision": "support_parked",
+      "congress": 119,
+      "displayNumber": "H.R. 5003",
+      "title": "Equal Treatment of the District of Columbia Under the Rural Health Transformation Program Act of 2025",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "hr5051": {
+      "decision": "support_parked",
+      "congress": 119,
+      "displayNumber": "H.R. 5051",
+      "title": "Body-worn cameras for Armed Forces deployed in the District of Columbia",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "hr5971": {
+      "decision": "support_parked",
+      "congress": 119,
+      "displayNumber": "H.R. 5971",
+      "title": "Service Academies District of Columbia Equality Act",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "hr6308": {
+      "decision": "support_parked",
+      "congress": 119,
+      "displayNumber": "H.R. 6308",
+      "title": "District of Columbia seal stained glass panel, Library of Congress",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "hr6537": {
+      "decision": "support_parked",
+      "congress": 119,
+      "displayNumber": "H.R. 6537",
+      "title": "Extend empowerment zone tax benefits to the District of Columbia",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "s3154": {
+      "decision": "support_parked",
+      "congress": 119,
+      "displayNumber": "S. 3154",
+      "title": "Service Academies District of Columbia Equality Act of 2025",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "hr4089": {
+      "decision": "not_relevant",
+      "congress": 119,
+      "displayNumber": "H.R. 4089",
+      "title": "Chuck Brown Post Office designation",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "hr5920": {
+      "decision": "not_relevant",
+      "congress": 119,
+      "displayNumber": "H.R. 5920",
+      "title": "District of Columbia Flood Prevention Act of 2025",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "s1353": {
+      "decision": "not_relevant",
+      "congress": 119,
+      "displayNumber": "S. 1353",
+      "title": "Second Division Memorial modifications extension",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    },
+    "s2546": {
+      "decision": "not_relevant",
+      "congress": 119,
+      "displayNumber": "S. 2546",
+      "title": "National Emergency Medical Services Memorial authority extension",
+      "decidedAt": "2026-10-09",
+      "source": "initial triage (Andria-approved)"
+    }
+  }
+}
