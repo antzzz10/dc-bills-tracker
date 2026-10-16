@@ -6,8 +6,9 @@
       "congress": 119,
       "displayNumber": "H.R. 3012",
       "title": "Improving Reentry for District of Columbia Residents in the Bureau of Prisons Act of 2025",
-      "decidedAt": "2026-10-09",
-      "source": "initial triage (Andria-approved)"
+      "decidedAt": "2026-10-16",
+      "issue": 1,
+      "source": "https://github.com/antzzz10/dc-bills-tracker/issues/1"
     },
     "hr4013": {
       "decision": "support_parked",
