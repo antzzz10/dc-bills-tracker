@@ -55,6 +55,36 @@ Draft copy and spec remain at `docs/about-page-draft.md` purely as a handoff art
 
 ## Credibility guardrails — next step
 
+### Public listing guardrails and complete status taxonomy
+
+Draft for review: `PUBLIC-LISTING-GUARDRAILS-DRAFT.md`. This is tracker work for a
+separate thread; do not resolve it as part of Codex onboarding.
+
+Decisions already made by Andria on September 8, 2026:
+
+- generated public statistics must agree with their underlying bill data;
+- public status sections must be mutually exclusive and collectively exhaustive;
+  a measure must appear exactly once, under a truthful label; and
+- automated discovery must not substantively label every candidate `oppose`.
+  Publication requires meeting approved guardrails or referral to a human reviewer.
+
+Questions to resolve before the guardrails are approved and published:
+
+1. Should failed, withdrawn, superseded, and prior-Congress measures remain in a
+   separate searchable archive, outside active counts? This is the current
+   recommendation.
+2. What type-specific statuses should apply to simple and concurrent resolutions,
+   which do not follow the ordinary House–Senate–President lifecycle?
+3. Is an approved external classification sufficient for publication, or must every
+   newly discovered bill receive an explicit RepresentDC human review?
+4. Should `routine` measures be publicly described as "anti-DC," or as structural
+   consequences of denied statehood within the same tracker?
+
+After those decisions: reconcile `METHODOLOGY.md`, the provisional-review workflow,
+the data schema/lints, public section logic and copy, generated counts, and the public
+methodology page. Validate the taxonomy against every currently tracked lifecycle
+state before deployment.
+
 Two gates now block commit and deploy: `lint-bills.js` (data shape + vote plausibility +
 urgency-claim expiry) and `check-published-claims.js` (the sentences the page shows).
 Rationale and the six incidents that prompted them:
