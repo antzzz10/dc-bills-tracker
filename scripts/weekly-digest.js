@@ -91,12 +91,20 @@ function getWeeklyChanges() {
     const newById = Object.fromEntries(newBills.map(b => [b.id, b]));
 
     const added = newBills.filter(b => !oldById[b.id]);
+    // A changed last action counts only when the action itself is from this week. The
+    // monitor began syncing Congress.gov's own latest action on 2026-11-08, and that
+    // first sync rewrote dozens of entries with actions from 2025; those are corrections
+    // to our record, not things Congress did this week.
+    const weekStart = new Date(Date.now() - DAYS_BACK * 86400000).toISOString().slice(0, 10);
     const changed = newBills.filter(b => {
       const old = oldById[b.id];
       if (!old) return false;
-      return old.status?.stage !== b.status?.stage ||
-             old.status?.lastAction !== b.status?.lastAction ||
-             old.priority !== b.priority;
+      const newAction = old.status?.lastAction !== b.status?.lastAction &&
+                        (b.status?.lastActionDate || '') >= weekStart;
+      // A stage that moved forward is news; one cleared back to none is a correction
+      // to our record (H.R. 5525, 2026-11-08), not something that happened this week.
+      const advanced = old.status?.stage !== b.status?.stage && Boolean(b.status?.stage);
+      return advanced || newAction || old.priority !== b.priority;
     });
     const newlyPassed = changed.filter(b => {
       const old = oldById[b.id];
@@ -148,7 +156,7 @@ async function generateDigest({ stats, changes, featuredBill, news, weekOf }) {
       ? `NEW BILLS ADDED:\n${changes.newBills.map(b => `- ${b.billNumbers[0]}: ${b.title}`).join('\n')}`
       : '',
     changes.statusChanges.length > 0
-      ? `STATUS UPDATES:\n${changes.statusChanges.slice(0, 5).map(b => `- ${b.billNumbers[0]}: ${b.status.lastAction || b.status.stage}`).join('\n')}`
+      ? `STATUS UPDATES:\n${changes.statusChanges.slice(0, 5).map(b => `- ${b.billNumbers[0]}: ${b.status.lastAction || b.status.stage}${b.status.lastActionDate ? ` (${b.status.lastActionDate})` : ''}`).join('\n')}`
       : '',
   ].filter(Boolean).join('\n\n') || 'No significant changes this week.';
 

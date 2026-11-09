@@ -1636,9 +1636,9 @@
       "priority": "high",
       "prioritySource": "legislative",
       "status": {
-        "stage": "passed-house",
-        "lastAction": "Passed House",
-        "lastActionDate": "2025-09-19",
+        "stage": null,
+        "lastAction": "Ordered to be Reported (Amended) by the Yeas and Nays: 21 - 19.",
+        "lastActionDate": "2026-03-18",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": true,
         "hasFloorVote": false,
@@ -2141,7 +2141,7 @@
       "status": {
         "stage": "enacted",
         "lastAction": "Signed into law by President Trump. DC Council Chairman Mendelson maintains the decoupling law already took effect Feb 11 — before the Senate voted — making the disapproval resolution invalid. No formal legal challenge filed yet.",
-        "lastActionDate": "2026-02-22",
+        "lastActionDate": "2026-02-18",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": true,
         "hasFloorVote": true,

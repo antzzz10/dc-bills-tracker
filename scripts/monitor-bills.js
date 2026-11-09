@@ -303,7 +303,9 @@ async function fetchBillStatus(billNumber) {
 
   const { billType, number, chamber } = parsed;
   const billUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}?api_key=${CONGRESS_API_KEY}`;
-  const actionsUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}/actions?api_key=${CONGRESS_API_KEY}`;
+  // limit=250: the API defaults to 20 actions per page, and the busiest tracked measure
+  // already has 53. A truncated list can hide a passage action.
+  const actionsUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}/actions?api_key=${CONGRESS_API_KEY}&limit=250`;
   const cosponsorsUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}/cosponsors?api_key=${CONGRESS_API_KEY}`;
 
   try {
@@ -571,13 +573,34 @@ function updateBillsJson(billId, passageInfo, status) {
       console.log(`  ⏸️  Keeping stage "${bill.status.stage}"; detected "${passageInfo.stage}" is earlier`);
     } else if (passageInfo.stage && bill.status.stage !== passageInfo.stage) {
       bill.status.stage = passageInfo.stage;
-      bill.status.lastAction = passageInfo.hasBecomeLaw
-        ? 'Became law'
-        : (passageInfo.hasPassedHouse ? 'Passed House' : 'Passed Senate');
-      bill.status.lastActionDate = new Date().toISOString().split('T')[0];
       updated = true;
       stageChanged = true;
       console.log(`  ✓ Updated stage to: ${passageInfo.stage}`);
+    }
+    // Deliberately no automatic downgrade. H.R. 5525 sat at a hand-entered
+    // "passed-house" for ten months (it was only marked up in committee) because this
+    // guard never moves a stage backwards. Clearing a stage when the detector finds no
+    // passage was tried and rejected (Codex review, 2026-11-08): the detector misses
+    // voice votes and suspension passages, so it would erase real passages. Stage
+    // disagreements are caught by representdc-data's coverage report instead.
+
+    // Last action = Congress.gov's own latest action, text and date. The monitor used to
+    // write "Passed House" with the date of the run that noticed the change, so the site
+    // dated those events to whenever the cron happened to fire (twenty bills read
+    // "2025-11-28"), and it never refreshed these fields otherwise.
+    if (status.latestActionDate && status.latestAction &&
+        (bill.status.lastActionDate !== status.latestActionDate ||
+         bill.status.lastAction !== status.latestAction)) {
+      bill.status.lastAction = status.latestAction;
+      bill.status.lastActionDate = status.latestActionDate;
+      updated = true;
+    }
+
+    // Introduction date, so "new bill" claims key off the actual introduction rather than
+    // guessing from action text ("Referred to..." also describes later re-referrals).
+    if (status.introducedDate && bill.status.introducedDate !== status.introducedDate) {
+      bill.status.introducedDate = status.introducedDate;
+      updated = true;
     }
 
     // Add or update passage data

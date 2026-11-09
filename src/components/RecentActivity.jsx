@@ -34,54 +34,70 @@ function RecentActivity({ allBills, allRiders }) {
     const allItems = [...allBills, ...allRiders]
 
     allItems.forEach(item => {
+      const lastAction = item.status?.lastAction || ''
       const lastActionDate = item.status?.lastActionDate
+      const stage = item.status?.stage
+      // The vote that produced the current stage. A passage is shown on its own vote
+      // date, never on the date of whatever happened afterwards ("Received in the
+      // Senate"). If that vote isn't on record (a voice vote, unanimous consent, or a
+      // failed roll-call fetch), the official latest action is shown instead, so an
+      // earlier House vote is never relabelled as passing both chambers.
+      const houseDate = item.passage?.house?.date
+      const senateDate = item.passage?.senate?.date
+      const passageDate =
+        stage === 'passed-house' ? houseDate
+          : stage === 'passed-senate' ? senateDate
+            : stage === 'passed-both' && houseDate && senateDate
+              ? [houseDate, senateDate].sort().pop()
+              : null
 
-      // Skip if no recent action
-      if (!isRecent(lastActionDate)) return
-
-      // Determine activity type and description
       let activityType = ''
       let description = ''
       let icon = 'file-text'
+      let date = lastActionDate
 
-      // Passed bills
-      if (item.status?.stage?.startsWith('passed-')) {
+      // Passed bills, when the vote itself is recent
+      if (stage?.startsWith('passed-') && isRecent(passageDate)) {
         activityType = 'passed'
         icon = 'alert-triangle'
-        if (item.status.stage === 'passed-house') {
+        date = passageDate
+        if (stage === 'passed-house') {
           description = `Passed the House`
-        } else if (item.status.stage === 'passed-senate') {
+        } else if (stage === 'passed-senate') {
           description = `Passed the Senate`
-        } else if (item.status.stage === 'passed-both') {
+        } else if (stage === 'passed-both') {
           description = `Passed both chambers`
         }
       }
-      // New bills (introduced recently)
-      else if (item.status?.lastAction === 'Introduced' || item.provisional) {
-        activityType = 'introduced'
-        icon = 'eye'
-        description = 'Introduced'
-      }
-      // Committee activity
-      else if (item.status?.hasCommitteeMarkup) {
-        activityType = 'markup'
-        icon = 'pencil'
-        description = 'Committee markup'
-      } else if (item.status?.hasCommitteeHearing) {
-        activityType = 'hearing'
-        icon = 'ear'
-        description = 'Committee hearing held'
-      }
-      // Other status changes
-      else if (item.status?.lastAction) {
-        activityType = 'status-change'
-        icon = 'refresh-cw'
-        description = item.status.lastAction
+      // Otherwise: the latest official action, in Congress.gov's own words and on its
+      // own date. Labels like "Committee markup" used to come from flags that stay true
+      // forever, so any later action was shown as a markup.
+      else if (isRecent(lastActionDate)) {
+        if (lastAction === 'Introduced' || (item.provisional && !lastAction)) {
+          activityType = 'introduced'
+          icon = 'eye'
+          description = 'Introduced'
+        } else if (lastAction) {
+          description = lastAction
+          if (/introduced|referred to/i.test(lastAction)) {
+            activityType = 'introduced'
+            icon = 'eye'
+          } else if (/mark-?up|ordered to be reported/i.test(lastAction)) {
+            activityType = 'markup'
+            icon = 'pencil'
+          } else if (/hearing/i.test(lastAction)) {
+            activityType = 'hearing'
+            icon = 'ear'
+          } else {
+            activityType = 'status-change'
+            icon = 'refresh-cw'
+          }
+        }
       }
 
       if (description) {
         activities.push({
-          date: lastActionDate,
+          date,
           type: activityType,
           icon,
           billNumbers: formatBillNumbers(item.billNumbers),

@@ -20,7 +20,7 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
-import { getUpdateBannerMessage } from '../src/components/updateBannerMessage.js';
+import { getUpdateBannerMessage, introductionDate } from '../src/components/updateBannerMessage.js';
 import {
   getPageSummaryFacts,
   advancedDetailText,
@@ -93,14 +93,25 @@ if (banner) {
     }
   }
 
-  // "X just introduced" — must correspond to a real, recent introduction.
-  const introMatch = message.match(/^(\S+)\s+just introduced:/);
+  // "X introduced: <title>" — must correspond to a real introduction within the last week.
+  // The banner joins companion numbers with "/" and numbers contain spaces ("H.R. 7068"),
+  // so match up to " introduced:". (This used to look for "just introduced", which the
+  // banner never says, so the claim was never checked.) Provisional bills count: the
+  // banner announces them on purpose.
+  const introMatch = message.match(/^(.+?) introduced:/);
   if (introMatch) {
-    const bill = opposeById.get(introMatch[1]);
+    const firstNumber = introMatch[1].split('/')[0].trim();
+    const bill = (data.bills || []).find(b => (b.billNumbers || [])[0] === firstNumber);
+    const introduced = bill && introductionDate(bill);
+    const ageDays = introduced
+      ? Math.floor((Date.now() - new Date(`${introduced}T00:00:00`)) / 86400000)
+      : null;
     if (!bill) {
-      fail(message, `names ${introMatch[1]}, which is not an oppose-side bill`);
+      fail(message, `names ${firstNumber}, which is not in the bills list`);
     } else if (bill.status?.stage) {
-      fail(message, `${introMatch[1]} has stage "${bill.status.stage}" — it is past introduction`);
+      fail(message, `${firstNumber} has stage "${bill.status.stage}" — it is past introduction`);
+    } else if (ageDays === null || ageDays < 0 || ageDays > 7) {
+      fail(message, `${firstNumber} was not introduced in the last 7 days (${introduced || 'no date'})`);
     }
   }
 } else {

@@ -7,29 +7,39 @@
 // the same verdict instead of duplicating the rules and drifting apart. Same reason
 // urgentAlertState.js exists.
 
+// YYYY-MM-DD as a local date. new Date('2026-03-18') is UTC midnight, which renders as
+// the previous day anywhere west of Greenwich.
+const parseLocalDate = (dateString) => {
+  const [year, month, day] = dateString.split('-').map(Number)
+  return new Date(year, month - 1, day)
+}
+
+// Official introduction date. Older entries without one fall back to a last action that
+// is itself the introduction.
+export function introductionDate(bill) {
+  if (bill.status?.introducedDate) return bill.status.introducedDate
+  if (bill.status?.lastActionDate && /^Introduced/i.test(bill.status?.lastAction || '')) {
+    return bill.status.lastActionDate
+  }
+  return null
+}
+
 export function getUpdateBannerMessage({ passedBills = [], upcomingFloorVotes = [], allBills = [] }) {
-  // Check for newly introduced bills (within last 7 days)
+  // Check for newly introduced bills (within last 7 days), keyed off the official
+  // introduction date. Action text can't tell: "Referred to..." also describes a later
+  // re-referral, which the old text match announced as a new bill.
   const recentlyIntroduced = allBills.filter(bill => {
-    if (!bill.status?.lastActionDate) return false
-
-    const actionDate = new Date(bill.status.lastActionDate)
-    const daysSince = Math.floor((Date.now() - actionDate) / (1000 * 60 * 60 * 24))
-
-    // Check if it's a new introduction and within 7 days
-    const isIntroduction = bill.status.lastAction &&
-      (bill.status.lastAction.includes('Referred to') ||
-       bill.status.lastAction.includes('Introduced'))
-
-    return isIntroduction && daysSince <= 7
-  }).sort((a, b) => {
-    // Sort by date descending (most recent first)
-    return new Date(b.status.lastActionDate) - new Date(a.status.lastActionDate)
-  })
+    if (bill.status?.stage) return false
+    const introduced = introductionDate(bill)
+    if (!introduced) return false
+    const daysSince = Math.floor((Date.now() - parseLocalDate(introduced)) / (1000 * 60 * 60 * 24))
+    return daysSince >= 0 && daysSince <= 7
+  }).sort((a, b) => introductionDate(b).localeCompare(introductionDate(a)))
 
   // Prioritize showing newly introduced bills
   if (recentlyIntroduced.length > 0) {
     const newest = recentlyIntroduced[0]
-    const actionDate = new Date(newest.status.lastActionDate)
+    const actionDate = parseLocalDate(introductionDate(newest))
     const formattedDate = actionDate.toLocaleDateString('en-US', {
       month: 'long',
       day: 'numeric',

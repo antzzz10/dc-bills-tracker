@@ -955,7 +955,9 @@ function buildBillEntry(billType, number, details, score) {
     status: {
       stage: null,
       lastAction: details.latestAction || 'Unknown',
-      lastActionDate: details.latestActionDate || today,
+      // Congress.gov's own dates only; a missing one stays missing (never "today").
+      lastActionDate: details.latestActionDate || null,
+      introducedDate: details.introducedDate || null,
       hasCommitteeHearing: false,
       hasCommitteeMarkup: false,
       hasFloorVote: false,
