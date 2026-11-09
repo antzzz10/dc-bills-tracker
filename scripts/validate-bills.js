@@ -99,6 +99,7 @@ async function main() {
     ...(billsData.bills || []),
     ...(billsData.riders || []),
     ...(billsData.supportBills || []),
+    ...(billsData.routineBills || []),
   ];
 
   let candidates;

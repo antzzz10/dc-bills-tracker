@@ -78,11 +78,9 @@ jobs:
           node --input-type=module << 'EOF'
           import { readFileSync } from 'fs';
           const data = JSON.parse(readFileSync('src/data/bills.json', 'utf-8'));
-          // Only the sections this job actually fetches. It used to count riders and
-          // supportBills too, which the monitor never scans — 17 of 18 riders are
-          // provisions of one appropriations bill and support bills are parked — so the
-          // warning reported 102 unvalidated entries every single run and meant nothing.
-          const scanned = data.bills || [];
+          // Every section the monitor scans. Since 2026-11 that is all four; riders are
+          // validated through the spending bill they sit on.
+          const scanned = ['bills', 'riders', 'supportBills', 'routineBills'].flatMap(s => data[s] || []);
           const unvalidated = scanned.filter(b => !b.congressValidated);
           if (unvalidated.length > 0) {
             console.log(`⚠️  WARNING: ${unvalidated.length} of ${scanned.length} scanned bill(s) have never been confirmed on Congress.gov:`);

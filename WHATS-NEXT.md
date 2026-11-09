@@ -11,7 +11,9 @@ policy, privacy rules, bundle discipline, the About page, the design-system roll
 across all three sites, and the cross-repo data contracts. Read that first; this file
 is only what is specific to the bill tracker.
 
-Longer-range domain ideas: `representdc-main/WHATS-NEXT.md`. Cross-project
+**The single RepresentDC to-do list is `representdc-main/WHATS-NEXT.md`** (merged
+2026-11-09); it leads with the four goals of the November plan. This file keeps the
+tracker-only detail. Cross-project
 scheduling: `~/Projects/QUEUE.md`.
 
 Started 2026-07-27 from a `site-batch` triage. Each item carries its **lane** —
@@ -68,7 +70,10 @@ Decisions already made by Andria on September 8, 2026:
 - automated discovery must not substantively label every candidate `oppose`.
   Publication requires meeting approved guardrails or referral to a human reviewer.
 
-Questions to resolve before the guardrails are approved and published:
+✅ **Answered 2026-11-09** (`PUBLIC-LISTING-GUARDRAILS-DRAFT.md`, "Andria's answers"):
+archive yes; resolutions counted separately; publish as "not yet reviewed" with very
+obvious reviews; routine measures are structural consequences. The build is
+`docs/2026-11-09-support-page-and-congress-switch-plan.md`. The original questions:
 
 1. Should failed, withdrawn, superseded, and prior-Congress measures remain in a
    separate searchable archive, outside active counts? This is the current
@@ -145,7 +150,12 @@ gates in priority.
 
 ## 🅿️ Parking lot
 
-### Support bills (pro-DC) — **parked 2026-08-03**
+### Support bills (pro-DC) — **parked 2026-08-03; revival approved 2026-11-09**
+
+**Update 2026-11-09:** Andria approved a separate `/support` page. The revival blocker
+below is fixed by step 1b of the support-page plan (built, in review): the daily check
+now covers support bills, routine measures and riders, and support priority is
+momentum-only.
 The tracker is **oppose-only**. `SupportBillsSection` no longer renders and
 `breakdown.supportBills` is gone from `/api/stats.json`. The 36 entries stay in
 `bills.json` and stay linted; the component file is kept, unreferenced.
@@ -203,11 +213,13 @@ cases automation genuinely cannot fix.
 Candidate threads, in rough value order:
 - **Provenance tracking** (`_source` field) — the last open item from the Congress
   validation plan. Would record where each bill entry came from.
-- **Data-integrity lint additions**, both cheap and both would have caught real bugs:
+- ~~**Data-integrity lint additions**~~ ✅ shipped as `lint-bills.js` check 8. Both cheap and both would have caught real bugs:
   assert `yeas > nays` for anything marked passed, and assert party rows sum to the
   displayed total. (A wrong, inverted House vote shipped live on H.R. 5103 and was
   caught only by manual review — see `decisions/2026-07-27-provisional-review.md`.)
-- **Priority persistence audit** — entries have been found stale (`watching` despite
+- **Priority persistence audit** — confirmed 2026-11-09: `calculatePriority`'s result
+  goes only to the email and `bill-status-history.json`; nothing writes it to
+  `bills.json`. Still to decide whether it should. Entries have been found stale (`watching` despite
   `hasFloorVote: true`), suggesting `calculatePriority`'s result may never be written
   back to `bills.json`. Unknown blast radius until audited.
 

@@ -36,6 +36,12 @@ const STAGE_RANK = {
 const billsPath = join(__dirname, '../src/data/bills.json');
 const billsData = JSON.parse(readFileSync(billsPath, 'utf-8'));
 
+// Every section of bills.json the daily check covers. Until 2026-11 it read `bills` only:
+// support bills drifted (H.R. 51's cosponsors went stale) and S. 1077, a routine measure,
+// sat at no stage for eight months after passing the Senate. Riders are handled apart —
+// see checkRiderParent — because a rider is a provision, not a bill.
+const SECTIONS = ['bills', 'riders', 'supportBills', 'routineBills'];
+
 // Parse bill number to API format
 function parseBillNumber(billNumber) {
   const match = billNumber.match(/(H\.R\.|S\.|H\.J\.Res\.|S\.J\.Res\.|H\.Con\.Res\.|S\.Con\.Res\.)\s*(\d+)/i);
@@ -294,7 +300,10 @@ async function detectPassage(actions, chamber, expected) {
 }
 
 // Fetch bill details from Congress.gov API
-async function fetchBillStatus(billNumber) {
+// `congress` is the entry's own Congress, never assumed: a bill number names a different
+// bill in every Congress, so looking an entry up in the wrong one silently overwrites it
+// with another bill's status.
+async function fetchBillStatus(billNumber, congress) {
   const parsed = parseBillNumber(billNumber);
   if (!parsed) {
     console.log(`⚠️  Could not parse bill number: ${billNumber}`);
@@ -302,11 +311,11 @@ async function fetchBillStatus(billNumber) {
   }
 
   const { billType, number, chamber } = parsed;
-  const billUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}?api_key=${CONGRESS_API_KEY}`;
+  const billUrl = `${API_BASE_URL}/bill/${congress}/${billType}/${number}?api_key=${CONGRESS_API_KEY}`;
   // limit=250: the API defaults to 20 actions per page, and the busiest tracked measure
   // already has 53. A truncated list can hide a passage action.
-  const actionsUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}/actions?api_key=${CONGRESS_API_KEY}&limit=250`;
-  const cosponsorsUrl = `${API_BASE_URL}/bill/${CONGRESS_NUMBER}/${billType}/${number}/cosponsors?api_key=${CONGRESS_API_KEY}`;
+  const actionsUrl = `${API_BASE_URL}/bill/${congress}/${billType}/${number}/actions?api_key=${CONGRESS_API_KEY}&limit=250`;
+  const cosponsorsUrl = `${API_BASE_URL}/bill/${congress}/${billType}/${number}/cosponsors?api_key=${CONGRESS_API_KEY}`;
 
   try {
     // Fetch basic bill info
@@ -316,7 +325,7 @@ async function fetchBillStatus(billNumber) {
       // bad bill number, but a *fleet* of 404s means the API is misbehaving — and the two
       // are only distinguishable after the fact if the status is recorded per bill.
       if (response.status === 404) {
-        throw new Error(`HTTP 404 — not found in the ${CONGRESS_NUMBER}th Congress`);
+        throw new Error(`HTTP 404 — not found in the ${congress}th Congress`);
       }
       throw new Error(`HTTP ${response.status}`);
     }
@@ -331,10 +340,17 @@ async function fetchBillStatus(billNumber) {
     let hasFloorVote = false;
     let committees = [];
     let passageInfo = null;
+    // Which parts of the record actually arrived. On 2026-11-09 the bill request for
+    // H.R. 5183 succeeded but its actions request failed; the flags defaulted to false and
+    // overwrote "markup held" on the live site, in a run reported as healthy. A part that
+    // didn't arrive now leaves the stored values alone and counts against the run's health.
+    const missingParts = [];
 
     try {
       const actionsResponse = await fetch(actionsUrl);
-      if (actionsResponse.ok) {
+      if (!actionsResponse.ok) {
+        missingParts.push(`actions (HTTP ${actionsResponse.status})`);
+      } else {
         const actionsData = await actionsResponse.json();
         actions = actionsData.actions || [];
 
@@ -359,19 +375,26 @@ async function fetchBillStatus(billNumber) {
         });
       }
     } catch (e) {
-      console.log(`  ⚠️  Could not fetch actions for ${billNumber}`);
+      missingParts.push(`actions (${e.message})`);
     }
+    const actionsOk = !missingParts.some(p => p.startsWith('actions'));
 
     // Fetch cosponsors count
     let cosponsorsCount = 0;
     try {
       const cosponsorsResponse = await fetch(cosponsorsUrl);
-      if (cosponsorsResponse.ok) {
+      if (!cosponsorsResponse.ok) {
+        missingParts.push(`cosponsors (HTTP ${cosponsorsResponse.status})`);
+      } else {
         const cosponsorsData = await cosponsorsResponse.json();
         cosponsorsCount = cosponsorsData.pagination?.count || 0;
       }
     } catch (e) {
-      console.log(`  ⚠️  Could not fetch cosponsors for ${billNumber}`);
+      missingParts.push(`cosponsors (${e.message})`);
+    }
+    const cosponsorsOk = !missingParts.some(p => p.startsWith('cosponsors'));
+    if (missingParts.length) {
+      console.log(`  ⚠️  Incomplete record for ${billNumber}: could not fetch ${missingParts.join(', ')}`);
     }
 
     // Extract committee info
@@ -387,12 +410,13 @@ async function fetchBillStatus(billNumber) {
       latestActionDate: bill.latestAction?.actionDate || null,
       status: getSimplifiedStatus(bill),
       sponsors: bill.sponsors?.map(s => s.fullName).join(', ') || 'Unknown',
-      url: `https://www.congress.gov/bill/${CONGRESS_NUMBER}th-congress/${billType}/${number}`,
-      // New fields
-      cosponsorsCount,
-      hasCommitteeHearing,
-      hasCommitteeMarkup,
-      hasFloorVote,
+      url: `https://www.congress.gov/bill/${congress}th-congress/${billType}/${number}`,
+      // null = not known this run (that part of the record didn't arrive), never "no".
+      cosponsorsCount: cosponsorsOk ? cosponsorsCount : null,
+      hasCommitteeHearing: actionsOk ? hasCommitteeHearing : null,
+      hasCommitteeMarkup: actionsOk ? hasCommitteeMarkup : null,
+      hasFloorVote: actionsOk ? hasFloorVote : null,
+      missingParts,
       committees,
       introducedDate: bill.introducedDate || null,
       // Passage information
@@ -438,13 +462,18 @@ function calculatePriority(billStatus, billData) {
   const hasMomentum = billStatus.hasFloorVote || billStatus.hasCommitteeMarkup ||
     billStatus.hasCommitteeHearing || billStatus.cosponsorsCount >= 20;
 
+  // Support bills (and the spending bills riders sit on) rank on momentum alone: the
+  // manual and FreeDC flags below are judgments about attacks, and the partial-attack cap
+  // is a rule about attacks. Neither means anything for a bill RepresentDC backs.
+  const momentumOnly = billData.position === 'support' || billData.type === 'rider-parent';
+
   // Partial attacks (bills where DC is not the primary target) can only rank
   // high on real legislative momentum — never on a manual flag or FreeDC
-  // listing alone. See METHODOLOGY.md.
-  const cappedAtMedium = billData.attackType === 'partial' && !hasMomentum;
+  // listing alone. See METHODOLOGY.md. Oppose bills only.
+  const cappedAtMedium = billData.position === 'oppose' && billData.attackType === 'partial' && !hasMomentum;
 
   // Check if bill is manually marked as high priority in bills.json
-  if (billData.priority === 'high' && billData.prioritySource === 'manual') {
+  if (!momentumOnly && billData.priority === 'high' && billData.prioritySource === 'manual') {
     if (cappedAtMedium) {
       return { priority: 'medium', source: 'manual', reason: 'Manually flagged (capped: partial attack without momentum)' };
     }
@@ -452,7 +481,7 @@ function calculatePriority(billStatus, billData) {
   }
 
   // Check if listed on FreeDC (you can set this in bills.json)
-  if (billData.prioritySource === 'freedc') {
+  if (!momentumOnly && billData.prioritySource === 'freedc') {
     if (cappedAtMedium) {
       return { priority: 'medium', source: 'freedc', reason: 'Listed on FreeDC (capped: partial attack without momentum)' };
     }
@@ -497,14 +526,19 @@ function calculatePriority(billStatus, billData) {
 function reloadBillsData() {
   const freshData = JSON.parse(readFileSync(billsPath, 'utf-8'));
   // Update in-memory data with fresh copy
-  billsData.bills = freshData.bills;
-  billsData.riders = freshData.riders;
+  // Every section, not just bills and riders: the write below serializes the whole
+  // object, so a section left stale here would overwrite any edit made to it mid-run.
+  for (const section of SECTIONS) {
+    billsData[section] = freshData[section];
+  }
   billsData.categories = freshData.categories;
   billsData.lastUpdated = freshData.lastUpdated;
+  // Also the freshness stamp, or a write mid-run restores the startup value over it.
+  billsData.lastChecked = freshData.lastChecked;
 }
 
 // Update bills.json with the latest tracked status (stage, votes, cosponsors, hearing/markup/floor flags)
-function updateBillsJson(billId, passageInfo, status) {
+function updateBillsJson(section, billId, passageInfo, status) {
   passageInfo = passageInfo || {};
 
   try {
@@ -512,13 +546,13 @@ function updateBillsJson(billId, passageInfo, status) {
     reloadBillsData();
 
     // Find and update the bill
-    const billIndex = billsData.bills.findIndex(b => b.id === billId);
+    const billIndex = (billsData[section] || []).findIndex(b => b.id === billId);
     if (billIndex === -1) {
-      console.log(`  ⚠️  Could not find bill ${billId} in bills.json`);
+      console.log(`  ⚠️  Could not find ${billId} in bills.json ${section}`);
       return { updated: false, stageChanged: false };
     }
 
-    const bill = billsData.bills[billIndex];
+    const bill = billsData[section][billIndex];
 
     let updated = false;
     let stageChanged = false;
@@ -566,6 +600,7 @@ function updateBillsJson(billId, passageInfo, status) {
     // had just passed both chambers. Today the only enacted bill happens to carry
     // manualOverride and returns above; that is convention, not protection, and nothing
     // requires the next one to be hand-flagged the same way.
+    if (!bill.status) bill.status = {};
     const currentRank = STAGE_RANK[bill.status.stage] || 0;
     const detectedRank = STAGE_RANK[passageInfo.stage] || 0;
 
@@ -665,19 +700,21 @@ function updateBillsJson(billId, passageInfo, status) {
     // Update status flags — each is compared before assignment so a real change
     // (e.g. a cosponsor count bump, which signals traction) actually gets persisted,
     // instead of silently being dropped when no stage/vote change also occurred.
-    if (bill.status.hasFloorVote !== status.hasFloorVote) {
+    // A null field didn't arrive this run (see missingParts in fetchBillStatus): keep
+    // what is stored rather than write "no" over it.
+    if (status.hasFloorVote !== null && bill.status.hasFloorVote !== status.hasFloorVote) {
       bill.status.hasFloorVote = status.hasFloorVote;
       updated = true;
     }
-    if (bill.status.hasCommitteeHearing !== status.hasCommitteeHearing) {
+    if (status.hasCommitteeHearing !== null && bill.status.hasCommitteeHearing !== status.hasCommitteeHearing) {
       bill.status.hasCommitteeHearing = status.hasCommitteeHearing;
       updated = true;
     }
-    if (bill.status.hasCommitteeMarkup !== status.hasCommitteeMarkup) {
+    if (status.hasCommitteeMarkup !== null && bill.status.hasCommitteeMarkup !== status.hasCommitteeMarkup) {
       bill.status.hasCommitteeMarkup = status.hasCommitteeMarkup;
       updated = true;
     }
-    if (bill.status.cosponsors !== status.cosponsorsCount) {
+    if (status.cosponsorsCount !== null && bill.status.cosponsors !== status.cosponsorsCount) {
       console.log(`  ✓ Cosponsors: ${bill.status.cosponsors ?? 0} → ${status.cosponsorsCount}`);
       bill.status.cosponsors = status.cosponsorsCount;
       updated = true;
@@ -697,10 +734,67 @@ function updateBillsJson(billId, passageInfo, status) {
   }
 }
 
+// Record that Congress.gov answered for these entries' bill number. Used for riders, whose
+// content the check deliberately does not touch (see the rider loop in monitorBills).
+// Provenance only, so like the stamp in updateBillsJson it ignores manualOverride.
+function stampValidation(section, ids) {
+  try {
+    reloadBillsData();
+    const today = new Date().toISOString().split('T')[0];
+    let stamped = 0;
+    for (const entry of billsData[section] || []) {
+      if (ids.includes(entry.id) && !entry.congressValidated) {
+        entry.congressValidated = true;
+        entry.congressValidatedDate = today;
+        stamped++;
+      }
+    }
+    if (stamped > 0) {
+      writeFileSync(billsPath, JSON.stringify(billsData, null, 2));
+      console.log(`  ✓ Recorded Congress.gov validation on ${stamped} ${section} entr${stamped === 1 ? 'y' : 'ies'}`);
+    }
+  } catch (error) {
+    console.log(`  ❌ Error stamping validation:`, error.message);
+  }
+}
+
+// One row of the run's history and email for a checked record.
+function changeRecord(id, section, title, status, priorityInfo, stored = {}) {
+  // Where part of the record didn't arrive, history keeps the last known value, so the
+  // next run's diff doesn't announce a hearing or cosponsor jump that already happened.
+  const known = (value, fallback) => (value === null ? (fallback ?? null) : value);
+  return {
+    id,
+    section,
+    bill: title,
+    billNumber: status.billNumber,
+    status: status.status,
+    latestAction: status.latestAction,
+    latestActionDate: status.latestActionDate,
+    url: status.url,
+    priority: priorityInfo.priority,
+    prioritySource: priorityInfo.source,
+    priorityReason: priorityInfo.reason,
+    cosponsorsCount: known(status.cosponsorsCount, stored.cosponsors),
+    hasCommitteeHearing: known(status.hasCommitteeHearing, stored.hasCommitteeHearing),
+    hasCommitteeMarkup: known(status.hasCommitteeMarkup, stored.hasCommitteeMarkup),
+    hasFloorVote: known(status.hasFloorVote, stored.hasFloorVote),
+    committees: status.committees,
+    introducedDate: status.introducedDate,
+    passageInfo: status.passageInfo
+  };
+}
+
+function logPriority(priorityInfo) {
+  const priorityBadge = priorityInfo.priority === 'high' ? '🔴' :
+                       priorityInfo.priority === 'medium' ? '🟡' : '⚪';
+  console.log(`  ${priorityBadge} Priority: ${priorityInfo.priority} (${priorityInfo.reason})`);
+}
+
 // Main monitoring function
 async function monitorBills() {
   console.log('🔍 Starting bill monitoring...\n');
-  console.log(`📊 Checking ${billsData.bills.length} bills\n`);
+  console.log(`📊 Checking ${SECTIONS.map(s => `${(billsData[s] || []).length} ${s}`).join(', ')}\n`);
 
   if (!CONGRESS_API_KEY) {
     console.error('❌ CONGRESS_API_KEY environment variable not set!');
@@ -714,79 +808,166 @@ async function monitorBills() {
   const changes = [];
   const errors = [];
   const passedBills = [];
+  // Health is measured per record we tried to reach, across every section. Entries that
+  // share a record (H.R. 1968's three provisions, H.R. 5166's 17 riders) are one lookup,
+  // so a single bad number can't masquerade as a fleet-wide outage, or the reverse.
+  const lookups = new Map();
+  const checkedBySection = Object.fromEntries(SECTIONS.map(s => [s, 0]));
+  let missingCongress = 0;
 
-  // Check each bill (with rate limiting)
-  for (let i = 0; i < billsData.bills.length; i++) {
-    const bill = billsData.bills[i];
-    const billNumber = bill.billNumbers[0]; // Primary bill number
+  async function lookup(billNumber, congress, section) {
+    const key = `${congress}:${billNumber.replace(/\s+/g, '').toUpperCase()}`;
+    if (lookups.has(key)) return lookups.get(key);
+    let result;
+    try {
+      const status = await fetchBillStatus(billNumber, congress);
+      result = status ? { status } : { error: 'No status returned' };
+    } catch (error) {
+      result = { error: error.message };
+    }
+    if (result.error) {
+      console.log(`  ❌ Error processing ${billNumber}: ${result.error}`);
+      errors.push({ billNumber, section, reason: result.error });
+    } else if (result.status.missingParts.length) {
+      // The record is still used (stored fields are kept), but it wasn't fully verified,
+      // so it counts against the run's health like any other failed lookup.
+      errors.push({ billNumber, section, reason: `Incomplete: could not fetch ${result.status.missingParts.join(', ')}` });
+    }
+    lookups.set(key, result);
+    // Rate limiting: wait 300ms between requests (more requests now with vote data)
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return result;
+  }
 
-    console.log(`[${i + 1}/${billsData.bills.length}] Checking ${billNumber}...`);
+  // An entry is looked up in its own Congress, which every entry must record. Guessing the
+  // current one is how a stale or past-Congress number would pick up a stranger's status.
+  function congressOf(entry, section, billNumber) {
+    if (!Number.isInteger(entry.congress)) {
+      missingCongress++;
+      errors.push({ billNumber, section, reason: `No congress recorded on ${entry.id}` });
+      console.log(`  ❌ ${entry.id} has no congress — not looked up`);
+      return null;
+    }
+    if (entry.congress !== CONGRESS_NUMBER) {
+      console.log(`  ⏭️  Skipping: ${entry.congress}th Congress (this check covers the ${CONGRESS_NUMBER}th)`);
+      return null;
+    }
+    return entry.congress;
+  }
 
-    // Skip bills with invalid/pending bill numbers
-    const parsed = parseBillNumber(billNumber);
-    if (!parsed) {
+  // Bills, support bills and routine measures: full status update per entry.
+  const entrySections = ['bills', 'supportBills', 'routineBills'];
+  const entryTotal = entrySections.reduce((n, s) => n + (billsData[s] || []).length, 0);
+  let i = 0;
+  for (const section of entrySections) {
+    for (const bill of billsData[section] || []) {
+      i++;
+      const billNumber = bill.billNumbers[0]; // Primary bill number
+      console.log(`[${i}/${entryTotal}] ${section}: checking ${billNumber}...`);
+
+      // Skip bills with invalid/pending bill numbers
+      if (!parseBillNumber(billNumber)) {
+        console.log(`  ⏭️  Skipping: Bill number not yet assigned (${billNumber})`);
+        continue;
+      }
+      const congress = congressOf(bill, section, billNumber);
+      if (!congress) continue;
+
+      const { status } = await lookup(billNumber, congress, section);
+      if (!status) continue;
+
+      // Rank on the last known value of anything that didn't arrive this run; a missing
+      // cosponsor count read as 0 would drop the priority today and "escalate" it tomorrow.
+      const stored = bill.status || {};
+      const priorityInfo = calculatePriority({
+        ...status,
+        hasFloorVote: status.hasFloorVote ?? stored.hasFloorVote ?? false,
+        hasCommitteeHearing: status.hasCommitteeHearing ?? stored.hasCommitteeHearing ?? false,
+        hasCommitteeMarkup: status.hasCommitteeMarkup ?? stored.hasCommitteeMarkup ?? false,
+        cosponsorsCount: status.cosponsorsCount ?? stored.cosponsors ?? 0
+      }, bill);
+
+      // Persist tracked status (stage, votes, cosponsors, hearing/markup/floor flags) for every bill,
+      // not just ones that passed a chamber — cosponsor/committee movement matters on its own.
+      const updateResult = updateBillsJson(section, bill.id, status.passageInfo, status);
+      if (updateResult.stageChanged) {
+        passedBills.push({
+          section,
+          billNumber: status.billNumber,
+          title: bill.title,
+          stage: status.passageInfo.stage,
+          houseVote: status.passageInfo.houseVote,
+          senateVote: status.passageInfo.senateVote
+        });
+      }
+
+      changes.push(changeRecord(bill.id, section, bill.title, status, priorityInfo, bill.status));
+      checkedBySection[section]++;
+      logPriority(priorityInfo);
+    }
+  }
+
+  // Riders: one lookup per spending bill they sit on. A rider is a provision inside that
+  // bill, and the bill's progress says nothing about whether the provision survived —
+  // H.R. 7148 became law, but whether S.Amdt. 4253 is in it is a separate fact. So this
+  // confirms the number on Congress.gov and reports the spending bill's movement in the
+  // email, and writes no stage to any rider. Rider statuses are step 1a of
+  // docs/2026-11-09-support-page-and-congress-switch-plan.md.
+  let previousParentRecords = new Map();
+  try {
+    const history = JSON.parse(readFileSync(join(__dirname, '../bill-status-history.json'), 'utf-8'));
+    const last = history[history.length - 1];
+    previousParentRecords = new Map((last?.changes || []).filter(c => c.section === 'riders').map(c => [c.id, c]));
+  } catch {
+    // No history yet: a first run has nothing to fall back on.
+  }
+  const parents = new Map();
+  for (const rider of billsData.riders || []) {
+    const billNumber = rider.billNumbers[0];
+    const key = `${rider.congress}:${billNumber}`;
+    if (!parents.has(key)) parents.set(key, { billNumber, first: rider, riders: [] });
+    parents.get(key).riders.push(rider);
+  }
+  for (const { billNumber, first, riders } of parents.values()) {
+    console.log(`riders: checking ${billNumber} (carries ${riders.length} rider${riders.length === 1 ? '' : 's'})...`);
+    if (!parseBillNumber(billNumber)) {
       console.log(`  ⏭️  Skipping: Bill number not yet assigned (${billNumber})`);
       continue;
     }
+    const congress = congressOf(first, 'riders', billNumber);
+    if (!congress) continue;
 
-    try {
-      const status = await fetchBillStatus(billNumber);
+    const { status } = await lookup(billNumber, congress, 'riders');
+    if (!status) continue;
 
-      if (status) {
-        // Calculate priority
-        const priorityInfo = calculatePriority(status, bill);
-
-        // Persist tracked status (stage, votes, cosponsors, hearing/markup/floor flags) for every bill,
-        // not just ones that passed a chamber — cosponsor/committee movement matters on its own.
-        const updateResult = updateBillsJson(bill.id, status.passageInfo, status);
-        if (updateResult.stageChanged) {
-          passedBills.push({
-            billNumber: status.billNumber,
-            title: bill.title,
-            stage: status.passageInfo.stage,
-            houseVote: status.passageInfo.houseVote,
-            senateVote: status.passageInfo.senateVote
-          });
-        }
-
-        // Check if status has changed (you'll need to track previous state)
-        changes.push({
-          id: bill.id,
-          bill: bill.title,
-          billNumber: status.billNumber,
-          status: status.status,
-          latestAction: status.latestAction,
-          latestActionDate: status.latestActionDate,
-          url: status.url,
-          // New fields
-          priority: priorityInfo.priority,
-          prioritySource: priorityInfo.source,
-          priorityReason: priorityInfo.reason,
-          cosponsorsCount: status.cosponsorsCount,
-          hasCommitteeHearing: status.hasCommitteeHearing,
-          hasCommitteeMarkup: status.hasCommitteeMarkup,
-          hasFloorVote: status.hasFloorVote,
-          committees: status.committees,
-          introducedDate: status.introducedDate,
-          passageInfo: status.passageInfo
-        });
-
-        // Show priority in output
-        const priorityBadge = priorityInfo.priority === 'high' ? '🔴' :
-                             priorityInfo.priority === 'medium' ? '🟡' : '⚪';
-        console.log(`  ${priorityBadge} Priority: ${priorityInfo.priority} (${priorityInfo.reason})`);
-      } else {
-        console.log(`  ❌ No status returned for ${billNumber}`);
-        errors.push({ billNumber, reason: 'No status returned' });
-      }
-    } catch (error) {
-      console.log(`  ❌ Error processing ${billNumber}: ${error.message}`);
-      errors.push({ billNumber, reason: error.message });
-    }
-
-    // Rate limiting: wait 300ms between requests (more requests now with vote data)
-    await new Promise(resolve => setTimeout(resolve, 300));
+    stampValidation('riders', riders.map(r => r.id));
+    // A spending bill has no stored status of its own, so its last known values come from
+    // the previous run's history. Without this, a failed actions request ranks it low for
+    // a day and the recovery reads as "priority escalated".
+    const id = `riders:${congress}:${billNumber}`;
+    const prev = previousParentRecords.get(id) || {};
+    const stored = {
+      hasFloorVote: prev.hasFloorVote,
+      hasCommitteeHearing: prev.hasCommitteeHearing,
+      hasCommitteeMarkup: prev.hasCommitteeMarkup,
+      cosponsors: prev.cosponsorsCount
+    };
+    const priorityInfo = calculatePriority({
+      ...status,
+      hasFloorVote: status.hasFloorVote ?? stored.hasFloorVote ?? false,
+      hasCommitteeHearing: status.hasCommitteeHearing ?? stored.hasCommitteeHearing ?? false,
+      hasCommitteeMarkup: status.hasCommitteeMarkup ?? stored.hasCommitteeMarkup ?? false,
+      cosponsorsCount: status.cosponsorsCount ?? stored.cosponsors ?? 0
+    }, { type: 'rider-parent' });
+    // "Tracked riders proposed for", not "carries": whether a provision survived into the
+    // bill is exactly what this check does not know.
+    const title = `${status.title} (${riders.length} tracked D.C. rider${riders.length === 1 ? '' : 's'} proposed for this bill)`;
+    changes.push(changeRecord(id, 'riders', title, status, priorityInfo, stored));
+    checkedBySection.riders += riders.length;
+    logPriority(priorityInfo);
   }
+
+  const attempted = lookups.size + missingCongress;
 
   console.log('\n✅ Monitoring complete!\n');
 
@@ -810,7 +991,7 @@ async function monitorBills() {
   }
 
   // Generate report
-  generateReport(changes, errors, passedBills);
+  generateReport(changes, errors, passedBills, { attempted, checkedBySection });
 }
 
 // Priority tiers for detecting escalation (watching and low are both "baseline")
@@ -845,19 +1026,21 @@ function diffAgainstPrevious(changes, previousChanges) {
       diff.priorityEscalations.push({ current, previous });
       notable = true;
     }
-    if (!previous.hasCommitteeHearing && current.hasCommitteeHearing) {
+    // A null on either side is "unknown that run", never a transition.
+    if (previous.hasCommitteeHearing === false && current.hasCommitteeHearing === true) {
       diff.newHearings.push(current);
       notable = true;
     }
-    if (!previous.hasCommitteeMarkup && current.hasCommitteeMarkup) {
+    if (previous.hasCommitteeMarkup === false && current.hasCommitteeMarkup === true) {
       diff.newMarkups.push(current);
       notable = true;
     }
-    if (!previous.hasFloorVote && current.hasFloorVote) {
+    if (previous.hasFloorVote === false && current.hasFloorVote === true) {
       diff.newFloorVotes.push(current);
       notable = true;
     }
-    const cosponsorDelta = (current.cosponsorsCount || 0) - (previous.cosponsorsCount || 0);
+    const bothCounts = Number.isInteger(current.cosponsorsCount) && Number.isInteger(previous.cosponsorsCount);
+    const cosponsorDelta = bothCounts ? current.cosponsorsCount - previous.cosponsorsCount : 0;
     if (cosponsorDelta >= 5) {
       diff.cosponsorJumps.push({ current, previous, delta: cosponsorDelta });
       notable = true;
@@ -887,7 +1070,15 @@ function escapeHtml(str) {
 }
 
 // Build the inline-styled HTML summary that gets emailed (full detail stays in monitoring-report.txt / history for archival)
-function buildSummaryHtml({ diff, passedBills, errors, totalBills, timestamp, previousTimestamp, runUrl }) {
+// The email is about attacks unless it says otherwise. Support and routine measures are
+// labelled so a support bill's hearing never reads as an attack advancing.
+function sectionTag(item) {
+  if (item.section === 'supportBills') return ' <em>(support bill)</em>';
+  if (item.section === 'routineBills') return ' <em>(routine measure)</em>';
+  return '';
+}
+
+function buildSummaryHtml({ diff, passedBills, errors, totalBills, checkedBySection = {}, timestamp, previousTimestamp, runUrl }) {
   const sections = [];
 
   if (passedBills.length > 0) {
@@ -896,15 +1087,18 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, timestamp, pr
       const voteText = vote
         ? ` — ${vote.yeas}-${vote.nays} (R ${vote.byParty.republican.yeas}-${vote.byParty.republican.nays}, D ${vote.byParty.democrat.yeas}-${vote.byParty.democrat.nays})`
         : '';
-      return `<li><strong>${escapeHtml(p.billNumber)}</strong>: ${escapeHtml(p.title)} passed ${stageLabel(p.stage)}${voteText}.
-        <br><em>Action to consider:</em> publish an urgent alert on the site and/or a newsletter update.</li>`;
+      const action = p.section === 'bills'
+        ? `<br><em>Action to consider:</em> publish an urgent alert on the site and/or a newsletter update.`
+        : '';
+      return `<li><strong>${escapeHtml(p.billNumber)}</strong>${sectionTag(p)}: ${escapeHtml(p.title)} passed ${stageLabel(p.stage)}${voteText}.
+        ${action}</li>`;
     }).join('');
     sections.push(`<h3 style="margin:20px 0 8px;color:#b91c1c;">🚨 Passed a chamber (${passedBills.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
   }
 
   if (diff.priorityEscalations.length > 0) {
     const rows = diff.priorityEscalations.map(({ current, previous }) =>
-      `<li><strong>${escapeHtml(current.billNumber)}</strong>: ${escapeHtml(current.bill)} — priority ${previous.priority} → <strong>${current.priority}</strong> (${escapeHtml(current.priorityReason)}).
+      `<li><strong>${escapeHtml(current.billNumber)}</strong>${sectionTag(current)}: ${escapeHtml(current.bill)} — priority ${previous.priority} → <strong>${current.priority}</strong> (${escapeHtml(current.priorityReason)}).
         <br><em>Action to consider:</em> review its placement/details on the site.</li>`
     ).join('');
     sections.push(`<h3 style="margin:20px 0 8px;color:#b45309;">🔼 Priority escalated (${diff.priorityEscalations.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
@@ -912,7 +1106,7 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, timestamp, pr
 
   if (diff.newMarkups.length > 0) {
     const rows = diff.newMarkups.map(c =>
-      `<li><strong>${escapeHtml(c.billNumber)}</strong>: ${escapeHtml(c.bill)} had a committee markup.
+      `<li><strong>${escapeHtml(c.billNumber)}</strong>${sectionTag(c)}: ${escapeHtml(c.bill)} had a committee markup.
         <br><em>Action to consider:</em> markups often precede a floor vote — watch closely.</li>`
     ).join('');
     sections.push(`<h3 style="margin:20px 0 8px;">📝 New committee markups (${diff.newMarkups.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
@@ -920,14 +1114,14 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, timestamp, pr
 
   if (diff.newHearings.length > 0) {
     const rows = diff.newHearings.map(c =>
-      `<li><strong>${escapeHtml(c.billNumber)}</strong>: ${escapeHtml(c.bill)} had a committee hearing.</li>`
+      `<li><strong>${escapeHtml(c.billNumber)}</strong>${sectionTag(c)}: ${escapeHtml(c.bill)} had a committee hearing.</li>`
     ).join('');
     sections.push(`<h3 style="margin:20px 0 8px;">🗣️ New committee hearings (${diff.newHearings.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
   }
 
   if (diff.newFloorVotes.length > 0) {
     const rows = diff.newFloorVotes.map(c =>
-      `<li><strong>${escapeHtml(c.billNumber)}</strong>: ${escapeHtml(c.bill)} — floor activity detected.
+      `<li><strong>${escapeHtml(c.billNumber)}</strong>${sectionTag(c)}: ${escapeHtml(c.bill)} — floor activity detected.
         <br><em>Action to consider:</em> check Congress.gov for the outcome.</li>`
     ).join('');
     sections.push(`<h3 style="margin:20px 0 8px;">🗳️ New floor activity (${diff.newFloorVotes.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
@@ -935,14 +1129,14 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, timestamp, pr
 
   if (diff.cosponsorJumps.length > 0) {
     const rows = diff.cosponsorJumps.map(({ current, previous, delta }) =>
-      `<li><strong>${escapeHtml(current.billNumber)}</strong>: ${escapeHtml(current.bill)} — cosponsors ${previous.cosponsorsCount} → ${current.cosponsorsCount} (+${delta}).
+      `<li><strong>${escapeHtml(current.billNumber)}</strong>${sectionTag(current)}: ${escapeHtml(current.bill)} — cosponsors ${previous.cosponsorsCount} → ${current.cosponsorsCount} (+${delta}).
         <br><em>Action to consider:</em> reassess priority tier if this crosses a threshold.</li>`
     ).join('');
     sections.push(`<h3 style="margin:20px 0 8px;">📈 Notable cosponsor jumps (${diff.cosponsorJumps.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
   }
 
   if (diff.newBills.length > 0) {
-    const rows = diff.newBills.map(c => `<li><strong>${escapeHtml(c.billNumber)}</strong>: ${escapeHtml(c.bill)}</li>`).join('');
+    const rows = diff.newBills.map(c => `<li><strong>${escapeHtml(c.billNumber)}</strong>${sectionTag(c)}: ${escapeHtml(c.bill)}</li>`).join('');
     sections.push(`<h3 style="margin:20px 0 8px;">🆕 New to monitoring (${diff.newBills.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul>`);
   }
 
@@ -958,9 +1152,12 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, timestamp, pr
   }
 
   const hasNotableChanges = sections.length > 0;
+  const sectionNames = { bills: 'anti-D.C. bill entries', riders: 'riders', supportBills: 'support bills', routineBills: 'routine' };
+  const checkedParts = Object.entries(checkedBySection).filter(([, n]) => n > 0).map(([s, n]) => `${n} ${sectionNames[s] || s}`);
+  const checkedLine = checkedParts.length ? ` (${checkedParts.join(', ')})` : '';
   const intro = hasNotableChanges
-    ? `Checked <strong>${totalBills}</strong> bills. Here's what changed since the last check${previousTimestamp ? ` (${new Date(previousTimestamp).toLocaleString('en-US', { dateStyle: 'medium' })})` : ''}:`
-    : `Checked <strong>${totalBills}</strong> bills. No notable changes since the last check${previousTimestamp ? ` (${new Date(previousTimestamp).toLocaleString('en-US', { dateStyle: 'medium' })})` : ''} — nothing needs your attention today.`;
+    ? `Checked <strong>${totalBills}</strong> Congress.gov records${checkedLine}. Here's what changed since the last check${previousTimestamp ? ` (${new Date(previousTimestamp).toLocaleString('en-US', { dateStyle: 'medium' })})` : ''}:`
+    : `Checked <strong>${totalBills}</strong> Congress.gov records${checkedLine}. No notable changes since the last check${previousTimestamp ? ` (${new Date(previousTimestamp).toLocaleString('en-US', { dateStyle: 'medium' })})` : ''} — nothing needs your attention today.`;
 
   const routineNote = diff.routineUpdateCount > 0
     ? `<p style="margin:16px 0 0;color:#6b7280;font-size:13px;">${diff.routineUpdateCount} other bill(s) had routine status/date updates with no notable category.</p>`
@@ -982,7 +1179,7 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, timestamp, pr
       ${routineNote}
       <hr style="margin:24px 0 12px;border:none;border-top:1px solid #e5e7eb;">
       <p style="margin:0;color:#6b7280;font-size:13px;font-style:italic;">
-        Full per-bill detail for all ${totalBills} bills is archived in <code>bill-status-history.json</code> (committed to the repo)
+        Full per-bill detail for all ${totalBills} records is archived in <code>bill-status-history.json</code> (committed to the repo)
         and attached as a workflow artifact (90-day retention).${runUrl ? ` <a href="${runUrl}">View this run</a>.` : ''}
       </p>
     </div>
@@ -990,10 +1187,11 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, timestamp, pr
 }
 
 // Generate summary report
-function generateReport(changes, errors, passedBills) {
+function generateReport(changes, errors, passedBills, { attempted, checkedBySection }) {
   console.log('📋 BILL STATUS REPORT');
   console.log('='.repeat(80));
-  console.log(`Total bills checked: ${billsData.bills.length}`);
+  console.log(`Congress.gov records looked up: ${attempted}`);
+  console.log(`Entries checked by section: ${JSON.stringify(checkedBySection)}`);
   console.log(`Successful checks: ${changes.length}`);
   console.log(`Errors: ${errors.length}\n`);
 
@@ -1100,6 +1298,7 @@ function generateReport(changes, errors, passedBills) {
     diff.newMarkups.length > 0 ||
     diff.newFloorVotes.length > 0 ||
     diff.cosponsorJumps.length > 0 ||
+    diff.newBills.length > 0 ||
     errors.length > 0;
 
   const runUrl = (process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY && process.env.GITHUB_RUN_ID)
@@ -1110,7 +1309,8 @@ function generateReport(changes, errors, passedBills) {
     diff,
     passedBills,
     errors,
-    totalBills: billsData.bills.length,
+    totalBills: attempted,
+    checkedBySection,
     timestamp,
     previousTimestamp: previousEntry ? previousEntry.timestamp : null,
     runUrl
@@ -1123,13 +1323,17 @@ function generateReport(changes, errors, passedBills) {
   // A run is only trustworthy if most lookups actually succeeded. Below that bar the
   // data is not verified, so downstream steps must not commit, deploy, or claim success.
   const MAX_ERROR_RATE = 0.25;
-  const errorRate = billsData.bills.length > 0 ? errors.length / billsData.bills.length : 1;
+  // Across every section: a run that reached the 78 oppose bills but none of the support
+  // bills is not a healthy check of the tracker.
+  const errorRate = attempted > 0 ? errors.length / attempted : 1;
   const checkFailed = errorRate > MAX_ERROR_RATE;
 
   const metaPath = join(__dirname, '../monitoring-meta.json');
   writeFileSync(metaPath, JSON.stringify({
     timestamp,
-    totalBills: billsData.bills.length,
+    // Congress.gov records looked up, across all sections (the email subject's "N/M lookups").
+    totalBills: attempted,
+    checkedBySection,
     passedCount: passedBills.length,
     errorCount: errors.length,
     errorRate: Number(errorRate.toFixed(3)),
@@ -1153,7 +1357,7 @@ function generateReport(changes, errors, passedBills) {
       console.error('Error stamping lastChecked:', error.message);
     }
   } else {
-    console.log(`⚠️  Check unhealthy (${errors.length}/${billsData.bills.length} lookups failed) — leaving lastChecked untouched`);
+    console.log(`⚠️  Check unhealthy (${errors.length}/${attempted} lookups failed) — leaving lastChecked untouched`);
   }
 }
 

@@ -23,6 +23,8 @@
  *      don't exceed totals, vote date not before introduction)
  *   9-10. Hand-set highlight flags don't contradict status.stage and expire (30d TTL)
  *   11. Passage vote records carry provenance (source URL + verifiedOn date)
+ *   12. Every entry in every section records its Congress (the monitor looks each
+ *       entry up in its own Congress and refuses to guess)
  *
  * Exits 1 on any error. See METHODOLOGY.md ("Quality control").
  */
@@ -266,6 +268,18 @@ for (const [section, items] of sections) {
       if (!record.verifiedOn) {
         errors.push(`${label}: ${chamber} passage vote has no "verifiedOn" date`);
       }
+    }
+  }
+}
+
+// 12. Every entry records its Congress. A bill number names a different bill in each
+//     Congress, so the monitor looks an entry up in its own Congress only. Four support
+//     bills had none until 2026-11-09; guessing the current Congress for them would have
+//     been right this time and wrong for any past-Congress entry.
+for (const [section, items] of sections) {
+  for (const bill of items) {
+    if (!Number.isInteger(bill.congress)) {
+      errors.push(`${section}/${bill.id}: no "congress" recorded (got ${JSON.stringify(bill.congress)})`);
     }
   }
 }

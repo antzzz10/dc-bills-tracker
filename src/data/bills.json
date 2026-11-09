@@ -3665,7 +3665,8 @@
       },
       "passage": {},
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congress": 119
     },
     {
       "id": "hr9362",
@@ -3701,7 +3702,8 @@
         ]
       },
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congress": 119
     },
     {
       "id": "hr6950",
@@ -3736,7 +3738,8 @@
         ]
       },
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congress": 119
     },
     {
       "id": "s4837",
@@ -3771,7 +3774,8 @@
         ]
       },
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congress": 119
     },
     {
       "id": "s51",
