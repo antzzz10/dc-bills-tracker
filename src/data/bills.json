@@ -1,6 +1,6 @@
 {
   "lastUpdated": "2026-11-09",
-  "lastChecked": "2026-11-09T14:57:12.631Z",
+  "lastChecked": "2026-11-09T18:10:51.950Z",
   "categories": [
     {
       "id": "abolishing",
@@ -2097,7 +2097,7 @@
         "lastAction": "Placed on the Union Calendar, Calendar No. 396.",
         "lastActionDate": "2026-01-27",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": false,
+        "hasCommitteeMarkup": true,
         "hasFloorVote": false,
         "cosponsors": 3,
         "committees": [],
@@ -3024,7 +3024,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-youth",
@@ -3044,7 +3045,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-noncitizen",
@@ -3064,7 +3066,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-emissions",
@@ -3084,7 +3087,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-oilgas",
@@ -3104,7 +3108,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-abortion",
@@ -3124,7 +3129,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-reprohealth",
@@ -3144,7 +3150,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-deathwithdignity",
@@ -3164,7 +3171,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-covid",
@@ -3184,7 +3192,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-insurance",
@@ -3204,7 +3213,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-marijuana",
@@ -3224,7 +3234,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-rightturn",
@@ -3244,7 +3255,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-cameras",
@@ -3264,7 +3276,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr7148-sa4253-cameras",
@@ -3294,7 +3307,8 @@
       },
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-slapp",
@@ -3314,7 +3328,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-guns",
@@ -3334,7 +3349,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-sistercity",
@@ -3354,7 +3370,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr5166-shield",
@@ -3374,7 +3391,8 @@
       "fiscalYear": "2026",
       "attackType": "direct",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     }
   ],
   "supportBills": [
@@ -3403,11 +3421,14 @@
         "cosponsors": 6,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
+        ],
+        "introducedDate": "2025-09-02"
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/5093",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09",
+      "passage": {}
     },
     {
       "id": "s402",
@@ -3428,17 +3449,20 @@
       "prioritySource": "manual",
       "status": {
         "stage": null,
-        "lastAction": "Referred to committee",
+        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
         "lastActionDate": "2025-02-05",
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 1,
-        "committees": []
+        "cosponsors": 2,
+        "committees": [],
+        "introducedDate": "2025-02-05"
       },
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/402",
       "congress": 119,
-      "congressValidated": false
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09",
+      "passage": {}
     },
     {
       "id": "hr51",
@@ -3467,20 +3491,22 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 207,
+        "cosponsors": 209,
         "committees": [
           "Energy and Commerce Committee",
           "Judiciary Committee",
           "Armed Services Committee",
           "Rules Committee",
           "Oversight and Government Reform Committee"
-        ]
+        ],
+        "introducedDate": "2025-01-03"
       },
       "congress": 119,
-      "congressValidated": false,
+      "congressValidated": true,
       "passage": {},
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr7881",
@@ -3512,12 +3538,15 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
+        ],
+        "introducedDate": "2026-03-09"
       },
       "congress": 119,
-      "congressValidated": false,
+      "congressValidated": true,
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congressValidatedDate": "2026-11-09",
+      "passage": {}
     },
     {
       "id": "hr1537",
@@ -3549,12 +3578,15 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
+        ],
+        "introducedDate": "2025-02-24"
       },
       "congress": 119,
-      "congressValidated": false,
+      "congressValidated": true,
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congressValidatedDate": "2026-11-09",
+      "passage": {}
     },
     {
       "id": "hr5698",
@@ -3586,12 +3618,15 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
+        ],
+        "introducedDate": "2025-10-06"
       },
       "congress": 119,
-      "congressValidated": false,
+      "congressValidated": true,
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congressValidatedDate": "2026-11-09",
+      "passage": {}
     },
     {
       "id": "hr5092",
@@ -3623,12 +3658,15 @@
         "cosponsors": 5,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
+        ],
+        "introducedDate": "2025-09-02"
       },
       "congress": 119,
-      "congressValidated": false,
+      "congressValidated": true,
       "reviewedDate": "2026-07-12",
-      "reviewMethod": "manual-three-prong"
+      "reviewMethod": "manual-three-prong",
+      "congressValidatedDate": "2026-11-09",
+      "passage": {}
     },
     {
       "id": "hr2693",
@@ -3661,12 +3699,15 @@
         "committees": [
           "Oversight and Government Reform Committee",
           "Rules Committee"
-        ]
+        ],
+        "introducedDate": "2025-04-07"
       },
       "passage": {},
       "reviewedDate": "2026-07-12",
       "reviewMethod": "manual-three-prong",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09"
     },
     {
       "id": "hr9362",
@@ -3699,11 +3740,15 @@
         "committees": [
           "Rules Committee",
           "Oversight and Government Reform Committee"
-        ]
+        ],
+        "introducedDate": "2026-06-18"
       },
       "reviewedDate": "2026-07-12",
       "reviewMethod": "manual-three-prong",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09",
+      "passage": {}
     },
     {
       "id": "hr6950",
@@ -3735,11 +3780,15 @@
         "cosponsors": 0,
         "committees": [
           "Transportation and Infrastructure Committee"
-        ]
+        ],
+        "introducedDate": "2026-01-06"
       },
       "reviewedDate": "2026-07-12",
       "reviewMethod": "manual-three-prong",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09",
+      "passage": {}
     },
     {
       "id": "s4837",
@@ -3771,11 +3820,15 @@
         "cosponsors": 4,
         "committees": [
           "Homeland Security and Governmental Affairs Committee"
-        ]
+        ],
+        "introducedDate": "2026-06-18"
       },
       "reviewedDate": "2026-07-12",
       "reviewMethod": "manual-three-prong",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-09",
+      "passage": {}
     },
     {
       "id": "s51",
@@ -3810,8 +3863,10 @@
         "cosponsors": 43,
         "committees": [
           "Homeland Security and Governmental Affairs Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-01-09"
+      },
+      "passage": {}
     },
     {
       "id": "hr214",
@@ -3847,8 +3902,10 @@
         "committees": [
           "Rules Committee",
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-01-06"
+      },
+      "passage": {}
     },
     {
       "id": "hr356",
@@ -3883,8 +3940,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-01-13"
+      },
+      "passage": {}
     },
     {
       "id": "s2688",
@@ -3919,8 +3978,10 @@
         "cosponsors": 12,
         "committees": [
           "Armed Services Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-09-02"
+      },
+      "passage": {}
     },
     {
       "id": "s2689",
@@ -3955,8 +4016,10 @@
         "cosponsors": 11,
         "committees": [
           "Homeland Security and Governmental Affairs Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-09-02"
+      },
+      "passage": {}
     },
     {
       "id": "hr565",
@@ -3991,8 +4054,10 @@
         "cosponsors": 0,
         "committees": [
           "Judiciary Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-01-20"
+      },
+      "passage": {}
     },
     {
       "id": "hr3047",
@@ -4027,8 +4092,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-04-28"
+      },
+      "passage": {}
     },
     {
       "id": "hr4815",
@@ -4063,8 +4130,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-07-29"
+      },
+      "passage": {}
     },
     {
       "id": "hr4956",
@@ -4099,8 +4168,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-08-12"
+      },
+      "passage": {}
     },
     {
       "id": "hr806",
@@ -4135,8 +4206,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-01-28"
+      },
+      "passage": {}
     },
     {
       "id": "hr5654",
@@ -4171,8 +4244,10 @@
         "cosponsors": 0,
         "committees": [
           "Appropriations Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-09-30"
+      },
+      "passage": {}
     },
     {
       "id": "hr4300",
@@ -4207,8 +4282,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-07-07"
+      },
+      "passage": {}
     },
     {
       "id": "hr6928",
@@ -4243,8 +4320,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-12-23"
+      },
+      "passage": {}
     },
     {
       "id": "hr6339",
@@ -4279,8 +4358,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-12-01"
+      },
+      "passage": {}
     },
     {
       "id": "hr5754",
@@ -4315,8 +4396,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-10-14"
+      },
+      "passage": {}
     },
     {
       "id": "hr4378",
@@ -4351,8 +4434,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-07-14"
+      },
+      "passage": {}
     },
     {
       "id": "hr4088",
@@ -4387,8 +4472,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-06-23"
+      },
+      "passage": {}
     },
     {
       "id": "hr4259",
@@ -4423,8 +4510,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-06-30"
+      },
+      "passage": {}
     },
     {
       "id": "hr7020",
@@ -4459,8 +4548,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2026-01-12"
+      },
+      "passage": {}
     },
     {
       "id": "hr4061",
@@ -4495,8 +4586,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-06-20"
+      },
+      "passage": {}
     },
     {
       "id": "hr3850",
@@ -4531,8 +4624,10 @@
         "cosponsors": 0,
         "committees": [
           "Judiciary Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-06-09"
+      },
+      "passage": {}
     },
     {
       "id": "hr1173",
@@ -4567,8 +4662,10 @@
         "cosponsors": 0,
         "committees": [
           "Judiciary Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-02-10"
+      },
+      "passage": {}
     },
     {
       "id": "hr5856",
@@ -4603,8 +4700,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-10-28"
+      },
+      "passage": {}
     },
     {
       "id": "hr4574",
@@ -4639,8 +4738,10 @@
         "cosponsors": 0,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
-      }
+        ],
+        "introducedDate": "2025-07-21"
+      },
+      "passage": {}
     },
     {
       "id": "hr1022",
@@ -4672,12 +4773,14 @@
         "hasCommitteeHearing": false,
         "hasCommitteeMarkup": false,
         "hasFloorVote": false,
-        "cosponsors": 0,
+        "cosponsors": 1,
         "committees": [
           "Oversight and Government Reform Committee"
-        ]
+        ],
+        "introducedDate": "2025-02-05"
       },
-      "attackType": "direct"
+      "attackType": "direct",
+      "passage": {}
     }
   ],
   "routineBills": [
@@ -4712,7 +4815,8 @@
         "hasCommitteeMarkup": false,
         "hasFloorVote": true,
         "cosponsors": 6,
-        "committees": []
+        "committees": [],
+        "introducedDate": "2025-03-14"
       },
       "attackType": "direct",
       "passage": {
