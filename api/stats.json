@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-11-03",
-  "lastChecked": "2026-11-08T15:10:57.864Z",
+  "lastUpdated": "2026-11-09",
+  "lastChecked": "2026-11-09T00:47:07.624Z",
   "totalBills": 97,
-  "pendingBills": 82,
-  "passedBills": 15,
+  "pendingBills": 83,
+  "passedBills": 14,
   "breakdown": {
     "bills": 78,
     "riders": 18,
@@ -76,12 +76,6 @@
       "number": "H.R. 1968",
       "title": "Full-Year Continuing Appropriations 2025 - Marijuana",
       "stage": "enacted"
-    },
-    {
-      "id": "hr5525",
-      "number": "H.R. 5525",
-      "title": "Stop DC CAMERA Act",
-      "stage": "passed-house"
     },
     {
       "id": "hr1968-budget",
