@@ -1,0 +1,31 @@
+Revise before implementation: **2 BLOCKER, 8 MATERIAL, 2 NOTE.** The core inventory checks out: 78 bill-list entries, 18 riders, 1 routine entry, 9 resolution groups, 36 support entries, 4 missing Congress values, and no provisionals.
+
+Paths below are relative to `dc-bills-tracker`; `main/` means `../representdc-main`.
+
+1. **BLOCKER — Joint resolutions need a constitutional-amendment exception.** Plan:46 sends every joint resolution down the ordinary bill path. Already-tracked H.J.Res. 31 proposes a constitutional amendment (`src/data/bills.json:2412`), which goes to states for ratification, without presidential approval. Add distinct statuses and claims checks. [House Legislative Counsel](https://legcounsel.house.gov/holc-guide-legislative-drafting) confirms the exception.
+
+2. **BLOCKER — A neutral section alone does not prevent provisional classification leaks.** Plan:56 omits existing public paths: `App.jsx:257` passes raw entries into RecentActivity, which displays their priority (`RecentActivity.jsx:179`); the banner also accepts raw entries (`App.jsx:207`) without an unreviewed label. The digest counts and features provisionals in anti-DC copy (`scripts/weekly-digest.js:88`, `:125`, `:180`). Explicitly filter or neutrally label every surface before publishing provisionals, as required by `PUBLIC-LISTING-GUARDRAILS-DRAFT.md:118`.
+
+3. **MATERIAL — The additive stats contract contradicts itself.** Plan:42 introduces bills-only `passedBills`/`pendingBills` while preserving those existing names and meanings. Use distinct fields or a nested schema. Also update `main/src/hooks/useBillStats.js:50`, which currently discards additional fields, and the passed/pending consumers at `main/src/Home.jsx:206` and `:210`; changing only `totalBills` sentences is insufficient.
+
+4. **MATERIAL — “88 anti-DC bills and riders” still misstates the underlying units.** The arithmetic includes routine S. 1077 (`src/data/bills.json:4681`), contrary to Andria’s routine decision. It also counts three provisions of H.R. 1968 as three bills (`:1195`, `:1345`, `:1831`). Define distinct bills, resolution groups, riders/provisions, and routine measures before approving headline or enacted counts.
+
+5. **MATERIAL — Status handling must cover every section and resolution type end to end.** `App.jsx:112` separates advanced entries only from `bills`; riders and routine entries are always counted pending (`:149`). Thus monitoring S. 1077 cannot move it into a truthful Senate-passed section. Simple resolutions are also unsupported by the monitor parser (`scripts/monitor-bills.js:41`), URL helper (`congressLink.js:17`), and passage detection (`monitor-bills.js:216`). Plan:45 needs parsing, routing, counts, banners and export checks—not labels alone.
+
+6. **MATERIAL — Extending the monitor loop is insufficient.** Plan:63 overlooks an updater that searches only `bills` (`scripts/monitor-bills.js:515`), reload logic that omits support/routine arrays (`:497`), and health denominators tied to `bills.length` (`:1126`). Require successful persistence and correct failure accounting across all four sections before support publication.
+
+7. **MATERIAL — The archive does not implement the full recorded decision.** Plan:83 moves prior-Congress entries, but provides no current-Congress path for failed, withdrawn or superseded measures, required by `PUBLIC-LISTING-GUARDRAILS-DRAFT.md:148`. Its “final outcomes” also mix legislative progress with disposition: passing one chamber does not prevent expiry. Separate furthest progress from final outcome and specify how later official corrections update archived records.
+
+8. **MATERIAL — The Congress switch needs an atomic migration and boundary checks.** Changing the date-derived constant before moving data makes the monitor request old numbers in the new Congress (`scripts/monitor-bills.js:305`). Passed-card links remain hardcoded to 119 (`PassedBillsSection.jsx:25`). An empty new Congress is treated as monitor failure (`monitor-bills.js:1126`). Old decision links also acquire whichever Congress is current when clicked (`record-discovery-decision.js:76`). Bind identities explicitly and rehearse these cases, not just January 4.
+
+9. **MATERIAL — Three classification links cannot supply the required two-axis review.** Plan:57 collects position only; confirming oppose/routine requires `attackType=direct|partial` (`scripts/review-provisional.js:122`). Discovery stores `unknown` (`discover-bills.js:967`). Specify how the reviewer records the second judgment and supporting evidence; otherwise classification either fails lint or requires an invented default.
+
+10. **MATERIAL — Support discovery still suppresses relevant candidates.** Plan:60 preserves the existing tiers, including “Pro-DC (park)” (`.github/workflows/discover-bills.yml:212`) and a −50 pro-DC scoring penalty (`scripts/discover-bills.js:879`). This undermines support revival and needs reconciliation with the “publish newly found bills immediately” decision (`PUBLIC-LISTING-GUARDRAILS-DRAFT.md:154`). Define which candidates qualify for immediate neutral publication.
+
+11. **NOTE — Correct several operational claims.** Discovery already imports `CURRENT_CONGRESS` (`discover-bills.js:12–19`); only its log says “119th.” There are **four**, not three, `totalBills` uses. The freshness watchdog runs twice daily (`data-freshness-check.yml:41`), and the weekly digest schedule is paused (`weekly-digest.yml:4`), so it cannot currently provide a scheduled reminder.
+
+12. **NOTE — Keep the implementation smaller and verification stronger.** Issue-per-bill plus separate decision issues introduces synchronization work beyond the existing review CLI. Define deduplication and reconciliation before choosing it. Likewise, the main site’s route-copy script assumes React Router (`main/scripts/prerender-routes.mjs:43`); it does not directly apply to the proposed Vite multi-page build.
+
+Both existing accuracy gates pass, yet checked-in stats report **15 advanced entries** (`public/api/stats.json:6`) against **14 in current data**. Add per-field data comparisons and lifecycle fixtures; arithmetic agreement alone is insufficient.
+
+Read-only review; no files changed.

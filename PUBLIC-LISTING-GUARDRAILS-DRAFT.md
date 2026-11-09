@@ -142,3 +142,27 @@ automated label alone.
 4. Should the public page use the term "anti-DC" for the `routine` category, or
    explain routine measures only as structural consequences of denied statehood?
 
+
+## Andria's answers, 2026-11-09 (internal; remove this section before publishing)
+
+1. **Archive: yes.** Failed, withdrawn, superseded and prior-Congress measures move
+   to a separate searchable archive, outside the active counts.
+2. **Resolutions: count them, but separately from bills.** Her words: "count them
+   but separately so we can use clear language rather than seeming to overcount when
+   we reference bills. We track overall indicators of support vs not so resolutions
+   are very useful there."
+3. **Publication:** "yes publish if it shows up in the Congress.gov system - we
+   can't do any review that would question that systems authority."
+   **Clarified 2026-11-09: option A.** Congress.gov settles that a bill exists and
+   what its status is; we never second-guess either. A newly found bill is published
+   right away as "newly introduced, not yet classified". It gets its oppose/support
+   label after a RepresentDC review. This keeps the September 8 rule.
+   **Requirement:** pending reviews must be very obvious, so they can't sit
+   unnoticed. Show how many are waiting and the age of the oldest, and send a
+   reminder.
+4. **Routine measures: describe them as structural consequences** of denied
+   statehood, not as "anti-DC". This matches the `routine` definition above.
+
+**Also decided:**
+- Support bills get their own page (`/support`).
+- The daily check will cover support bills too.
