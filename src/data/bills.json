@@ -1,6 +1,6 @@
 {
   "lastUpdated": "2026-11-09",
-  "lastChecked": "2026-11-09T00:47:07.624Z",
+  "lastChecked": "2026-11-09T14:57:12.631Z",
   "categories": [
     {
       "id": "abolishing",
@@ -2097,7 +2097,7 @@
         "lastAction": "Placed on the Union Calendar, Calendar No. 396.",
         "lastActionDate": "2026-01-27",
         "hasCommitteeHearing": false,
-        "hasCommitteeMarkup": true,
+        "hasCommitteeMarkup": false,
         "hasFloorVote": false,
         "cosponsors": 3,
         "committees": [],
