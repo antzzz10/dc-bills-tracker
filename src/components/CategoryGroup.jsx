@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './CategoryGroup.css'
 import BillCard from './BillCard'
 import Icon from './Icon'
+import { countUnits, describeKinds } from '../lib/measureCounts'
 
 function CategoryGroup({ category, bills }) {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -14,7 +15,7 @@ function CategoryGroup({ category, bills }) {
       >
         <div className="category-group-title">
           <h2>{category.name}</h2>
-          <span className="bill-count">{bills.length} {bills.length === 1 ? 'bill' : 'bills'}</span>
+          <span className="bill-count">{describeKinds(countUnits(bills))}</span>
         </div>
         <span className="expand-icon-large">
           <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={18} />

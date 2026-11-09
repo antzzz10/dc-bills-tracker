@@ -1,0 +1,15 @@
+**0 BLOCKER, 4 MATERIAL, 2 NOTE.** The core counts are correct against current data: **93 tracked, 81 not advanced, 12 advanced (11 bills + 1 resolution), 2 enacted.**
+
+- **MATERIAL — entry counts remain public.** [App.jsx:382](/Users/andriathomas/Projects/dc-bills-tracker/src/App.jsx:382) says “Other introduced bills (52)” for **51 distinct units**. [CategoryGroup.jsx:17](/Users/andriathomas/Projects/dc-bills-tracker/src/components/CategoryGroup.jsx:17) likewise reports seven transportation bills for six measures. [DownloadButton.jsx:93](/Users/andriathomas/Projects/dc-bills-tracker/src/components/DownloadButton.jsx:93) retains entry counts: the all-data PDF reports **96 versus 92 units** and calls enacted entries pending.
+
+- **MATERIAL — main-site wording still misstates the totals.** [Home.jsx:63](/Users/andriathomas/Projects/representdc-main/src/Home.jsx:63), [Home.jsx:144](/Users/andriathomas/Projects/representdc-main/src/Home.jsx:144), and [HowCongressControlsDC.jsx:166](/Users/andriathomas/Projects/representdc-main/src/HowCongressControlsDC.jsx:166) call **81** “bills.” That figure includes **55 bills, 8 resolutions and 18 riders**. The narrower “to block local D.C. laws” description also exceeds what this broad dataset establishes.
+
+- **MATERIAL — changed sentences publish stale fallback counts.** Those main-site locations display **61 pending** during loading and indefinitely after fetch failure, supplied by [useBillStats.js:31](/Users/andriathomas/Projects/representdc-main/src/hooks/useBillStats.js:31). Only the homepage hero suppresses fallback figures.
+
+- **MATERIAL — the original overcount can recur in the banner undetected.** [updateBannerMessage.js:123](/Users/andriathomas/Projects/dc-bills-tracker/src/components/updateBannerMessage.js:123) still counts entries. In an in-memory fixture where H.R. 5242’s three entries advance together, it announced **“3 bills have passed”**; **both gates passed**. [check-published-claims.js:124](/Users/andriathomas/Projects/dc-bills-tracker/scripts/check-published-claims.js:124) also leaves results, section, export and main-site wording unchecked.
+
+- **NOTE — API units remain mixed.** [generate-stats.js:72](/Users/andriathomas/Projects/dc-bills-tracker/scripts/generate-stats.js:72) publishes a `breakdown` totaling **97 entries** beside `totalBills: 93`, and 14 `passed` rows beside `passedBills: 12`. Current main-site consumption uses the correct totals.
+
+- **NOTE — companion deduplication depends on ordering.** [measureCounts.js:19](/Users/andriathomas/Projects/dc-bills-tracker/src/lib/measureCounts.js:19) uses only the first number. Reversed companion pairs count twice; no current collision exists. Current filters/search, provisional exclusion and per-provision rider counting otherwise reconcile.
+
+Both gates pass; in-memory generated stats exactly match `stats.json`. Tracker and scoped main-site bundles succeed in memory. Normal generation was blocked by sandbox write restrictions. Targeted ESLint passes on main; tracker reports four pre-existing errors. **No files changed.**

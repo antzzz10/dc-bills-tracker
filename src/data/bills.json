@@ -4701,7 +4701,7 @@
       "congressValidatedDate": "2026-07-20",
       "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/1077",
       "status": {
-        "stage": null,
+        "stage": "passed-senate",
         "lastAction": "Held at the desk.",
         "lastActionDate": "2025-03-18",
         "hasCommitteeHearing": false,
@@ -4711,7 +4711,14 @@
         "committees": []
       },
       "attackType": "direct",
-      "passage": {}
+      "passage": {
+        "senate": {
+          "date": "2025-03-14",
+          "method": "voice vote",
+          "source": "https://www.congress.gov/bill/119th-congress/senate-bill/1077/all-actions",
+          "verifiedOn": "2026-11-09"
+        }
+      }
     }
   ]
 }

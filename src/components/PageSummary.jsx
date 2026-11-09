@@ -1,6 +1,7 @@
 import './PageSummary.css'
 import Icon from './Icon'
 import { CURRENT_CONGRESS } from '../data/config'
+import { describeKinds } from '../lib/measureCounts'
 import {
   getPageSummaryFacts,
   advancedDetailText,
@@ -31,6 +32,7 @@ function PageSummary({ bills = [], riders = [], routineBills = [] }) {
           <>
             <strong>{facts.advancedCount} {facts.advancedCount === 1 ? 'has' : 'have'} already
             cleared at least one chamber</strong>
+            {facts.advancedKinds.resolutions > 0 && <> ({describeKinds(facts.advancedKinds)})</>}
             {detail && <> &mdash; {detail}</>}.{' '}
           </>
         )}

@@ -42,6 +42,26 @@ const opposeById = new Map(
   [...bills, ...riders, ...routineBills].map(b => [(b.billNumbers || [])[0], b])
 );
 
+// Counting units, implemented here independently of src/lib/measureCounts.js so a bug
+// there can't pass its own check. One per official measure (entries sharing any bill
+// number, spacing ignored, are one measure); one per budget rider. Counting entries said
+// "14 ... 4 are now law" when the truth was 12 and 2.
+function independentCount(items) {
+  const parent = new Map();
+  const find = x => { while (parent.get(x) !== x) x = parent.get(x); return x; };
+  const union = (a, b) => parent.set(find(a), find(b));
+  for (const item of items) {
+    const keys = item.type === 'rider'
+      ? [`rider:${item.id}`]
+      : (item.billNumbers?.length ? item.billNumbers : [item.id]).map(n => String(n).replace(/\s+/g, '').toUpperCase());
+    keys.forEach(k => { if (!parent.has(k)) parent.set(k, k); });
+    keys.slice(1).forEach(k => union(k, keys[0]));
+  }
+  return new Set(items.map(item => find(item.type === 'rider'
+    ? `rider:${item.id}`
+    : String((item.billNumbers?.length ? item.billNumbers : [item.id])[0]).replace(/\s+/g, '').toUpperCase()))).size;
+}
+
 // ---------------------------------------------------------------------------
 // 1. The top banner
 // ---------------------------------------------------------------------------
@@ -93,6 +113,20 @@ if (banner) {
     }
   }
 
+  // "N bills and M resolutions have passed!" — the number must be measures, not entries.
+  const manyMatch = message.match(/^(.+?) have passed!/);
+  if (manyMatch) {
+    const claimed = [...manyMatch[1].matchAll(/(\d+)/g)].reduce((sum, m) => sum + Number(m[1]), 0);
+    const latest = b => [b.passage?.house?.date, b.passage?.senate?.date].filter(Boolean).sort().pop();
+    const recent = passedBills.filter(b => {
+      const d = latest(b);
+      return d && Math.floor((Date.now() - new Date(`${d}T00:00:00`)) / 86400000) <= 30;
+    });
+    if (claimed !== independentCount(recent)) {
+      fail(message, `claims ${claimed} passed; data holds ${independentCount(recent)} measures passed in the last 30 days`);
+    }
+  }
+
   // "X introduced: <title>" — must correspond to a real introduction within the last week.
   // The banner joins companion numbers with "/" and numbers contain spaces ("H.R. 7068"),
   // so match up to " introduced:". (This used to look for "just introduced", which the
@@ -132,14 +166,29 @@ if (facts) {
     (facts.showMovement ? `Latest movement: ${facts.latest.billNumbers[0]}.` : '');
   claims.push(`summary: "${sentence}"`);
 
-  const expectedTracked = bills.length + riders.length + routineBills.length;
+  // Counted here independently of src/lib/measureCounts.js, so a bug there can't pass its
+  // own check. One per official measure (first bill number, spacing ignored); one per
+  // budget rider. Counting entries said "14 ... 4 are now law" when the truth was 12 and 2.
+  // Anti-DC only: routine measures are counted apart (2026-11-09).
+  const all = [...bills, ...riders];
+
+  const expectedTracked = independentCount(all);
   if (facts.trackedCount !== expectedTracked) {
-    fail(sentence, `claims ${facts.trackedCount} tracked, data holds ${expectedTracked}`);
+    fail(sentence, `claims ${facts.trackedCount} tracked, data holds ${expectedTracked} measures`);
   }
 
-  const expectedAdvanced = [...bills, ...riders, ...routineBills].filter(hasAdvanced).length;
+  const expectedAdvanced = independentCount(all.filter(hasAdvanced));
   if (facts.advancedCount !== expectedAdvanced) {
-    fail(sentence, `claims ${facts.advancedCount} advanced, data holds ${expectedAdvanced}`);
+    fail(sentence, `claims ${facts.advancedCount} advanced, data holds ${expectedAdvanced} measures`);
+  }
+  const expectedEnacted = independentCount(all.filter(b => b.status?.stage === 'enacted'));
+  if (facts.enactedCount !== expectedEnacted) {
+    fail(sentence, `claims ${facts.enactedCount} now law, data holds ${expectedEnacted} measures`);
+  }
+  const advancedResolutions = independentCount(all.filter(hasAdvanced).filter(b => /RES\./i.test((b.billNumbers || [])[0] || '')));
+  if (facts.advancedKinds.resolutions !== advancedResolutions ||
+      facts.advancedKinds.bills !== expectedAdvanced - advancedResolutions) {
+    fail(sentence, `splits advanced into ${facts.advancedKinds.bills} bills and ${facts.advancedKinds.resolutions} resolutions; data holds ${expectedAdvanced - advancedResolutions} and ${advancedResolutions}`);
   }
   if (facts.advancedCount > facts.trackedCount) {
     fail(sentence, `claims more advanced (${facts.advancedCount}) than tracked (${facts.trackedCount})`);
@@ -152,13 +201,33 @@ if (facts) {
     if (stats.totalBills !== facts.trackedCount) {
       fail(sentence, `summary says ${facts.trackedCount} but stats.json publishes ${stats.totalBills}`);
     }
+    if (stats.passedBills !== facts.advancedCount) {
+      fail(sentence, `summary says ${facts.advancedCount} advanced but stats.json publishes ${stats.passedBills}`);
+    }
+    if (stats.pendingBills + stats.passedBills !== stats.totalBills) {
+      fail(sentence, `stats.json pending (${stats.pendingBills}) + passed (${stats.passedBills}) ≠ total (${stats.totalBills})`);
+    }
+    const pb = stats.passedBreakdown || {};
+    if (pb.bills !== expectedAdvanced - advancedResolutions || pb.resolutions !== advancedResolutions) {
+      fail(sentence, `stats.json passedBreakdown is ${pb.bills} bills / ${pb.resolutions} resolutions; data holds ${expectedAdvanced - advancedResolutions} / ${advancedResolutions}`);
+    }
+    const bd = stats.breakdown || {};
+    if ((bd.bills + bd.resolutions + bd.riders) !== stats.totalBills) {
+      fail(sentence, `stats.json breakdown (${bd.bills}+${bd.resolutions}+${bd.riders}) does not add up to totalBills ${stats.totalBills}`);
+    }
+    if ((stats.passed || []).length !== stats.passedBills) {
+      fail(sentence, `stats.json lists ${(stats.passed || []).length} passed rows but passedBills is ${stats.passedBills}`);
+    }
+    if (stats.routine?.total !== independentCount(routineBills)) {
+      fail(sentence, `stats.json routine.total is ${stats.routine?.total}; data holds ${independentCount(routineBills)}`);
+    }
   } catch {
     // generate-stats.js has not run; lint-bills.js check 7 already warns about this.
   }
 
   // "Latest movement" must genuinely be the most recent action we hold.
   if (facts.showMovement) {
-    const newest = [...bills, ...riders, ...routineBills]
+    const newest = [...bills, ...riders]
       .filter(b => b.status?.lastActionDate)
       .reduce((a, b) => (a.status.lastActionDate >= b.status.lastActionDate ? a : b));
     if (newest.status.lastActionDate !== facts.latest.status.lastActionDate) {

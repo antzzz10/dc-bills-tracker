@@ -15,6 +15,7 @@ import PageSummary from './components/PageSummary'
 import { getUpdateBannerMessage } from './components/updateBannerMessage'
 import PassedBillsSection from './components/PassedBillsSection'
 import RecentActivity from './components/RecentActivity'
+import { countUnits } from './lib/measureCounts'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
 
 // Bill-data freshness. `lastChecked` is stamped by scripts/monitor-bills.js on every
@@ -62,7 +63,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [showOtherBills, setShowOtherBills] = useState(false)
 
-  const { filteredBills, filteredRiders, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, totalCount, pendingCount, passedCount } = useMemo(() => {
+  const { filteredBills, filteredRiders, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, totalCount, pendingCount, passedCount, routineCount } = useMemo(() => {
     // Exclude provisional (auto-discovered, not-yet-human-reviewed) entries from
     // the public oppose/routine sections — their `position` is an unverified
     // default, not a reviewed classification. They still surface in Recent
@@ -146,9 +147,12 @@ function App() {
       bills: filteredRoutineBills.filter(bill => bill.category === category.id)
     })).filter(group => group.bills.length > 0)
 
-    const pendingCount = filtered.length + filteredRiders.length + filteredRoutineBills.length
-    const passedCount = passedBills.length
-    const totalCount = pendingCount + passedCount
+    // Measures, not entries: H.R. 1968 is three entries but one law (src/lib/measureCounts.js).
+    // Routine measures are counted on their own, never as anti-DC (2026-11-09).
+    const pendingCount = countUnits([...filtered, ...filteredRiders]).total
+    const passedCount = countUnits(passedBills).total
+    const routineCount = countUnits(filteredRoutineBills).total
+    const totalCount = pendingCount + passedCount + routineCount
 
     return {
       filteredBills: filtered,
@@ -160,7 +164,8 @@ function App() {
       routineGroups,
       totalCount,
       pendingCount,
-      passedCount
+      passedCount,
+      routineCount
     }
   }, [selectedCategories, searchTerm])
 
@@ -265,8 +270,12 @@ function App() {
         <div className="results-header">
           <h2>
             {totalCount} {totalCount === 1 ? 'item' : 'items'} found
-            {passedCount > 0 && (
-              <span className="count-breakdown"> ({pendingCount} pending, {passedCount} passed)</span>
+            {(passedCount > 0 || routineCount > 0) && (
+              <span className="count-breakdown"> ({[
+                `${pendingCount} pending`,
+                passedCount > 0 && `${passedCount} passed`,
+                routineCount > 0 && `${routineCount} routine`,
+              ].filter(Boolean).join(', ')})</span>
             )}
           </h2>
           <div className="results-actions">
@@ -311,7 +320,7 @@ function App() {
                   {highPriorityGroups.length > 0 && (
                 <div className="priority-section">
                   <div className="section-header high-priority-header">
-                    <h2><Icon name="alert-circle" size={18} /> High priority bills ({highPriorityGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
+                    <h2><Icon name="alert-circle" size={18} /> High priority bills ({countUnits(highPriorityGroups.flatMap(g => g.bills)).total})</h2>
                     <p className="section-description">
                       Bills with significant legislative activity or identified as high-priority threats by FreeDC
                     </p>
@@ -334,7 +343,7 @@ function App() {
               {routineGroups.length > 0 && (
                 <div className="priority-section">
                   <div className="section-header routine-header">
-                    <h2><Icon name="paperclip" size={18} /> Everyday indignities ({routineGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
+                    <h2><Icon name="paperclip" size={18} /> Everyday indignities ({countUnits(routineGroups.flatMap(g => g.bills)).total})</h2>
                     <p className="section-description">
                       The routine paperwork of not being a state — sign-offs Congress requires from D.C. that no state legislature would ever need to ask for.
                     </p>
@@ -353,7 +362,7 @@ function App() {
               {riderGroups.length > 0 && (
                 <div className="priority-section">
                   <div className="section-header riders-header">
-                    <h2><Icon name="file-text" size={18} /> Budget riders ({riderGroups.reduce((sum, g) => sum + g.bills.length, 0)})</h2>
+                    <h2><Icon name="file-text" size={18} /> Budget riders ({countUnits(riderGroups.flatMap(g => g.bills)).total})</h2>
                     <p className="section-description">
                       Policy restrictions attached to appropriations bills (H.R. 5166)
                     </p>
@@ -377,7 +386,7 @@ function App() {
                   >
                     <div>
                       <h2>
-                        <Icon name="circle" size={18} /> Other introduced bills ({otherBillsGroups.reduce((sum, g) => sum + g.bills.length, 0)})
+                        <Icon name="circle" size={18} /> Other introduced bills ({countUnits(otherBillsGroups.flatMap(g => g.bills)).total})
                         <span className="expand-icon-section">
                           <Icon name={showOtherBills ? 'chevron-up' : 'chevron-down'} size={18} />
                         </span>

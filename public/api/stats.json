@@ -1,13 +1,21 @@
 {
-  "lastUpdated": "2026-08-14",
-  "lastChecked": "2026-08-14T14:45:32.539Z",
-  "totalBills": 97,
-  "pendingBills": 82,
-  "passedBills": 15,
+  "lastUpdated": "2026-11-09",
+  "lastChecked": "2026-11-09T00:47:07.624Z",
+  "totalBills": 92,
+  "pendingBills": 80,
+  "passedBills": 12,
+  "passedBreakdown": {
+    "bills": 11,
+    "resolutions": 1
+  },
   "breakdown": {
-    "bills": 78,
-    "riders": 18,
-    "routineBills": 1
+    "bills": 65,
+    "resolutions": 9,
+    "riders": 18
+  },
+  "routine": {
+    "total": 1,
+    "advanced": 1
   },
   "provisionalAwaitingReview": 0,
   "passed": [
@@ -15,91 +23,85 @@
       "id": "hr2096",
       "number": "H.R. 2096",
       "title": "Protecting Our Nation's Capital Emergency Act of 2025",
-      "stage": "passed-house"
+      "stage": "passed-house",
+      "provisions": 1
     },
     {
       "id": "hr2056-s1522",
       "number": "H.R. 2056",
       "title": "District of Columbia Federal Immigration Compliance Act",
-      "stage": "passed-house"
+      "stage": "passed-house",
+      "provisions": 1
     },
     {
       "id": "hr4922-s2686",
       "number": "H.R. 4922",
       "title": "DC CRIMES Act of 2025",
-      "stage": "passed-house"
+      "stage": "passed-house",
+      "provisions": 1
     },
     {
       "id": "hr5140",
       "number": "H.R. 5140",
       "title": "Juvenile Charging Age Reduction",
-      "stage": "passed-house"
+      "stage": "passed-house",
+      "provisions": 1
     },
     {
       "id": "hr5143",
       "number": "H.R. 5143",
       "title": "District of Columbia Policing Protection Act",
-      "stage": "passed-house"
+      "stage": "passed-house",
+      "provisions": 1
     },
     {
       "id": "hr5107-s2687",
       "number": "H.R. 5107",
       "title": "CLEAN DC Act",
-      "stage": "passed-house"
+      "stage": "passed-house",
+      "provisions": 1
     },
     {
       "id": "hr5214",
       "number": "H.R. 5214",
       "title": "District of Columbia Cash Bail Reform Act",
-      "stage": "passed-house"
+      "stage": "passed-house",
+      "provisions": 1
     },
     {
       "id": "hr5125-s2854",
       "number": "H.R. 5125",
       "title": "District of Columbia Judicial Nominations Reform Act",
-      "stage": "passed-house"
+      "stage": "passed-house",
+      "provisions": 1
     },
     {
       "id": "hr884-s2636",
       "number": "H.R. 884",
       "title": "Noncitizen Voting Prohibition",
-      "stage": "passed-house"
+      "stage": "passed-house",
+      "provisions": 1
     },
     {
       "id": "hr1968-abortion",
       "number": "H.R. 1968",
       "title": "Full-Year Continuing Appropriations 2025 - Abortion",
-      "stage": "passed-both"
-    },
-    {
-      "id": "hr1968-marijuana",
-      "number": "H.R. 1968",
-      "title": "Full-Year Continuing Appropriations 2025 - Marijuana",
-      "stage": "passed-both"
-    },
-    {
-      "id": "hr5525",
-      "number": "H.R. 5525",
-      "title": "Stop DC CAMERA Act",
-      "stage": "passed-house"
-    },
-    {
-      "id": "hr1968-budget",
-      "number": "H.R. 1968",
-      "title": "Full-Year Continuing Appropriations 2025 - Budget Cut",
-      "stage": "passed-both"
+      "stage": "enacted",
+      "provisions": 3
     },
     {
       "id": "hjres142-sjres102",
       "number": "H.J.Res.142",
       "title": "Disapproval of D.C. Tax Decoupling from Federal OBBBA Changes",
-      "stage": "enacted"
+      "stage": "enacted",
+      "provisions": 1
     },
     {
       "id": "hr5103",
       "number": "H.R. 5103",
       "title": "Make the District of Columbia Safe and Beautiful Act of 2025",
-      "stage": "passed-house"
+      "stage": "passed-house",
+      "provisions": 1
     }
   ]
 }

@@ -6,6 +6,8 @@
 // well-formed field feeding a false claim. Whatever asserts the copy has to be able to
 // read the copy.
 
+import { countUnits } from '../lib/measureCounts.js';
+
 // How recent an action must be to count as "latest movement". Congress recesses for
 // weeks, so a short window blanks the sentence out for most of August; a long one dresses
 // a stale committee referral up as news. The sentence always carries its own date.
@@ -39,7 +41,10 @@ export const hasAdvanced = item =>
  * would measure the gaps in our own data rather than anything Congress did.
  */
 export function getPageSummaryFacts({ bills = [], riders = [], routineBills = [], now = Date.now() }) {
-  const tracked = [...bills, ...riders, ...routineBills].filter(item => !item.provisional);
+  // Anti-DC measures only. Routine measures (S. 1077, D.C.'s own budget) are structural
+  // consequences of denied statehood, not attacks, so this sentence never counts them
+  // (Andria, 2026-11-09). They have their own section and count.
+  const tracked = [...bills, ...riders].filter(item => !item.provisional);
   if (tracked.length === 0) return null;
 
   const advanced = tracked.filter(hasAdvanced);
@@ -55,14 +60,26 @@ export function getPageSummaryFacts({ bills = [], riders = [], routineBills = []
     ? Math.floor((now - parseLocalDate(latest.status.lastActionDate)) / 86400000)
     : null;
 
+  // Every count is of measures, not entries (src/lib/measureCounts.js): H.R. 1968 is
+  // three entries but one law.
+  const trackedUnits = countUnits(tracked);
+  const advancedUnits = countUnits(advanced);
+
   return {
-    trackedCount: tracked.length,
-    advancedCount: advanced.length,
-    enactedCount: enacted.length,
-    passedBothCount: passedBoth.length,
+    trackedCount: trackedUnits.total,
+    advancedCount: advancedUnits.total,
+    advancedKinds: advancedUnits,
+    enactedCount: countUnits(enacted).total,
+    passedBothCount: countUnits(passedBoth).total,
     // 17 of the 18 riders are provisions of a single appropriations bill, so calling all
-    // of them separate "bills" would overstate the count.
-    scopeNoun: riders.length > 0 ? 'bills and budget riders' : 'bills',
+    // of them separate "bills" would overstate the count. Resolutions are named too, so
+    // "bills" never quietly includes them.
+    scopeNoun: [
+      trackedUnits.bills > 0 && 'bills',
+      trackedUnits.resolutions > 0 && 'resolutions',
+      trackedUnits.riders > 0 && 'budget riders',
+    ].filter(Boolean).join(', ').replace(/, ([^,]+)$/, ' and $1'),
+    routineCount: countUnits((routineBills || []).filter(item => !item.provisional)).total,
     latest,
     latestAgeDays,
     showMovement: Boolean(latest && latestAgeDays <= MOVEMENT_WINDOW_DAYS),

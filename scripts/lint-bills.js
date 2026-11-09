@@ -30,6 +30,7 @@
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { countUnits, measureKey, isRider } from '../src/lib/measureCounts.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const data = JSON.parse(readFileSync(join(__dirname, '../src/data/bills.json'), 'utf-8'));
@@ -114,8 +115,10 @@ for (const [id, expected] of Object.entries(golden.labels)) {
 //    different number than the tracker displays. This diverged silently once —
 //    the tracker showed 93 while main cited 96 — so it is asserted here.
 {
-  const reviewed = (list) => (data[list] || []).filter(item => !item.provisional).length;
-  const siteTotal = reviewed('bills') + reviewed('riders') + reviewed('routineBills');
+  // Measures, not entries (src/lib/measureCounts.js): H.R. 1968 is three entries, one law.
+  const reviewed = (list) => (data[list] || []).filter(item => !item.provisional);
+  // Anti-DC only: routine measures are counted apart (2026-11-09).
+  const siteTotal = countUnits([...reviewed('bills'), ...reviewed('riders')]).total;
 
   let statsJson = null;
   try {
@@ -127,9 +130,29 @@ for (const [id, expected] of Object.entries(golden.labels)) {
   if (statsJson && statsJson.totalBills !== siteTotal) {
     errors.push(
       `stats.json totalBills is ${statsJson.totalBills} but the site renders ${siteTotal} ` +
-      `(non-provisional bills+riders+routineBills). Regenerate stats.json — representdc-main ` +
+      `(non-provisional bills+riders, as measures). Regenerate stats.json — representdc-main ` +
       `publishes this number.`
     );
+  }
+}
+
+// 7b. Entries that are the same measure must agree on its stage. Counts treat H.R. 1968's
+//     three entries as one law; that is only true if all three say "enacted". A split
+//     stage would make the measure both pending and passed at once.
+{
+  const stageByMeasure = new Map();
+  for (const list of ['bills', 'routineBills', 'supportBills']) {
+    for (const item of data[list] || []) {
+      if (isRider(item)) continue;
+      const key = `${list}:${measureKey(item)}`;
+      const stage = item.status?.stage ?? null;
+      const seen = stageByMeasure.get(key);
+      if (seen && seen.stage !== stage) {
+        errors.push(`${item.id} and ${seen.id} are the same measure (${measureKey(item)}) but have stages ${JSON.stringify(stage)} and ${JSON.stringify(seen.stage)}`);
+      } else if (!seen) {
+        stageByMeasure.set(key, { stage, id: item.id });
+      }
+    }
   }
 }
 

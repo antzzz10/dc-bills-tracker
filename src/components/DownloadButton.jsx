@@ -5,6 +5,7 @@ import billsData from '../data/bills.json'
 import { track, EVENTS } from '../lib/analytics'
 import './DownloadButton.css'
 import Icon from './Icon'
+import { countUnits, describeKinds } from '../lib/measureCounts'
 
 function DownloadButton({ filteredBills, filteredRiders }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -84,13 +85,14 @@ function DownloadButton({ filteredBills, filteredRiders }) {
     // Add subtitle
     doc.setFontSize(10)
     doc.setTextColor(100)
-    doc.text('Bills pending in Congress that threaten D.C. home rule and autonomy', 14, 27)
+    doc.text('Bills, resolutions and budget riders in Congress that threaten D.C. home rule and autonomy', 14, 27)
 
     // Add date
     doc.setFontSize(9)
     doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 33)
     doc.text(`Last Updated: ${__BUILD_DATE__}`, 14, 38)
-    doc.text(`Total Items: ${bills.length + (riders?.length || 0)} (${bills.length} bills, ${riders?.length || 0} riders)`, 14, 43)
+    // Measures, not entries (src/lib/measureCounts.js): H.R. 1968 is three rows, one law.
+    doc.text(`Total: ${describeKinds(countUnits([...bills, ...(riders || [])]))}`, 14, 43)
 
     let currentY = 50
 
@@ -102,7 +104,7 @@ function DownloadButton({ filteredBills, filteredRiders }) {
     if (highPriorityBills.length > 0) {
       doc.setFontSize(12)
       doc.setTextColor(220, 20, 60)
-      doc.text(`HIGH PRIORITY BILLS (${highPriorityBills.length})`, 14, currentY)
+      doc.text(`HIGH PRIORITY BILLS (${countUnits(highPriorityBills).total})`, 14, currentY)
       currentY += 5
 
       const highPriorityData = highPriorityBills.map(bill => [
@@ -160,7 +162,7 @@ function DownloadButton({ filteredBills, filteredRiders }) {
 
       doc.setFontSize(12)
       doc.setTextColor(255, 140, 0)
-      doc.text(`BUDGET RIDERS (${riders.length})`, 14, currentY)
+      doc.text(`BUDGET RIDERS (${countUnits(riders).total})`, 14, currentY)
       currentY += 5
 
       const riderData = riders.map(rider => [
@@ -218,7 +220,7 @@ function DownloadButton({ filteredBills, filteredRiders }) {
 
       doc.setFontSize(12)
       doc.setTextColor(153, 153, 153)
-      doc.text(`OTHER INTRODUCED BILLS (${otherBills.length})`, 14, currentY)
+      doc.text(`OTHER INTRODUCED BILLS (${countUnits(otherBills).total})`, 14, currentY)
       currentY += 5
 
       const otherData = otherBills.map(bill => [
@@ -291,6 +293,9 @@ function DownloadButton({ filteredBills, filteredRiders }) {
     setIsOpen(false)
   }
 
+  // Same set the "all" download exports: reviewed entries only.
+  const allReviewed = [...(billsData.bills || []), ...(billsData.riders || [])].filter(b => !b.provisional)
+
   return (
     <div className="download-container">
       <button
@@ -310,9 +315,9 @@ function DownloadButton({ filteredBills, filteredRiders }) {
             </div>
 
             <div className="download-section">
-              <h4>Filtered Items ({filteredBills.length + (filteredRiders?.length || 0)})</h4>
+              <h4>Filtered Items ({countUnits([...filteredBills, ...(filteredRiders || [])]).total})</h4>
               <p className="download-description">
-                Download currently visible items ({filteredBills.length} bills, {filteredRiders?.length || 0} riders)
+                Download currently visible items ({describeKinds(countUnits([...filteredBills, ...(filteredRiders || [])]))})
               </p>
               <div className="download-buttons">
                 <button
@@ -333,9 +338,9 @@ function DownloadButton({ filteredBills, filteredRiders }) {
             <div className="download-divider" />
 
             <div className="download-section">
-              <h4>All Items ({(billsData.bills?.length || 0) + (billsData.riders?.length || 0)})</h4>
+              <h4>All Items ({countUnits(allReviewed).total})</h4>
               <p className="download-description">
-                Download complete dataset ({billsData.bills?.length || 0} bills, {billsData.riders?.length || 0} riders)
+                Download complete dataset ({describeKinds(countUnits(allReviewed))})
               </p>
               <div className="download-buttons">
                 <button

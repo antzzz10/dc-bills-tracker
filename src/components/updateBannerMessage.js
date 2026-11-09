@@ -1,3 +1,5 @@
+import { countUnits, describeKinds } from '../lib/measureCounts.js'
+
 // Message computation for UpdateBanner, extracted so App.jsx can ask "is the banner
 // going to say anything?" without rendering it.
 //
@@ -65,7 +67,9 @@ export function getUpdateBannerMessage({ passedBills = [], upcomingFloorVotes = 
   const recentlyPassed = passedBills.filter(bill => {
     if (!bill.passage?.house?.date && !bill.passage?.senate?.date) return false
 
-    const dateString = bill.passage.house?.date || bill.passage.senate?.date
+    // The latest chamber's date: a House date from last year must not hide a Senate
+    // passage from last week.
+    const dateString = [bill.passage.house?.date, bill.passage.senate?.date].filter(Boolean).sort().pop()
     // Parse as local date to avoid timezone issues
     const [year, month, day] = dateString.split('-').map(Number)
     const passageDate = new Date(year, month - 1, day)
@@ -84,7 +88,12 @@ export function getUpdateBannerMessage({ passedBills = [], upcomingFloorVotes = 
     bill.highlight === 'floor-vote' && !bill.status?.stage
   )
 
-  // Prioritize showing passed bills
+  // Prioritize showing passed bills. Counted as measures, not entries: a law stored as
+  // three provision entries is one passage (src/lib/measureCounts.js). "Most recent" must
+  // really be the latest passage, so sort by date rather than trusting data order.
+  const passDate = bill => [bill.passage?.house?.date, bill.passage?.senate?.date].filter(Boolean).sort().pop() || ''
+  recentlyPassed.sort((a, b) => passDate(b).localeCompare(passDate(a)))
+  const recentUnits = countUnits(recentlyPassed)
   if (recentlyPassed.length > 0) {
     const mostRecent = recentlyPassed[0]
     const dateString = mostRecent.passage.senate?.date || mostRecent.passage.house?.date
@@ -104,23 +113,26 @@ export function getUpdateBannerMessage({ passedBills = [], upcomingFloorVotes = 
       ? mostRecent.passage.senate.vote
       : (mostRecent.passage.house?.vote || mostRecent.passage.senate?.vote)
 
-    if (recentlyPassed.length === 1) {
+    // A voice vote has no tally; never print "undefined-undefined".
+    const tally = vote ? ` (${vote.yeas}-${vote.nays})` : ''
+
+    if (recentUnits.total === 1) {
       const isEnacted = mostRecent.status?.stage === 'enacted'
       const nextStep = isEnacted
-        ? 'Signed into law. D.C. Council disputes its validity.'
+        ? 'Signed into law.'
         : passedBoth
           ? 'Awaiting presidential signature.'
-          : `Now headed to ${chamber === 'House' ? 'Senate' : 'President'}.`
+          : `Now headed to the ${chamber === 'House' ? 'Senate' : 'House'}.`
       return {
         icon: 'siren',
         date: formattedDate,
-        message: `${mostRecent.billNumbers[0]} passed the ${chamber} (${vote.yeas}-${vote.nays}). ${nextStep}`
+        message: `${mostRecent.billNumbers[0]} passed the ${chamber}${tally}. ${nextStep}`
       }
     } else {
       return {
         icon: 'siren',
         date: formattedDate,
-        message: `${recentlyPassed.length} bills have passed! Most recent: ${mostRecent.billNumbers[0]} (${chamber}, ${vote.yeas}-${vote.nays}). Click "Bills that have passed" section below for details.`
+        message: `${describeKinds(recentUnits)} have passed! Most recent: ${mostRecent.billNumbers[0]} (${chamber}${vote ? `, ${vote.yeas}-${vote.nays}` : ''}). Details are in the passed sections below.`
       }
     }
   }

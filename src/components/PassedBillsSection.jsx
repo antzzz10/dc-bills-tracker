@@ -3,6 +3,7 @@ import './PassedBillsSection.css'
 import sponsorsData from '../data/sponsors.json'
 import { stateAbbreviations } from '../data/stateAbbreviations'
 import Icon from './Icon'
+import { countUnits } from '../lib/measureCounts'
 
 // Update this date to control which enacted bills appear in the "Enacted into law" section
 const ENACTED_SINCE = new Date('2025-01-20')
@@ -187,9 +188,9 @@ function PassedBillsSection({ passedBills }) {
       {enactedBills.length > 0 && (
         <AccordionSection
           title="Enacted into law"
-          count={enactedBills.length}
+          count={countUnits(enactedBills).total}
           bills={enactedBills}
-          intro="These anti-DC bills have been signed into law since January 20, 2025. Review each for ongoing legal challenges or DC government responses."
+          intro={`These anti-DC measures have become law since January 20, 2025.${enactedBills.length > countUnits(enactedBills).total ? ' A law with several anti-DC provisions is listed once for each provision.' : ''} Review each for ongoing legal challenges or DC government responses.`}
           expanded={enactedExpanded}
           onToggle={() => setEnactedExpanded(e => !e)}
           className="enacted-section"
@@ -198,9 +199,9 @@ function PassedBillsSection({ passedBills }) {
       {advancedBills.length > 0 && (
         <AccordionSection
           title="Bills that have advanced"
-          count={advancedBills.length}
+          count={countUnits(advancedBills).total}
           bills={advancedBills}
-          intro="These anti-DC bills have cleared at least one chamber of Congress. Bills that have passed both chambers are headed to the President for signature."
+          intro={`These anti-DC measures have cleared at least one chamber of Congress.${advancedBills.some(b => b.status?.stage === 'passed-both') ? ' Those that have passed both chambers are headed to the President for signature.' : ''}`}
           expanded={advancedExpanded}
           onToggle={() => setAdvancedExpanded(e => !e)}
         />
