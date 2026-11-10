@@ -34,6 +34,9 @@ function RecentActivity({ allBills, allRiders }) {
     const allItems = [...allBills, ...allRiders]
 
     allItems.forEach(item => {
+      // An entry with a verified outcome is a provision whose status fields describe the
+      // law it ended up in (or nothing at all); its own events aren't Congress.gov actions.
+      if (item.outcome) return
       const lastAction = item.status?.lastAction || ''
       const lastActionDate = item.status?.lastActionDate
       const stage = item.status?.stage

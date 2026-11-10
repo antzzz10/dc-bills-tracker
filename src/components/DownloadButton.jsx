@@ -6,6 +6,7 @@ import { track, EVENTS } from '../lib/analytics'
 import './DownloadButton.css'
 import Icon from './Icon'
 import { countUnits, describeKinds } from '../lib/measureCounts'
+import { isActive } from '../lib/measureStatus'
 
 function DownloadButton({ filteredBills, filteredRiders }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -273,8 +274,8 @@ function DownloadButton({ filteredBills, filteredRiders }) {
   const handleDownload = (format, scope) => {
     // "All" scope reads straight from billsData, so provisional (unreviewed)
     // entries must be excluded here too, same as the on-site sections.
-    const bills = scope === 'filtered' ? filteredBills : (billsData.bills || []).filter(b => !b.provisional)
-    const riders = scope === 'filtered' ? filteredRiders : (billsData.riders || []).filter(r => !r.provisional)
+    const bills = scope === 'filtered' ? filteredBills : (billsData.bills || []).filter(isActive)
+    const riders = scope === 'filtered' ? filteredRiders : (billsData.riders || []).filter(isActive)
     const scopeText = scope === 'filtered' ? 'filtered' : 'all'
     const timestamp = new Date().toISOString().split('T')[0]
 
@@ -294,7 +295,7 @@ function DownloadButton({ filteredBills, filteredRiders }) {
   }
 
   // Same set the "all" download exports: reviewed entries only.
-  const allReviewed = [...(billsData.bills || []), ...(billsData.riders || [])].filter(b => !b.provisional)
+  const allReviewed = [...(billsData.bills || []), ...(billsData.riders || [])].filter(isActive)
 
   return (
     <div className="download-container">
@@ -317,7 +318,7 @@ function DownloadButton({ filteredBills, filteredRiders }) {
             <div className="download-section">
               <h4>Filtered Items ({countUnits([...filteredBills, ...(filteredRiders || [])]).total})</h4>
               <p className="download-description">
-                Download currently visible items ({describeKinds(countUnits([...filteredBills, ...(filteredRiders || [])]))})
+                Download matching pending and passed items ({describeKinds(countUnits([...filteredBills, ...(filteredRiders || [])]))})
               </p>
               <div className="download-buttons">
                 <button

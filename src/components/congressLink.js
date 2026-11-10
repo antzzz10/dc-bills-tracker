@@ -8,13 +8,17 @@ const TYPE_SLUGS = [
   ['s.j.res', 'senate-joint-resolution'],
   ['h.con.res', 'house-concurrent-resolution'],
   ['s.con.res', 'senate-concurrent-resolution'],
+  ['h.res', 'house-resolution'],
+  ['s.res', 'senate-resolution'],
   ['h.r.', 'house-bill'],
   ['s.', 'senate-bill'],
 ]
 
 export function getCongressGovUrl(billNumber, congress = CURRENT_CONGRESS) {
   if (!billNumber) return null
-  const match = billNumber.match(/(H\.R\.|S\.|H\.J\.Res\.|S\.J\.Res\.|H\.Con\.Res\.|S\.Con\.Res\.)\s*(\d+)/i)
+  // Anchored, and longest prefixes first: unanchored, "S." matched inside "H.Res. 12" and
+  // linked a Senate bill. "S.Amdt." numbers are amendments, not bills, so they don't match.
+  const match = billNumber.trim().match(/^(H\.J\.Res\.|S\.J\.Res\.|H\.Con\.Res\.|S\.Con\.Res\.|H\.Res\.|S\.Res\.|H\.R\.|S\.)\s*(\d+)$/i)
   if (!match) return null
 
   const [, type, number] = match

@@ -4,27 +4,14 @@ import sponsorsData from '../data/sponsors.json'
 import { stateAbbreviations } from '../data/stateAbbreviations'
 import Icon from './Icon'
 import { countUnits } from '../lib/measureCounts'
+import { stageLabel, isConstitutionalAmendment } from '../lib/measureStatus'
+import { getCongressGovUrl } from './congressLink'
 
 // Update this date to control which enacted bills appear in the "Enacted into law" section
 const ENACTED_SINCE = new Date('2025-01-20')
 
-const CONGRESS_PATH = {
-  'h.r.': 'house-bill',
-  's.': 'senate-bill',
-  'h.j.res.': 'house-joint-resolution',
-  's.j.res.': 'senate-joint-resolution',
-  'h.con.res.': 'house-concurrent-resolution',
-  's.con.res.': 'senate-concurrent-resolution',
-}
-
-function getCongressLink(billNumber) {
-  const match = billNumber.match(/(H\.R\.|S\.|H\.J\.Res\.|S\.J\.Res\.|H\.Con\.Res\.|S\.Con\.Res\.)\s*(\d+)/i)
-  if (!match) return null
-  const [, type, number] = match
-  const path = CONGRESS_PATH[type.toLowerCase()]
-  if (!path) return null
-  return `https://www.congress.gov/bill/119th-congress/${path}/${number}`
-}
+// The bill numbers link through the shared helper (one parser for the whole site).
+const getCongressLink = num => getCongressGovUrl(num)
 
 function getRelevantVote(bill) {
   const stage = bill.status?.stage
@@ -65,15 +52,28 @@ function BillCard({ bill }) {
               })}
             </div>
             <div className="bill-status-tags">
-              {stage === 'passed-both' && <span className="bill-status-tag tag-passed-both">Passed both chambers</span>}
-              {stage === 'passed-senate' && <span className="bill-status-tag tag-passed-senate">Passed Senate</span>}
-              {stage === 'passed-house' && <span className="bill-status-tag tag-passed-house">Passed House</span>}
+              {stage !== 'enacted' && stageLabel(bill) && (
+                <span className={`bill-status-tag tag-${stage}`}>{stageLabel(bill)}</span>
+              )}
               {bill.disputedByDC && <span className="bill-status-tag tag-disputed">Disputed by DC</span>}
             </div>
           </div>
 
           <h3 className="passed-bill-title">{bill.fullTitle || bill.title}</h3>
           <p className="passed-bill-description">{bill.description}</p>
+          {/* A rider enacted in a funding law: its own checked outcome, since the bill
+              number above is the bill it was proposed in, not the law it is in. */}
+          {bill.outcome?.summary && (
+            <p className="passed-bill-description">
+              <strong>{bill.outcome.summary}</strong>{' '}
+              {bill.outcome.source && (
+                <a href={bill.outcome.source} target="_blank" rel="noopener noreferrer"
+                   className="vote-source-link" onClick={e => e.stopPropagation()}>
+                  Official record ↗
+                </a>
+              )}
+            </p>
+          )}
 
           <div className="passed-bill-sponsors">
             <strong>Sponsor{bill.sponsors.length > 1 ? 's' : ''}:</strong>
@@ -201,7 +201,7 @@ function PassedBillsSection({ passedBills }) {
           title="Bills that have advanced"
           count={countUnits(advancedBills).total}
           bills={advancedBills}
-          intro={`These anti-DC measures have cleared at least one chamber of Congress.${advancedBills.some(b => b.status?.stage === 'passed-both') ? ' Those that have passed both chambers are headed to the President for signature.' : ''}`}
+          intro={`These anti-DC measures have cleared at least one chamber of Congress.${advancedBills.some(b => b.status?.stage === 'passed-both' && !isConstitutionalAmendment(b)) ? ' Those marked “Passed both chambers” are headed to the President for signature.' : ''}`}
           expanded={advancedExpanded}
           onToggle={() => setAdvancedExpanded(e => !e)}
         />

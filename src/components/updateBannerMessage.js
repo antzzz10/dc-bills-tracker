@@ -1,4 +1,5 @@
 import { countUnits, describeKinds } from '../lib/measureCounts.js'
+import { isConstitutionalAmendment } from '../lib/measureStatus.js'
 
 // Message computation for UpdateBanner, extracted so App.jsx can ask "is the banner
 // going to say anything?" without rendering it.
@@ -117,16 +118,20 @@ export function getUpdateBannerMessage({ passedBills = [], upcomingFloorVotes = 
     const tally = vote ? ` (${vote.yeas}-${vote.nays})` : ''
 
     if (recentUnits.total === 1) {
-      const isEnacted = mostRecent.status?.stage === 'enacted'
-      const nextStep = isEnacted
+      // The next step depends on the measure's path, not just on which chambers voted:
+      // a constitutional amendment never goes to the President (2026-11-09).
+      const stage = mostRecent.status?.stage
+      const nextStep = stage === 'enacted'
         ? 'Signed into law.'
-        : passedBoth
-          ? 'Awaiting presidential signature.'
-          : `Now headed to the ${chamber === 'House' ? 'Senate' : 'House'}.`
+        : stage === 'sent-to-states'
+          ? 'Sent to the states for ratification.'
+          : passedBoth
+            ? (isConstitutionalAmendment(mostRecent) ? '' : 'Awaiting presidential signature.')
+            : `Now headed to the ${chamber === 'House' ? 'Senate' : 'House'}.`
       return {
         icon: 'siren',
         date: formattedDate,
-        message: `${mostRecent.billNumbers[0]} passed the ${chamber}${tally}. ${nextStep}`
+        message: `${mostRecent.billNumbers[0]} passed the ${chamber}${tally}.${nextStep ? ` ${nextStep}` : ''}`
       }
     } else {
       return {

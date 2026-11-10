@@ -1,26 +1,35 @@
 {
   "lastUpdated": "2026-11-09",
-  "lastChecked": "2026-11-09T00:47:07.624Z",
-  "totalBills": 92,
-  "pendingBills": 80,
-  "passedBills": 12,
+  "lastChecked": "2026-11-09T18:10:51.950Z",
+  "totalBills": 74,
+  "introducedThisCongress": 92,
+  "pendingBills": 60,
+  "passedBills": 14,
   "passedBreakdown": {
     "bills": 11,
-    "resolutions": 1
+    "resolutions": 1,
+    "riders": 2
   },
   "breakdown": {
     "bills": 65,
-    "resolutions": 9,
-    "riders": 18
+    "resolutions": 7,
+    "riders": 2
   },
   "routine": {
     "total": 1,
     "advanced": 1
   },
+  "archived": {
+    "total": 18,
+    "bills": 0,
+    "resolutions": 2,
+    "riders": 16
+  },
   "provisionalAwaitingReview": 0,
   "passed": [
     {
       "id": "hr2096",
+      "kind": "measure",
       "number": "H.R. 2096",
       "title": "Protecting Our Nation's Capital Emergency Act of 2025",
       "stage": "passed-house",
@@ -28,6 +37,7 @@
     },
     {
       "id": "hr2056-s1522",
+      "kind": "measure",
       "number": "H.R. 2056",
       "title": "District of Columbia Federal Immigration Compliance Act",
       "stage": "passed-house",
@@ -35,6 +45,7 @@
     },
     {
       "id": "hr4922-s2686",
+      "kind": "measure",
       "number": "H.R. 4922",
       "title": "DC CRIMES Act of 2025",
       "stage": "passed-house",
@@ -42,6 +53,7 @@
     },
     {
       "id": "hr5140",
+      "kind": "measure",
       "number": "H.R. 5140",
       "title": "Juvenile Charging Age Reduction",
       "stage": "passed-house",
@@ -49,6 +61,7 @@
     },
     {
       "id": "hr5143",
+      "kind": "measure",
       "number": "H.R. 5143",
       "title": "District of Columbia Policing Protection Act",
       "stage": "passed-house",
@@ -56,6 +69,7 @@
     },
     {
       "id": "hr5107-s2687",
+      "kind": "measure",
       "number": "H.R. 5107",
       "title": "CLEAN DC Act",
       "stage": "passed-house",
@@ -63,6 +77,7 @@
     },
     {
       "id": "hr5214",
+      "kind": "measure",
       "number": "H.R. 5214",
       "title": "District of Columbia Cash Bail Reform Act",
       "stage": "passed-house",
@@ -70,6 +85,7 @@
     },
     {
       "id": "hr5125-s2854",
+      "kind": "measure",
       "number": "H.R. 5125",
       "title": "District of Columbia Judicial Nominations Reform Act",
       "stage": "passed-house",
@@ -77,6 +93,7 @@
     },
     {
       "id": "hr884-s2636",
+      "kind": "measure",
       "number": "H.R. 884",
       "title": "Noncitizen Voting Prohibition",
       "stage": "passed-house",
@@ -84,6 +101,7 @@
     },
     {
       "id": "hr1968-abortion",
+      "kind": "measure",
       "number": "H.R. 1968",
       "title": "Full-Year Continuing Appropriations 2025 - Abortion",
       "stage": "enacted",
@@ -91,6 +109,7 @@
     },
     {
       "id": "hjres142-sjres102",
+      "kind": "measure",
       "number": "H.J.Res.142",
       "title": "Disapproval of D.C. Tax Decoupling from Federal OBBBA Changes",
       "stage": "enacted",
@@ -98,10 +117,35 @@
     },
     {
       "id": "hr5103",
+      "kind": "measure",
       "number": "H.R. 5103",
       "title": "Make the District of Columbia Safe and Beautiful Act of 2025",
       "stage": "passed-house",
       "provisions": 1
+    },
+    {
+      "id": "hr5166-abortion",
+      "kind": "rider",
+      "number": "H.R. 7148",
+      "title": "FY 2026 D.C. Appropriations - Abortion",
+      "stage": "enacted",
+      "provisions": 1,
+      "proposedIn": "H.R. 5166",
+      "law": "P.L. 119-75",
+      "provision": "Division E, Sec. 810",
+      "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm"
+    },
+    {
+      "id": "hr5166-marijuana",
+      "kind": "rider",
+      "number": "H.R. 7148",
+      "title": "FY 2026 D.C. Appropriations - Marijuana",
+      "stage": "enacted",
+      "provisions": 1,
+      "proposedIn": "H.R. 5166",
+      "law": "P.L. 119-75",
+      "provision": "Division E, Sec. 809",
+      "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm"
     }
   ]
 }

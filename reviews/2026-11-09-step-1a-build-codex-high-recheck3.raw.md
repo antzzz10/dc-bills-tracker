@@ -1,0 +1,8 @@
+**0 BLOCKER, 0 MATERIAL, 1 unchanged NOTE.** The MATERIAL fix is verified.
+
+- **Three reproductions pass:** House marker + amended Senate roll-call → `passed-house`; two unamended roll-call-only passages → `passed-both`; House roll-call + amended Senate marker → `passed-house`. Both input orders pass. See [monitor-bills.js:219](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:219).
+- **Same-day ordering NOTE resolved:** marker and roll-call cases consistently use the origin chamber, remain nonfinal, and are independent of input order. See [monitor-bills.js:234](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:234).
+- **No vote-extraction regression found:** House marker lines are skipped while detail lines supply tallies; Senate marker lines still supply vote numbers. Both session years, roll-number precedence, party totals, and source URLs passed. See [monitor-bills.js:276](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:276) and [monitor-bills.js:307](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:307).
+- **NOTE — Existing rank guard still preserves incorrect terminal stages.** A stored `passed-both`, `agreed-both`, or `sent-to-states` cannot downgrade to a corrected one-chamber stage. None currently exist in stored data. See [monitor-bills.js:705](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:705).
+
+51 focused fixtures passed with vote API calls mocked, plus syntax, data lint, published-claims, and scoped whitespace checks. No files edited.
