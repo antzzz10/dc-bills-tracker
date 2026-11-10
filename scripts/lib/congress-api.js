@@ -44,7 +44,7 @@ export async function fetchJsonWithRetry(url, {
         } catch (e) {
           // A truncated body is a transient fault too.
           lastStatus = response.status;
-          lastReason = `invalid JSON (${e.message})`;
+          lastReason = `invalid JSON (${redactKey(e.message)})`;
           continue;
         }
       }
@@ -57,20 +57,40 @@ export async function fetchJsonWithRetry(url, {
       }
     } catch (e) {
       lastStatus = null;
-      lastReason = e.message;
+      lastReason = redactKey(e.message);
     }
   }
-  return { ok: false, status: lastStatus, reason: lastReason };
+  // Redacted here, at the source: a reason travels into logs, the email summary,
+  // bill-status-history.json and the statehood store (Codex attack review, 2026-11-10:
+  // a URL-bearing fetch error put a dummy key into committed history).
+  return { ok: false, status: lastStatus, reason: redactKey(lastReason) };
 }
 
 // The API key travels in the query string; it must never reach a log line or a stored file.
-export function redactKey(url) {
-  return String(url).replace(/api_key=[^&]*/g, 'api_key=REDACTED');
+// Also strips URL credentials (user:pass@), which Node echoes back in its error text.
+export function redactKey(text) {
+  return String(text)
+    .replace(/api_key=[^&\s"')]*/gi, 'api_key=REDACTED')
+    .replace(/\/\/[^/\s@"']*@/g, '//REDACTED@');
 }
 
-// Congress.gov's `pagination.next` omits the key. Add it back (once) before following.
-export function withKey(url, apiKey) {
-  const u = new URL(url);
+const API_ORIGIN = 'https://api.congress.gov';
+
+/**
+ * Congress.gov's `pagination.next` omits the key. Add it back, but only to a URL that is
+ * the same API endpoint we asked for: HTTPS on api.congress.gov, no embedded credentials,
+ * no port, and the expected path. Anything else is refused (returns null) rather than
+ * followed with the key attached.
+ */
+export function withKey(url, apiKey, expectedPath) {
+  let u;
+  try {
+    u = new URL(url);
+  } catch {
+    return null;
+  }
+  if (u.origin !== API_ORIGIN || u.username || u.password || u.port) return null;
+  if (expectedPath && u.pathname !== expectedPath) return null;
   u.searchParams.set('api_key', apiKey);
   if (!u.searchParams.has('format')) u.searchParams.set('format', 'json');
   return u.toString();

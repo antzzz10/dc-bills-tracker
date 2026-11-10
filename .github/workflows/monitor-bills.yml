@@ -61,6 +61,11 @@ jobs:
 
       # Data-quality gate: if the updated bills.json fails consistency checks or
       # drifts from golden labels, fail here so nothing is committed or deployed.
+      # Offline tests for the statehood-bill cosponsor fetch: pagination, withdrawals,
+      # retries and the keep-last-complete-list rule.
+      - name: Test statehood cosponsor fetch (offline)
+        run: node scripts/test-statehood.js
+
       - name: Lint bill data (consistency + golden-label eval)
         run: node scripts/lint-bills.js
 
@@ -159,7 +164,29 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Update bill statuses - ${{ steps.check_changes.outputs.timestamp }}"
-            git push
+            # The weekly roster workflow (refresh-member-roster.yml) also pushes to main.
+            # If it landed during this run, rebase over it, but ONLY over roster-only
+            # commits: any other upstream change (discovery, decisions, a hand edit) is
+            # refused as before, since auto-merging would publish data nothing validated.
+            # After a rebase the gates run again on the combined tree. The generated
+            # stats.json is discarded first (it would block the rebase); the deploy's build
+            # regenerates it. (Codex medium/high/attack, 2026-11-10.)
+            for attempt in 1 2 3; do
+              git push && exit 0
+              [ "$attempt" = 3 ] && exit 1
+              sleep $((attempt * 5))
+              git checkout -- public/api/stats.json
+              git fetch -q origin main || exit 1
+              # An inspection error must stop the save, never read as "nothing changed".
+              UPSTREAM=$(git diff --name-only HEAD...origin/main) || exit 1
+              OTHER=$(grep -v -E '^public/api/members-[0-9]+\.json$' <<<"$UPSTREAM" || true)
+              if [ -n "$OTHER" ]; then
+                echo "::error::main changed during this run beyond the member roster; not rebasing over: $OTHER"
+                exit 1
+              fi
+              git rebase -q origin/main || { git rebase --abort; exit 1; }
+              node scripts/lint-bills.js && node scripts/generate-stats.js && node scripts/check-published-claims.js || exit 1
+            done
           fi
 
       - name: Rebuild and deploy site

@@ -262,6 +262,36 @@ if (facts) {
 }
 
 // ---------------------------------------------------------------------------
+// 2b. stats.json numbers, checked whether or not the summary renders. The summary block
+//     above is skipped when nothing is tracked (as on the first days of a new Congress),
+//     and its stats checks with it; these run regardless, with zero as a real expectation
+//     (Codex PRD review finding 8; re-raised by Codex medium + high, 2026-11-10).
+// ---------------------------------------------------------------------------
+{
+  let stats = null;
+  try {
+    stats = JSON.parse(readFileSync(join(__dirname, '../public/api/stats.json'), 'utf-8'));
+  } catch (e) {
+    fail('stats.json', `not readable (${e.message}); run scripts/generate-stats.js`);
+  }
+  if (stats) {
+    const all = [...bills, ...riders];
+    const expected = {
+      totalBills: independentCount(all),
+      passedBills: independentCount(all.filter(hasAdvanced)),
+      pendingBills: independentCount(all.filter(b => !hasAdvanced(b)))
+    };
+    claims.push(`stats.json: ${expected.totalBills} total, ${expected.pendingBills} pending, ${expected.passedBills} passed`);
+    for (const [key, value] of Object.entries(expected)) {
+      if (stats[key] !== value) fail(`stats.json ${key}`, `publishes ${stats[key]}; data holds ${value}`);
+    }
+    if ((stats.routine?.total ?? null) !== independentCount(routineBills)) {
+      fail('stats.json routine.total', `publishes ${stats.routine?.total}; data holds ${independentCount(routineBills)}`);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // 3. Outcomes (archived cards and enacted riders): each states a checked fact with a source
 // ---------------------------------------------------------------------------
 // An outcome is hand-verified, so the gate can't recompute it. It can require that each
@@ -306,11 +336,20 @@ for (const item of ['bills', 'riders', 'routineBills'].flatMap(list => data[list
   let store = { bills: {} };
   try {
     store = readPublished('../src/data/statehood-cosponsors.json');
-  } catch {
-    // Before the monitor's first run every row must publish as incomplete; checked below.
+  } catch (e) {
+    // The store is tracked and written by every monitor run. Its loss is never a quiet
+    // "no data": it would publish every row as unavailable (Codex attack review).
+    fail('src/data/statehood-cosponsors.json', `not readable (${e.message})`);
   }
   const currentCongress = CURRENT_CONGRESS;
   const flagshipEntries = (data.supportBills || []).filter(b => b.flagship === true);
+  // The page needs a House and a Senate bill. Removing the flags would publish an empty
+  // file that every other check accepts.
+  for (const chamber of ['house', 'senate']) {
+    if (!flagshipEntries.some(e => (/^H/i.test(e.billNumbers[0]) ? 'house' : 'senate') === chamber)) {
+      fail('statehood-cosponsors.json', `no flagship ${chamber} bill in bills.json`);
+    }
+  }
   if (payload) {
     const rows = Array.isArray(payload.bills) ? payload.bills : [];
     const published = new Set(rows.map(r => r.id));
@@ -333,28 +372,52 @@ for (const item of ['bills', 'riders', 'routineBills'].flatMap(list => data[list
       const expectedChamber = /^H/i.test(row.billNumber) ? 'house' : 'senate';
       if (row.chamber !== expectedChamber) fail(claim, `chamber "${row.chamber}" for ${row.billNumber}`);
 
+      if (row.complete !== true) {
+        // Unavailable is not zero: an incomplete row publishes no totals at all.
+        if (row.totals !== null) fail(claim, 'incomplete list published with totals; they must be null');
+        if (row.checkedAt !== undefined) fail(claim, `incomplete list published with checkedAt ${row.checkedAt}`);
+        if (list.length) fail(claim, `incomplete list published with ${list.length} rows`);
+        continue;
+      }
       if (t.cosponsors !== list.length) fail(claim, `total says ${t.cosponsors}, list holds ${list.length}`);
-      const sum = obj => Object.values(obj || {}).reduce((n, v) => n + v, 0);
-      if (sum(t.byParty) !== list.length) fail(claim, `party breakdown sums to ${sum(t.byParty)}, list holds ${list.length}`);
-      if (sum(t.byState) !== list.length) fail(claim, `state breakdown sums to ${sum(t.byState)}, list holds ${list.length}`);
+      // Every key and value, recounted here: a breakdown that only sums right can still
+      // name the wrong states (Codex high + medium, 2026-11-10).
+      const tally = key => {
+        const out = {};
+        for (const c of list) out[c[key]] = (out[c[key]] || 0) + 1;
+        return out;
+      };
+      const sameCounts = (a, b) => {
+        const ka = Object.keys(a || {}).sort();
+        const kb = Object.keys(b || {}).sort();
+        return ka.length === kb.length && ka.every((k, i) => k === kb[i] && a[k] === b[k]);
+      };
+      if (!sameCounts(t.byParty, tally('party'))) fail(claim, `party breakdown ${JSON.stringify(t.byParty)} ≠ list ${JSON.stringify(tally('party'))}`);
+      if (!sameCounts(t.byState, tally('state'))) fail(claim, `state breakdown does not match the list's states`);
       const original = list.filter(c => c.isOriginalCosponsor === true).length;
       if (t.original !== original) fail(claim, `original says ${t.original}, list holds ${original}`);
       const nonVoting = row.chamber === 'house' ? list.filter(c => NON_VOTING_HERE.includes(c.state)).length : 0;
       if (t.nonVoting !== nonVoting) fail(claim, `non-voting says ${t.nonVoting}, list holds ${nonVoting}`);
 
       const rec = store.bills?.[row.id];
-      if (row.complete === true) {
-        if (!rec || rec.complete !== true) { fail(claim, 'published as complete, but no complete list is stored'); continue; }
-        if (row.checkedAt !== rec.checkedAt) fail(claim, `checkedAt ${row.checkedAt} ≠ stored ${rec.checkedAt}`);
-        const ids = list.map(c => c.bioguideId).join(',');
-        if (ids !== rec.cosponsors.map(c => c.bioguideId).join(',')) fail(claim, 'published list differs from the stored list');
-        // bills.json's count drives the tracker's own card; the two must agree.
-        if (entry.status?.cosponsors !== list.length) {
-          fail(claim, `bills.json shows ${entry.status?.cosponsors} cosponsors on the tracker card`);
-        }
-      } else {
-        if (row.checkedAt !== undefined) fail(claim, `incomplete list published with checkedAt ${row.checkedAt}`);
-        if (list.length) fail(claim, `incomplete list published with ${list.length} rows`);
+      if (!rec || rec.complete !== true) { fail(claim, 'published as complete, but no complete list is stored'); continue; }
+      if (row.checkedAt !== rec.checkedAt) fail(claim, `checkedAt ${row.checkedAt} ≠ stored ${rec.checkedAt}`);
+      // Field by field, not IDs only: a changed name or signing date is a false claim.
+      const FIELDS = ['bioguideId', 'name', 'party', 'state', 'district', 'sponsorshipDate', 'isOriginalCosponsor'];
+      const rowKey = c => JSON.stringify(FIELDS.map(f => c[f] ?? null));
+      if (list.length !== rec.cosponsors.length || list.some((c, i) => rowKey(c) !== rowKey(rec.cosponsors[i]))) {
+        fail(claim, 'published cosponsor rows differ from the stored list');
+      }
+      for (const key of ['sponsor', 'introducedDate', 'latestAction', 'congressGovUrl']) {
+        if (JSON.stringify(row[key]) !== JSON.stringify(rec[key])) fail(claim, `${key} differs from the stored record`);
+      }
+      const today = new Date().toISOString().slice(0, 10);
+      if (list.some(c => c.sponsorshipDate < (rec.introducedDate || '') || c.sponsorshipDate > today)) {
+        fail(claim, 'a sponsorship date falls before introduction or in the future');
+      }
+      // bills.json's count drives the tracker's own card; the two must agree.
+      if (entry.status?.cosponsors !== list.length) {
+        fail(claim, `bills.json shows ${entry.status?.cosponsors} cosponsors on the tracker card`);
       }
     }
   }

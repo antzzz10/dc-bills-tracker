@@ -98,6 +98,7 @@ function cosponsorRecord(raw) {
  * `firstPage` is the raw first page (or null), so the caller can still read its count.
  */
 export async function fetchFullCosponsorList({ apiBase, congress, billType, number, apiKey, fetchOptions = {} }) {
+  const path = `/v3/bill/${congress}/${billType}/${number}/cosponsors`;
   let url = `${apiBase}/bill/${congress}/${billType}/${number}/cosponsors?api_key=${apiKey}&limit=250&format=json`;
   const rows = [];
   const seenUrls = new Set();
@@ -112,7 +113,7 @@ export async function fetchFullCosponsorList({ apiBase, congress, billType, numb
 
     const res = await fetchJsonWithRetry(url, fetchOptions);
     if (!res.ok) {
-      return { complete: false, reason: `page ${pages}: ${res.reason}`, firstPage };
+      return { complete: false, reason: `page ${pages}: ${redactKey(res.reason)}`, firstPage };
     }
     const page = res.data || {};
     if (pages === 1) firstPage = page;
@@ -129,7 +130,12 @@ export async function fetchFullCosponsorList({ apiBase, congress, billType, numb
       return { complete: false, reason: `page ${pages}: no cosponsors array`, firstPage };
     }
     rows.push(...page.cosponsors);
-    url = p.next ? withKey(p.next, apiKey) : null;
+    if (p.next) {
+      url = withKey(p.next, apiKey, path);
+      if (!url) return { complete: false, reason: `page ${pages}: unexpected pagination.next ${redactKey(p.next)}`, firstPage };
+    } else {
+      url = null;
+    }
   }
 
   const withdrawn = rows.filter(r => r.sponsorshipWithdrawnDate);
@@ -250,7 +256,8 @@ export function buildStatehoodPayload({ store, billsData, currentCongress, gener
     };
     if (complete) row.checkedAt = rec.checkedAt;
     row.cosponsors = cosponsors;
-    row.totals = computeTotals(cosponsors, chamber);
+    // Unavailable is not zero: without a complete list there are no totals to state.
+    row.totals = complete ? computeTotals(cosponsors, chamber) : null;
     return row;
   });
   const order = { house: 0, senate: 1 };

@@ -339,6 +339,11 @@ for (const [section, items] of sections) {
     }
   }
 }
+for (const chamber of ['house', 'senate']) {
+  if (!flagships.some(f => chamberOf(f.billNumbers[0]) === chamber)) {
+    errors.push(`no flagship ${chamber} statehood bill (flagship: true) in supportBills — the statehood-bill page would publish nothing for it`);
+  }
+}
 const flagshipSlots = new Map();
 for (const item of flagships) {
   const slot = `${item.congress}:${chamberOf(item.billNumbers[0])}`;
@@ -353,8 +358,10 @@ for (const item of flagships) {
 let statehoodStore = null;
 try {
   statehoodStore = readJson('../src/data/statehood-cosponsors.json');
-} catch {
-  if (flagships.length) warnings.push('src/data/statehood-cosponsors.json not found — the monitor writes it on its next run');
+} catch (e) {
+  // Tracked and rewritten by every monitor run; losing it would publish every row as
+  // unavailable, so it is an error, not a warning (Codex attack review, 2026-11-10).
+  if (flagships.length) errors.push(`src/data/statehood-cosponsors.json not readable (${e.message})`);
 }
 const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/;
 const YMD = /^\d{4}-\d{2}-\d{2}$/;
@@ -402,11 +409,20 @@ if (statehoodStore) {
 //     signed on" from it, so a short roster would hide members and a stale one would list
 //     people who have left.
 const rosterRel = `../public/api/members-${CURRENT_CONGRESS}.json`;
+// Required. The one allowed gap is an explicit `{ congress, pending: true }` placeholder,
+// written when CURRENT_CONGRESS moves on before the new Congress's members can be listed
+// (Jan 3); the page shows no lookup for it. A missing file is an error, never a skip.
 let roster = null;
 try {
   roster = readJson(rosterRel);
-} catch {
-  warnings.push(`${rosterRel.slice(3)} not found — run scripts/build-member-roster.js (weekly workflow)`);
+} catch (e) {
+  errors.push(`${rosterRel.slice(3)} not readable (${e.message}) — run scripts/build-member-roster.js, or write a { "congress": ${CURRENT_CONGRESS}, "pending": true } placeholder at a Congress switch`);
+}
+if (roster?.pending === true) {
+  if (roster.congress !== CURRENT_CONGRESS) errors.push(`members-${CURRENT_CONGRESS}: pending placeholder names the ${roster.congress}th Congress`);
+  if ((roster.members || []).length) errors.push(`members-${CURRENT_CONGRESS}: a pending placeholder must hold no members`);
+  warnings.push(`members-${CURRENT_CONGRESS}: roster pending — the member lookup is off until build-member-roster.js runs`);
+  roster = null;
 }
 if (roster) {
   const label = `members-${CURRENT_CONGRESS}`;
@@ -472,7 +488,9 @@ try {
     }
     if (row.final !== true) errors.push(`${label}: a finished Congress must be final: true`);
   }
+  // Required: the 119th is the latest finished-or-running Congress the page compares to.
   const r119 = rows.get(119);
+  if (!r119) errors.push('statehood-bill-history/119: missing');
   if (r119 && (r119.house?.cosponsors !== HISTORY_119_SNAPSHOT.house || r119.senate?.cosponsors !== HISTORY_119_SNAPSHOT.senate)) {
     errors.push(`statehood-bill-history/119: snapshot is ${r119.house?.cosponsors}/${r119.senate?.cosponsors}, exported as ${HISTORY_119_SNAPSHOT.house}/${HISTORY_119_SNAPSHOT.senate} on 2026-11-10`);
   }

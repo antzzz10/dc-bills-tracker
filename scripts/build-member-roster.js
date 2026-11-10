@@ -60,7 +60,12 @@ async function listCurrentMembers() {
     if (expected !== null && p.count !== expected) throw new Error(`member count changed mid-walk (${expected}→${p.count})`);
     expected = p.count;
     rows.push(...(res.data.members || []));
-    url = p.next ? withKey(p.next, CONGRESS_API_KEY) : null;
+    if (p.next) {
+      url = withKey(p.next, CONGRESS_API_KEY, `/v3/member/congress/${CURRENT_CONGRESS}`);
+      if (!url) throw new Error(`unexpected pagination.next ${redactKey(p.next)}`);
+    } else {
+      url = null;
+    }
     await sleep(DELAY_MS);
   }
   if (rows.length !== expected) throw new Error(`member list returned ${rows.length} rows, pagination.count says ${expected}`);
@@ -70,6 +75,16 @@ async function listCurrentMembers() {
 }
 
 function memberRow(listItem, detail) {
+  // The detail record must be the member we asked for and must still say they serve: a
+  // resignation between the list request and this one would otherwise publish a departed
+  // member with a fresh generatedAt (Codex attack review, 2026-11-10). Either mismatch
+  // aborts the whole refresh; last week's roster stays.
+  if (detail.bioguideId !== listItem.bioguideId) {
+    throw new Error(`asked for ${listItem.bioguideId}, detail record is ${detail.bioguideId}`);
+  }
+  if (detail.currentMember !== true) {
+    throw new Error(`${detail.bioguideId}: listed as current but the member record says currentMember=${detail.currentMember}`);
+  }
   // The term in this Congress. A member who moved chambers mid-Congress has two; the
   // later one is where they serve now.
   const terms = (detail.terms || []).filter(t => t.congress === CURRENT_CONGRESS)

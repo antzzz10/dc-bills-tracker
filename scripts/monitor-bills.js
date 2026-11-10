@@ -12,6 +12,7 @@ import { dirname, join } from 'path';
 import { CURRENT_CONGRESS } from './config.js';
 import { isProvision } from '../src/lib/measureStatus.js';
 import { fetchFullCosponsorList, nextStoreRecord, sponsorRecord, congressGovBillUrl } from './lib/statehood.js';
+import { redactKey } from './lib/congress-api.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -490,7 +491,7 @@ async function fetchBillStatus(billNumber, congress, { fullCosponsorList = false
         cosponsorsCount = fetchResult.count;
         console.log(`  ✓ Full cosponsor list: ${fetchResult.count} (${fetchResult.withdrawnCount} withdrawn, excluded; ${fetchResult.pages} page(s))`);
       } else {
-        missingParts.push(`cosponsors (incomplete list: ${fetchResult.reason})`);
+        missingParts.push(`cosponsors (incomplete list: ${redactKey(fetchResult.reason)})`);
       }
       flagship = {
         fetchResult,

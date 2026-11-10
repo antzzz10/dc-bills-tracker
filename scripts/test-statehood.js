@@ -9,8 +9,10 @@
 
 import assert from 'assert/strict';
 import { fetchFullCosponsorList, nextStoreRecord, computeTotals, buildStatehoodPayload } from './lib/statehood.js';
+import { fetchJsonWithRetry, redactKey } from './lib/congress-api.js';
 
-const API = 'https://api.example/v3';
+const API = 'https://api.congress.gov/v3';
+const NEXT = offset => `${API}/bill/119/hr/51/cosponsors?offset=${offset}&limit=250&format=json`;
 const row = (id, extra = {}) => ({
   bioguideId: id, firstName: 'A', lastName: id, party: 'D', state: 'NY', district: 1,
   sponsorshipDate: '2025-01-03', isOriginalCosponsor: true, ...extra
@@ -49,7 +51,7 @@ const test = (name, fn) => tests.push([name, fn]);
 
 test('two pages, one withdrawal: complete, withdrawn dropped, key re-added to next', async () => {
   const { r, calls } = await run({
-    0: [json(200, page([row('A1'), row('A2', { sponsorshipWithdrawnDate: '2025-02-01' })], 2, 3, `${API}/bill/119/hr/51/cosponsors?offset=2&limit=250&format=json`))],
+    0: [json(200, page([row('A1'), row('A2', { sponsorshipWithdrawnDate: '2025-02-01' })], 2, 3, NEXT(2)))],
     2: [json(200, page([row('A3', { sponsorshipDate: '2025-01-02' })], 2, 3))]
   });
   assert.equal(r.complete, true, r.reason);
@@ -92,7 +94,7 @@ test('rows missing against countIncludingWithdrawn: incomplete', async () => {
 
 test('duplicate member across pages: incomplete', async () => {
   const { r } = await run({
-    0: [json(200, page([row('A1')], 2, 2, `${API}/x?offset=1`))],
+    0: [json(200, page([row('A1')], 2, 2, NEXT(1)))],
     1: [json(200, page([row('A1')], 2, 2))]
   });
   assert.equal(r.complete, false);
@@ -101,11 +103,33 @@ test('duplicate member across pages: incomplete', async () => {
 
 test('counts change mid-walk: incomplete', async () => {
   const { r } = await run({
-    0: [json(200, page([row('A1')], 2, 2, `${API}/x?offset=1`))],
+    0: [json(200, page([row('A1')], 2, 2, NEXT(1)))],
     1: [json(200, page([row('A2')], 3, 3))]
   });
   assert.equal(r.complete, false);
   assert.match(r.reason, /mid-walk/);
+});
+
+test('pagination.next off the API, or carrying credentials: refused, key never sent or reported', async () => {
+  for (const bad of ['https://evil.example/v3/bill/119/hr/51/cosponsors?offset=1',
+    'https://user:pass@api.congress.gov/v3/bill/119/hr/51/cosponsors?offset=1',
+    `${API}/bill/119/s/51/cosponsors?offset=1`]) {
+    const { r, calls } = await run({ 0: [json(200, page([row('A1')], 2, 2, bad))] });
+    assert.equal(r.complete, false);
+    assert.match(r.reason, /unexpected pagination.next/);
+    assert.equal(calls.length, 1);
+    assert.doesNotMatch(r.reason, /KEY|pass/);
+  }
+});
+
+test('network error text carrying the key is redacted', async () => {
+  const res = await fetchJsonWithRetry('u', {
+    retries: 0, sleepImpl: async () => {},
+    fetchImpl: async () => { throw new Error('Failed to parse URL from https://user:pw@api.congress.gov/x?api_key=SECRET123&y=1'); }
+  });
+  assert.equal(res.ok, false);
+  assert.doesNotMatch(res.reason, /SECRET123|pw@/);
+  assert.equal(redactKey('a?api_key=K"'), 'a?api_key=REDACTED"');
 });
 
 const entry = { id: 'hr51', congress: 119, billNumbers: ['H.R. 51'], title: 'T', supportBills: true };
@@ -143,7 +167,7 @@ test('payload: incomplete row has no checkedAt; past-Congress row is not current
   assert.equal(house.current, false);
   assert.equal(house.totals.nonVoting, 1);
   assert.equal('checkedAt' in senate, false);
-  assert.equal(senate.totals.cosponsors, 0);
+  assert.equal(senate.totals, null); // unavailable, not zero
 });
 
 let failed = 0;
