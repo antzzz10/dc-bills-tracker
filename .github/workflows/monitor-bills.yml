@@ -151,7 +151,10 @@ jobs:
         run: |
           git config --global user.name 'DC Bills Monitor'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add bill-status-history.json src/data/bills.json
+          # statehood-cosponsors.json: the statehood bill's last complete cosponsor lists
+          # (scripts/lib/statehood.js). The published public/api/statehood-*.json files are
+          # derived from it by every build, so they are not committed.
+          git add bill-status-history.json src/data/bills.json src/data/statehood-cosponsors.json
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else

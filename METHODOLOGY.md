@@ -78,6 +78,23 @@ Run before deploying data changes:
 node scripts/lint-bills.js
 ```
 
+## The statehood bill's cosponsors (data for representdc.org/statehood-bill)
+
+The tracker publishes three files for the statehood-bill page on the main site (PRD `docs/2026-11-10-cosponsor-page-and-120th-overview-prd.md`, decision #7). Every number in them is counted from the rows; none is typed.
+
+| Published file | Built from | Refreshed | Source |
+|---|---|---|---|
+| `api/statehood-cosponsors.json` | `src/data/statehood-cosponsors.json` (tracked), derived at every build by `scripts/generate-stats.js` | Daily, by the monitor | Congress.gov API, bill cosponsors endpoint |
+| `api/members-<congress>.json` | `scripts/build-member-roster.js` (tracked file) | Weekly, `refresh-member-roster.yml` | Congress.gov API, member endpoints (`currentMember=true`) |
+| `api/statehood-bill-history.json` | `src/data/statehood-bill-history.json` (tracked), copied at build | One-time export (`scripts/export-statehood-history.js`) | GovInfo BILLSTATUS, via `representdc-data` |
+
+- **Which bills.** Entries in `supportBills` marked `flagship: true` (today H.R. 51 and S. 51 of the 119th). The scripts find them by that flag, never by bill number, because the numbers change every Congress.
+- **Cosponsor lists.** For flagship entries only, the daily check fetches the whole list (`limit=250`, following `pagination.next`), retrying rate limits and server errors with backoff. Withdrawn cosponsors are dropped. A list is accepted as complete only if the rows kept equal Congress.gov's `pagination.count` (which already excludes withdrawals), kept plus withdrawn equal `countIncludingWithdrawnCosponsors`, and no member appears twice. Otherwise the previous complete list and its `checkedAt` stay, and that bill's lookup counts as failed in the run's health. `checkedAt` therefore always means "a complete list was fetched at this time". All other bills still read the count only.
+- **Non-voting members.** The House list can include the delegates and the resident commissioner (D.C., Puerto Rico, Guam, the Virgin Islands, American Samoa, the Northern Mariana Islands). The totals say how many are included; the page states recorded counts, never a fraction of the chamber.
+- **Member roster.** Who currently serves, with party, state, district, chamber, whether the member votes on the floor and the official website Congress.gov records. Written only if every member record arrived and the chamber counts are plausible (House 430–441 including non-voting members, Senate 98–100); otherwise last week's roster stays.
+- **Earlier Congresses.** End-of-Congress cosponsor counts (withdrawals excluded) and passage dates for the 115th–119th, from the `dc-statehood-admission` family in `representdc-data`. The 119th row is a snapshot (`final: false`); the live count is in `statehood-cosponsors.json`.
+- **Gates.** `lint-bills.js` checks 15–18 and section 4 of `check-published-claims.js` recompute every published total from the rows, refuse a `checkedAt` on an incomplete list, check the roster's counts and bounds, keep `stats.json`'s existing fields, and pin the history to the values verified on 2026-11-10.
+
 ## How we differ from our sources
 
 | | This tracker | D.C. Statehood Scorecard | Free DC |

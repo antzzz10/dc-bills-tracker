@@ -27,6 +27,11 @@
  *       entry up in its own Congress and refuses to guess)
  *   13. A rider or amendment carries a stage only with a verified became-law outcome
  *   14. A constitutional amendment is never "enacted"
+ *   15. Flagship (statehood-bill) entries: support only, one per chamber per Congress
+ *   16. The stored statehood cosponsor lists: a complete list carries checkedAt and agrees
+ *       with bills.json's count; an incomplete one carries neither checkedAt nor rows
+ *   17. The current-member roster: plausible chamber counts, counts match the rows
+ *   18. The prior-Congress history export matches the values verified 2026-11-10
  *
  * Exits 1 on any error. See METHODOLOGY.md ("Quality control").
  */
@@ -36,6 +41,9 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { countUnits, measureKey, isRider } from '../src/lib/measureCounts.js';
 import { isActive, isProvision } from '../src/lib/measureStatus.js';
+import { CURRENT_CONGRESS } from './config.js';
+import { NON_VOTING_STATES, chamberOf } from './lib/statehood.js';
+import { ROSTER_BOUNDS, rosterCounts } from './build-member-roster.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const data = JSON.parse(readFileSync(join(__dirname, '../src/data/bills.json'), 'utf-8'));
@@ -313,6 +321,166 @@ for (const [section, items] of sections) {
       errors.push(`${section}/${item.id}: a constitutional amendment cannot be "enacted"; its final stage is "sent-to-states"`);
     }
   }
+}
+
+// 15. Flagship entries feed representdc.org/statehood-bill. They are found by this flag,
+//     never by bill number, so the flag itself must be well placed.
+const readJson = rel => JSON.parse(readFileSync(join(__dirname, rel), 'utf-8'));
+const flagships = [];
+for (const [section, items] of sections) {
+  for (const item of items) {
+    if (item.flagship === undefined) continue;
+    if (item.flagship !== true) {
+      errors.push(`${section}/${item.id}: flagship must be true or absent (got ${JSON.stringify(item.flagship)})`);
+    } else if (section !== 'supportBills') {
+      errors.push(`${section}/${item.id}: only a supportBills entry can be flagship`);
+    } else {
+      flagships.push(item);
+    }
+  }
+}
+const flagshipSlots = new Map();
+for (const item of flagships) {
+  const slot = `${item.congress}:${chamberOf(item.billNumbers[0])}`;
+  if (flagshipSlots.has(slot)) {
+    errors.push(`supportBills/${item.id}: second flagship for ${slot} (also ${flagshipSlots.get(slot)})`);
+  }
+  flagshipSlots.set(slot, item.id);
+}
+
+// 16. Stored cosponsor lists. checkedAt means "a complete list was fetched then"; it must
+//     never sit on a partial list (Codex PRD review, finding 6).
+let statehoodStore = null;
+try {
+  statehoodStore = readJson('../src/data/statehood-cosponsors.json');
+} catch {
+  if (flagships.length) warnings.push('src/data/statehood-cosponsors.json not found — the monitor writes it on its next run');
+}
+const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/;
+const YMD = /^\d{4}-\d{2}-\d{2}$/;
+if (statehoodStore) {
+  for (const item of flagships) {
+    const rec = statehoodStore.bills?.[item.id];
+    const label = `statehood-cosponsors/${item.id}`;
+    if (!rec) {
+      warnings.push(`${label}: no stored record yet — the monitor writes it on its next run`);
+      continue;
+    }
+    if (rec.congress !== item.congress || rec.billNumber !== item.billNumbers[0]) {
+      errors.push(`${label}: stored for ${rec.congress} ${rec.billNumber}, but the entry is ${item.congress} ${item.billNumbers[0]}`);
+    }
+    const list = Array.isArray(rec.cosponsors) ? rec.cosponsors : null;
+    if (rec.complete === true) {
+      if (!ISO_INSTANT.test(rec.checkedAt || '')) errors.push(`${label}: complete list without a valid checkedAt`);
+      if (!list) { errors.push(`${label}: complete but no cosponsors array`); continue; }
+      if (!rec.sponsor?.bioguideId) errors.push(`${label}: complete but no sponsor`);
+      const ids = new Set();
+      for (const c of list) {
+        if (!c.bioguideId || !c.name || !c.party || !/^[A-Z]{2}$/.test(c.state || '') || !YMD.test(c.sponsorshipDate || '') || typeof c.isOriginalCosponsor !== 'boolean') {
+          errors.push(`${label}: cosponsor row missing a required field (${c.bioguideId || 'no id'})`);
+        }
+        if (ids.has(c.bioguideId)) errors.push(`${label}: ${c.bioguideId} listed twice`);
+        ids.add(c.bioguideId);
+        if (c.sponsorshipWithdrawnDate) errors.push(`${label}: ${c.bioguideId} withdrew but is still listed`);
+      }
+      if (rec.sponsor?.bioguideId && ids.has(rec.sponsor.bioguideId)) {
+        errors.push(`${label}: the sponsor is also listed as a cosponsor`);
+      }
+      // The daily check sets both from the same fetch, and leaves both alone on failure.
+      if (item.status?.cosponsors !== list.length) {
+        errors.push(`${label}: stored list has ${list.length} cosponsors but bills.json says ${item.status?.cosponsors}`);
+      }
+    } else {
+      if (rec.complete !== false) errors.push(`${label}: complete must be true or false`);
+      if (rec.checkedAt !== undefined) errors.push(`${label}: incomplete list carries checkedAt ${rec.checkedAt}`);
+      if (list && list.length) errors.push(`${label}: incomplete record holds ${list.length} rows`);
+    }
+  }
+}
+
+// 17. The current-member roster (scripts/build-member-roster.js). The page derives "not yet
+//     signed on" from it, so a short roster would hide members and a stale one would list
+//     people who have left.
+const rosterRel = `../public/api/members-${CURRENT_CONGRESS}.json`;
+let roster = null;
+try {
+  roster = readJson(rosterRel);
+} catch {
+  warnings.push(`${rosterRel.slice(3)} not found — run scripts/build-member-roster.js (weekly workflow)`);
+}
+if (roster) {
+  const label = `members-${CURRENT_CONGRESS}`;
+  const members = Array.isArray(roster.members) ? roster.members : [];
+  if (roster.congress !== CURRENT_CONGRESS) errors.push(`${label}: congress is ${roster.congress}`);
+  const counts = rosterCounts(members);
+  for (const key of Object.keys(counts)) {
+    if (roster.counts?.[key] !== counts[key]) {
+      errors.push(`${label}: counts.${key} says ${roster.counts?.[key]}, rows hold ${counts[key]}`);
+    }
+  }
+  for (const [chamber, [lo, hi]] of Object.entries(ROSTER_BOUNDS)) {
+    if (counts[chamber] < lo || counts[chamber] > hi) {
+      errors.push(`${label}: ${counts[chamber]} current ${chamber} members, outside the plausible ${lo}-${hi}`);
+    }
+  }
+  if (counts.houseNonVoting > NON_VOTING_STATES.size) {
+    errors.push(`${label}: ${counts.houseNonVoting} non-voting House members, more than the ${NON_VOTING_STATES.size} seats that exist`);
+  }
+  const ids = new Set();
+  for (const m of members) {
+    if (ids.has(m.bioguideId)) errors.push(`${label}: ${m.bioguideId} listed twice`);
+    ids.add(m.bioguideId);
+    if (!m.bioguideId || !m.name || !/^[A-Z]{2}$/.test(m.state || '') || !['house', 'senate'].includes(m.chamber)) {
+      errors.push(`${label}: row missing a required field (${m.bioguideId || 'no id'})`);
+    }
+    const expectVoting = m.chamber === 'senate' || !NON_VOTING_STATES.has(m.state);
+    if (m.votingMember !== expectVoting) {
+      errors.push(`${label}: ${m.bioguideId} (${m.chamber}, ${m.state}) votingMember is ${m.votingMember}`);
+    }
+  }
+  const ageDays = (Date.now() - Date.parse(roster.generatedAt)) / 86400000;
+  if (!Number.isFinite(ageDays)) errors.push(`${label}: generatedAt is not a date`);
+  else if (ageDays > 15) warnings.push(`${label}: generated ${Math.floor(ageDays)} days ago — the weekly refresh has missed at least two runs`);
+}
+
+// 18. The statehood bill in earlier Congresses: a one-time export, pinned to the values
+//     verified against GovInfo BILLSTATUS on 2026-11-10 (withdrawn cosponsors excluded).
+//     The 119th row is a snapshot and is not pinned; the live list is checked by 16.
+const HISTORY_EXPECTED = {
+  115: { house: ['H.R. 1291', 181], senate: ['S. 1278', 30], passedHouse: null },
+  116: { house: ['H.R. 51', 227], senate: ['S. 631', 42], passedHouse: '2020-06-26' },
+  117: { house: ['H.R. 51', 216], senate: ['S. 51', 45], passedHouse: '2021-04-22' },
+  118: { house: ['H.R. 51', 211], senate: ['S. 51', 46], passedHouse: null }
+};
+const HISTORY_119_SNAPSHOT = { house: 209, senate: 43 };
+try {
+  const history = readJson('../src/data/statehood-bill-history.json');
+  const rows = new Map((history.congresses || []).map(r => [r.congress, r]));
+  for (const [congress, want] of Object.entries(HISTORY_EXPECTED)) {
+    const row = rows.get(Number(congress));
+    const label = `statehood-bill-history/${congress}`;
+    if (!row) { errors.push(`${label}: missing`); continue; }
+    for (const chamber of ['house', 'senate']) {
+      const [number, count] = want[chamber];
+      if (row[chamber]?.billNumber !== number || row[chamber]?.cosponsors !== count) {
+        errors.push(`${label}: ${chamber} is ${row[chamber]?.billNumber} ${row[chamber]?.cosponsors}, verified ${number} ${count}`);
+      }
+      if (row[chamber]?.passedSenate) errors.push(`${label}: ${chamber} bill shows a Senate passage; none occurred`);
+    }
+    if ((row.house?.passedHouse ?? null) !== want.passedHouse) {
+      errors.push(`${label}: House passage ${row.house?.passedHouse}, verified ${want.passedHouse}`);
+    }
+    if (row.final !== true) errors.push(`${label}: a finished Congress must be final: true`);
+  }
+  const r119 = rows.get(119);
+  if (r119 && (r119.house?.cosponsors !== HISTORY_119_SNAPSHOT.house || r119.senate?.cosponsors !== HISTORY_119_SNAPSHOT.senate)) {
+    errors.push(`statehood-bill-history/119: snapshot is ${r119.house?.cosponsors}/${r119.senate?.cosponsors}, exported as ${HISTORY_119_SNAPSHOT.house}/${HISTORY_119_SNAPSHOT.senate} on 2026-11-10`);
+  }
+  if (r119 && CURRENT_CONGRESS === 119 && r119.final !== false) {
+    errors.push('statehood-bill-history/119: the Congress is in session, so the row must be final: false');
+  }
+} catch (e) {
+  errors.push(`src/data/statehood-bill-history.json unreadable: ${e.message}`);
 }
 
 const total = sections.reduce((n, [, items]) => n + items.length, 0);

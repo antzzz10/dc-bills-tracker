@@ -19,6 +19,7 @@
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { CURRENT_CONGRESS } from './config.js';
 
 import { getUpdateBannerMessage, introductionDate } from '../src/components/updateBannerMessage.js';
 import {
@@ -284,6 +285,101 @@ for (const item of ['bills', 'riders', 'routineBills'].flatMap(list => data[list
   }
   // An archived entry may keep its furthest progress (a measure that passed the House and
   // was later withdrawn): progress and outcome are separate facts. It is never counted.
+}
+
+// ---------------------------------------------------------------------------
+// 4. The statehood-bill files (representdc.org/statehood-bill)
+// ---------------------------------------------------------------------------
+// Every total is recomputed here from the published rows, independently of
+// scripts/lib/statehood.js, and the published rows must be exactly the stored list. A
+// missing file is a failure, not a skip: generate-stats.js always writes it, and an empty
+// dataset that skips its checks is how a wrong number ships (Codex PRD review, finding 8).
+{
+  const NON_VOTING_HERE = ['DC', 'PR', 'GU', 'VI', 'AS', 'MP'];
+  const readPublished = rel => JSON.parse(readFileSync(join(__dirname, rel), 'utf-8'));
+  let payload = null;
+  try {
+    payload = readPublished('../public/api/statehood-cosponsors.json');
+  } catch (e) {
+    fail('statehood-cosponsors.json', `not readable (${e.message}); run scripts/generate-stats.js`);
+  }
+  let store = { bills: {} };
+  try {
+    store = readPublished('../src/data/statehood-cosponsors.json');
+  } catch {
+    // Before the monitor's first run every row must publish as incomplete; checked below.
+  }
+  const currentCongress = CURRENT_CONGRESS;
+  const flagshipEntries = (data.supportBills || []).filter(b => b.flagship === true);
+  if (payload) {
+    const rows = Array.isArray(payload.bills) ? payload.bills : [];
+    const published = new Set(rows.map(r => r.id));
+    for (const entry of flagshipEntries) {
+      if (!published.has(entry.id)) fail(`statehood-cosponsors.json`, `flagship ${entry.id} is not published`);
+    }
+    for (const row of rows) {
+      const list = Array.isArray(row.cosponsors) ? row.cosponsors : [];
+      const t = row.totals || {};
+      const claim = `statehood ${row.billNumber} (${row.congress}th): "${t.cosponsors} cosponsors (including ${t.nonVoting} non-voting), ${t.original} original"`;
+      claims.push(claim);
+      const entry = flagshipEntries.find(e => e.id === row.id);
+      if (!entry) { fail(claim, `${row.id} is not a flagship entry in bills.json`); continue; }
+      if (row.congress !== entry.congress || row.billNumber !== entry.billNumbers[0]) {
+        fail(claim, `published as ${row.congress} ${row.billNumber}; bills.json has ${entry.congress} ${entry.billNumbers[0]}`);
+      }
+      if (row.current !== (row.congress === currentCongress)) {
+        fail(claim, `current is ${row.current} for a ${row.congress}th-Congress bill while the tracker checks the ${currentCongress}th`);
+      }
+      const expectedChamber = /^H/i.test(row.billNumber) ? 'house' : 'senate';
+      if (row.chamber !== expectedChamber) fail(claim, `chamber "${row.chamber}" for ${row.billNumber}`);
+
+      if (t.cosponsors !== list.length) fail(claim, `total says ${t.cosponsors}, list holds ${list.length}`);
+      const sum = obj => Object.values(obj || {}).reduce((n, v) => n + v, 0);
+      if (sum(t.byParty) !== list.length) fail(claim, `party breakdown sums to ${sum(t.byParty)}, list holds ${list.length}`);
+      if (sum(t.byState) !== list.length) fail(claim, `state breakdown sums to ${sum(t.byState)}, list holds ${list.length}`);
+      const original = list.filter(c => c.isOriginalCosponsor === true).length;
+      if (t.original !== original) fail(claim, `original says ${t.original}, list holds ${original}`);
+      const nonVoting = row.chamber === 'house' ? list.filter(c => NON_VOTING_HERE.includes(c.state)).length : 0;
+      if (t.nonVoting !== nonVoting) fail(claim, `non-voting says ${t.nonVoting}, list holds ${nonVoting}`);
+
+      const rec = store.bills?.[row.id];
+      if (row.complete === true) {
+        if (!rec || rec.complete !== true) { fail(claim, 'published as complete, but no complete list is stored'); continue; }
+        if (row.checkedAt !== rec.checkedAt) fail(claim, `checkedAt ${row.checkedAt} ≠ stored ${rec.checkedAt}`);
+        const ids = list.map(c => c.bioguideId).join(',');
+        if (ids !== rec.cosponsors.map(c => c.bioguideId).join(',')) fail(claim, 'published list differs from the stored list');
+        // bills.json's count drives the tracker's own card; the two must agree.
+        if (entry.status?.cosponsors !== list.length) {
+          fail(claim, `bills.json shows ${entry.status?.cosponsors} cosponsors on the tracker card`);
+        }
+      } else {
+        if (row.checkedAt !== undefined) fail(claim, `incomplete list published with checkedAt ${row.checkedAt}`);
+        if (list.length) fail(claim, `incomplete list published with ${list.length} rows`);
+      }
+    }
+  }
+
+  // The history table is republished verbatim from the export lint-bills.js pins.
+  try {
+    const src = JSON.stringify(readPublished('../src/data/statehood-bill-history.json'));
+    const pub = JSON.stringify(readPublished('../public/api/statehood-bill-history.json'));
+    claims.push('statehood-bill-history.json: republished export');
+    if (src !== pub) fail('statehood-bill-history.json', 'published file differs from src/data/statehood-bill-history.json');
+  } catch (e) {
+    fail('statehood-bill-history.json', `not readable (${e.message})`);
+  }
+
+  // stats.json keeps every field the main site reads, with the same meaning (PRD § 6): the
+  // statehood data lives in its own files and adds nothing to these totals.
+  try {
+    const stats = readPublished('../public/api/stats.json');
+    const KEEP = ['lastUpdated', 'lastChecked', 'totalBills', 'introducedThisCongress', 'pendingBills',
+      'passedBills', 'passedBreakdown', 'breakdown', 'routine', 'archived', 'provisionalAwaitingReview', 'passed'];
+    const missing = KEEP.filter(k => !(k in stats));
+    if (missing.length) fail('stats.json', `missing field(s) the main site reads: ${missing.join(', ')}`);
+  } catch (e) {
+    fail('stats.json', `not readable (${e.message})`);
+  }
 }
 
 // ---------------------------------------------------------------------------

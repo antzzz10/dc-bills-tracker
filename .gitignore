@@ -34,3 +34,11 @@ monitoring-meta.json
 *.njsproj
 *.sln
 *.sw?
+
+# Statehood-bill files derived at build time by scripts/generate-stats.js from tracked
+# sources (src/data/statehood-cosponsors.json, src/data/statehood-bill-history.json).
+# Not committed: every workflow regenerates them, and a regenerated tracked file would
+# leave a dirty tree that blocks the discovery workflow's rebase-and-retry. The roster,
+# public/api/members-<congress>.json, is fetched rather than derived, so it IS tracked.
+public/api/statehood-cosponsors.json
+public/api/statehood-bill-history.json

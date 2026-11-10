@@ -10,6 +10,8 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { countUnits, groupUnits } from '../src/lib/measureCounts.js';
 import { isActive, isArchived, isPending, hasAdvanced } from '../src/lib/measureStatus.js';
+import { buildStatehoodPayload } from './lib/statehood.js';
+import { CURRENT_CONGRESS } from './config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -138,7 +140,36 @@ try {
 const statsPath = join(apiDir, 'stats.json');
 writeFileSync(statsPath, JSON.stringify(stats, null, 2));
 
+// ---------------------------------------------------------------------------
+// The statehood-bill files for representdc.org/statehood-bill. Separate files, so every
+// stats.json field above keeps its meaning (PRD § 6). Both are derived from stored data;
+// no number here is typed.
+// ---------------------------------------------------------------------------
+const generatedAt = new Date().toISOString();
+let statehoodStore = { bills: {} };
+try {
+  statehoodStore = JSON.parse(readFileSync(join(__dirname, '../src/data/statehood-cosponsors.json'), 'utf-8'));
+} catch {
+  // No store yet: rows publish as incomplete (no list, no checkedAt), never as zero.
+}
+const statehood = buildStatehoodPayload({
+  store: statehoodStore, billsData, currentCongress: CURRENT_CONGRESS, generatedAt
+});
+writeFileSync(join(apiDir, 'statehood-cosponsors.json'), JSON.stringify(statehood, null, 2) + '\n');
+
+// Prior Congresses: a one-time export from representdc-data (scripts/export-statehood-history.js),
+// republished as-is.
+try {
+  const history = JSON.parse(readFileSync(join(__dirname, '../src/data/statehood-bill-history.json'), 'utf-8'));
+  writeFileSync(join(apiDir, 'statehood-bill-history.json'), JSON.stringify(history, null, 2) + '\n');
+} catch (e) {
+  console.log(`  ⚠ statehood-bill-history.json not published: ${e.message}`);
+}
+
 console.log('✓ Generated stats.json');
+for (const row of statehood.bills) {
+  console.log(`  Statehood ${row.billNumber} (${row.congress}th): ${row.complete ? `${row.totals.cosponsors} cosponsors, checked ${row.checkedAt}` : 'no complete list yet'}`);
+}
 console.log(`  Total bills: ${stats.totalBills}  (reviewed only)`);
 console.log(`  Pending: ${stats.pendingBills}`);
 console.log(`  Passed: ${stats.passedBills}`);
