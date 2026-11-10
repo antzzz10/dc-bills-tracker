@@ -10,6 +10,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { CURRENT_CONGRESS } from './config.js';
+import { isProvision } from '../src/lib/measureStatus.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -28,8 +29,14 @@ const API_BASE_URL = 'https://api.congress.gov/v3';
 const STAGE_RANK = {
   'passed-house': 1,
   'passed-senate': 1,
+  'agreed-house': 1,
+  'agreed-senate': 1,
   'passed-both': 2,
-  'enacted': 3
+  'agreed-both': 2,
+  'enacted': 3,
+  // A constitutional amendment's final congressional step (two-thirds of each chamber,
+  // no President). Ranked above passed-both, which the bill path would have called it.
+  'sent-to-states': 3
 };
 
 // Load bills data
@@ -44,34 +51,25 @@ const SECTIONS = ['bills', 'riders', 'supportBills', 'routineBills'];
 
 // Parse bill number to API format
 function parseBillNumber(billNumber) {
-  const match = billNumber.match(/(H\.R\.|S\.|H\.J\.Res\.|S\.J\.Res\.|H\.Con\.Res\.|S\.Con\.Res\.)\s*(\d+)/i);
+  // Anchored, longest prefix first. Unanchored, "S." matched inside "H.Res. 12" and looked
+  // up S. 12, a different (Senate) bill. Amendment numbers (S.Amdt.) are not bills.
+  const match = String(billNumber).trim().match(
+    /^(H\.J\.Res\.|S\.J\.Res\.|H\.Con\.Res\.|S\.Con\.Res\.|H\.Res\.|S\.Res\.|H\.R\.|S\.)\s*(\d+)$/i
+  );
   if (!match) return null;
 
   const [, type, number] = match;
-
-  let billType = '';
-  let chamber = '';
-
-  if (type.toLowerCase().includes('h.r.')) {
-    billType = 'hr';
-    chamber = 'house';
-  } else if (type.toLowerCase().includes('s.') && !type.toLowerCase().includes('res')) {
-    billType = 's';
-    chamber = 'senate';
-  } else if (type.toLowerCase().includes('h.j.res')) {
-    billType = 'hjres';
-    chamber = 'house';
-  } else if (type.toLowerCase().includes('s.j.res')) {
-    billType = 'sjres';
-    chamber = 'senate';
-  } else if (type.toLowerCase().includes('h.con.res')) {
-    billType = 'hconres';
-    chamber = 'house';
-  } else if (type.toLowerCase().includes('s.con.res')) {
-    billType = 'sconres';
-    chamber = 'senate';
-  }
-
+  const TYPES = {
+    'h.j.res.': ['hjres', 'house'],
+    's.j.res.': ['sjres', 'senate'],
+    'h.con.res.': ['hconres', 'house'],
+    's.con.res.': ['sconres', 'senate'],
+    'h.res.': ['hres', 'house'],
+    's.res.': ['sres', 'senate'],
+    'h.r.': ['hr', 'house'],
+    's.': ['s', 'senate']
+  };
+  const [billType, chamber] = TYPES[type.toLowerCase()];
   return { billType, number, chamber };
 }
 
@@ -190,6 +188,59 @@ async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
 }
 
 // Detect bill passage and fetch vote data from actions
+// Congress.gov's standardized marker for a chamber's passage or agreement, emitted for
+// every measure type and every method, voice votes and unanimous consent included. The
+// tally-specific matches below miss voice votes (S. 1077's Senate passage was one).
+const PASSAGE_MARKER = { house: /^Passed\/agreed to in House/i, senate: /^Passed\/agreed to in Senate/i };
+
+// One definition of "this action is a chamber passing the measure", shared by the tally
+// detection in detectPassage and the finality helpers below, so they never disagree:
+// Congress.gov's standardized marker, or the roll-call wording the tally parser reads.
+function isHousePassage(text = '') {
+  return PASSAGE_MARKER.house.test(text) ||
+    text.includes('On passage Passed by recorded vote') ||
+    text.includes('On passage Passed by the Yeas and Nays') ||
+    (text.includes('Passed House') && !text.includes('Passed/agreed to in House'));
+}
+function isSenatePassage(text = '') {
+  return PASSAGE_MARKER.senate.test(text) ||
+    (text.includes('Passed Senate') && !text.includes('passed in Senate') && !text.includes('Received in the Senate'));
+}
+
+// Did both chambers agree to the same text? Passing both is not enough: each agreement
+// can add an amendment the other chamber must then accept (the Senate amended H.Con.Res.
+// 14 on 2025-04-05; the House accepted that amendment on 2025-04-10). So find the last
+// agreement of any kind (a passage, or one chamber agreeing to the other's amendment) and
+// require that it made no further amendment. Same-day actions have no reliable order, so
+// any amendment on the last day counts as unresolved.
+function differencesResolved(actions) {
+  const isAgreement = a => {
+    const t = a.text || '';
+    if (isHousePassage(t) || isSenatePassage(t)) return true;
+    return /(agree|concur)\w* (in|to) the (House|Senate) amendments?/i.test(t) &&
+      /agreed to|without objection|concurred/i.test(t) && !/not agreed to|failed/i.test(t);
+  };
+  const agreements = actions.filter(isAgreement);
+  if (agreements.length === 0) return false;
+  const lastDate = agreements.map(a => String(a.actionDate)).sort().pop();
+  return !agreements
+    .filter(a => String(a.actionDate) === lastDate)
+    .some(a => /with (an )?amendments?/i.test(a.text || ''));
+}
+
+// Both chambers agreed, to different text: report only the first chamber's agreement,
+// which is true, rather than a final stage that isn't yet. If both acted on the same day
+// (no reliable order), the measure's chamber of origin is taken as first.
+function firstChamber(actions, originChamber) {
+  const dated = side => actions
+    .filter(a => (side === 'house' ? isHousePassage : isSenatePassage)(a.text || ''))
+    .map(a => String(a.actionDate)).sort()[0];
+  const h = dated('house'), sn = dated('senate');
+  if (h && (!sn || h < sn)) return 'house';
+  if (sn && (!h || sn < h)) return 'senate';
+  return originChamber === 'senate' ? 'senate' : 'house';
+}
+
 async function detectPassage(actions, chamber, expected) {
   const passageInfo = {
     hasPassedHouse: false,
@@ -220,9 +271,9 @@ async function detectPassage(actions, chamber, expected) {
     }
 
     // Detect House passage
-    if (actionText.includes('On passage Passed by recorded vote') ||
-        actionText.includes('On passage Passed by the Yeas and Nays') ||
-        (actionText.includes('Passed House') && !actionText.includes('Passed/agreed to in House'))) {
+    // The marker is excluded here only because it repeats a roll-call action already
+    // matched; it still counts as passage evidence in isHousePassage.
+    if (isHousePassage(actionText) && !PASSAGE_MARKER.house.test(actionText)) {
 
       passageInfo.hasPassedHouse = true;
 
@@ -252,9 +303,8 @@ async function detectPassage(actions, chamber, expected) {
     }
 
     // Detect Senate passage
-    if (actionText.includes('Passed Senate') &&
-        !actionText.includes('passed in Senate') &&
-        !actionText.includes('Received in the Senate')) {
+    // Unchanged from before: the Senate marker line can carry the record vote number.
+    if (isSenatePassage(actionText)) {
 
       passageInfo.hasPassedSenate = true;
 
@@ -283,13 +333,57 @@ async function detectPassage(actions, chamber, expected) {
     }
   }
 
+  // Voice votes and unanimous consent carry no tally, so the matches above miss them.
+  // The standardized marker catches every method; it never supplies a vote record.
+  if (actions.some(a => PASSAGE_MARKER.house.test(a.text || ''))) passageInfo.hasPassedHouse = true;
+  if (actions.some(a => PASSAGE_MARKER.senate.test(a.text || ''))) passageInfo.hasPassedSenate = true;
+
+  // Resolutions don't follow the bill path (Andria's guardrails, 2026-11-09). Simple and
+  // concurrent resolutions are "agreed to", never passed or enacted; Congress.gov marks
+  // each chamber's agreement with a "Passed/agreed to in <chamber>" action.
+  const { billType, title } = expected || {};
+  if (['hres', 'sres', 'hconres', 'sconres'].includes(billType)) {
+    const agreedHouse = actions.some(a => /^Passed\/agreed to in House/i.test(a.text || ''));
+    const agreedSenate = actions.some(a => /^Passed\/agreed to in Senate/i.test(a.text || ''));
+    passageInfo.houseVote = null;
+    passageInfo.senateVote = null;
+    passageInfo.hasBecomeLaw = false;
+    // Concurrent resolutions need both chambers on identical text; a simple resolution
+    // is only ever agreed to by its own chamber.
+    passageInfo.stage = agreedHouse && agreedSenate && differencesResolved(actions) ? 'agreed-both'
+      : agreedHouse && agreedSenate ? `agreed-${firstChamber(actions, chamber)}`
+        : agreedHouse ? 'agreed-house'
+          : agreedSenate ? 'agreed-senate'
+            : null;
+    return passageInfo;
+  }
+
+  // A joint resolution proposing a constitutional amendment goes to the states after
+  // two-thirds of each chamber, with no President. It is never "law" and never "headed
+  // to the President" (H.J.Res. 31).
+  const isConstitutionalAmendment = ['hjres', 'sjres'].includes(billType) &&
+    /^Proposing an amendment to the Constitution/i.test(title || '');
+  if (isConstitutionalAmendment) {
+    passageInfo.hasBecomeLaw = false;
+    // Sent to the states only once both chambers have passed the same text. Until then
+    // it falls through to the ordinary passed-* stages below, which are true.
+    if (passageInfo.hasPassedHouse && passageInfo.hasPassedSenate && differencesResolved(actions)) {
+      passageInfo.stage = 'sent-to-states';
+      return passageInfo;
+    }
+  }
+
   // Determine stage. Enactment is checked first: a bill that became law still carries
   // its earlier chamber-passage actions, so the passed-* checks below would otherwise
   // describe a law as merely having passed both chambers.
   if (passageInfo.hasBecomeLaw) {
     passageInfo.stage = 'enacted';
   } else if (passageInfo.hasPassedHouse && passageInfo.hasPassedSenate) {
-    passageInfo.stage = 'passed-both';
+    // "Passed both chambers" tells readers a bill is headed to the President, which is
+    // only true once both have passed the same text. Until then, report the first
+    // chamber's passage, which is true.
+    passageInfo.stage = differencesResolved(actions) ? 'passed-both'
+      : `passed-${firstChamber(actions, chamber)}`;
   } else if (passageInfo.hasPassedHouse) {
     passageInfo.stage = 'passed-house';
   } else if (passageInfo.hasPassedSenate) {
@@ -355,7 +449,7 @@ async function fetchBillStatus(billNumber, congress) {
         actions = actionsData.actions || [];
 
         // Detect passage and fetch vote data
-        passageInfo = await detectPassage(actions, chamber, { billType, number });
+        passageInfo = await detectPassage(actions, chamber, { billType, number, title: bill.title });
 
         // Analyze actions for significant events
         actions.forEach(action => {
@@ -582,8 +676,12 @@ function updateBillsJson(section, billId, passageInfo, status) {
 
     // Everything below this point rewrites bill content, so manual edits win.
     // The validation stamp above is intentionally the only thing that runs first.
-    if (bill.manualOverride) {
-      console.log(`  🔒 Skipping ${billId}: manual override is set (preserving manual edits)`);
+    // A provision (an amendment, a rider) or an entry with a verified outcome: the bill
+    // number belongs to the measure it was proposed for, whose status is not the
+    // provision's. H.Con.Res. 14 was agreed to; S.Amdt. 2195 to it never got a vote.
+    const protectedEntry = bill.manualOverride || bill.outcome || isProvision(bill);
+    if (protectedEntry) {
+      console.log(`  🔒 Skipping ${billId}: ${bill.manualOverride ? 'manual override is set (preserving manual edits)' : 'provision or verified outcome; its own status is not this bill number\'s'}`);
       if (updated) {
         // Only ever the validation stamp, and only the first time — no lastUpdated bump,
         // since nothing about the bill's own content changed.
@@ -1057,9 +1155,11 @@ function diffAgainstPrevious(changes, previousChanges) {
 }
 
 function stageLabel(stage) {
-  if (stage === 'passed-house') return 'the House';
-  if (stage === 'passed-senate') return 'the Senate';
-  if (stage === 'passed-both') return 'both chambers';
+  if (stage === 'passed-house' || stage === 'agreed-house') return 'the House';
+  if (stage === 'passed-senate' || stage === 'agreed-senate') return 'the Senate';
+  if (stage === 'passed-both' || stage === 'agreed-both') return 'both chambers';
+  if (stage === 'sent-to-states') return 'both chambers and went to the states';
+  if (stage === 'enacted') return 'into law';
   return stage;
 }
 

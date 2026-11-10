@@ -1096,7 +1096,8 @@
     {
       "id": "hconres14-cruz",
       "billNumbers": [
-        "H.Con.Res. 14"
+        "H.Con.Res. 14",
+        "S.Amdt. 2195"
       ],
       "title": "Noncitizen Voting Budget Amendment",
       "sponsors": [
@@ -1123,7 +1124,16 @@
       "congress": 119,
       "congressValidated": true,
       "passage": {},
-      "congressValidatedDate": "2026-08-04"
+      "congressValidatedDate": "2026-08-04",
+      "outcome": {
+        "result": "not-voted-on",
+        "archived": true,
+        "date": "2025-04-04",
+        "amendment": "S.Amdt. 2195",
+        "summary": "S.Amdt. 2195 was submitted on Apr. 4, 2025 and never voted on. Both chambers agreed to H.Con.Res. 14 without it.",
+        "source": "https://www.congress.gov/amendment/119th-congress/senate-amendment/2195",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr4851",
@@ -1798,7 +1808,8 @@
     {
       "id": "sconres7-lee",
       "billNumbers": [
-        "S.Con.Res. 7"
+        "S.Con.Res. 7",
+        "S.Amdt. 919"
       ],
       "title": "Legislative Authority Budget Amendment",
       "sponsors": [
@@ -1825,7 +1836,16 @@
       "congress": 119,
       "congressValidated": true,
       "passage": {},
-      "congressValidatedDate": "2026-08-04"
+      "congressValidatedDate": "2026-08-04",
+      "outcome": {
+        "result": "not-voted-on",
+        "archived": true,
+        "date": "2025-02-20",
+        "amendment": "S.Amdt. 919",
+        "summary": "S.Amdt. 919 was submitted on Feb. 20, 2025 and never voted on. The Senate agreed to S.Con.Res. 7 without it.",
+        "source": "https://www.congress.gov/amendment/119th-congress/senate-amendment/919",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr1968-budget",
@@ -2439,7 +2459,8 @@
       "congress": 119,
       "congressValidated": true,
       "congressValidatedDate": "2026-08-04",
-      "passage": {}
+      "passage": {},
+      "constitutionalAmendment": true
     },
     {
       "id": "s487",
@@ -3025,7 +3046,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-youth",
@@ -3046,7 +3075,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-noncitizen",
@@ -3067,7 +3104,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-emissions",
@@ -3088,7 +3133,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-oilgas",
@@ -3109,7 +3162,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-abortion",
@@ -3120,7 +3181,7 @@
       "sponsors": [
         "House"
       ],
-      "description": "Would prohibit the use of funds for abortion",
+      "description": "Prohibits D.C. from spending any funds on abortion, except where the life of the mother is endangered or the pregnancy results from rape or incest",
       "category": "healthcare",
       "position": "oppose",
       "type": "rider",
@@ -3130,7 +3191,23 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "status": {
+        "stage": "enacted",
+        "lastAction": "Became Public Law No: 119-75.",
+        "lastActionDate": "2026-02-03"
+      },
+      "outcome": {
+        "result": "became-law",
+        "archived": false,
+        "date": "2026-02-03",
+        "law": "P.L. 119-75",
+        "enactedIn": "H.R. 7148",
+        "provision": "Division E, Sec. 810",
+        "summary": "Enacted in the FY2026 funding law, P.L. 119-75 (H.R. 7148), Division E, Sec. 810.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-reprohealth",
@@ -3151,7 +3228,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-deathwithdignity",
@@ -3172,7 +3257,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-covid",
@@ -3193,7 +3286,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-insurance",
@@ -3214,7 +3315,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-marijuana",
@@ -3225,7 +3334,7 @@
       "sponsors": [
         "House"
       ],
-      "description": "Would prohibit the use of funds to commercialize recreational marijuana",
+      "description": "Prohibits D.C. from using any funds to enact a law that legalizes or reduces penalties for recreational marijuana or other schedule I substances",
       "category": "marijuana",
       "position": "oppose",
       "type": "rider",
@@ -3235,7 +3344,23 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "status": {
+        "stage": "enacted",
+        "lastAction": "Became Public Law No: 119-75.",
+        "lastActionDate": "2026-02-03"
+      },
+      "outcome": {
+        "result": "became-law",
+        "archived": false,
+        "date": "2026-02-03",
+        "law": "P.L. 119-75",
+        "enactedIn": "H.R. 7148",
+        "provision": "Division E, Sec. 809",
+        "summary": "Enacted in the FY2026 funding law, P.L. 119-75 (H.R. 7148), Division E, Sec. 809.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-rightturn",
@@ -3256,7 +3381,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-cameras",
@@ -3277,7 +3410,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr7148-sa4253-cameras",
@@ -3308,7 +3449,16 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-voted-on",
+        "archived": true,
+        "date": "2026-01-29",
+        "amendment": "S.Amdt. 4253",
+        "summary": "S.Amdt. 4253 was submitted on Jan. 29, 2026 and never voted on. H.R. 7148 became law without it.",
+        "source": "https://www.congress.gov/amendment/119th-congress/senate-amendment/4253",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-slapp",
@@ -3329,7 +3479,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-guns",
@@ -3350,7 +3508,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-sistercity",
@@ -3371,7 +3537,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     },
     {
       "id": "hr5166-shield",
@@ -3392,7 +3566,15 @@
       "attackType": "direct",
       "congress": 119,
       "congressValidated": true,
-      "congressValidatedDate": "2026-11-09"
+      "congressValidatedDate": "2026-11-09",
+      "outcome": {
+        "result": "not-included",
+        "archived": true,
+        "date": "2026-02-03",
+        "summary": "Not included in the FY2026 funding law, P.L. 119-75 (Feb. 3, 2026). H.R. 5166 is still on the House calendar.",
+        "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
+        "verifiedOn": "2026-11-09"
+      }
     }
   ],
   "supportBills": [

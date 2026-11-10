@@ -24,7 +24,6 @@ import { getUpdateBannerMessage, introductionDate } from '../src/components/upda
 import {
   getPageSummaryFacts,
   advancedDetailText,
-  hasAdvanced,
 } from '../src/components/pageSummaryFacts.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -34,7 +33,17 @@ const failures = [];
 const claims = [];
 const fail = (claim, why) => failures.push(`${claim}\n     → ${why}`);
 
-const reviewed = list => (data[list] || []).filter(item => !item.provisional);
+// Archived entries (final, with an official outcome) are outside every published count.
+// Written here independently of src/lib/measureStatus.js, so a bug there can't pass its
+// own check.
+const isArchivedHere = item => item.outcome?.archived === true;
+const reviewed = list => (data[list] || []).filter(item => !item.provisional && !isArchivedHere(item));
+const archivedEntries = ['bills', 'riders', 'routineBills']
+  .flatMap(list => (data[list] || []).filter(item => !item.provisional && isArchivedHere(item)));
+// Cleared at least one chamber, per stage. Independent of the module's list.
+const ADVANCED_HERE = ['passed-house', 'passed-senate', 'passed-both', 'enacted',
+  'agreed-house', 'agreed-senate', 'agreed-both', 'sent-to-states'];
+const hasAdvanced = item => ADVANCED_HERE.includes(item.status?.stage);
 const bills = reviewed('bills');
 const riders = reviewed('riders');
 const routineBills = reviewed('routineBills');
@@ -185,10 +194,19 @@ if (facts) {
   if (facts.enactedCount !== expectedEnacted) {
     fail(sentence, `claims ${facts.enactedCount} now law, data holds ${expectedEnacted} measures`);
   }
-  const advancedResolutions = independentCount(all.filter(hasAdvanced).filter(b => /RES\./i.test((b.billNumbers || [])[0] || '')));
+  const advancedRiders = all.filter(hasAdvanced).filter(b => b.type === 'rider').length;
+  const advancedResolutions = independentCount(all.filter(hasAdvanced).filter(b => b.type !== 'rider' && /RES\./i.test((b.billNumbers || [])[0] || '')));
+  const advancedBills = expectedAdvanced - advancedResolutions - advancedRiders;
   if (facts.advancedKinds.resolutions !== advancedResolutions ||
-      facts.advancedKinds.bills !== expectedAdvanced - advancedResolutions) {
-    fail(sentence, `splits advanced into ${facts.advancedKinds.bills} bills and ${facts.advancedKinds.resolutions} resolutions; data holds ${expectedAdvanced - advancedResolutions} and ${advancedResolutions}`);
+      facts.advancedKinds.riders !== advancedRiders ||
+      facts.advancedKinds.bills !== advancedBills) {
+    fail(sentence, `splits advanced into ${facts.advancedKinds.bills} bills, ${facts.advancedKinds.resolutions} resolutions and ${facts.advancedKinds.riders} riders; data holds ${advancedBills}, ${advancedResolutions} and ${advancedRiders}`);
+  }
+  // Riders enacted in one funding law are provisions, not laws. If any are among the
+  // enacted, the sentence must name the kinds, or "4 are now law" reads as four laws.
+  const enactedRiders = all.filter(b => b.type === 'rider' && b.status?.stage === 'enacted').length;
+  if (enactedRiders > 0 && !/budget rider/.test(detail)) {
+    fail(sentence, `${enactedRiders} enacted budget rider(s) counted in "now law" without naming them as riders`);
   }
   if (facts.advancedCount > facts.trackedCount) {
     fail(sentence, `claims more advanced (${facts.advancedCount}) than tracked (${facts.trackedCount})`);
@@ -208,8 +226,11 @@ if (facts) {
       fail(sentence, `stats.json pending (${stats.pendingBills}) + passed (${stats.passedBills}) ≠ total (${stats.totalBills})`);
     }
     const pb = stats.passedBreakdown || {};
-    if (pb.bills !== expectedAdvanced - advancedResolutions || pb.resolutions !== advancedResolutions) {
-      fail(sentence, `stats.json passedBreakdown is ${pb.bills} bills / ${pb.resolutions} resolutions; data holds ${expectedAdvanced - advancedResolutions} / ${advancedResolutions}`);
+    if (pb.bills !== advancedBills || pb.resolutions !== advancedResolutions || (pb.riders || 0) !== advancedRiders) {
+      fail(sentence, `stats.json passedBreakdown is ${pb.bills} bills / ${pb.resolutions} resolutions / ${pb.riders} riders; data holds ${advancedBills} / ${advancedResolutions} / ${advancedRiders}`);
+    }
+    if ((stats.archived?.total ?? 0) !== independentCount(archivedEntries)) {
+      fail(sentence, `stats.json archived.total is ${stats.archived?.total}; data holds ${independentCount(archivedEntries)}`);
     }
     const bd = stats.breakdown || {};
     if ((bd.bills + bd.resolutions + bd.riders) !== stats.totalBills) {
@@ -237,6 +258,32 @@ if (facts) {
       fail(sentence, `latest movement is dated in the future`);
     }
   }
+}
+
+// ---------------------------------------------------------------------------
+// 3. Outcomes (archived cards and enacted riders): each states a checked fact with a source
+// ---------------------------------------------------------------------------
+// An outcome is hand-verified, so the gate can't recompute it. It can require that each
+// one says what it is, where it was checked and when, and that it agrees with the stage.
+for (const item of ['bills', 'riders', 'routineBills'].flatMap(list => data[list] || [])) {
+  const o = item.outcome;
+  if (!o) continue;
+  const claim = `outcome ${item.id}: "${o.summary || ''}"`;
+  claims.push(claim);
+  if (!o.summary || !o.source || !o.verifiedOn || !o.result || !o.date) {
+    fail(claim, 'an outcome needs result, date, summary, source and verifiedOn');
+  }
+  if (o.source && !/^https:\/\/(www\.)?(congress\.gov|govinfo\.gov|clerk\.house\.gov|senate\.gov)\//.test(o.source)) {
+    fail(claim, `source ${o.source} is not an official record`);
+  }
+  if (o.result === 'became-law' && (o.archived || item.status?.stage !== 'enacted')) {
+    fail(claim, 'became law, so it must be active with stage "enacted"');
+  }
+  if (o.result !== 'became-law' && !o.archived) {
+    fail(claim, `result "${o.result}" is final but the entry is not archived`);
+  }
+  // An archived entry may keep its furthest progress (a measure that passed the House and
+  // was later withdrawn): progress and outcome are separate facts. It is never counted.
 }
 
 // ---------------------------------------------------------------------------

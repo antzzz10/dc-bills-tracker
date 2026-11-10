@@ -14,8 +14,10 @@ import { isUrgentAlertActive } from './components/urgentAlertState'
 import PageSummary from './components/PageSummary'
 import { getUpdateBannerMessage } from './components/updateBannerMessage'
 import PassedBillsSection from './components/PassedBillsSection'
+import ArchivedSection from './components/ArchivedSection'
 import RecentActivity from './components/RecentActivity'
 import { countUnits } from './lib/measureCounts'
+import { isActive, isPending, hasAdvanced, isArchived } from './lib/measureStatus'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
 
 // Bill-data freshness. `lastChecked` is stamped by scripts/monitor-bills.js on every
@@ -58,12 +60,16 @@ const formatBuildDate = (dateOnly) => {
   })
 }
 
+// Recent Activity and the banner read raw data on purpose (Recent Activity shows newly
+// introduced, unreviewed bills); archived entries are never news.
+const activeOrUnreviewed = list => (list || []).filter(item => !isArchived(item))
+
 function App() {
   const [selectedCategories, setSelectedCategories] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [showOtherBills, setShowOtherBills] = useState(false)
 
-  const { filteredBills, filteredRiders, passedBills, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, totalCount, pendingCount, passedCount, routineCount } = useMemo(() => {
+  const { filteredBills, filteredRiders, passedBills, archivedItems, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, totalCount, archivedCount, pendingCount, passedCount, routineCount } = useMemo(() => {
     // Exclude provisional (auto-discovered, not-yet-human-reviewed) entries from
     // the public oppose/routine sections — their `position` is an unverified
     // default, not a reviewed classification. They still surface in Recent
@@ -73,9 +79,15 @@ function App() {
     // parked (see decisions/2026-08-03-park-support-bills.md). The data is kept
     // and still linted, it just does not render — this page is oppose-only so it
     // can be shared without a reader having to sort attacks from allies.
-    const allBills = (billsData.bills || []).filter(bill => !bill.provisional)
-    const allRiders = (billsData.riders || []).filter(rider => !rider.provisional)
-    const allRoutineBills = (billsData.routineBills || []).filter(bill => !bill.provisional)
+    //
+    // Archived entries (final, with an official outcome) are kept in bills.json for the
+    // record but leave every active list and count; they render in their own section.
+    const allBills = (billsData.bills || []).filter(isActive)
+    const allRiders = (billsData.riders || []).filter(isActive)
+    const allRoutineBills = (billsData.routineBills || []).filter(isActive)
+    let archivedItems = ['bills', 'riders', 'routineBills']
+      .flatMap(section => billsData[section] || [])
+      .filter(item => !item.provisional && isArchived(item))
 
     // Start with all bills and apply filters
     let filteredAllBills = allBills
@@ -99,6 +111,7 @@ function App() {
       filteredRoutineBills = filteredRoutineBills.filter(bill =>
         selectedCategories.includes(bill.category)
       )
+      archivedItems = archivedItems.filter(item => selectedCategories.includes(item.category))
     }
 
     // Filter by search term
@@ -107,17 +120,14 @@ function App() {
       filteredAllBills = filteredAllBills.filter(searchFilter(term))
       filteredRiders = filteredRiders.filter(searchFilter(term))
       filteredRoutineBills = filteredRoutineBills.filter(searchFilter(term))
+      archivedItems = archivedItems.filter(searchFilter(term))
     }
 
     // NOW separate passed bills from pending bills (after filters applied)
-    const passedBills = filteredAllBills.filter(bill =>
-      bill.status?.stage &&
-      (bill.status.stage.startsWith('passed-') || bill.status.stage === 'enacted')
-    )
-    const filtered = filteredAllBills.filter(bill =>
-      !bill.status?.stage ||
-      (!bill.status.stage.startsWith('passed-') && bill.status.stage !== 'enacted')
-    )
+    // Riders can advance too: a rider enacted in a funding law is law (2026-11-09).
+    const passedBills = [...filteredAllBills, ...filteredRiders].filter(hasAdvanced)
+    const filtered = filteredAllBills.filter(isPending)
+    filteredRiders = filteredRiders.filter(isPending)
 
     // Separate high priority from other bills (only pending bills)
     const highPriorityBills = filtered.filter(bill => bill.priority === 'high')
@@ -152,17 +162,22 @@ function App() {
     const pendingCount = countUnits([...filtered, ...filteredRiders]).total
     const passedCount = countUnits(passedBills).total
     const routineCount = countUnits(filteredRoutineBills).total
-    const totalCount = pendingCount + passedCount + routineCount
+    const archivedCount = countUnits(archivedItems).total
+    // Everything the search found, archived matches included, so a search that only
+    // matches an archived amendment doesn't say "0 items found" above its card.
+    const totalCount = pendingCount + passedCount + routineCount + archivedCount
 
     return {
       filteredBills: filtered,
       filteredRiders,
       passedBills,
+      archivedItems,
       highPriorityGroups,
       otherBillsGroups,
       riderGroups,
       routineGroups,
       totalCount,
+      archivedCount,
       pendingCount,
       passedCount,
       routineCount
@@ -196,7 +211,7 @@ function App() {
     getUpdateBannerMessage({
       passedBills,
       upcomingFloorVotes: filteredBills.filter(b => b.highlight === 'floor-vote'),
-      allBills: billsData.bills,
+      allBills: activeOrUnreviewed(billsData.bills),
     })
   )
   const showPageSummary = !isUrgentAlertActive() && !hasBannerMessage
@@ -209,7 +224,7 @@ function App() {
         <UpdateBanner
           passedBills={passedBills}
           upcomingFloorVotes={filteredBills.filter(b => b.highlight === 'floor-vote')}
-          allBills={billsData.bills}
+          allBills={activeOrUnreviewed(billsData.bills)}
         />
       )}
       {/* Sub-page hero: eyebrow + h1 + one-line subtitle. Max 3 blocks
@@ -259,8 +274,8 @@ function App() {
         {/* Recent Activity - Auto-generated from bill changes */}
         {!searchTerm && selectedCategories.length === 0 && (
           <RecentActivity
-            allBills={billsData.bills}
-            allRiders={billsData.riders}
+            allBills={activeOrUnreviewed(billsData.bills)}
+            allRiders={activeOrUnreviewed(billsData.riders)}
           />
         )}
 
@@ -270,11 +285,12 @@ function App() {
         <div className="results-header">
           <h2>
             {totalCount} {totalCount === 1 ? 'item' : 'items'} found
-            {(passedCount > 0 || routineCount > 0) && (
+            {(passedCount > 0 || routineCount > 0 || archivedCount > 0) && (
               <span className="count-breakdown"> ({[
                 `${pendingCount} pending`,
                 passedCount > 0 && `${passedCount} passed`,
                 routineCount > 0 && `${routineCount} routine`,
+                archivedCount > 0 && `${archivedCount} archived`,
               ].filter(Boolean).join(', ')})</span>
             )}
           </h2>
@@ -284,9 +300,11 @@ function App() {
                 Clear All Filters
               </button>
             )}
+            {/* Every active entry the results show, passed ones included: an enacted rider
+                found by search must be in the filtered export too. */}
             <DownloadButton
-              filteredBills={filteredBills}
-              filteredRiders={filteredRiders}
+              filteredBills={[...filteredBills, ...passedBills.filter(b => b.type !== 'rider')]}
+              filteredRiders={[...filteredRiders, ...passedBills.filter(b => b.type === 'rider')]}
             />
           </div>
         </div>
@@ -294,6 +312,7 @@ function App() {
         <div className="bills-list">
           {/* Passed Bills Section - Always visible when there are passed bills */}
           <PassedBillsSection passedBills={passedBills} />
+          <ArchivedSection items={archivedItems} />
 
           {totalCount === 0 ? (
             <div className="no-results">
@@ -302,6 +321,7 @@ function App() {
           ) : (
             <>
               {/* Pending Bills Section - Non-collapsible header */}
+              {pendingCount > 0 && (
               <div className="pending-bills-section">
                 <div className="pending-bills-header">
                   <div className="pending-bills-title">
@@ -328,29 +348,6 @@ function App() {
                   {highPriorityGroups.map(group => (
                     <CategoryGroup
                       key={`high-${group.category.id}`}
-                      category={group.category}
-                      bills={group.bills}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {/* Everyday Indignities Section — bills that are neither attacks nor
-                  advocacy wins: Congress performing a routine, recurring structural
-                  obligation over D.C. that a state legislature would never need to ask
-                  permission for. Still a real structural incursion (attackType is
-                  mandatory on every entry) — see METHODOLOGY.md. */}
-              {routineGroups.length > 0 && (
-                <div className="priority-section">
-                  <div className="section-header routine-header">
-                    <h2><Icon name="paperclip" size={18} /> Everyday indignities ({countUnits(routineGroups.flatMap(g => g.bills)).total})</h2>
-                    <p className="section-description">
-                      The routine paperwork of not being a state — sign-offs Congress requires from D.C. that no state legislature would ever need to ask for.
-                    </p>
-                  </div>
-                  {routineGroups.map(group => (
-                    <CategoryGroup
-                      key={`routine-${group.category.id}`}
                       category={group.category}
                       bills={group.bills}
                     />
@@ -407,6 +404,32 @@ function App() {
               )}
                 </div>
               </div>
+              )}
+              {/* Outside the pending section on purpose: a routine measure can have passed a
+                  chamber (S. 1077 passed the Senate), and the pending intro says none have.
+                  Everyday Indignities Section — bills that are neither attacks nor
+                  advocacy wins: Congress performing a routine, recurring structural
+                  obligation over D.C. that a state legislature would never need to ask
+                  permission for. Still a real structural incursion (attackType is
+                  mandatory on every entry) — see METHODOLOGY.md. */}
+              {routineGroups.length > 0 && (
+                <div className="priority-section">
+                  <div className="section-header routine-header">
+                    <h2><Icon name="paperclip" size={18} /> Everyday indignities ({countUnits(routineGroups.flatMap(g => g.bills)).total})</h2>
+                    <p className="section-description">
+                      The routine paperwork of not being a state — sign-offs Congress requires from D.C. that no state legislature would ever need to ask for.
+                    </p>
+                  </div>
+                  {routineGroups.map(group => (
+                    <CategoryGroup
+                      key={`routine-${group.category.id}`}
+                      category={group.category}
+                      bills={group.bills}
+                    />
+                  ))}
+                </div>
+              )}
+
             </>
           )}
 

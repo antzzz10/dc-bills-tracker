@@ -9,6 +9,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { countUnits, groupUnits } from '../src/lib/measureCounts.js';
+import { isActive, isArchived, isPending, hasAdvanced } from '../src/lib/measureStatus.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -29,26 +30,27 @@ const billsData = JSON.parse(readFileSync(billsPath, 'utf-8'));
  * App.jsx's in agreement; scripts/lint-bills.js now asserts that they match.
  */
 const reviewed = (list) => (list || []).filter(item => !item.provisional);
+// Archived entries (final, with an official outcome) are reviewed but outside every
+// active count, same as the site (src/lib/measureStatus.js).
+const active = (list) => (list || []).filter(isActive);
 
 // Calculate stats
-const bills = reviewed(billsData.bills);
-const riders = reviewed(billsData.riders);
-const routineBills = reviewed(billsData.routineBills);
+const bills = active(billsData.bills);
+const riders = active(billsData.riders);
+const routineBills = active(billsData.routineBills);
+const archived = ['bills', 'riders', 'routineBills']
+  .flatMap(section => reviewed(billsData[section]))
+  .filter(isArchived);
 
 const provisionalCount =
   (billsData.bills || []).length + (billsData.riders || []).length +
   (billsData.routineBills || []).length -
-  (bills.length + riders.length + routineBills.length);
+  (bills.length + riders.length + routineBills.length + archived.length);
 
-const passedBills = bills.filter(bill =>
-  bill.status?.stage &&
-  (bill.status.stage.startsWith('passed-') || bill.status.stage === 'enacted')
-);
-
-const pendingBills = bills.filter(bill =>
-  !bill.status?.stage ||
-  (!bill.status.stage.startsWith('passed-') && bill.status.stage !== 'enacted')
-);
+// Riders can advance too: one enacted in a funding law is law (2026-11-09).
+const passedBills = [...bills, ...riders].filter(hasAdvanced);
+const pendingBills = bills.filter(isPending);
+const pendingRiders = riders.filter(isPending);
 
 // Measures, not entries (src/lib/measureCounts.js): H.R. 1968 is three entries but one
 // law. representdc-main publishes these three numbers, so they must match the tracker's
@@ -58,19 +60,26 @@ const pendingBills = bills.filter(bill =>
 // consequences of denied statehood (Andria, 2026-11-09). They get their own block and are
 // never added into the anti-DC totals.
 const totalOpposeBills = countUnits([...bills, ...riders]).total;
-const pendingOpposeBills = countUnits([...pendingBills, ...riders]).total;
+const pendingOpposeBills = countUnits([...pendingBills, ...pendingRiders]).total;
 const passedUnits = countUnits(passedBills);
-const routineAdvanced = routineBills.filter(b =>
-  b.status?.stage && (b.status.stage.startsWith('passed-') || b.status.stage === 'enacted'));
+const routineAdvanced = routineBills.filter(hasAdvanced);
 
 const stats = {
   lastUpdated: billsData.lastUpdated,
   lastChecked: billsData.lastChecked || null,
   totalBills: totalOpposeBills,
+  // Everything introduced in this Congress that the tracker has classified as anti-DC,
+  // archived entries included: archiving a measure doesn't un-introduce it. The main
+  // site's "N ... introduced in this Congress" reads this, not totalBills (Codex,
+  // 2026-11-09). totalBills is the active count the tracker page shows.
+  introducedThisCongress: countUnits([
+    ...bills, ...riders,
+    ...archived.filter(item => item.position === 'oppose')
+  ]).total,
   pendingBills: pendingOpposeBills,
   passedBills: passedUnits.total,
   // How the passed figure splits. Resolutions are counted apart from bills (2026-11-09).
-  passedBreakdown: { bills: passedUnits.bills, resolutions: passedUnits.resolutions },
+  passedBreakdown: { bills: passedUnits.bills, resolutions: passedUnits.resolutions, riders: passedUnits.riders },
   // Oppose-side only. supportBills is deliberately absent: pro-DC bills are parked
   // (decisions/2026-08-03-park-support-bills.md) and the site does not render them,
   // so publishing a count for them would advertise something no page shows. Verified
@@ -85,17 +94,36 @@ const stats = {
     total: countUnits(routineBills).total,
     advanced: countUnits(routineAdvanced).total
   },
+  // Final and outside every count above (Andria, 2026-11-09). Kept for the record.
+  archived: { total: countUnits(archived).total, ...countUnits(archived) },
   // Awaiting human review — deliberately excluded from every count above.
   provisionalAwaitingReview: provisionalCount,
   // One row per measure, matching passedBills. A law stored as several provision entries
   // lists how many anti-DC provisions it carries.
-  passed: groupUnits(passedBills).map(group => ({
-    id: group[0].id,
-    number: group[0].billNumbers[0],
-    title: group[0].title,
-    stage: group[0].status.stage,
-    provisions: group.length
-  }))
+  //
+  // A rider enacted in a funding law is listed under the law it is in, with the bill it was
+  // proposed in kept apart: H.R. 5166 never passed, but two of its riders are law through
+  // H.R. 7148.
+  passed: groupUnits(passedBills).map(group => {
+    const first = group[0];
+    const row = {
+      id: first.id,
+      kind: first.type === 'rider' ? 'rider' : 'measure',
+      number: first.outcome?.enactedIn || first.billNumbers[0],
+      title: first.title,
+      stage: first.status.stage,
+      provisions: group.length
+    };
+    if (first.outcome?.result === 'became-law') {
+      Object.assign(row, {
+        proposedIn: first.billNumbers[0],
+        law: first.outcome.law,
+        provision: first.outcome.provision,
+        source: first.outcome.source
+      });
+    }
+    return row;
+  })
 };
 
 // Ensure public/api directory exists

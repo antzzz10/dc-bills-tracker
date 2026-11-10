@@ -25,6 +25,8 @@ import { execSync, execFileSync } from 'child_process';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { countUnits } from '../src/lib/measureCounts.js';
+import { isActive, isPending, hasAdvanced } from '../src/lib/measureStatus.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -85,8 +87,11 @@ function getWeeklyChanges() {
     }
     newData = loadBillsData();
 
+    // Active entries only. A verified outcome (a rider found in a funding law, an amendment
+    // never voted on) is a correction to our record, not this week's news.
+    const newsworthy = b => isActive(b) && !b.outcome;
     const oldBills = [...(oldData.bills || []), ...(oldData.riders || [])];
-    const newBills = [...(newData.bills || []), ...(newData.riders || [])];
+    const newBills = [...(newData.bills || []), ...(newData.riders || [])].filter(newsworthy);
     const oldById = Object.fromEntries(oldBills.map(b => [b.id, b]));
     const newById = Object.fromEntries(newBills.map(b => [b.id, b]));
 
@@ -108,8 +113,7 @@ function getWeeklyChanges() {
     });
     const newlyPassed = changed.filter(b => {
       const old = oldById[b.id];
-      return b.status?.stage && b.status.stage !== old?.status?.stage &&
-             (b.status.stage.startsWith('passed') || b.status.stage === 'enacted');
+      return b.status?.stage && b.status.stage !== old?.status?.stage && hasAdvanced(b);
     });
 
     return { newBills: added, statusChanges: changed, newlyPassed };
@@ -122,18 +126,23 @@ function getWeeklyChanges() {
 // ── Stats summary ─────────────────────────────────────────────────────────────
 
 function getStats(data) {
-  const all = [...(data.bills || []), ...(data.riders || [])];
-  const pending = all.filter(b => !b.status?.stage || b.status.stage === 'introduced');
-  const passed = all.filter(b => b.status?.stage?.startsWith('passed'));
+  // Measures, not entries, and active only: the same units as the site
+  // (src/lib/measureCounts.js, src/lib/measureStatus.js).
+  const all = [...(data.bills || []), ...(data.riders || [])].filter(isActive);
+  const pending = all.filter(isPending);
+  const passed = all.filter(b => hasAdvanced(b) && b.status.stage !== 'enacted');
   const enacted = all.filter(b => b.status?.stage === 'enacted');
   const highPriority = pending.filter(b => b.priority === 'high');
-  return { total: all.length, pending: pending.length, passed: passed.length, enacted: enacted.length, highPriority: highPriority.length };
+  const n = items => countUnits(items).total;
+  return { total: n(all), pending: n(pending), passed: n(passed), enacted: n(enacted), highPriority: n(highPriority) };
 }
 
 // ── Pick featured bill ────────────────────────────────────────────────────────
 
 function pickFeaturedBill(data, changes) {
-  const all = [...(data.bills || []), ...(data.riders || [])];
+  // Active pending entries only: an archived rider's old date must never make it the
+  // week's featured threat.
+  const all = [...(data.bills || []), ...(data.riders || [])].filter(isPending);
   // Prefer newly passed, then newly added, then high priority with recent action
   if (changes.newlyPassed.length > 0) return changes.newlyPassed[0];
   if (changes.newBills.length > 0) return changes.newBills[0];

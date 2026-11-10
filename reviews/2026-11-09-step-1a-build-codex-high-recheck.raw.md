@@ -1,0 +1,22 @@
+**Do not mark step 1a complete yet: 0 BLOCKER, 2 MATERIAL, 3 NOTE.** Most prior findings are fixed.
+
+1. **MATERIAL — Final-stage detection still accepts agreement that changes the text.** [monitor-bills.js:206](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:206) treats “House agree to the Senate amendment **with an amendment** … Agreed to” as resolved differences. A three-action fixture returns `agreed-both` for a concurrent resolution and `sent-to-states` for a constitutional amendment, although the other chamber must still accept the new amendment. The rank guard would preserve that premature terminal stage. Require agreement without further changes, or subsequent acceptance of those changes. [CRS procedural guidance](https://www.congress.gov/crs_external_products/R/PDF/R41003/R41003.20.pdf).
+
+2. **MATERIAL — The passed-section intro still misroutes constitutional amendments in a mixed list.** [PassedBillsSection.jsx:204](/Users/andriathomas/Projects/dc-bills-tracker/src/components/PassedBillsSection.jsx:204) suppresses the presidential sentence only when no ordinary `passed-both` measure exists. With H.J.Res. 31 at `sent-to-states` alongside an ordinary `passed-both` bill, it says: “Those that have passed both chambers are headed to the President for signature.” Qualify the sentence explicitly as applying to ordinary bills and joint resolutions. The standalone banner fixtures now pass.
+
+3. **NOTE — Deploy the main-site consumer first.** [useBillStats.js:50](/Users/andriathomas/Projects/representdc-main/src/hooks/useBillStats.js:50) fetches stats live. Shipping the tracker first makes the previous homepage render **74 introduced**, despite the new API also providing 92. Deploy and verify the updated main site before publishing the tracker’s changed `totalBills` semantics. Its fallback supports the older API during that sequence; already-open older clients remain a transition caveat.
+
+4. **NOTE — “Currently visible items” still overpromises the download scope.** [DownloadButton.jsx:321](/Users/andriathomas/Projects/dc-bills-tracker/src/components/DownloadButton.jsx:321) excludes archived and routine matches. An archive-only search now correctly shows one result, but offers **Filtered Items (0)**. The unfiltered **93 items found** arithmetic is valid—60 pending + 14 advanced + 1 routine + 18 archived—while the download contains 74 active anti-DC units. Label that narrower export scope.
+
+5. **NOTE — Only the digest’s fallback selection is pending-only.** [weekly-digest.js:147](/Users/andriathomas/Projects/dc-bills-tracker/scripts/weekly-digest.js:147) still prefers `changes.newlyPassed`, then `changes.newBills`, before the pending pool. The prior archived-fallback problem is fixed; the broader claim that featured selection uses pending entries only is inaccurate.
+
+The remaining claimed fixes checked out:
+
+- Generated stats exactly match the on-disk artifact: **92 introduced / 74 active / 60 pending / 14 advanced / 4 enacted**. Both enacted-rider API rows carry H.R. 7148, `kind`, `proposedIn`, law, provision, and source.
+- Archive-only results count correctly and avoid the empty state. Empty pending sections disappear; routine measures sit outside pending. The exact marijuana-rider search produces one passed result and one downloadable unit.
+- The archive exporter preserves all **20 outcomes**, **18 archived entries**, and amendment numbers; outcome entries are excluded from tracker comparisons.
+- An archived whole-measure fixture retains `passed-house` and passes the claims gate. Lint check 14 rejects an enacted constitutional amendment.
+- Across **154 stored measure lookups**, the marker newly detects S. 1077’s voice vote without changing its stored stage. The other newly recognized stages belong to protected archived amendments’ parents. H.Con.Res. 14 remains `agreed-house` through April 9 and becomes `agreed-both` on April 10.
+- The abortion description includes §810’s exceptions. The marijuana description accurately summarizes §809(b), though it omits §809(a)’s separate federal-funds restriction and some statutory detail. Both provision references match the supplied text and [official enrolled law](https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm).
+
+Data lint, published-claims checks, and all three repositories’ whitespace checks pass. Both apps bundle successfully in memory. Scoped ESLint still reports the existing `__BUILD_DATE__` configuration errors. **No files were edited.**

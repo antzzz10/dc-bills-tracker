@@ -6,7 +6,8 @@
 // well-formed field feeding a false claim. Whatever asserts the copy has to be able to
 // read the copy.
 
-import { countUnits } from '../lib/measureCounts.js';
+import { countUnits, describeKinds } from '../lib/measureCounts.js';
+import { isActive, hasAdvanced as advancedPerModule } from '../lib/measureStatus.js';
 
 // How recent an action must be to count as "latest movement". Congress recesses for
 // weeks, so a short window blanks the sentence out for most of August; a long one dresses
@@ -28,9 +29,9 @@ export function formatSummaryDate(dateString) {
   });
 }
 
-export const hasAdvanced = item =>
-  Boolean(item.status?.stage &&
-    (item.status.stage.startsWith('passed-') || item.status.stage === 'enacted'));
+// One definition for every surface (src/lib/measureStatus.js): resolutions' "agreed to"
+// stages and riders enacted in a funding law count as advanced; archived entries never do.
+export const hasAdvanced = advancedPerModule;
 
 /**
  * Derive every figure the summary states. Nothing here is written down by hand —
@@ -44,7 +45,7 @@ export function getPageSummaryFacts({ bills = [], riders = [], routineBills = []
   // Anti-DC measures only. Routine measures (S. 1077, D.C.'s own budget) are structural
   // consequences of denied statehood, not attacks, so this sentence never counts them
   // (Andria, 2026-11-09). They have their own section and count.
-  const tracked = [...bills, ...riders].filter(item => !item.provisional);
+  const tracked = [...bills, ...riders].filter(isActive);
   if (tracked.length === 0) return null;
 
   const advanced = tracked.filter(hasAdvanced);
@@ -70,6 +71,7 @@ export function getPageSummaryFacts({ bills = [], riders = [], routineBills = []
     advancedCount: advancedUnits.total,
     advancedKinds: advancedUnits,
     enactedCount: countUnits(enacted).total,
+    enactedKinds: countUnits(enacted),
     passedBothCount: countUnits(passedBoth).total,
     // 17 of the 18 riders are provisions of a single appropriations bill, so calling all
     // of them separate "bills" would overstate the count. Resolutions are named too, so
@@ -79,7 +81,7 @@ export function getPageSummaryFacts({ bills = [], riders = [], routineBills = []
       trackedUnits.resolutions > 0 && 'resolutions',
       trackedUnits.riders > 0 && 'budget riders',
     ].filter(Boolean).join(', ').replace(/, ([^,]+)$/, ' and $1'),
-    routineCount: countUnits((routineBills || []).filter(item => !item.provisional)).total,
+    routineCount: countUnits((routineBills || []).filter(isActive)).total,
     latest,
     latestAgeDays,
     showMovement: Boolean(latest && latestAgeDays <= MOVEMENT_WINDOW_DAYS),
@@ -87,9 +89,14 @@ export function getPageSummaryFacts({ bills = [], riders = [], routineBills = []
 }
 
 /** The advanced-detail clause, or '' when nothing has got that far. */
-export function advancedDetailText({ passedBothCount, enactedCount }) {
+//
+// When riders are among the enacted, the kinds are named: two riders enacted in one
+// funding law are two provisions, not two laws, and "4 are now law" alone would read as
+// four laws (Codex, 2026-11-09).
+export function advancedDetailText({ passedBothCount, enactedCount, enactedKinds }) {
+  const kinds = enactedKinds?.riders > 0 ? ` (${describeKinds(enactedKinds)})` : '';
   return [
     passedBothCount > 0 && `${passedBothCount} ${passedBothCount === 1 ? 'has' : 'have'} passed both chambers`,
-    enactedCount > 0 && `${enactedCount} ${enactedCount === 1 ? 'is' : 'are'} now law`,
+    enactedCount > 0 && `${enactedCount} ${enactedCount === 1 ? 'is' : 'are'} now law${kinds}`,
   ].filter(Boolean).join(', and ');
 }

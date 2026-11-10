@@ -25,6 +25,8 @@
  *   11. Passage vote records carry provenance (source URL + verifiedOn date)
  *   12. Every entry in every section records its Congress (the monitor looks each
  *       entry up in its own Congress and refuses to guess)
+ *   13. A rider or amendment carries a stage only with a verified became-law outcome
+ *   14. A constitutional amendment is never "enacted"
  *
  * Exits 1 on any error. See METHODOLOGY.md ("Quality control").
  */
@@ -33,6 +35,7 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { countUnits, measureKey, isRider } from '../src/lib/measureCounts.js';
+import { isActive, isProvision } from '../src/lib/measureStatus.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const data = JSON.parse(readFileSync(join(__dirname, '../src/data/bills.json'), 'utf-8'));
@@ -118,7 +121,9 @@ for (const [id, expected] of Object.entries(golden.labels)) {
 //    the tracker showed 93 while main cited 96 — so it is asserted here.
 {
   // Measures, not entries (src/lib/measureCounts.js): H.R. 1968 is three entries, one law.
-  const reviewed = (list) => (data[list] || []).filter(item => !item.provisional);
+  // Active only: archived entries (final, with an official outcome) render in their own
+  // section and are outside every count (src/lib/measureStatus.js).
+  const reviewed = (list) => (data[list] || []).filter(isActive);
   // Anti-DC only: routine measures are counted apart (2026-11-09).
   const siteTotal = countUnits([...reviewed('bills'), ...reviewed('riders')]).total;
 
@@ -145,7 +150,9 @@ for (const [id, expected] of Object.entries(golden.labels)) {
   const stageByMeasure = new Map();
   for (const list of ['bills', 'routineBills', 'supportBills']) {
     for (const item of data[list] || []) {
-      if (isRider(item)) continue;
+      // An amendment or rider is a provision of a measure, not the measure: its own
+      // outcome can differ (S.Amdt. 2195 died; H.Con.Res. 14 was agreed to).
+      if (isRider(item) || isProvision(item)) continue;
       const key = `${list}:${measureKey(item)}`;
       const stage = item.status?.stage ?? null;
       const seen = stageByMeasure.get(key);
@@ -280,6 +287,30 @@ for (const [section, items] of sections) {
   for (const bill of items) {
     if (!Number.isInteger(bill.congress)) {
       errors.push(`${section}/${bill.id}: no "congress" recorded (got ${JSON.stringify(bill.congress)})`);
+    }
+  }
+}
+
+// 13. A rider or amendment shows a stage only with a verified outcome. The monitor reads
+//     bill numbers, and the bill a provision sits on can become law without it (H.R. 7148
+//     became law; S.Amdt. 4253 was never voted on). Its stage must come from its own
+//     checked outcome, never from the parent bill.
+for (const [section, items] of sections) {
+  for (const item of items) {
+    if (!isProvision(item)) continue;
+    const stage = item.status?.stage ?? null;
+    if (stage && !(item.outcome?.result === 'became-law' && stage === 'enacted')) {
+      errors.push(`${section}/${item.id}: provision has stage "${stage}" without a verified "became-law" outcome`);
+    }
+  }
+}
+
+// 14. A constitutional amendment is never law and never goes to the President: its last
+//     congressional step is "sent-to-states" (two-thirds of each chamber).
+for (const [section, items] of sections) {
+  for (const item of items) {
+    if (item.constitutionalAmendment && item.status?.stage === 'enacted') {
+      errors.push(`${section}/${item.id}: a constitutional amendment cannot be "enacted"; its final stage is "sent-to-states"`);
     }
   }
 }

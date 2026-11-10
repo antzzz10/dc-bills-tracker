@@ -154,6 +154,13 @@
   color: var(--white);
 }
 
+/* Resolutions and constitutional amendments reuse the chamber colours: "agreed to" is a
+   resolution's passage, and sending an amendment to the states is its both-chambers step. */
+.tag-agreed-house { background: var(--status-house); color: var(--white); }
+.tag-agreed-senate { background: var(--status-senate); color: var(--white); }
+.tag-agreed-both,
+.tag-sent-to-states { background: var(--status-both); color: var(--white); }
+
 /* A caveat, not a severity level — dashed border instead of a solid fill so
    the "texture, not just color" device from the logo mark carries the
    distinction accessibly (colorblind-safe, survives grayscale/print) */

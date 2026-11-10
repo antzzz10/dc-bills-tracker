@@ -1,6 +1,7 @@
 import {
   AlertCircle,
   AlertTriangle,
+  Archive,
   ArrowRight,
   Calendar,
   CheckCircle,
@@ -37,6 +38,7 @@ import {
  * registered explicitly below instead — adding one means adding a line here.
  */
 const ICONS = {
+  'archive': Archive,
   'alert-circle': AlertCircle,
   'alert-triangle': AlertTriangle,
   'arrow-right': ArrowRight,
