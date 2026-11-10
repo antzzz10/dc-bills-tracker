@@ -418,6 +418,13 @@ try {
 } catch (e) {
   errors.push(`${rosterRel.slice(3)} not readable (${e.message}) — run scripts/build-member-roster.js, or write a { "congress": ${CURRENT_CONGRESS}, "pending": true } placeholder at a Congress switch`);
 }
+if (roster !== null && (typeof roster !== 'object' || Array.isArray(roster))) {
+  errors.push(`${rosterRel.slice(3)} is not a roster object`);
+  roster = null;
+} else if (roster === null && !errors.some(e => e.startsWith(rosterRel.slice(3)))) {
+  // Parsed, but to JSON null: neither a roster nor the explicit pending placeholder.
+  errors.push(`${rosterRel.slice(3)} holds null — expected a roster or { "congress": ${CURRENT_CONGRESS}, "pending": true }`);
+}
 if (roster?.pending === true) {
   if (roster.congress !== CURRENT_CONGRESS) errors.push(`members-${CURRENT_CONGRESS}: pending placeholder names the ${roster.congress}th Congress`);
   if ((roster.members || []).length) errors.push(`members-${CURRENT_CONGRESS}: a pending placeholder must hold no members`);

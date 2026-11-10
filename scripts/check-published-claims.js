@@ -288,6 +288,28 @@ if (facts) {
     if ((stats.routine?.total ?? null) !== independentCount(routineBills)) {
       fail('stats.json routine.total', `publishes ${stats.routine?.total}; data holds ${independentCount(routineBills)}`);
     }
+    // Every other number stats.json publishes, recounted here too (Codex recheck, 2026-11-10).
+    const isRes = b => b.type !== 'rider' && /RES\./i.test((b.billNumbers || [])[0] || '');
+    const advanced = all.filter(hasAdvanced);
+    const more = {
+      introducedThisCongress: independentCount([...all, ...archivedEntries.filter(b => b.position === 'oppose')]),
+      'routine.advanced': independentCount(routineBills.filter(hasAdvanced)),
+      'archived.total': independentCount(archivedEntries),
+      'breakdown.riders': riders.length,
+      'breakdown.resolutions': independentCount(bills.filter(isRes)),
+      'breakdown.bills': independentCount(bills) - independentCount(bills.filter(isRes)),
+      'passedBreakdown.riders': advanced.filter(b => b.type === 'rider').length,
+      'passedBreakdown.resolutions': independentCount(advanced.filter(isRes)),
+      'passedBreakdown.bills': expected.passedBills - independentCount(advanced.filter(isRes)) - advanced.filter(b => b.type === 'rider').length,
+      'passed.length': expected.passedBills,
+      provisionalAwaitingReview: ['bills', 'riders', 'routineBills'].flatMap(l => data[l] || []).filter(b => b.provisional).length
+    };
+    const read = path => path === 'passed.length'
+      ? (Array.isArray(stats.passed) ? stats.passed.length : null)
+      : path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), stats) ?? 0;
+    for (const [path, value] of Object.entries(more)) {
+      if (read(path) !== value) fail(`stats.json ${path}`, `publishes ${read(path)}; data holds ${value}`);
+    }
   }
 }
 
