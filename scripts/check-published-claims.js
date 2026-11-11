@@ -19,6 +19,7 @@
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { CURRENT_CONGRESS } from './config.js';
 
 import { getUpdateBannerMessage, introductionDate } from '../src/components/updateBannerMessage.js';
 import {
@@ -261,6 +262,61 @@ if (facts) {
 }
 
 // ---------------------------------------------------------------------------
+// 2b. stats.json numbers, checked whether or not the summary renders. The summary block
+//     above is skipped when nothing is tracked (as on the first days of a new Congress),
+//     and its stats checks with it; these run regardless, with zero as a real expectation
+//     (Codex PRD review finding 8; re-raised by Codex medium + high, 2026-11-10).
+// ---------------------------------------------------------------------------
+{
+  let stats = null;
+  try {
+    stats = JSON.parse(readFileSync(join(__dirname, '../public/api/stats.json'), 'utf-8'));
+  } catch (e) {
+    fail('stats.json', `not readable (${e.message}); run scripts/generate-stats.js`);
+  }
+  if (stats) {
+    const all = [...bills, ...riders];
+    const expected = {
+      totalBills: independentCount(all),
+      passedBills: independentCount(all.filter(hasAdvanced)),
+      pendingBills: independentCount(all.filter(b => !hasAdvanced(b)))
+    };
+    claims.push(`stats.json: ${expected.totalBills} total, ${expected.pendingBills} pending, ${expected.passedBills} passed`);
+    for (const [key, value] of Object.entries(expected)) {
+      if (stats[key] !== value) fail(`stats.json ${key}`, `publishes ${stats[key]}; data holds ${value}`);
+    }
+    if ((stats.routine?.total ?? null) !== independentCount(routineBills)) {
+      fail('stats.json routine.total', `publishes ${stats.routine?.total}; data holds ${independentCount(routineBills)}`);
+    }
+    // Every other number stats.json publishes, recounted here too (Codex recheck, 2026-11-10).
+    const isRes = b => b.type !== 'rider' && /RES\./i.test((b.billNumbers || [])[0] || '');
+    const advanced = all.filter(hasAdvanced);
+    const more = {
+      introducedThisCongress: independentCount([...all, ...archivedEntries.filter(b => b.position === 'oppose')]),
+      'routine.advanced': independentCount(routineBills.filter(hasAdvanced)),
+      'archived.total': independentCount(archivedEntries),
+      'archived.riders': archivedEntries.filter(b => b.type === 'rider').length,
+      'archived.resolutions': independentCount(archivedEntries.filter(isRes)),
+      'archived.bills': independentCount(archivedEntries.filter(b => b.type !== 'rider')) - independentCount(archivedEntries.filter(isRes)),
+      'breakdown.riders': riders.length,
+      'breakdown.resolutions': independentCount(bills.filter(isRes)),
+      'breakdown.bills': independentCount(bills) - independentCount(bills.filter(isRes)),
+      'passedBreakdown.riders': advanced.filter(b => b.type === 'rider').length,
+      'passedBreakdown.resolutions': independentCount(advanced.filter(isRes)),
+      'passedBreakdown.bills': expected.passedBills - independentCount(advanced.filter(isRes)) - advanced.filter(b => b.type === 'rider').length,
+      'passed.length': expected.passedBills,
+      provisionalAwaitingReview: ['bills', 'riders', 'routineBills'].flatMap(l => data[l] || []).filter(b => b.provisional).length
+    };
+    const read = path => path === 'passed.length'
+      ? (Array.isArray(stats.passed) ? stats.passed.length : null)
+      : path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), stats) ?? 0;
+    for (const [path, value] of Object.entries(more)) {
+      if (read(path) !== value) fail(`stats.json ${path}`, `publishes ${read(path)}; data holds ${value}`);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // 3. Outcomes (archived cards and enacted riders): each states a checked fact with a source
 // ---------------------------------------------------------------------------
 // An outcome is hand-verified, so the gate can't recompute it. It can require that each
@@ -284,6 +340,134 @@ for (const item of ['bills', 'riders', 'routineBills'].flatMap(list => data[list
   }
   // An archived entry may keep its furthest progress (a measure that passed the House and
   // was later withdrawn): progress and outcome are separate facts. It is never counted.
+}
+
+// ---------------------------------------------------------------------------
+// 4. The statehood-bill files (representdc.org/statehood-bill)
+// ---------------------------------------------------------------------------
+// Every total is recomputed here from the published rows, independently of
+// scripts/lib/statehood.js, and the published rows must be exactly the stored list. A
+// missing file is a failure, not a skip: generate-stats.js always writes it, and an empty
+// dataset that skips its checks is how a wrong number ships (Codex PRD review, finding 8).
+{
+  const NON_VOTING_HERE = ['DC', 'PR', 'GU', 'VI', 'AS', 'MP'];
+  const readPublished = rel => JSON.parse(readFileSync(join(__dirname, rel), 'utf-8'));
+  let payload = null;
+  try {
+    payload = readPublished('../public/api/statehood-cosponsors.json');
+  } catch (e) {
+    fail('statehood-cosponsors.json', `not readable (${e.message}); run scripts/generate-stats.js`);
+  }
+  let store = { bills: {} };
+  try {
+    store = readPublished('../src/data/statehood-cosponsors.json');
+  } catch (e) {
+    // The store is tracked and written by every monitor run. Its loss is never a quiet
+    // "no data": it would publish every row as unavailable (Codex attack review).
+    fail('src/data/statehood-cosponsors.json', `not readable (${e.message})`);
+  }
+  const currentCongress = CURRENT_CONGRESS;
+  const flagshipEntries = (data.supportBills || []).filter(b => b.flagship === true);
+  // The page needs a House and a Senate bill. Removing the flags would publish an empty
+  // file that every other check accepts.
+  for (const chamber of ['house', 'senate']) {
+    if (!flagshipEntries.some(e => (/^H/i.test(e.billNumbers[0]) ? 'house' : 'senate') === chamber)) {
+      fail('statehood-cosponsors.json', `no flagship ${chamber} bill in bills.json`);
+    }
+  }
+  if (payload) {
+    const rows = Array.isArray(payload.bills) ? payload.bills : [];
+    const published = new Set(rows.map(r => r.id));
+    for (const entry of flagshipEntries) {
+      if (!published.has(entry.id)) fail(`statehood-cosponsors.json`, `flagship ${entry.id} is not published`);
+    }
+    for (const row of rows) {
+      const list = Array.isArray(row.cosponsors) ? row.cosponsors : [];
+      const t = row.totals || {};
+      const claim = `statehood ${row.billNumber} (${row.congress}th): "${t.cosponsors} cosponsors (including ${t.nonVoting} non-voting), ${t.original} original"`;
+      claims.push(claim);
+      const entry = flagshipEntries.find(e => e.id === row.id);
+      if (!entry) { fail(claim, `${row.id} is not a flagship entry in bills.json`); continue; }
+      if (row.congress !== entry.congress || row.billNumber !== entry.billNumbers[0]) {
+        fail(claim, `published as ${row.congress} ${row.billNumber}; bills.json has ${entry.congress} ${entry.billNumbers[0]}`);
+      }
+      if (row.current !== (row.congress === currentCongress)) {
+        fail(claim, `current is ${row.current} for a ${row.congress}th-Congress bill while the tracker checks the ${currentCongress}th`);
+      }
+      const expectedChamber = /^H/i.test(row.billNumber) ? 'house' : 'senate';
+      if (row.chamber !== expectedChamber) fail(claim, `chamber "${row.chamber}" for ${row.billNumber}`);
+
+      if (row.complete !== true) {
+        // Unavailable is not zero: an incomplete row publishes no totals at all.
+        if (row.totals !== null) fail(claim, 'incomplete list published with totals; they must be null');
+        if (row.checkedAt !== undefined) fail(claim, `incomplete list published with checkedAt ${row.checkedAt}`);
+        if (list.length) fail(claim, `incomplete list published with ${list.length} rows`);
+        continue;
+      }
+      if (t.cosponsors !== list.length) fail(claim, `total says ${t.cosponsors}, list holds ${list.length}`);
+      // Every key and value, recounted here: a breakdown that only sums right can still
+      // name the wrong states (Codex high + medium, 2026-11-10).
+      const tally = key => {
+        const out = {};
+        for (const c of list) out[c[key]] = (out[c[key]] || 0) + 1;
+        return out;
+      };
+      const sameCounts = (a, b) => {
+        const ka = Object.keys(a || {}).sort();
+        const kb = Object.keys(b || {}).sort();
+        return ka.length === kb.length && ka.every((k, i) => k === kb[i] && a[k] === b[k]);
+      };
+      if (!sameCounts(t.byParty, tally('party'))) fail(claim, `party breakdown ${JSON.stringify(t.byParty)} ≠ list ${JSON.stringify(tally('party'))}`);
+      if (!sameCounts(t.byState, tally('state'))) fail(claim, `state breakdown does not match the list's states`);
+      const original = list.filter(c => c.isOriginalCosponsor === true).length;
+      if (t.original !== original) fail(claim, `original says ${t.original}, list holds ${original}`);
+      const nonVoting = row.chamber === 'house' ? list.filter(c => NON_VOTING_HERE.includes(c.state)).length : 0;
+      if (t.nonVoting !== nonVoting) fail(claim, `non-voting says ${t.nonVoting}, list holds ${nonVoting}`);
+
+      const rec = store.bills?.[row.id];
+      if (!rec || rec.complete !== true) { fail(claim, 'published as complete, but no complete list is stored'); continue; }
+      if (row.checkedAt !== rec.checkedAt) fail(claim, `checkedAt ${row.checkedAt} ≠ stored ${rec.checkedAt}`);
+      // Field by field, not IDs only: a changed name or signing date is a false claim.
+      const FIELDS = ['bioguideId', 'name', 'party', 'state', 'district', 'sponsorshipDate', 'isOriginalCosponsor'];
+      const rowKey = c => JSON.stringify(FIELDS.map(f => c[f] ?? null));
+      if (list.length !== rec.cosponsors.length || list.some((c, i) => rowKey(c) !== rowKey(rec.cosponsors[i]))) {
+        fail(claim, 'published cosponsor rows differ from the stored list');
+      }
+      for (const key of ['sponsor', 'introducedDate', 'latestAction', 'congressGovUrl']) {
+        if (JSON.stringify(row[key]) !== JSON.stringify(rec[key])) fail(claim, `${key} differs from the stored record`);
+      }
+      const today = new Date().toISOString().slice(0, 10);
+      if (list.some(c => c.sponsorshipDate < (rec.introducedDate || '') || c.sponsorshipDate > today)) {
+        fail(claim, 'a sponsorship date falls before introduction or in the future');
+      }
+      // bills.json's count drives the tracker's own card; the two must agree.
+      if (entry.status?.cosponsors !== list.length) {
+        fail(claim, `bills.json shows ${entry.status?.cosponsors} cosponsors on the tracker card`);
+      }
+    }
+  }
+
+  // The history table is republished verbatim from the export lint-bills.js pins.
+  try {
+    const src = JSON.stringify(readPublished('../src/data/statehood-bill-history.json'));
+    const pub = JSON.stringify(readPublished('../public/api/statehood-bill-history.json'));
+    claims.push('statehood-bill-history.json: republished export');
+    if (src !== pub) fail('statehood-bill-history.json', 'published file differs from src/data/statehood-bill-history.json');
+  } catch (e) {
+    fail('statehood-bill-history.json', `not readable (${e.message})`);
+  }
+
+  // stats.json keeps every field the main site reads, with the same meaning (PRD § 6): the
+  // statehood data lives in its own files and adds nothing to these totals.
+  try {
+    const stats = readPublished('../public/api/stats.json');
+    const KEEP = ['lastUpdated', 'lastChecked', 'totalBills', 'introducedThisCongress', 'pendingBills',
+      'passedBills', 'passedBreakdown', 'breakdown', 'routine', 'archived', 'provisionalAwaitingReview', 'passed'];
+    const missing = KEEP.filter(k => !(k in stats));
+    if (missing.length) fail('stats.json', `missing field(s) the main site reads: ${missing.join(', ')}`);
+  } catch (e) {
+    fail('stats.json', `not readable (${e.message})`);
+  }
 }
 
 // ---------------------------------------------------------------------------

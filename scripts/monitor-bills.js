@@ -11,6 +11,8 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { CURRENT_CONGRESS } from './config.js';
 import { isProvision } from '../src/lib/measureStatus.js';
+import { fetchFullCosponsorList, nextStoreRecord, sponsorRecord, congressGovBillUrl } from './lib/statehood.js';
+import { redactKey } from './lib/congress-api.js';
 
 // Every network call gets a deadline. On 2026-11-10 one Congress.gov request never
 // answered, and with no timeout the whole run sat until GitHub cancelled it at 20 minutes:
@@ -53,6 +55,7 @@ const STAGE_RANK = {
 // Load bills data
 const billsPath = join(__dirname, '../src/data/bills.json');
 const billsData = JSON.parse(readFileSync(billsPath, 'utf-8'));
+const statehoodStorePath = join(__dirname, '../src/data/statehood-cosponsors.json');
 
 // Every section of bills.json the daily check covers. Until 2026-11 it read `bills` only:
 // support bills drifted (H.R. 51's cosponsors went stale) and S. 1077, a routine measure,
@@ -417,7 +420,9 @@ async function detectPassage(actions, chamber, expected) {
 // `congress` is the entry's own Congress, never assumed: a bill number names a different
 // bill in every Congress, so looking an entry up in the wrong one silently overwrites it
 // with another bill's status.
-async function fetchBillStatus(billNumber, congress) {
+// `fullCosponsorList`: flagship entries only (the statehood bill). Fetches every cosponsor
+// page with retries instead of reading the count alone; see scripts/lib/statehood.js.
+async function fetchBillStatus(billNumber, congress, { fullCosponsorList = false } = {}) {
   const parsed = parseBillNumber(billNumber);
   if (!parsed) {
     console.log(`⚠️  Could not parse bill number: ${billNumber}`);
@@ -493,13 +498,47 @@ async function fetchBillStatus(billNumber, congress) {
     if (passageInfo?.voteFetchFailed) missingParts.push('roll-call vote');
     const actionsOk = !missingParts.some(p => p.startsWith('actions'));
 
-    // Cosponsor count from the bill record itself. The separate /cosponsors request took
-    // about 17 seconds per bill on 2026-11-10, enough to push a run past GitHub's 20-minute
-    // limit; the bill record's count is the same number (checked on H.R. 51, S. 402 and
-    // H.R. 1022) and arrives with the request already made. The API leaves the block out
-    // for a bill with no cosponsors (checked on H.R. 9362); a block without a count is unknown.
+    // Cosponsor count. Flagship entries (the statehood bill) fetch the whole list instead,
+    // through scripts/lib/statehood.js: same 30-second deadline per request, retries on
+    // 429/5xx/timeouts, and an incomplete list (a timeout included) is a failed part like any
+    // other, so the stored count and list stay. One extra request per flagship bill.
     let cosponsorsCount = 0;
-    if (Number.isInteger(bill.cosponsors?.count)) {
+    let flagship = null;
+    if (fullCosponsorList) {
+      const fetchResult = await fetchFullCosponsorList({
+        apiBase: API_BASE_URL, congress, billType, number, apiKey: CONGRESS_API_KEY,
+        fetchOptions: { timeoutMs: REQUEST_TIMEOUT_MS }
+      });
+      // The bill record and the list are two requests; they must report the same count.
+      if (fetchResult.complete && Number.isInteger(bill.cosponsors?.count) && bill.cosponsors.count !== fetchResult.count) {
+        fetchResult.complete = false;
+        fetchResult.reason = `list has ${fetchResult.count}, bill record says ${bill.cosponsors.count}`;
+      }
+      if (fetchResult.complete) {
+        cosponsorsCount = fetchResult.count;
+        console.log(`  ✓ Full cosponsor list: ${fetchResult.count} (${fetchResult.withdrawnCount} withdrawn, excluded; ${fetchResult.pages} page(s))`);
+      } else {
+        missingParts.push(`cosponsors (incomplete list: ${redactKey(fetchResult.reason)})`);
+      }
+      flagship = {
+        fetchResult,
+        billMeta: {
+          title: bill.title,
+          sponsor: sponsorRecord(bill.sponsors?.[0]),
+          introducedDate: bill.introducedDate || null,
+          latestAction: bill.latestAction
+            ? { actionDate: bill.latestAction.actionDate || null, text: bill.latestAction.text || '' }
+            : null,
+          congressGovUrl: congressGovBillUrl(congress, billType, number)
+        }
+      };
+    } else if (Number.isInteger(bill.cosponsors?.count)) {
+      // Every other bill: the count from the bill record itself. The separate /cosponsors
+      // request took about 17 seconds per bill on 2026-11-10, enough to push a run past
+      // GitHub's 20-minute limit; the bill record's count is the same number (checked on
+      // H.R. 51, S. 402 and H.R. 1022) and arrives with the request already made. The API
+      // leaves the block out for a bill with no cosponsors (checked on H.R. 9362); a block
+      // without a count is unknown.
       cosponsorsCount = bill.cosponsors.count;
     } else if (bill.cosponsors === undefined) {
       cosponsorsCount = 0; // the API omits the block for a bill with no cosponsors
@@ -534,7 +573,9 @@ async function fetchBillStatus(billNumber, congress) {
       committees,
       introducedDate: bill.introducedDate || null,
       // Passage information
-      passageInfo
+      passageInfo,
+      // Flagship entries only: the full-list fetch and the bill facts the page publishes.
+      flagship
     };
 
     console.log(`  ✓ Successfully fetched ${billNumber}`);
@@ -933,12 +974,12 @@ async function monitorBills() {
   const checkedBySection = Object.fromEntries(SECTIONS.map(s => [s, 0]));
   let missingCongress = 0;
 
-  async function lookup(billNumber, congress, section) {
+  async function lookup(billNumber, congress, section, options = {}) {
     const key = `${congress}:${billNumber.replace(/\s+/g, '').toUpperCase()}`;
     if (lookups.has(key)) return lookups.get(key);
     let result;
     try {
-      const status = await fetchBillStatus(billNumber, congress);
+      const status = await fetchBillStatus(billNumber, congress, options);
       result = status ? { status } : { error: 'No status returned' };
     } catch (error) {
       result = { error: error.message };
@@ -973,6 +1014,17 @@ async function monitorBills() {
     return entry.congress;
   }
 
+  // The statehood bill's stored cosponsor lists (scripts/lib/statehood.js). Read once, written
+  // once after the entry loop.
+  let statehoodStore = { bills: {} };
+  try {
+    statehoodStore = JSON.parse(readFileSync(statehoodStorePath, 'utf-8'));
+    statehoodStore.bills ||= {};
+  } catch {
+    // First run: no store yet.
+  }
+  let statehoodTouched = false;
+
   // Bills, support bills and routine measures: full status update per entry.
   const entrySections = ['bills', 'supportBills', 'routineBills'];
   const entryTotal = entrySections.reduce((n, s) => n + (billsData[s] || []).length, 0);
@@ -991,7 +1043,20 @@ async function monitorBills() {
       const congress = congressOf(bill, section, billNumber);
       if (!congress) continue;
 
-      const { status } = await lookup(billNumber, congress, section);
+      const isFlagship = section === 'supportBills' && bill.flagship === true;
+      const { status } = await lookup(billNumber, congress, section, { fullCosponsorList: isFlagship });
+      if (isFlagship) {
+        // Recorded whether or not the lookup succeeded: a failure keeps the last complete
+        // list and its checkedAt, and notes the failure beside it.
+        statehoodStore.bills[bill.id] = nextStoreRecord({
+          previous: statehoodStore.bills[bill.id],
+          entry: bill,
+          billMeta: status?.flagship?.billMeta,
+          fetchResult: status?.flagship?.fetchResult,
+          now: new Date().toISOString()
+        });
+        statehoodTouched = true;
+      }
       if (!status) continue;
 
       // Rank on the last known value of anything that didn't arrive this run; a missing
@@ -1023,6 +1088,14 @@ async function monitorBills() {
       checkedBySection[section]++;
       logPriority(priorityInfo);
     }
+  }
+
+  if (statehoodTouched) {
+    writeFileSync(statehoodStorePath, JSON.stringify({
+      note: 'Last complete cosponsor list per flagship statehood-bill entry (flagship: true in bills.json). Written by scripts/monitor-bills.js; published as public/api/statehood-cosponsors.json by scripts/generate-stats.js. A failed fetch keeps the previous list and its checkedAt.',
+      bills: statehoodStore.bills
+    }, null, 2) + '\n');
+    console.log(`💾 Statehood cosponsor store saved: ${statehoodStorePath}`);
   }
 
   // Riders: one lookup per spending bill they sit on. A rider is a provision inside that

@@ -1,0 +1,73 @@
+name: Refresh Member Roster
+
+# Weekly: the current members of Congress, for the member lookup on
+# representdc.org/statehood-bill ("signed on" / "not yet signed on", joined to the
+# statehood bill's cosponsor list by Bioguide ID). PRD
+# docs/2026-11-10-cosponsor-page-and-120th-overview-prd.md, decision #7.
+#
+# Its own workflow, not a step in discovery: a roster failure must not block or muddy
+# the bill scan, and the bill scan must not block the roster. It only commits; the
+# daily monitor's deploy publishes the file (public/ is copied into every build).
+#
+# All or nothing: build-member-roster.js writes nothing unless every member record
+# arrived and both chambers' counts are plausible, so a failed run leaves last week's
+# roster published and the run red. lint-bills.js check 17 warns once the file is more
+# than 15 days old.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Tuesdays 11:17 UTC. Off the hour, and clear of the Monday discovery scan and the
+    # daily monitor (13:41).
+    - cron: '17 11 * * 2'
+
+concurrency:
+  group: member-roster
+  cancel-in-progress: false
+
+jobs:
+  roster:
+    runs-on: ubuntu-24.04
+    # ~540 member records at the monitor's 300 ms spacing: about 4-5 minutes on a normal
+    # day. Each request has a 30-second deadline with retries; on a slow API day (as on
+    # 2026-11-10) the run can take far longer, so the same 45-minute limit as the monitor.
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the current-member roster
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
+        run: node scripts/build-member-roster.js
+
+      - name: Lint (roster plausibility + data consistency)
+        run: node scripts/lint-bills.js
+
+      - name: Commit and push the roster
+        run: |
+          git config --global user.name 'DC Bills Roster'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add public/api/members-*.json
+          if git diff --staged --quiet; then
+            echo "No roster changes to commit"
+            exit 0
+          fi
+          git commit -m "Member roster - $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          # Other workflows push to main. This commit touches only the roster file, so a
+          # rebase over theirs cannot conflict; retry a few times on a lost race.
+          for attempt in 1 2 3; do
+            git push && exit 0
+            [ "$attempt" = 3 ] && exit 1
+            sleep $((attempt * 5))
+            git pull --rebase -q origin main || { git rebase --abort; exit 1; }
+          done

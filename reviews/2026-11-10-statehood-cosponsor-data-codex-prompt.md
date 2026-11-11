@@ -1,0 +1,14 @@
+You are reviewing a code change set in the dc-bills-tracker repository (working tree of this directory, branch claude/statehood-cosponsor-data-9b42d8, base origin/main). Review the uncommitted/untracked changes plus any commits on this branch beyond origin/main: run `git diff origin/main` and `git status` and read new files under scripts/lib/, scripts/build-member-roster.js, scripts/export-statehood-history.js, scripts/test-statehood.js, .github/workflows/refresh-member-roster.yml, src/data/statehood-*.json, public/api/members-119.json (if present).
+
+Purpose: the tracker publishes data for a statehood-bill cosponsor page on the main site (PRD: ~/Projects/dc-bills-tracker/docs/2026-11-10-cosponsor-page-and-120th-overview-prd.md, decision #7 and § 4 A; prior Codex findings 1, 6, 8 in ~/Projects/dc-bills-tracker/reviews/2026-11-10-cosponsor-page-prd-codex-high.raw.md). Requirements:
+1. monitor-bills.js: for supportBills entries with flagship: true (identified by the flag, not number) fetch the full cosponsor list (limit=250, follow pagination.next, drop sponsorshipWithdrawnDate rows, verify completeness against pagination counts, retry 429/5xx with backoff); on any incompleteness keep the previous complete list and count that bill's lookup as failed. Every other bill keeps count-only behaviour; rate limiting and existing health rules unchanged.
+2. public/api/statehood-cosponsors.json per bill with totals; checkedAt only on a complete fetch.
+3. scripts/build-member-roster.js -> public/api/members-119.json, all-or-nothing, weekly workflow.
+4. One-time history export src/data/statehood-bill-history.json (115th-119th) from ~/Projects/representdc-data (read-only). Expected House 181/227/216/211/209, Senate 30/42/45/46/43, House passed 2020-06-26 and 2021-04-22.
+5. Gates in lint-bills.js / check-published-claims.js.
+6. monitor workflow stages the new source file.
+Note: Congress.gov's pagination.count EXCLUDES withdrawn cosponsors; countIncludingWithdrawnCosponsors includes them (verified on 116th H.R. 51: 227 / 228).
+
+Accuracy is paramount: every published number must derive from data; public data must never claim a check that did not complete. Look for: correctness bugs, any path where an incomplete or stale list is stamped checkedAt or published as current, any change to the behaviour of non-flagship bills or the run-health rules, API key leakage into files/logs, workflow race/rebase hazards with the other workflows that push to main (monitor-bills.yml, discover-bills.yml, discovery-decision.yml), gates that skip silently on empty/missing data, gates that would block the daily monitor spuriously (e.g. on the Congress switch in January when CURRENT_CONGRESS becomes 120), and anything the main-site page would mis-render.
+
+Do not modify files. Report findings as a numbered list, each labelled BLOCKER / MATERIAL / NOTE, with file:line, the concrete failure scenario, and a fix. Start with a one-line verdict.
