@@ -1,0 +1,2409 @@
+{
+  "generatedAt": "2026-11-11T03:21:49.209Z",
+  "source": "Congress.gov API, bill cosponsors endpoint (withdrawn cosponsors excluded), checked daily by the bill tracker",
+  "bills": [
+    {
+      "id": "hr51",
+      "chamber": "house",
+      "congress": 119,
+      "billNumber": "H.R. 51",
+      "current": true,
+      "title": "Washington, D.C. Admission Act",
+      "sponsor": {
+        "bioguideId": "N000147",
+        "name": "Eleanor Holmes Norton",
+        "party": "D",
+        "state": "DC",
+        "district": null
+      },
+      "introducedDate": "2025-01-03",
+      "latestAction": {
+        "actionDate": "2025-01-03",
+        "text": "Referred to the Committee on Oversight and Government Reform, and in addition to the Committees on Rules, Armed Services, the Judiciary, and Energy and Commerce, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned."
+      },
+      "congressGovUrl": "https://www.congress.gov/bill/119th-congress/house-bill/51",
+      "complete": true,
+      "checkedAt": "2026-11-11T03:20:52.888Z",
+      "cosponsors": [
+        {
+          "bioguideId": "A000370",
+          "name": "Alma S. Adams",
+          "party": "D",
+          "state": "NC",
+          "district": 12,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "A000371",
+          "name": "Pete Aguilar",
+          "party": "D",
+          "state": "CA",
+          "district": 33,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "A000380",
+          "name": "Gabe Amo",
+          "party": "D",
+          "state": "RI",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001318",
+          "name": "Becca Balint",
+          "party": "D",
+          "state": "VT",
+          "district": 0,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001300",
+          "name": "Nanette Diaz Barragán",
+          "party": "D",
+          "state": "CA",
+          "district": 44,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001281",
+          "name": "Joyce Beatty",
+          "party": "D",
+          "state": "OH",
+          "district": 3,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001287",
+          "name": "Ami Bera",
+          "party": "D",
+          "state": "CA",
+          "district": 6,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001292",
+          "name": "Donald S. Beyer",
+          "party": "D",
+          "state": "VA",
+          "district": 8,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B000490",
+          "name": "Sanford D. Bishop",
+          "party": "D",
+          "state": "GA",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001278",
+          "name": "Suzanne Bonamici",
+          "party": "D",
+          "state": "OR",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001296",
+          "name": "Brendan F. Boyle",
+          "party": "D",
+          "state": "PA",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001313",
+          "name": "Shontel M. Brown",
+          "party": "D",
+          "state": "OH",
+          "district": 11,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001285",
+          "name": "Julia Brownley",
+          "party": "D",
+          "state": "CA",
+          "district": 26,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001315",
+          "name": "Nikki Budzinski",
+          "party": "D",
+          "state": "IL",
+          "district": 13,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001112",
+          "name": "Salud O. Carbajal",
+          "party": "D",
+          "state": "CA",
+          "district": 24,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001072",
+          "name": "André Carson",
+          "party": "D",
+          "state": "IN",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001125",
+          "name": "Troy A. Carter",
+          "party": "D",
+          "state": "LA",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001131",
+          "name": "Greg Casar",
+          "party": "D",
+          "state": "TX",
+          "district": 35,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001055",
+          "name": "Ed Case",
+          "party": "D",
+          "state": "HI",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001117",
+          "name": "Sean Casten",
+          "party": "D",
+          "state": "IL",
+          "district": 6,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001066",
+          "name": "Kathy Castor",
+          "party": "D",
+          "state": "FL",
+          "district": 14,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001091",
+          "name": "Joaquin Castro",
+          "party": "D",
+          "state": "TX",
+          "district": 20,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001127",
+          "name": "Sheila Cherfilus-McCormick",
+          "party": "D",
+          "state": "FL",
+          "district": 20,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001080",
+          "name": "Judy Chu",
+          "party": "D",
+          "state": "CA",
+          "district": 28,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001101",
+          "name": "Katherine M. Clark",
+          "party": "D",
+          "state": "MA",
+          "district": 5,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001067",
+          "name": "Yvette D. Clarke",
+          "party": "D",
+          "state": "NY",
+          "district": 9,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001061",
+          "name": "Emanuel Cleaver",
+          "party": "D",
+          "state": "MO",
+          "district": 5,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C000537",
+          "name": "James E. Clyburn",
+          "party": "D",
+          "state": "SC",
+          "district": 6,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001068",
+          "name": "Steve Cohen",
+          "party": "D",
+          "state": "TN",
+          "district": 9,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001078",
+          "name": "Gerald E. Connolly",
+          "party": "D",
+          "state": "VA",
+          "district": 11,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001059",
+          "name": "Jim Costa",
+          "party": "D",
+          "state": "CA",
+          "district": 21,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001119",
+          "name": "Angie Craig",
+          "party": "D",
+          "state": "MN",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001130",
+          "name": "Jasmine Crockett",
+          "party": "D",
+          "state": "TX",
+          "district": 30,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001121",
+          "name": "Jason Crow",
+          "party": "D",
+          "state": "CO",
+          "district": 6,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000629",
+          "name": "Sharice Davids",
+          "party": "D",
+          "state": "KS",
+          "district": 3,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000096",
+          "name": "Danny K. Davis",
+          "party": "D",
+          "state": "IL",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000631",
+          "name": "Madeleine Dean",
+          "party": "D",
+          "state": "PA",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000197",
+          "name": "Diana DeGette",
+          "party": "D",
+          "state": "CO",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000216",
+          "name": "Rosa L. DeLauro",
+          "party": "D",
+          "state": "CT",
+          "district": 3,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000617",
+          "name": "Suzan K. DelBene",
+          "party": "D",
+          "state": "WA",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000530",
+          "name": "Christopher R. Deluzio",
+          "party": "D",
+          "state": "PA",
+          "district": 17,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000623",
+          "name": "Mark DeSaulnier",
+          "party": "D",
+          "state": "CA",
+          "district": 10,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000624",
+          "name": "Debbie Dingell",
+          "party": "D",
+          "state": "MI",
+          "district": 6,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000399",
+          "name": "Lloyd Doggett",
+          "party": "D",
+          "state": "TX",
+          "district": 37,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "E000299",
+          "name": "Veronica Escobar",
+          "party": "D",
+          "state": "TX",
+          "district": 16,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "E000297",
+          "name": "Adriano Espaillat",
+          "party": "D",
+          "state": "NY",
+          "district": 13,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "E000296",
+          "name": "Dwight Evans",
+          "party": "D",
+          "state": "PA",
+          "district": 3,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "F000454",
+          "name": "Bill Foster",
+          "party": "D",
+          "state": "IL",
+          "district": 11,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "F000477",
+          "name": "Valerie P. Foushee",
+          "party": "D",
+          "state": "NC",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "F000462",
+          "name": "Lois Frankel",
+          "party": "D",
+          "state": "FL",
+          "district": 22,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "F000476",
+          "name": "Maxwell Frost",
+          "party": "D",
+          "state": "FL",
+          "district": 10,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "G000559",
+          "name": "John Garamendi",
+          "party": "D",
+          "state": "CA",
+          "district": 8,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "G000587",
+          "name": "Sylvia R. Garcia",
+          "party": "D",
+          "state": "TX",
+          "district": 29,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "G000598",
+          "name": "Robert Garcia",
+          "party": "D",
+          "state": "CA",
+          "district": 42,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "G000586",
+          "name": "Jesús G. \"Chuy\" García",
+          "party": "D",
+          "state": "IL",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "G000599",
+          "name": "Daniel S. Goldman",
+          "party": "D",
+          "state": "NY",
+          "district": 10,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "G000585",
+          "name": "Jimmy Gomez",
+          "party": "D",
+          "state": "CA",
+          "district": 34,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "G000553",
+          "name": "Al Green",
+          "party": "D",
+          "state": "TX",
+          "district": 9,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "G000551",
+          "name": "Raúl M. Grijalva",
+          "party": "D",
+          "state": "AZ",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "H001047",
+          "name": "James A. Himes",
+          "party": "D",
+          "state": "CT",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "H001066",
+          "name": "Steven Horsford",
+          "party": "D",
+          "state": "NV",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "H001085",
+          "name": "Chrissy Houlahan",
+          "party": "D",
+          "state": "PA",
+          "district": 6,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "H000874",
+          "name": "Steny H. Hoyer",
+          "party": "D",
+          "state": "MD",
+          "district": 5,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "H001094",
+          "name": "Val T. Hoyle",
+          "party": "D",
+          "state": "OR",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "H001068",
+          "name": "Jared Huffman",
+          "party": "D",
+          "state": "CA",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "I000058",
+          "name": "Glenn Ivey",
+          "party": "D",
+          "state": "MD",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "J000309",
+          "name": "Jonathan L. Jackson",
+          "party": "D",
+          "state": "IL",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "J000305",
+          "name": "Sara Jacobs",
+          "party": "D",
+          "state": "CA",
+          "district": 51,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "J000298",
+          "name": "Pramila Jayapal",
+          "party": "D",
+          "state": "WA",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "J000294",
+          "name": "Hakeem S. Jeffries",
+          "party": "D",
+          "state": "NY",
+          "district": 8,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "J000288",
+          "name": "Henry C. \"Hank\" Johnson",
+          "party": "D",
+          "state": "GA",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "K000400",
+          "name": "Sydney Kamlager-Dove",
+          "party": "D",
+          "state": "CA",
+          "district": 37,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "K000375",
+          "name": "William R. Keating",
+          "party": "D",
+          "state": "MA",
+          "district": 9,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "K000385",
+          "name": "Robin L. Kelly",
+          "party": "D",
+          "state": "IL",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "K000402",
+          "name": "Timothy M. Kennedy",
+          "party": "D",
+          "state": "NY",
+          "district": 26,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "K000389",
+          "name": "Ro Khanna",
+          "party": "D",
+          "state": "CA",
+          "district": 17,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "K000391",
+          "name": "Raja Krishnamoorthi",
+          "party": "D",
+          "state": "IL",
+          "district": 8,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "L000601",
+          "name": "Greg Landsman",
+          "party": "D",
+          "state": "OH",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "L000560",
+          "name": "Rick Larsen",
+          "party": "D",
+          "state": "WA",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "L000557",
+          "name": "John B. Larson",
+          "party": "D",
+          "state": "CT",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "L000602",
+          "name": "Summer L. Lee",
+          "party": "D",
+          "state": "PA",
+          "district": 12,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "L000273",
+          "name": "Teresa Leger Fernandez",
+          "party": "D",
+          "state": "NM",
+          "district": 3,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "L000582",
+          "name": "Ted Lieu",
+          "party": "D",
+          "state": "CA",
+          "district": 36,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "L000397",
+          "name": "Zoe Lofgren",
+          "party": "D",
+          "state": "CA",
+          "district": 18,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "L000562",
+          "name": "Stephen F. Lynch",
+          "party": "D",
+          "state": "MA",
+          "district": 8,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001223",
+          "name": "Seth Magaziner",
+          "party": "D",
+          "state": "RI",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001163",
+          "name": "Doris O. Matsui",
+          "party": "D",
+          "state": "CA",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001208",
+          "name": "Lucy McBath",
+          "party": "D",
+          "state": "GA",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001227",
+          "name": "Jennifer L. McClellan",
+          "party": "D",
+          "state": "VA",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001143",
+          "name": "Betty McCollum",
+          "party": "D",
+          "state": "MN",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001220",
+          "name": "Morgan McGarvey",
+          "party": "D",
+          "state": "KY",
+          "district": 3,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M000312",
+          "name": "James P. McGovern",
+          "party": "D",
+          "state": "MA",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001229",
+          "name": "LaMonica McIver",
+          "party": "D",
+          "state": "NJ",
+          "district": 10,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001137",
+          "name": "Gregory W. Meeks",
+          "party": "D",
+          "state": "NY",
+          "district": 5,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001226",
+          "name": "Robert Menendez",
+          "party": "D",
+          "state": "NJ",
+          "district": 8,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001188",
+          "name": "Grace Meng",
+          "party": "D",
+          "state": "NY",
+          "district": 6,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M000687",
+          "name": "Kweisi Mfume",
+          "party": "D",
+          "state": "MD",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001160",
+          "name": "Gwen Moore",
+          "party": "D",
+          "state": "WI",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001206",
+          "name": "Joseph D. Morelle",
+          "party": "D",
+          "state": "NY",
+          "district": 25,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001217",
+          "name": "Jared Moskowitz",
+          "party": "D",
+          "state": "FL",
+          "district": 23,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001196",
+          "name": "Seth Moulton",
+          "party": "D",
+          "state": "MA",
+          "district": 6,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001214",
+          "name": "Frank J. Mrvan",
+          "party": "D",
+          "state": "IN",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001225",
+          "name": "Kevin Mullin",
+          "party": "D",
+          "state": "CA",
+          "district": 15,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "N000002",
+          "name": "Jerrold Nadler",
+          "party": "D",
+          "state": "NY",
+          "district": 12,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "N000015",
+          "name": "Richard E. Neal",
+          "party": "D",
+          "state": "MA",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "N000191",
+          "name": "Joe Neguse",
+          "party": "D",
+          "state": "CO",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "N000188",
+          "name": "Donald Norcross",
+          "party": "D",
+          "state": "NJ",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "O000172",
+          "name": "Alexandria Ocasio-Cortez",
+          "party": "D",
+          "state": "NY",
+          "district": 14,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "O000173",
+          "name": "Ilhan Omar",
+          "party": "D",
+          "state": "MN",
+          "district": 5,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "P000034",
+          "name": "Frank Pallone",
+          "party": "D",
+          "state": "NJ",
+          "district": 6,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "P000613",
+          "name": "Jimmy Panetta",
+          "party": "D",
+          "state": "CA",
+          "district": 19,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "P000608",
+          "name": "Scott H. Peters",
+          "party": "D",
+          "state": "CA",
+          "district": 50,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "P000620",
+          "name": "Brittany Pettersen",
+          "party": "D",
+          "state": "CO",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "P000597",
+          "name": "Chellie Pingree",
+          "party": "D",
+          "state": "ME",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "P000607",
+          "name": "Mark Pocan",
+          "party": "D",
+          "state": "WI",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "P000617",
+          "name": "Ayanna Pressley",
+          "party": "D",
+          "state": "MA",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "Q000023",
+          "name": "Mike Quigley",
+          "party": "D",
+          "state": "IL",
+          "district": 5,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "R000617",
+          "name": "Delia C. Ramirez",
+          "party": "D",
+          "state": "IL",
+          "district": 3,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "R000606",
+          "name": "Jamie Raskin",
+          "party": "D",
+          "state": "MD",
+          "district": 8,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "R000305",
+          "name": "Deborah K. Ross",
+          "party": "D",
+          "state": "NC",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "R000599",
+          "name": "Raul Ruiz",
+          "party": "D",
+          "state": "CA",
+          "district": 25,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "R000579",
+          "name": "Patrick Ryan",
+          "party": "D",
+          "state": "NY",
+          "district": 18,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001226",
+          "name": "Andrea Salinas",
+          "party": "D",
+          "state": "OR",
+          "district": 6,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001156",
+          "name": "Linda T. Sánchez",
+          "party": "D",
+          "state": "CA",
+          "district": 38,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001205",
+          "name": "Mary Gay Scanlon",
+          "party": "D",
+          "state": "PA",
+          "district": 5,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001145",
+          "name": "Janice D. Schakowsky",
+          "party": "D",
+          "state": "IL",
+          "district": 9,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001190",
+          "name": "Bradley Scott Schneider",
+          "party": "D",
+          "state": "IL",
+          "district": 10,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001221",
+          "name": "Hillary J. Scholten",
+          "party": "D",
+          "state": "MI",
+          "district": 3,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001216",
+          "name": "Kim Schrier",
+          "party": "D",
+          "state": "WA",
+          "district": 8,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S000185",
+          "name": "Robert C. \"Bobby\" Scott",
+          "party": "D",
+          "state": "VA",
+          "district": 3,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001157",
+          "name": "David Scott",
+          "party": "D",
+          "state": "GA",
+          "district": 13,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001185",
+          "name": "Terri A. Sewell",
+          "party": "D",
+          "state": "AL",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S000344",
+          "name": "Brad Sherman",
+          "party": "D",
+          "state": "CA",
+          "district": 32,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S000510",
+          "name": "Adam Smith",
+          "party": "D",
+          "state": "WA",
+          "district": 9,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001225",
+          "name": "Eric Sorensen",
+          "party": "D",
+          "state": "IL",
+          "district": 17,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001200",
+          "name": "Darren Soto",
+          "party": "D",
+          "state": "FL",
+          "district": 9,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001218",
+          "name": "Melanie A. Stansbury",
+          "party": "D",
+          "state": "NM",
+          "district": 1,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001211",
+          "name": "Greg Stanton",
+          "party": "D",
+          "state": "AZ",
+          "district": 4,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001215",
+          "name": "Haley M. Stevens",
+          "party": "D",
+          "state": "MI",
+          "district": 11,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001159",
+          "name": "Marilyn Strickland",
+          "party": "D",
+          "state": "WA",
+          "district": 10,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001193",
+          "name": "Eric Swalwell",
+          "party": "D",
+          "state": "CA",
+          "district": 14,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001223",
+          "name": "Emilia Strong Sykes",
+          "party": "D",
+          "state": "OH",
+          "district": 13,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "T000472",
+          "name": "Mark Takano",
+          "party": "D",
+          "state": "CA",
+          "district": 39,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "T000488",
+          "name": "Shri Thanedar",
+          "party": "D",
+          "state": "MI",
+          "district": 13,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "T000193",
+          "name": "Bennie G. Thompson",
+          "party": "D",
+          "state": "MS",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "T000481",
+          "name": "Rashida Tlaib",
+          "party": "D",
+          "state": "MI",
+          "district": 12,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "T000487",
+          "name": "Jill N. Tokuda",
+          "party": "D",
+          "state": "HI",
+          "district": 2,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "T000469",
+          "name": "Paul Tonko",
+          "party": "D",
+          "state": "NY",
+          "district": 20,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "T000474",
+          "name": "Norma J. Torres",
+          "party": "D",
+          "state": "CA",
+          "district": 35,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "T000486",
+          "name": "Ritchie Torres",
+          "party": "D",
+          "state": "NY",
+          "district": 15,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "T000482",
+          "name": "Lori Trahan",
+          "party": "D",
+          "state": "MA",
+          "district": 3,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "U000040",
+          "name": "Lauren Underwood",
+          "party": "D",
+          "state": "IL",
+          "district": 14,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "V000130",
+          "name": "Juan Vargas",
+          "party": "D",
+          "state": "CA",
+          "district": 52,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "V000131",
+          "name": "Marc A. Veasey",
+          "party": "D",
+          "state": "TX",
+          "district": 33,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "V000081",
+          "name": "Nydia M. Velázquez",
+          "party": "D",
+          "state": "NY",
+          "district": 7,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "W000797",
+          "name": "Debbie Wasserman Schultz",
+          "party": "D",
+          "state": "FL",
+          "district": 25,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "W000822",
+          "name": "Bonnie Watson Coleman",
+          "party": "D",
+          "state": "NJ",
+          "district": 12,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "W000788",
+          "name": "Nikema Williams",
+          "party": "D",
+          "state": "GA",
+          "district": 5,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "W000808",
+          "name": "Frederica S. Wilson",
+          "party": "D",
+          "state": "FL",
+          "district": 24,
+          "sponsorshipDate": "2025-01-03",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "A000148",
+          "name": "Jake Auchincloss",
+          "party": "D",
+          "state": "MA",
+          "district": 4,
+          "sponsorshipDate": "2025-01-06",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "G000583",
+          "name": "Josh Gottheimer",
+          "party": "D",
+          "state": "NJ",
+          "district": 5,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "F000110",
+          "name": "CLEO FIELDS",
+          "party": "D",
+          "state": "LA",
+          "district": 6,
+          "sponsorshipDate": "2025-01-15",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "M001234",
+          "name": "Kelly Morrison",
+          "party": "D",
+          "state": "MN",
+          "district": 3,
+          "sponsorshipDate": "2025-01-15",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "S001230",
+          "name": "Suhas Subramanyam",
+          "party": "D",
+          "state": "VA",
+          "district": 10,
+          "sponsorshipDate": "2025-01-15",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "T000489",
+          "name": "Sylvester Turner",
+          "party": "D",
+          "state": "TX",
+          "district": 18,
+          "sponsorshipDate": "2025-01-15",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "C001136",
+          "name": "Herbert C. Conaway",
+          "party": "D",
+          "state": "NJ",
+          "district": 3,
+          "sponsorshipDate": "2025-01-22",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "M001241",
+          "name": "Dave Min",
+          "party": "D",
+          "state": "CA",
+          "district": 47,
+          "sponsorshipDate": "2025-01-28",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "C001123",
+          "name": "Gilbert Ray Cisneros",
+          "party": "D",
+          "state": "CA",
+          "district": 31,
+          "sponsorshipDate": "2025-01-31",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "D000635",
+          "name": "Maxine Dexter",
+          "party": "D",
+          "state": "OR",
+          "district": 3,
+          "sponsorshipDate": "2025-01-31",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "F000481",
+          "name": "Shomari Figures",
+          "party": "D",
+          "state": "AL",
+          "district": 2,
+          "sponsorshipDate": "2025-01-31",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "M001238",
+          "name": "Sarah McBride",
+          "party": "D",
+          "state": "DE",
+          "district": 0,
+          "sponsorshipDate": "2025-01-31",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "M001232",
+          "name": "April McClain Delaney",
+          "party": "D",
+          "state": "MD",
+          "district": 6,
+          "sponsorshipDate": "2025-01-31",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "T000491",
+          "name": "Derek Tran",
+          "party": "D",
+          "state": "CA",
+          "district": 45,
+          "sponsorshipDate": "2025-01-31",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "M001231",
+          "name": "John W. Mannion",
+          "party": "D",
+          "state": "NY",
+          "district": 22,
+          "sponsorshipDate": "2025-02-04",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "O000176",
+          "name": "Johnny Olszewski",
+          "party": "D",
+          "state": "MD",
+          "district": 2,
+          "sponsorshipDate": "2025-02-04",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "E000301",
+          "name": "Sarah Elfreth",
+          "party": "D",
+          "state": "MD",
+          "district": 3,
+          "sponsorshipDate": "2025-02-05",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "R000621",
+          "name": "Emily Randall",
+          "party": "D",
+          "state": "WA",
+          "district": 6,
+          "sponsorshipDate": "2025-02-10",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "L000606",
+          "name": "George Latimer",
+          "party": "D",
+          "state": "NY",
+          "district": 16,
+          "sponsorshipDate": "2025-02-12",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "A000381",
+          "name": "Yassamin Ansari",
+          "party": "D",
+          "state": "AZ",
+          "district": 3,
+          "sponsorshipDate": "2025-03-03",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "C001110",
+          "name": "J. Luis Correa",
+          "party": "D",
+          "state": "CA",
+          "district": 46,
+          "sponsorshipDate": "2025-03-10",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "F000483",
+          "name": "Laura Friedman",
+          "party": "D",
+          "state": "CA",
+          "district": 30,
+          "sponsorshipDate": "2025-03-10",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "S001231",
+          "name": "Lateefah Simon",
+          "party": "D",
+          "state": "CA",
+          "district": 12,
+          "sponsorshipDate": "2025-03-10",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "W000187",
+          "name": "Maxine Waters",
+          "party": "D",
+          "state": "CA",
+          "district": 43,
+          "sponsorshipDate": "2025-03-10",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "V000138",
+          "name": "Eugene Simon Vindman",
+          "party": "D",
+          "state": "VA",
+          "district": 7,
+          "sponsorshipDate": "2025-03-11",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "H001081",
+          "name": "Jahana Hayes",
+          "party": "D",
+          "state": "CT",
+          "district": 5,
+          "sponsorshipDate": "2025-03-14",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "L000593",
+          "name": "Mike Levin",
+          "party": "D",
+          "state": "CA",
+          "district": 49,
+          "sponsorshipDate": "2025-03-14",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "F000468",
+          "name": "Lizzie Fletcher",
+          "party": "D",
+          "state": "TX",
+          "district": 7,
+          "sponsorshipDate": "2025-03-18",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "J000310",
+          "name": "Julie Johnson",
+          "party": "D",
+          "state": "TX",
+          "district": 32,
+          "sponsorshipDate": "2025-03-21",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "H001103",
+          "name": "Pablo José Hernández",
+          "party": "D",
+          "state": "PR",
+          "district": 0,
+          "sponsorshipDate": "2025-04-03",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "B001324",
+          "name": "Wesley Bell",
+          "party": "D",
+          "state": "MO",
+          "district": 1,
+          "sponsorshipDate": "2025-04-24",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "P000197",
+          "name": "Nancy Pelosi",
+          "party": "D",
+          "state": "CA",
+          "district": 11,
+          "sponsorshipDate": "2025-06-02",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "R000620",
+          "name": "Luz M. Rivas",
+          "party": "D",
+          "state": "CA",
+          "district": 29,
+          "sponsorshipDate": "2025-06-24",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "C001069",
+          "name": "Joe Courtney",
+          "party": "D",
+          "state": "CT",
+          "district": 2,
+          "sponsorshipDate": "2025-06-25",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "P000610",
+          "name": "Stacey E. Plaskett",
+          "party": "D",
+          "state": "VI",
+          "district": 0,
+          "sponsorshipDate": "2025-07-21",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "T000460",
+          "name": "Mike Thompson",
+          "party": "D",
+          "state": "CA",
+          "district": 4,
+          "sponsorshipDate": "2025-07-21",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "S001201",
+          "name": "Thomas R. Suozzi",
+          "party": "D",
+          "state": "NY",
+          "district": 3,
+          "sponsorshipDate": "2025-07-29",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "B001326",
+          "name": "Janelle S. Bynum",
+          "party": "D",
+          "state": "OR",
+          "district": 5,
+          "sponsorshipDate": "2025-08-15",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "S001207",
+          "name": "Mikie Sherrill",
+          "party": "D",
+          "state": "NJ",
+          "district": 11,
+          "sponsorshipDate": "2025-08-22",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "T000468",
+          "name": "Dina Titus",
+          "party": "D",
+          "state": "NV",
+          "district": 1,
+          "sponsorshipDate": "2025-09-03",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "L000607",
+          "name": "Sam T. Liccardo",
+          "party": "D",
+          "state": "CA",
+          "district": 16,
+          "sponsorshipDate": "2025-09-04",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "V000136",
+          "name": "Gabe Vasquez",
+          "party": "D",
+          "state": "NM",
+          "district": 2,
+          "sponsorshipDate": "2025-09-16",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "P000621",
+          "name": "Nellie Pou",
+          "party": "D",
+          "state": "NJ",
+          "district": 9,
+          "sponsorshipDate": "2025-09-17",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "R000622",
+          "name": "Josh Riley",
+          "party": "D",
+          "state": "NY",
+          "district": 19,
+          "sponsorshipDate": "2025-09-17",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "W000831",
+          "name": "James R. Walkinshaw",
+          "party": "D",
+          "state": "VA",
+          "district": 11,
+          "sponsorshipDate": "2025-10-24",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "G000606",
+          "name": "Adelita S. Grijalva",
+          "party": "D",
+          "state": "AZ",
+          "district": 7,
+          "sponsorshipDate": "2026-01-12",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "M001245",
+          "name": "Christian D. Menefee",
+          "party": "D",
+          "state": "TX",
+          "district": 18,
+          "sponsorshipDate": "2026-03-12",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "M001246",
+          "name": "Analilia Mejia",
+          "party": "D",
+          "state": "NJ",
+          "district": 11,
+          "sponsorshipDate": "2026-05-07",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "G000604",
+          "name": "Maggie Goodlander",
+          "party": "D",
+          "state": "NH",
+          "district": 2,
+          "sponsorshipDate": "2026-07-27",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "B001328",
+          "name": "Everton Blair",
+          "party": "D",
+          "state": "GA",
+          "district": 13,
+          "sponsorshipDate": "2026-10-09",
+          "isOriginalCosponsor": false
+        }
+      ],
+      "totals": {
+        "cosponsors": 209,
+        "original": 159,
+        "nonVoting": 2,
+        "byParty": {
+          "D": 209
+        },
+        "byState": {
+          "AL": 2,
+          "AZ": 4,
+          "CA": 40,
+          "CO": 4,
+          "CT": 5,
+          "DE": 1,
+          "FL": 8,
+          "GA": 6,
+          "HI": 2,
+          "IL": 14,
+          "IN": 2,
+          "KS": 1,
+          "KY": 1,
+          "LA": 2,
+          "MA": 9,
+          "MD": 7,
+          "ME": 1,
+          "MI": 5,
+          "MN": 4,
+          "MO": 2,
+          "MS": 1,
+          "NC": 3,
+          "NH": 1,
+          "NJ": 10,
+          "NM": 3,
+          "NV": 2,
+          "NY": 18,
+          "OH": 4,
+          "OR": 5,
+          "PA": 7,
+          "PR": 1,
+          "RI": 2,
+          "SC": 1,
+          "TN": 1,
+          "TX": 12,
+          "VA": 7,
+          "VI": 1,
+          "VT": 1,
+          "WA": 7,
+          "WI": 2
+        }
+      }
+    },
+    {
+      "id": "s51",
+      "chamber": "senate",
+      "congress": 119,
+      "billNumber": "S. 51",
+      "current": true,
+      "title": "Washington, D.C. Admission Act",
+      "sponsor": {
+        "bioguideId": "V000128",
+        "name": "Chris Van Hollen",
+        "party": "D",
+        "state": "MD",
+        "district": null
+      },
+      "introducedDate": "2025-01-09",
+      "latestAction": {
+        "actionDate": "2025-01-09",
+        "text": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs."
+      },
+      "congressGovUrl": "https://www.congress.gov/bill/119th-congress/senate-bill/51",
+      "complete": true,
+      "checkedAt": "2026-11-11T03:21:01.285Z",
+      "cosponsors": [
+        {
+          "bioguideId": "A000382",
+          "name": "Angela Alsobrooks",
+          "party": "D",
+          "state": "MD",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001230",
+          "name": "Tammy Baldwin",
+          "party": "D",
+          "state": "WI",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001267",
+          "name": "Michael Bennet",
+          "party": "D",
+          "state": "CO",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001277",
+          "name": "Richard Blumenthal",
+          "party": "D",
+          "state": "CT",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "B001288",
+          "name": "Cory Booker",
+          "party": "D",
+          "state": "NJ",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C000127",
+          "name": "Maria Cantwell",
+          "party": "D",
+          "state": "WA",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001088",
+          "name": "Christopher A. Coons",
+          "party": "D",
+          "state": "DE",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "C001113",
+          "name": "Catherine Cortez Masto",
+          "party": "D",
+          "state": "NV",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000622",
+          "name": "Tammy Duckworth",
+          "party": "D",
+          "state": "IL",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "D000563",
+          "name": "Richard J. Durbin",
+          "party": "D",
+          "state": "IL",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "G000555",
+          "name": "Kirsten E. Gillibrand",
+          "party": "D",
+          "state": "NY",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "H001076",
+          "name": "Maggie Hassan",
+          "party": "D",
+          "state": "NH",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "H001046",
+          "name": "Martin T. Heinrich",
+          "party": "D",
+          "state": "NM",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "H000273",
+          "name": "John W. Hickenlooper",
+          "party": "D",
+          "state": "CO",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "H001042",
+          "name": "Mazie K. Hirono",
+          "party": "D",
+          "state": "HI",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "K000384",
+          "name": "Timothy M. Kaine",
+          "party": "D",
+          "state": "VA",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "K000394",
+          "name": "Andy Kim",
+          "party": "D",
+          "state": "NJ",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "K000367",
+          "name": "Amy Klobuchar",
+          "party": "D",
+          "state": "MN",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "L000570",
+          "name": "Ben R. Luján",
+          "party": "D",
+          "state": "NM",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M000133",
+          "name": "Edward J. Markey",
+          "party": "D",
+          "state": "MA",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001176",
+          "name": "Jeff Merkley",
+          "party": "D",
+          "state": "OR",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001169",
+          "name": "Christopher S. Murphy",
+          "party": "D",
+          "state": "CT",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "M001111",
+          "name": "Patty Murray",
+          "party": "D",
+          "state": "WA",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "P000145",
+          "name": "Alex Padilla",
+          "party": "D",
+          "state": "CA",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "P000595",
+          "name": "Gary Peters",
+          "party": "D",
+          "state": "MI",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "R000122",
+          "name": "John F. Reed",
+          "party": "D",
+          "state": "RI",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "R000608",
+          "name": "Jacklyn Rosen",
+          "party": "D",
+          "state": "NV",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S000033",
+          "name": "Bernard Sanders",
+          "party": "I",
+          "state": "VT",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001194",
+          "name": "Brian Schatz",
+          "party": "D",
+          "state": "HI",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001150",
+          "name": "Adam B. Schiff",
+          "party": "D",
+          "state": "CA",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S000148",
+          "name": "Charles E. Schumer",
+          "party": "D",
+          "state": "NY",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001181",
+          "name": "Jeanne Shaheen",
+          "party": "D",
+          "state": "NH",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001208",
+          "name": "Elissa Slotkin",
+          "party": "D",
+          "state": "MI",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "S001203",
+          "name": "Tina Smith",
+          "party": "D",
+          "state": "MN",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "W000805",
+          "name": "Mark R. Warner",
+          "party": "D",
+          "state": "VA",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "W000790",
+          "name": "Raphael Warnock",
+          "party": "D",
+          "state": "GA",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "W000817",
+          "name": "Elizabeth A. Warren",
+          "party": "D",
+          "state": "MA",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "W000800",
+          "name": "Peter Welch",
+          "party": "D",
+          "state": "VT",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "W000802",
+          "name": "Sheldon Whitehouse",
+          "party": "D",
+          "state": "RI",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "W000779",
+          "name": "Ron Wyden",
+          "party": "D",
+          "state": "OR",
+          "district": null,
+          "sponsorshipDate": "2025-01-09",
+          "isOriginalCosponsor": true
+        },
+        {
+          "bioguideId": "G000574",
+          "name": "Ruben Gallego",
+          "party": "D",
+          "state": "AZ",
+          "district": null,
+          "sponsorshipDate": "2025-02-11",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "F000479",
+          "name": "John K. Fetterman",
+          "party": "D",
+          "state": "PA",
+          "district": null,
+          "sponsorshipDate": "2025-04-10",
+          "isOriginalCosponsor": false
+        },
+        {
+          "bioguideId": "B001303",
+          "name": "Lisa Blunt Rochester",
+          "party": "D",
+          "state": "DE",
+          "district": null,
+          "sponsorshipDate": "2025-04-29",
+          "isOriginalCosponsor": false
+        }
+      ],
+      "totals": {
+        "cosponsors": 43,
+        "original": 40,
+        "nonVoting": 0,
+        "byParty": {
+          "D": 42,
+          "I": 1
+        },
+        "byState": {
+          "AZ": 1,
+          "CA": 2,
+          "CO": 2,
+          "CT": 2,
+          "DE": 2,
+          "GA": 1,
+          "HI": 2,
+          "IL": 2,
+          "MA": 2,
+          "MD": 1,
+          "MI": 2,
+          "MN": 2,
+          "NH": 2,
+          "NJ": 2,
+          "NM": 2,
+          "NV": 2,
+          "NY": 2,
+          "OR": 2,
+          "PA": 1,
+          "RI": 2,
+          "VA": 2,
+          "VT": 2,
+          "WA": 2,
+          "WI": 1
+        }
+      }
+    }
+  ]
+}

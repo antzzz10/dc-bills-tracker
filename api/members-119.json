@@ -1,0 +1,5404 @@
+{
+  "congress": 119,
+  "generatedAt": "2026-11-10T20:08:46.670Z",
+  "source": "Congress.gov API: /member/congress/119?currentMember=true and /member/{bioguideId}",
+  "counts": {
+    "house": 439,
+    "houseVoting": 433,
+    "houseNonVoting": 6,
+    "senate": 100,
+    "total": 539
+  },
+  "members": [
+    {
+      "bioguideId": "B001323",
+      "name": "Nicholas J. Begich III",
+      "party": "R",
+      "state": "AK",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://begich.house.gov/"
+    },
+    {
+      "bioguideId": "S001198",
+      "name": "Dan Sullivan",
+      "party": "R",
+      "state": "AK",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.sullivan.senate.gov"
+    },
+    {
+      "bioguideId": "M001153",
+      "name": "Lisa Murkowski",
+      "party": "R",
+      "state": "AK",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.murkowski.senate.gov/"
+    },
+    {
+      "bioguideId": "M001212",
+      "name": "Barry Moore",
+      "party": "R",
+      "state": "AL",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://barrymoore.house.gov"
+    },
+    {
+      "bioguideId": "F000481",
+      "name": "Shomari Figures",
+      "party": "D",
+      "state": "AL",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://figures.house.gov/"
+    },
+    {
+      "bioguideId": "R000575",
+      "name": "Mike Rogers",
+      "party": "R",
+      "state": "AL",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mikerogers.house.gov/"
+    },
+    {
+      "bioguideId": "A000055",
+      "name": "Robert B. Aderholt",
+      "party": "R",
+      "state": "AL",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://aderholt.house.gov/"
+    },
+    {
+      "bioguideId": "S001220",
+      "name": "Dale W. Strong",
+      "party": "R",
+      "state": "AL",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://strong.house.gov"
+    },
+    {
+      "bioguideId": "P000609",
+      "name": "Gary J. Palmer",
+      "party": "R",
+      "state": "AL",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://palmer.house.gov/"
+    },
+    {
+      "bioguideId": "S001185",
+      "name": "Terri A. Sewell",
+      "party": "D",
+      "state": "AL",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://sewell.house.gov/"
+    },
+    {
+      "bioguideId": "B001319",
+      "name": "Katie Boyd Britt",
+      "party": "R",
+      "state": "AL",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.britt.senate.gov/"
+    },
+    {
+      "bioguideId": "T000278",
+      "name": "Tommy Tuberville",
+      "party": "R",
+      "state": "AL",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.tuberville.senate.gov"
+    },
+    {
+      "bioguideId": "C001087",
+      "name": "Eric A. \"Rick\" Crawford",
+      "party": "R",
+      "state": "AR",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://crawford.house.gov/"
+    },
+    {
+      "bioguideId": "H001072",
+      "name": "J. French Hill",
+      "party": "R",
+      "state": "AR",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hill.house.gov/"
+    },
+    {
+      "bioguideId": "W000809",
+      "name": "Steve Womack",
+      "party": "R",
+      "state": "AR",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://womack.house.gov/"
+    },
+    {
+      "bioguideId": "W000821",
+      "name": "Bruce Westerman",
+      "party": "R",
+      "state": "AR",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://westerman.house.gov/"
+    },
+    {
+      "bioguideId": "B001236",
+      "name": "John Boozman",
+      "party": "R",
+      "state": "AR",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.boozman.senate.gov/"
+    },
+    {
+      "bioguideId": "C001095",
+      "name": "Tom Cotton",
+      "party": "R",
+      "state": "AR",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.cotton.senate.gov"
+    },
+    {
+      "bioguideId": "R000600",
+      "name": "Aumua Amata Coleman Radewagen",
+      "party": "R",
+      "state": "AS",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": false,
+      "officialWebsiteUrl": "https://radewagen.house.gov"
+    },
+    {
+      "bioguideId": "S001183",
+      "name": "David Schweikert",
+      "party": "R",
+      "state": "AZ",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://schweikert.house.gov/"
+    },
+    {
+      "bioguideId": "C001132",
+      "name": "Elijah Crane",
+      "party": "R",
+      "state": "AZ",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://crane.house.gov"
+    },
+    {
+      "bioguideId": "A000381",
+      "name": "Yassamin Ansari",
+      "party": "D",
+      "state": "AZ",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ansari.house.gov/"
+    },
+    {
+      "bioguideId": "S001211",
+      "name": "Greg Stanton",
+      "party": "D",
+      "state": "AZ",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://stanton.house.gov/"
+    },
+    {
+      "bioguideId": "B001302",
+      "name": "Andy Biggs",
+      "party": "R",
+      "state": "AZ",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://biggs.house.gov"
+    },
+    {
+      "bioguideId": "C001133",
+      "name": "Juan Ciscomani",
+      "party": "R",
+      "state": "AZ",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ciscomani.house.gov"
+    },
+    {
+      "bioguideId": "G000606",
+      "name": "Adelita S. Grijalva",
+      "party": "D",
+      "state": "AZ",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://grijalva.house.gov/"
+    },
+    {
+      "bioguideId": "H001098",
+      "name": "Abraham J. Hamadeh",
+      "party": "R",
+      "state": "AZ",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hamadeh.house.gov/"
+    },
+    {
+      "bioguideId": "G000565",
+      "name": "Paul A. Gosar",
+      "party": "R",
+      "state": "AZ",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gosar.house.gov/"
+    },
+    {
+      "bioguideId": "K000377",
+      "name": "Mark Kelly",
+      "party": "D",
+      "state": "AZ",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.kelly.senate.gov"
+    },
+    {
+      "bioguideId": "G000574",
+      "name": "Ruben Gallego",
+      "party": "D",
+      "state": "AZ",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.gallego.senate.gov/"
+    },
+    {
+      "bioguideId": "G000607",
+      "name": "James Gallagher",
+      "party": "R",
+      "state": "CA",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gallagher.house.gov"
+    },
+    {
+      "bioguideId": "H001068",
+      "name": "Jared Huffman",
+      "party": "D",
+      "state": "CA",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://huffman.house.gov"
+    },
+    {
+      "bioguideId": "K000401",
+      "name": "Kevin Kiley",
+      "party": "I",
+      "state": "CA",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://kiley.house.gov"
+    },
+    {
+      "bioguideId": "T000460",
+      "name": "Mike Thompson",
+      "party": "D",
+      "state": "CA",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mikethompson.house.gov/"
+    },
+    {
+      "bioguideId": "M001177",
+      "name": "Tom McClintock",
+      "party": "R",
+      "state": "CA",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcclintock.house.gov/"
+    },
+    {
+      "bioguideId": "B001287",
+      "name": "Ami Bera",
+      "party": "D",
+      "state": "CA",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bera.house.gov"
+    },
+    {
+      "bioguideId": "M001163",
+      "name": "Doris O. Matsui",
+      "party": "D",
+      "state": "CA",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://matsui.house.gov"
+    },
+    {
+      "bioguideId": "G000559",
+      "name": "John Garamendi",
+      "party": "D",
+      "state": "CA",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://garamendi.house.gov/"
+    },
+    {
+      "bioguideId": "H001090",
+      "name": "Josh Harder",
+      "party": "D",
+      "state": "CA",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://harder.house.gov/"
+    },
+    {
+      "bioguideId": "D000623",
+      "name": "Mark DeSaulnier",
+      "party": "D",
+      "state": "CA",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://desaulnier.house.gov/"
+    },
+    {
+      "bioguideId": "P000197",
+      "name": "Nancy Pelosi",
+      "party": "D",
+      "state": "CA",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://pelosi.house.gov/"
+    },
+    {
+      "bioguideId": "S001231",
+      "name": "Lateefah Simon",
+      "party": "D",
+      "state": "CA",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://simon.house.gov/"
+    },
+    {
+      "bioguideId": "G000605",
+      "name": "Adam Gray",
+      "party": "D",
+      "state": "CA",
+      "district": 13,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gray.house.gov/"
+    },
+    {
+      "bioguideId": "W000832",
+      "name": "Aisha Wahab",
+      "party": "D",
+      "state": "CA",
+      "district": 14,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://wahab.house.gov/"
+    },
+    {
+      "bioguideId": "M001225",
+      "name": "Kevin Mullin",
+      "party": "D",
+      "state": "CA",
+      "district": 15,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://kevinmullin.house.gov"
+    },
+    {
+      "bioguideId": "L000607",
+      "name": "Sam T. Liccardo",
+      "party": "D",
+      "state": "CA",
+      "district": 16,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://liccardo.house.gov/"
+    },
+    {
+      "bioguideId": "K000389",
+      "name": "Ro Khanna",
+      "party": "D",
+      "state": "CA",
+      "district": 17,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://khanna.house.gov"
+    },
+    {
+      "bioguideId": "L000397",
+      "name": "Zoe Lofgren",
+      "party": "D",
+      "state": "CA",
+      "district": 18,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://lofgren.house.gov/"
+    },
+    {
+      "bioguideId": "P000613",
+      "name": "Jimmy Panetta",
+      "party": "D",
+      "state": "CA",
+      "district": 19,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://panetta.house.gov"
+    },
+    {
+      "bioguideId": "F000480",
+      "name": "Vince Fong",
+      "party": "R",
+      "state": "CA",
+      "district": 20,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fong.house.gov/"
+    },
+    {
+      "bioguideId": "C001059",
+      "name": "Jim Costa",
+      "party": "D",
+      "state": "CA",
+      "district": 21,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://costa.house.gov/"
+    },
+    {
+      "bioguideId": "V000129",
+      "name": "David G. Valadao",
+      "party": "R",
+      "state": "CA",
+      "district": 22,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://valadao.house.gov"
+    },
+    {
+      "bioguideId": "O000019",
+      "name": "Jay Obernolte",
+      "party": "R",
+      "state": "CA",
+      "district": 23,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://obernolte.house.gov"
+    },
+    {
+      "bioguideId": "C001112",
+      "name": "Salud O. Carbajal",
+      "party": "D",
+      "state": "CA",
+      "district": 24,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://carbajal.house.gov"
+    },
+    {
+      "bioguideId": "R000599",
+      "name": "Raul Ruiz",
+      "party": "D",
+      "state": "CA",
+      "district": 25,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ruiz.house.gov"
+    },
+    {
+      "bioguideId": "B001285",
+      "name": "Julia Brownley",
+      "party": "D",
+      "state": "CA",
+      "district": 26,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://juliabrownley.house.gov"
+    },
+    {
+      "bioguideId": "W000830",
+      "name": "George Whitesides",
+      "party": "D",
+      "state": "CA",
+      "district": 27,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://whitesides.house.gov/"
+    },
+    {
+      "bioguideId": "C001080",
+      "name": "Judy Chu",
+      "party": "D",
+      "state": "CA",
+      "district": 28,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://chu.house.gov/"
+    },
+    {
+      "bioguideId": "R000620",
+      "name": "Luz M. Rivas",
+      "party": "D",
+      "state": "CA",
+      "district": 29,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://rivas.house.gov/"
+    },
+    {
+      "bioguideId": "F000483",
+      "name": "Laura Friedman",
+      "party": "D",
+      "state": "CA",
+      "district": 30,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://friedman.house.gov/"
+    },
+    {
+      "bioguideId": "C001123",
+      "name": "Gilbert Ray Cisneros, Jr.",
+      "party": "D",
+      "state": "CA",
+      "district": 31,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://cisneros.house.gov/"
+    },
+    {
+      "bioguideId": "S000344",
+      "name": "Brad Sherman",
+      "party": "D",
+      "state": "CA",
+      "district": 32,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://sherman.house.gov"
+    },
+    {
+      "bioguideId": "A000371",
+      "name": "Pete Aguilar",
+      "party": "D",
+      "state": "CA",
+      "district": 33,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://aguilar.house.gov/"
+    },
+    {
+      "bioguideId": "G000585",
+      "name": "Jimmy Gomez",
+      "party": "D",
+      "state": "CA",
+      "district": 34,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gomez.house.gov/"
+    },
+    {
+      "bioguideId": "T000474",
+      "name": "Norma J. Torres",
+      "party": "D",
+      "state": "CA",
+      "district": 35,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://torres.house.gov/"
+    },
+    {
+      "bioguideId": "L000582",
+      "name": "Ted Lieu",
+      "party": "D",
+      "state": "CA",
+      "district": 36,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://lieu.house.gov/"
+    },
+    {
+      "bioguideId": "K000400",
+      "name": "Sydney Kamlager-Dove",
+      "party": "D",
+      "state": "CA",
+      "district": 37,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://kamlager-dove.house.gov"
+    },
+    {
+      "bioguideId": "S001156",
+      "name": "Linda T. Sánchez",
+      "party": "D",
+      "state": "CA",
+      "district": 38,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://lindasanchez.house.gov/"
+    },
+    {
+      "bioguideId": "T000472",
+      "name": "Mark Takano",
+      "party": "D",
+      "state": "CA",
+      "district": 39,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://takano.house.gov"
+    },
+    {
+      "bioguideId": "K000397",
+      "name": "Young Kim",
+      "party": "R",
+      "state": "CA",
+      "district": 40,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://youngkim.house.gov"
+    },
+    {
+      "bioguideId": "C000059",
+      "name": "Ken Calvert",
+      "party": "R",
+      "state": "CA",
+      "district": 41,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://calvert.house.gov/"
+    },
+    {
+      "bioguideId": "G000598",
+      "name": "Robert Garcia",
+      "party": "D",
+      "state": "CA",
+      "district": 42,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://robertgarcia.house.gov"
+    },
+    {
+      "bioguideId": "W000187",
+      "name": "Maxine Waters",
+      "party": "D",
+      "state": "CA",
+      "district": 43,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://waters.house.gov"
+    },
+    {
+      "bioguideId": "B001300",
+      "name": "Nanette Diaz Barragán",
+      "party": "D",
+      "state": "CA",
+      "district": 44,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://barragan.house.gov"
+    },
+    {
+      "bioguideId": "T000491",
+      "name": "Derek Tran",
+      "party": "D",
+      "state": "CA",
+      "district": 45,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://tran.house.gov/"
+    },
+    {
+      "bioguideId": "C001110",
+      "name": "J. Luis Correa",
+      "party": "D",
+      "state": "CA",
+      "district": 46,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://correa.house.gov"
+    },
+    {
+      "bioguideId": "M001241",
+      "name": "Dave Min",
+      "party": "D",
+      "state": "CA",
+      "district": 47,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://min.house.gov/"
+    },
+    {
+      "bioguideId": "I000056",
+      "name": "Darrell Issa",
+      "party": "R",
+      "state": "CA",
+      "district": 48,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://issa.house.gov"
+    },
+    {
+      "bioguideId": "L000593",
+      "name": "Mike Levin",
+      "party": "D",
+      "state": "CA",
+      "district": 49,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://levin.house.gov/"
+    },
+    {
+      "bioguideId": "P000608",
+      "name": "Scott H. Peters",
+      "party": "D",
+      "state": "CA",
+      "district": 50,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://scottpeters.house.gov"
+    },
+    {
+      "bioguideId": "J000305",
+      "name": "Sara Jacobs",
+      "party": "D",
+      "state": "CA",
+      "district": 51,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://sarajacobs.house.gov"
+    },
+    {
+      "bioguideId": "V000130",
+      "name": "Juan Vargas",
+      "party": "D",
+      "state": "CA",
+      "district": 52,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://vargas.house.gov"
+    },
+    {
+      "bioguideId": "S001150",
+      "name": "Adam B. Schiff",
+      "party": "D",
+      "state": "CA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.schiff.senate.gov"
+    },
+    {
+      "bioguideId": "P000145",
+      "name": "Alex Padilla",
+      "party": "D",
+      "state": "CA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.padilla.senate.gov"
+    },
+    {
+      "bioguideId": "D000197",
+      "name": "Diana DeGette",
+      "party": "D",
+      "state": "CO",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://degette.house.gov"
+    },
+    {
+      "bioguideId": "N000191",
+      "name": "Joe Neguse",
+      "party": "D",
+      "state": "CO",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://neguse.house.gov/"
+    },
+    {
+      "bioguideId": "H001100",
+      "name": "Jeff Hurd",
+      "party": "R",
+      "state": "CO",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hurd.house.gov/"
+    },
+    {
+      "bioguideId": "B000825",
+      "name": "Lauren Boebert",
+      "party": "R",
+      "state": "CO",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://boebert.house.gov"
+    },
+    {
+      "bioguideId": "C001137",
+      "name": "Jeff Crank",
+      "party": "R",
+      "state": "CO",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://crank.house.gov/"
+    },
+    {
+      "bioguideId": "C001121",
+      "name": "Jason Crow",
+      "party": "D",
+      "state": "CO",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://crow.house.gov/"
+    },
+    {
+      "bioguideId": "P000620",
+      "name": "Brittany Pettersen",
+      "party": "D",
+      "state": "CO",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://pettersen.house.gov"
+    },
+    {
+      "bioguideId": "E000300",
+      "name": "Gabe Evans",
+      "party": "R",
+      "state": "CO",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gabeevans.house.gov/"
+    },
+    {
+      "bioguideId": "H000273",
+      "name": "John W. Hickenlooper",
+      "party": "D",
+      "state": "CO",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.hickenlooper.senate.gov"
+    },
+    {
+      "bioguideId": "B001267",
+      "name": "Michael F. Bennet",
+      "party": "D",
+      "state": "CO",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.bennet.senate.gov"
+    },
+    {
+      "bioguideId": "L000557",
+      "name": "John B. Larson",
+      "party": "D",
+      "state": "CT",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://larson.house.gov/"
+    },
+    {
+      "bioguideId": "C001069",
+      "name": "Joe Courtney",
+      "party": "D",
+      "state": "CT",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://courtney.house.gov/"
+    },
+    {
+      "bioguideId": "D000216",
+      "name": "Rosa L. DeLauro",
+      "party": "D",
+      "state": "CT",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://delauro.house.gov/"
+    },
+    {
+      "bioguideId": "H001047",
+      "name": "James A. Himes",
+      "party": "D",
+      "state": "CT",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://himes.house.gov/"
+    },
+    {
+      "bioguideId": "H001081",
+      "name": "Jahana Hayes",
+      "party": "D",
+      "state": "CT",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hayes.house.gov"
+    },
+    {
+      "bioguideId": "M001169",
+      "name": "Christopher Murphy",
+      "party": "D",
+      "state": "CT",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.murphy.senate.gov/"
+    },
+    {
+      "bioguideId": "B001277",
+      "name": "Richard Blumenthal",
+      "party": "D",
+      "state": "CT",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.blumenthal.senate.gov"
+    },
+    {
+      "bioguideId": "N000147",
+      "name": "Eleanor Holmes Norton",
+      "party": "D",
+      "state": "DC",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": false,
+      "officialWebsiteUrl": "https://norton.house.gov/"
+    },
+    {
+      "bioguideId": "M001238",
+      "name": "Sarah McBride",
+      "party": "D",
+      "state": "DE",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcbride.house.gov/"
+    },
+    {
+      "bioguideId": "C001088",
+      "name": "Christopher A. Coons",
+      "party": "D",
+      "state": "DE",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.coons.senate.gov/"
+    },
+    {
+      "bioguideId": "B001303",
+      "name": "Lisa Blunt Rochester",
+      "party": "D",
+      "state": "DE",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.bluntrochester.senate.gov/"
+    },
+    {
+      "bioguideId": "P000622",
+      "name": "Jimmy Patronis",
+      "party": "R",
+      "state": "FL",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://patronis.house.gov/"
+    },
+    {
+      "bioguideId": "D000628",
+      "name": "Neal P. Dunn",
+      "party": "R",
+      "state": "FL",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://dunn.house.gov"
+    },
+    {
+      "bioguideId": "C001039",
+      "name": "Kat Cammack",
+      "party": "R",
+      "state": "FL",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://cammack.house.gov"
+    },
+    {
+      "bioguideId": "B001314",
+      "name": "Aaron Bean",
+      "party": "R",
+      "state": "FL",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bean.house.gov"
+    },
+    {
+      "bioguideId": "R000609",
+      "name": "John H. Rutherford",
+      "party": "R",
+      "state": "FL",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://rutherford.house.gov"
+    },
+    {
+      "bioguideId": "F000484",
+      "name": "Randy Fine",
+      "party": "R",
+      "state": "FL",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fine.house.gov/"
+    },
+    {
+      "bioguideId": "M001216",
+      "name": "Cory Mills",
+      "party": "R",
+      "state": "FL",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mills.house.gov"
+    },
+    {
+      "bioguideId": "H001099",
+      "name": "Mike Haridopolos",
+      "party": "R",
+      "state": "FL",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://haridopolos.house.gov/"
+    },
+    {
+      "bioguideId": "S001200",
+      "name": "Darren Soto",
+      "party": "D",
+      "state": "FL",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://soto.house.gov"
+    },
+    {
+      "bioguideId": "F000476",
+      "name": "Maxwell Frost",
+      "party": "D",
+      "state": "FL",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://frost.house.gov"
+    },
+    {
+      "bioguideId": "W000806",
+      "name": "Daniel Webster",
+      "party": "R",
+      "state": "FL",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://webster.house.gov/"
+    },
+    {
+      "bioguideId": "B001257",
+      "name": "Gus M. Bilirakis",
+      "party": "R",
+      "state": "FL",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bilirakis.house.gov/"
+    },
+    {
+      "bioguideId": "L000596",
+      "name": "Anna Paulina Luna",
+      "party": "R",
+      "state": "FL",
+      "district": 13,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://luna.house.gov"
+    },
+    {
+      "bioguideId": "C001066",
+      "name": "Kathy Castor",
+      "party": "D",
+      "state": "FL",
+      "district": 14,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://castor.house.gov/"
+    },
+    {
+      "bioguideId": "L000597",
+      "name": "Laurel M. Lee",
+      "party": "R",
+      "state": "FL",
+      "district": 15,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://laurellee.house.gov"
+    },
+    {
+      "bioguideId": "B001260",
+      "name": "Vern Buchanan",
+      "party": "R",
+      "state": "FL",
+      "district": 16,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://buchanan.house.gov/"
+    },
+    {
+      "bioguideId": "S001214",
+      "name": "W. Gregory Steube",
+      "party": "R",
+      "state": "FL",
+      "district": 17,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://steube.house.gov/"
+    },
+    {
+      "bioguideId": "F000472",
+      "name": "Scott Franklin",
+      "party": "R",
+      "state": "FL",
+      "district": 18,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://franklin.house.gov"
+    },
+    {
+      "bioguideId": "D000032",
+      "name": "Byron Donalds",
+      "party": "R",
+      "state": "FL",
+      "district": 19,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://donalds.house.gov"
+    },
+    {
+      "bioguideId": "M001199",
+      "name": "Brian J. Mast",
+      "party": "R",
+      "state": "FL",
+      "district": 21,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mast.house.gov"
+    },
+    {
+      "bioguideId": "F000462",
+      "name": "Lois Frankel",
+      "party": "D",
+      "state": "FL",
+      "district": 22,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://frankel.house.gov"
+    },
+    {
+      "bioguideId": "M001217",
+      "name": "Jared Moskowitz",
+      "party": "D",
+      "state": "FL",
+      "district": 23,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://moskowitz.house.gov"
+    },
+    {
+      "bioguideId": "W000808",
+      "name": "Frederica S. Wilson",
+      "party": "D",
+      "state": "FL",
+      "district": 24,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://wilson.house.gov/"
+    },
+    {
+      "bioguideId": "W000797",
+      "name": "Debbie Wasserman Schultz",
+      "party": "D",
+      "state": "FL",
+      "district": 25,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://wassermanschultz.house.gov/"
+    },
+    {
+      "bioguideId": "D000600",
+      "name": "Mario Diaz-Balart",
+      "party": "R",
+      "state": "FL",
+      "district": 26,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mariodiazbalart.house.gov/"
+    },
+    {
+      "bioguideId": "S000168",
+      "name": "Maria Elvira Salazar",
+      "party": "R",
+      "state": "FL",
+      "district": 27,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://salazar.house.gov"
+    },
+    {
+      "bioguideId": "G000593",
+      "name": "Carlos A. Gimenez",
+      "party": "R",
+      "state": "FL",
+      "district": 28,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gimenez.house.gov"
+    },
+    {
+      "bioguideId": "M001244",
+      "name": "Ashley Moody",
+      "party": "R",
+      "state": "FL",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.moody.senate.gov"
+    },
+    {
+      "bioguideId": "S001217",
+      "name": "Rick Scott",
+      "party": "R",
+      "state": "FL",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.rickscott.senate.gov/"
+    },
+    {
+      "bioguideId": "C001103",
+      "name": "Earl L. \"Buddy\" Carter",
+      "party": "R",
+      "state": "GA",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://buddycarter.house.gov/"
+    },
+    {
+      "bioguideId": "B000490",
+      "name": "Sanford D. Bishop, Jr.",
+      "party": "D",
+      "state": "GA",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bishop.house.gov/"
+    },
+    {
+      "bioguideId": "J000311",
+      "name": "Brian Jack",
+      "party": "R",
+      "state": "GA",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://jack.house.gov/"
+    },
+    {
+      "bioguideId": "J000288",
+      "name": "Henry C. \"Hank\" Johnson, Jr.",
+      "party": "D",
+      "state": "GA",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hankjohnson.house.gov/"
+    },
+    {
+      "bioguideId": "W000788",
+      "name": "Nikema Williams",
+      "party": "D",
+      "state": "GA",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://nikemawilliams.house.gov"
+    },
+    {
+      "bioguideId": "M001208",
+      "name": "Lucy McBath",
+      "party": "D",
+      "state": "GA",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcbath.house.gov"
+    },
+    {
+      "bioguideId": "M001218",
+      "name": "Richard McCormick",
+      "party": "R",
+      "state": "GA",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mccormick.house.gov"
+    },
+    {
+      "bioguideId": "S001189",
+      "name": "Austin Scott",
+      "party": "R",
+      "state": "GA",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://austinscott.house.gov/"
+    },
+    {
+      "bioguideId": "C001116",
+      "name": "Andrew S. Clyde",
+      "party": "R",
+      "state": "GA",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://clyde.house.gov"
+    },
+    {
+      "bioguideId": "C001129",
+      "name": "Mike Collins",
+      "party": "R",
+      "state": "GA",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://collins.house.gov"
+    },
+    {
+      "bioguideId": "L000583",
+      "name": "Barry Loudermilk",
+      "party": "R",
+      "state": "GA",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://loudermilk.house.gov"
+    },
+    {
+      "bioguideId": "A000372",
+      "name": "Rick W. Allen",
+      "party": "R",
+      "state": "GA",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://allen.house.gov"
+    },
+    {
+      "bioguideId": "B001328",
+      "name": "Everton Blair Jr.",
+      "party": "D",
+      "state": "GA",
+      "district": 13,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://blair.house.gov/"
+    },
+    {
+      "bioguideId": "F000485",
+      "name": "Clay Fuller",
+      "party": "R",
+      "state": "GA",
+      "district": 14,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fuller.house.gov/"
+    },
+    {
+      "bioguideId": "O000174",
+      "name": "Jon Ossoff",
+      "party": "D",
+      "state": "GA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.ossoff.senate.gov"
+    },
+    {
+      "bioguideId": "W000790",
+      "name": "Raphael G. Warnock",
+      "party": "D",
+      "state": "GA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.warnock.senate.gov"
+    },
+    {
+      "bioguideId": "M001219",
+      "name": "James C. Moylan",
+      "party": "R",
+      "state": "GU",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": false,
+      "officialWebsiteUrl": "https://moylan.house.gov"
+    },
+    {
+      "bioguideId": "C001055",
+      "name": "Ed Case",
+      "party": "D",
+      "state": "HI",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://case.house.gov/"
+    },
+    {
+      "bioguideId": "T000487",
+      "name": "Jill N. Tokuda",
+      "party": "D",
+      "state": "HI",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://tokuda.house.gov"
+    },
+    {
+      "bioguideId": "S001194",
+      "name": "Brian Schatz",
+      "party": "D",
+      "state": "HI",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.schatz.senate.gov"
+    },
+    {
+      "bioguideId": "H001042",
+      "name": "Mazie K. Hirono",
+      "party": "D",
+      "state": "HI",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.hirono.senate.gov/"
+    },
+    {
+      "bioguideId": "M001215",
+      "name": "Mariannette Miller-Meeks",
+      "party": "R",
+      "state": "IA",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://millermeeks.house.gov/"
+    },
+    {
+      "bioguideId": "H001091",
+      "name": "Ashley Hinson",
+      "party": "R",
+      "state": "IA",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hinson.house.gov"
+    },
+    {
+      "bioguideId": "N000193",
+      "name": "Zachary Nunn",
+      "party": "R",
+      "state": "IA",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://nunn.house.gov"
+    },
+    {
+      "bioguideId": "F000446",
+      "name": "Randy Feenstra",
+      "party": "R",
+      "state": "IA",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://feenstra.house.gov"
+    },
+    {
+      "bioguideId": "G000386",
+      "name": "Chuck Grassley",
+      "party": "R",
+      "state": "IA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.grassley.senate.gov"
+    },
+    {
+      "bioguideId": "E000295",
+      "name": "Joni Ernst",
+      "party": "R",
+      "state": "IA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.ernst.senate.gov"
+    },
+    {
+      "bioguideId": "F000469",
+      "name": "Russ Fulcher",
+      "party": "R",
+      "state": "ID",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fulcher.house.gov/"
+    },
+    {
+      "bioguideId": "S001148",
+      "name": "Michael K. Simpson",
+      "party": "R",
+      "state": "ID",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://simpson.house.gov"
+    },
+    {
+      "bioguideId": "R000584",
+      "name": "James E. Risch",
+      "party": "R",
+      "state": "ID",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.risch.senate.gov"
+    },
+    {
+      "bioguideId": "C000880",
+      "name": "Mike Crapo",
+      "party": "R",
+      "state": "ID",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.crapo.senate.gov"
+    },
+    {
+      "bioguideId": "J000309",
+      "name": "Jonathan L. Jackson",
+      "party": "D",
+      "state": "IL",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://jonathanjackson.house.gov"
+    },
+    {
+      "bioguideId": "K000385",
+      "name": "Robin L. Kelly",
+      "party": "D",
+      "state": "IL",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://robinkelly.house.gov/"
+    },
+    {
+      "bioguideId": "R000617",
+      "name": "Delia C. Ramirez",
+      "party": "D",
+      "state": "IL",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ramirez.house.gov"
+    },
+    {
+      "bioguideId": "G000586",
+      "name": "Jesús G. \"Chuy\" García",
+      "party": "D",
+      "state": "IL",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://chuygarcia.house.gov/"
+    },
+    {
+      "bioguideId": "Q000023",
+      "name": "Mike Quigley",
+      "party": "D",
+      "state": "IL",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://quigley.house.gov/"
+    },
+    {
+      "bioguideId": "C001117",
+      "name": "Sean Casten",
+      "party": "D",
+      "state": "IL",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://casten.house.gov"
+    },
+    {
+      "bioguideId": "D000096",
+      "name": "Danny K. Davis",
+      "party": "D",
+      "state": "IL",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://davis.house.gov"
+    },
+    {
+      "bioguideId": "K000391",
+      "name": "Raja Krishnamoorthi",
+      "party": "D",
+      "state": "IL",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://krishnamoorthi.house.gov"
+    },
+    {
+      "bioguideId": "S001145",
+      "name": "Janice D. Schakowsky",
+      "party": "D",
+      "state": "IL",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://schakowsky.house.gov"
+    },
+    {
+      "bioguideId": "S001190",
+      "name": "Bradley Scott Schneider",
+      "party": "D",
+      "state": "IL",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://schneider.house.gov"
+    },
+    {
+      "bioguideId": "F000454",
+      "name": "Bill Foster",
+      "party": "D",
+      "state": "IL",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://foster.house.gov"
+    },
+    {
+      "bioguideId": "B001295",
+      "name": "Mike Bost",
+      "party": "R",
+      "state": "IL",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bost.house.gov/"
+    },
+    {
+      "bioguideId": "B001315",
+      "name": "Nikki Budzinski",
+      "party": "D",
+      "state": "IL",
+      "district": 13,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://budzinski.house.gov"
+    },
+    {
+      "bioguideId": "U000040",
+      "name": "Lauren Underwood",
+      "party": "D",
+      "state": "IL",
+      "district": 14,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://underwood.house.gov/"
+    },
+    {
+      "bioguideId": "M001211",
+      "name": "Mary E. Miller",
+      "party": "R",
+      "state": "IL",
+      "district": 15,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://marymiller.house.gov"
+    },
+    {
+      "bioguideId": "L000585",
+      "name": "Darin LaHood",
+      "party": "R",
+      "state": "IL",
+      "district": 16,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://lahood.house.gov/"
+    },
+    {
+      "bioguideId": "S001225",
+      "name": "Eric Sorensen",
+      "party": "D",
+      "state": "IL",
+      "district": 17,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://sorensen.house.gov"
+    },
+    {
+      "bioguideId": "D000563",
+      "name": "Richard J. Durbin",
+      "party": "D",
+      "state": "IL",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.durbin.senate.gov"
+    },
+    {
+      "bioguideId": "D000622",
+      "name": "Tammy Duckworth",
+      "party": "D",
+      "state": "IL",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.duckworth.senate.gov"
+    },
+    {
+      "bioguideId": "M001214",
+      "name": "Frank J. Mrvan",
+      "party": "D",
+      "state": "IN",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mrvan.house.gov"
+    },
+    {
+      "bioguideId": "Y000067",
+      "name": "Rudy Yakym III",
+      "party": "R",
+      "state": "IN",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://yakym.house.gov"
+    },
+    {
+      "bioguideId": "S001188",
+      "name": "Marlin A. Stutzman",
+      "party": "R",
+      "state": "IN",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://stutzman.house.gov/"
+    },
+    {
+      "bioguideId": "B001307",
+      "name": "James R. Baird",
+      "party": "R",
+      "state": "IN",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://baird.house.gov/"
+    },
+    {
+      "bioguideId": "S000929",
+      "name": "Victoria Spartz",
+      "party": "R",
+      "state": "IN",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://spartz.house.gov"
+    },
+    {
+      "bioguideId": "S001229",
+      "name": "Jefferson Shreve",
+      "party": "R",
+      "state": "IN",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://shreve.house.gov/"
+    },
+    {
+      "bioguideId": "C001072",
+      "name": "André Carson",
+      "party": "D",
+      "state": "IN",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://carson.house.gov/"
+    },
+    {
+      "bioguideId": "M001233",
+      "name": "Mark B. Messmer",
+      "party": "R",
+      "state": "IN",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://messmer.house.gov/"
+    },
+    {
+      "bioguideId": "H001093",
+      "name": "Erin Houchin",
+      "party": "R",
+      "state": "IN",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://houchin.house.gov"
+    },
+    {
+      "bioguideId": "B001299",
+      "name": "Jim Banks",
+      "party": "R",
+      "state": "IN",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.banks.senate.gov/"
+    },
+    {
+      "bioguideId": "Y000064",
+      "name": "Todd Young",
+      "party": "R",
+      "state": "IN",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.young.senate.gov"
+    },
+    {
+      "bioguideId": "M000871",
+      "name": "Tracey Mann",
+      "party": "R",
+      "state": "KS",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mann.house.gov"
+    },
+    {
+      "bioguideId": "S001228",
+      "name": "Derek Schmidt",
+      "party": "R",
+      "state": "KS",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://schmidt.house.gov/"
+    },
+    {
+      "bioguideId": "D000629",
+      "name": "Sharice Davids",
+      "party": "D",
+      "state": "KS",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://davids.house.gov/"
+    },
+    {
+      "bioguideId": "E000298",
+      "name": "Ron Estes",
+      "party": "R",
+      "state": "KS",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://estes.house.gov/"
+    },
+    {
+      "bioguideId": "M000934",
+      "name": "Jerry Moran",
+      "party": "R",
+      "state": "KS",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.moran.senate.gov"
+    },
+    {
+      "bioguideId": "M001198",
+      "name": "Roger Marshall",
+      "party": "R",
+      "state": "KS",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.marshall.senate.gov"
+    },
+    {
+      "bioguideId": "C001108",
+      "name": "James Comer",
+      "party": "R",
+      "state": "KY",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://comer.house.gov/"
+    },
+    {
+      "bioguideId": "G000558",
+      "name": "Brett Guthrie",
+      "party": "R",
+      "state": "KY",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://guthrie.house.gov/"
+    },
+    {
+      "bioguideId": "M001220",
+      "name": "Morgan McGarvey",
+      "party": "D",
+      "state": "KY",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcgarvey.house.gov"
+    },
+    {
+      "bioguideId": "M001184",
+      "name": "Thomas Massie",
+      "party": "R",
+      "state": "KY",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://massie.house.gov"
+    },
+    {
+      "bioguideId": "R000395",
+      "name": "Harold Rogers",
+      "party": "R",
+      "state": "KY",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://halrogers.house.gov/"
+    },
+    {
+      "bioguideId": "B001282",
+      "name": "Andy Barr",
+      "party": "R",
+      "state": "KY",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://barr.house.gov/"
+    },
+    {
+      "bioguideId": "M000355",
+      "name": "Mitch McConnell",
+      "party": "R",
+      "state": "KY",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.mcconnell.senate.gov/"
+    },
+    {
+      "bioguideId": "P000603",
+      "name": "Rand Paul",
+      "party": "R",
+      "state": "KY",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.paul.senate.gov"
+    },
+    {
+      "bioguideId": "S001176",
+      "name": "Steve Scalise",
+      "party": "R",
+      "state": "LA",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://scalise.house.gov/"
+    },
+    {
+      "bioguideId": "C001125",
+      "name": "Troy A. Carter",
+      "party": "D",
+      "state": "LA",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://troycarter.house.gov"
+    },
+    {
+      "bioguideId": "H001077",
+      "name": "Clay Higgins",
+      "party": "R",
+      "state": "LA",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://clayhiggins.house.gov"
+    },
+    {
+      "bioguideId": "J000299",
+      "name": "Mike Johnson",
+      "party": "R",
+      "state": "LA",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mikejohnson.house.gov"
+    },
+    {
+      "bioguideId": "L000595",
+      "name": "Julia Letlow",
+      "party": "R",
+      "state": "LA",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://letlow.house.gov"
+    },
+    {
+      "bioguideId": "F000110",
+      "name": "Cleo Fields",
+      "party": "D",
+      "state": "LA",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fields.house.gov/"
+    },
+    {
+      "bioguideId": "C001075",
+      "name": "Bill Cassidy",
+      "party": "R",
+      "state": "LA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.cassidy.senate.gov"
+    },
+    {
+      "bioguideId": "K000393",
+      "name": "John Kennedy",
+      "party": "R",
+      "state": "LA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.kennedy.senate.gov"
+    },
+    {
+      "bioguideId": "N000015",
+      "name": "Richard E. Neal",
+      "party": "D",
+      "state": "MA",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://neal.house.gov/"
+    },
+    {
+      "bioguideId": "M000312",
+      "name": "James P. McGovern",
+      "party": "D",
+      "state": "MA",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcgovern.house.gov/"
+    },
+    {
+      "bioguideId": "T000482",
+      "name": "Lori Trahan",
+      "party": "D",
+      "state": "MA",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://trahan.house.gov"
+    },
+    {
+      "bioguideId": "A000148",
+      "name": "Jake Auchincloss",
+      "party": "D",
+      "state": "MA",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://auchincloss.house.gov"
+    },
+    {
+      "bioguideId": "C001101",
+      "name": "Katherine M. Clark",
+      "party": "D",
+      "state": "MA",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://katherineclark.house.gov"
+    },
+    {
+      "bioguideId": "M001196",
+      "name": "Seth Moulton",
+      "party": "D",
+      "state": "MA",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://moulton.house.gov/"
+    },
+    {
+      "bioguideId": "P000617",
+      "name": "Ayanna Pressley",
+      "party": "D",
+      "state": "MA",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://pressley.house.gov"
+    },
+    {
+      "bioguideId": "L000562",
+      "name": "Stephen F. Lynch",
+      "party": "D",
+      "state": "MA",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://lynch.house.gov/"
+    },
+    {
+      "bioguideId": "K000375",
+      "name": "William R. Keating",
+      "party": "D",
+      "state": "MA",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://keating.house.gov/"
+    },
+    {
+      "bioguideId": "M000133",
+      "name": "Edward J. Markey",
+      "party": "D",
+      "state": "MA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.markey.senate.gov"
+    },
+    {
+      "bioguideId": "W000817",
+      "name": "Elizabeth Warren",
+      "party": "D",
+      "state": "MA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.warren.senate.gov"
+    },
+    {
+      "bioguideId": "H001052",
+      "name": "Andy Harris",
+      "party": "R",
+      "state": "MD",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://harris.house.gov/"
+    },
+    {
+      "bioguideId": "O000176",
+      "name": "Johnny Olszewski, Jr.",
+      "party": "D",
+      "state": "MD",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://olszewski.house.gov/"
+    },
+    {
+      "bioguideId": "E000301",
+      "name": "Sarah Elfreth",
+      "party": "D",
+      "state": "MD",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://elfreth.house.gov/"
+    },
+    {
+      "bioguideId": "I000058",
+      "name": "Glenn Ivey",
+      "party": "D",
+      "state": "MD",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ivey.house.gov"
+    },
+    {
+      "bioguideId": "H000874",
+      "name": "Steny H. Hoyer",
+      "party": "D",
+      "state": "MD",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hoyer.house.gov/"
+    },
+    {
+      "bioguideId": "M001232",
+      "name": "April McClain Delaney",
+      "party": "D",
+      "state": "MD",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcclaindelaney.house.gov/"
+    },
+    {
+      "bioguideId": "M000687",
+      "name": "Kweisi Mfume",
+      "party": "D",
+      "state": "MD",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mfume.house.gov/"
+    },
+    {
+      "bioguideId": "R000606",
+      "name": "Jamie Raskin",
+      "party": "D",
+      "state": "MD",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://raskin.house.gov"
+    },
+    {
+      "bioguideId": "A000382",
+      "name": "Angela D. Alsobrooks",
+      "party": "D",
+      "state": "MD",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://alsobrooks.senate.gov/"
+    },
+    {
+      "bioguideId": "V000128",
+      "name": "Chris Van Hollen",
+      "party": "D",
+      "state": "MD",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.vanhollen.senate.gov"
+    },
+    {
+      "bioguideId": "P000597",
+      "name": "Chellie Pingree",
+      "party": "D",
+      "state": "ME",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://pingree.house.gov/"
+    },
+    {
+      "bioguideId": "G000592",
+      "name": "Jared F. Golden",
+      "party": "D",
+      "state": "ME",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://golden.house.gov"
+    },
+    {
+      "bioguideId": "K000383",
+      "name": "Angus S. King Jr.",
+      "party": "I",
+      "state": "ME",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.king.senate.gov/"
+    },
+    {
+      "bioguideId": "C001035",
+      "name": "Susan M. Collins",
+      "party": "R",
+      "state": "ME",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.collins.senate.gov"
+    },
+    {
+      "bioguideId": "B001301",
+      "name": "Jack Bergman",
+      "party": "R",
+      "state": "MI",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bergman.house.gov"
+    },
+    {
+      "bioguideId": "M001194",
+      "name": "John R. Moolenaar",
+      "party": "R",
+      "state": "MI",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://moolenaar.house.gov/"
+    },
+    {
+      "bioguideId": "S001221",
+      "name": "Hillary J. Scholten",
+      "party": "D",
+      "state": "MI",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://scholten.house.gov"
+    },
+    {
+      "bioguideId": "H001058",
+      "name": "Bill Huizenga",
+      "party": "R",
+      "state": "MI",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://huizenga.house.gov/"
+    },
+    {
+      "bioguideId": "W000798",
+      "name": "Tim Walberg",
+      "party": "R",
+      "state": "MI",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://walberg.house.gov/"
+    },
+    {
+      "bioguideId": "D000624",
+      "name": "Debbie Dingell",
+      "party": "D",
+      "state": "MI",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://debbiedingell.house.gov/"
+    },
+    {
+      "bioguideId": "B001321",
+      "name": "Tom Barrett",
+      "party": "R",
+      "state": "MI",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://barrett.house.gov/"
+    },
+    {
+      "bioguideId": "M001237",
+      "name": "Kristen McDonald Rivet",
+      "party": "D",
+      "state": "MI",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcdonaldrivet.house.gov/"
+    },
+    {
+      "bioguideId": "M001136",
+      "name": "Lisa C. McClain",
+      "party": "R",
+      "state": "MI",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcclain.house.gov"
+    },
+    {
+      "bioguideId": "J000307",
+      "name": "John James",
+      "party": "R",
+      "state": "MI",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://james.house.gov"
+    },
+    {
+      "bioguideId": "S001215",
+      "name": "Haley M. Stevens",
+      "party": "D",
+      "state": "MI",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://stevens.house.gov/"
+    },
+    {
+      "bioguideId": "T000481",
+      "name": "Rashida Tlaib",
+      "party": "D",
+      "state": "MI",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://tlaib.house.gov/"
+    },
+    {
+      "bioguideId": "T000488",
+      "name": "Shri Thanedar",
+      "party": "D",
+      "state": "MI",
+      "district": 13,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://thanedar.house.gov"
+    },
+    {
+      "bioguideId": "S001208",
+      "name": "Elissa Slotkin",
+      "party": "D",
+      "state": "MI",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.slotkin.senate.gov/"
+    },
+    {
+      "bioguideId": "P000595",
+      "name": "Gary C. Peters",
+      "party": "D",
+      "state": "MI",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.peters.senate.gov"
+    },
+    {
+      "bioguideId": "F000475",
+      "name": "Brad Finstad",
+      "party": "R",
+      "state": "MN",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://finstad.house.gov/"
+    },
+    {
+      "bioguideId": "C001119",
+      "name": "Angie Craig",
+      "party": "D",
+      "state": "MN",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://craig.house.gov"
+    },
+    {
+      "bioguideId": "M001234",
+      "name": "Kelly Morrison",
+      "party": "D",
+      "state": "MN",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://morrison.house.gov/"
+    },
+    {
+      "bioguideId": "M001143",
+      "name": "Betty McCollum",
+      "party": "D",
+      "state": "MN",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mccollum.house.gov"
+    },
+    {
+      "bioguideId": "O000173",
+      "name": "Ilhan Omar",
+      "party": "D",
+      "state": "MN",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://omar.house.gov/"
+    },
+    {
+      "bioguideId": "E000294",
+      "name": "Tom Emmer",
+      "party": "R",
+      "state": "MN",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://emmer.house.gov/"
+    },
+    {
+      "bioguideId": "F000470",
+      "name": "Michelle Fischbach",
+      "party": "R",
+      "state": "MN",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fischbach.house.gov"
+    },
+    {
+      "bioguideId": "S001212",
+      "name": "Pete Stauber",
+      "party": "R",
+      "state": "MN",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://stauber.house.gov"
+    },
+    {
+      "bioguideId": "K000367",
+      "name": "Amy Klobuchar",
+      "party": "D",
+      "state": "MN",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.klobuchar.senate.gov/"
+    },
+    {
+      "bioguideId": "S001203",
+      "name": "Tina Smith",
+      "party": "D",
+      "state": "MN",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.smith.senate.gov"
+    },
+    {
+      "bioguideId": "B001324",
+      "name": "Wesley Bell",
+      "party": "D",
+      "state": "MO",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bell.house.gov/"
+    },
+    {
+      "bioguideId": "W000812",
+      "name": "Ann Wagner",
+      "party": "R",
+      "state": "MO",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://wagner.house.gov"
+    },
+    {
+      "bioguideId": "O000177",
+      "name": "Robert F. Onder, Jr.",
+      "party": "R",
+      "state": "MO",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://onder.house.gov/"
+    },
+    {
+      "bioguideId": "A000379",
+      "name": "Mark Alford",
+      "party": "R",
+      "state": "MO",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://alford.house.gov"
+    },
+    {
+      "bioguideId": "C001061",
+      "name": "Emanuel Cleaver",
+      "party": "D",
+      "state": "MO",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://cleaver.house.gov"
+    },
+    {
+      "bioguideId": "G000546",
+      "name": "Sam Graves",
+      "party": "R",
+      "state": "MO",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://graves.house.gov/"
+    },
+    {
+      "bioguideId": "B001316",
+      "name": "Eric Burlison",
+      "party": "R",
+      "state": "MO",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://burlison.house.gov"
+    },
+    {
+      "bioguideId": "S001195",
+      "name": "Jason Smith",
+      "party": "R",
+      "state": "MO",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://jasonsmith.house.gov"
+    },
+    {
+      "bioguideId": "S001227",
+      "name": "Eric Schmitt",
+      "party": "R",
+      "state": "MO",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.schmitt.senate.gov/"
+    },
+    {
+      "bioguideId": "H001089",
+      "name": "Josh Hawley",
+      "party": "R",
+      "state": "MO",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.hawley.senate.gov"
+    },
+    {
+      "bioguideId": "K000404",
+      "name": "Kimberlyn King-Hinds",
+      "party": "R",
+      "state": "MP",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": false,
+      "officialWebsiteUrl": "https://king-hinds.house.gov/"
+    },
+    {
+      "bioguideId": "K000388",
+      "name": "Trent Kelly",
+      "party": "R",
+      "state": "MS",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://trentkelly.house.gov/"
+    },
+    {
+      "bioguideId": "T000193",
+      "name": "Bennie G. Thompson",
+      "party": "D",
+      "state": "MS",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://benniethompson.house.gov/"
+    },
+    {
+      "bioguideId": "G000591",
+      "name": "Michael Guest",
+      "party": "R",
+      "state": "MS",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://guest.house.gov"
+    },
+    {
+      "bioguideId": "E000235",
+      "name": "Mike Ezell",
+      "party": "R",
+      "state": "MS",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ezell.house.gov"
+    },
+    {
+      "bioguideId": "H001079",
+      "name": "Cindy Hyde-Smith",
+      "party": "R",
+      "state": "MS",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.hydesmith.senate.gov/"
+    },
+    {
+      "bioguideId": "W000437",
+      "name": "Roger F. Wicker",
+      "party": "R",
+      "state": "MS",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.wicker.senate.gov"
+    },
+    {
+      "bioguideId": "Z000018",
+      "name": "Ryan K. Zinke",
+      "party": "R",
+      "state": "MT",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://zinke.house.gov"
+    },
+    {
+      "bioguideId": "D000634",
+      "name": "Troy Downing",
+      "party": "R",
+      "state": "MT",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://downing.house.gov/"
+    },
+    {
+      "bioguideId": "D000618",
+      "name": "Steve Daines",
+      "party": "R",
+      "state": "MT",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.daines.senate.gov"
+    },
+    {
+      "bioguideId": "S001232",
+      "name": "Tim Sheehy",
+      "party": "R",
+      "state": "MT",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.sheehy.senate.gov/"
+    },
+    {
+      "bioguideId": "D000230",
+      "name": "Donald G. Davis",
+      "party": "D",
+      "state": "NC",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://dondavis.house.gov"
+    },
+    {
+      "bioguideId": "R000305",
+      "name": "Deborah K. Ross",
+      "party": "D",
+      "state": "NC",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ross.house.gov"
+    },
+    {
+      "bioguideId": "M001210",
+      "name": "Gregory F. Murphy",
+      "party": "R",
+      "state": "NC",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://murphy.house.gov"
+    },
+    {
+      "bioguideId": "F000477",
+      "name": "Valerie P. Foushee",
+      "party": "D",
+      "state": "NC",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://foushee.house.gov"
+    },
+    {
+      "bioguideId": "F000450",
+      "name": "Virginia Foxx",
+      "party": "R",
+      "state": "NC",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://foxx.house.gov/"
+    },
+    {
+      "bioguideId": "M001240",
+      "name": "Addison P. McDowell",
+      "party": "R",
+      "state": "NC",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcdowell.house.gov/"
+    },
+    {
+      "bioguideId": "R000603",
+      "name": "David Rouzer",
+      "party": "R",
+      "state": "NC",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://rouzer.house.gov/"
+    },
+    {
+      "bioguideId": "H001102",
+      "name": "Mark Harris",
+      "party": "R",
+      "state": "NC",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://markharris.house.gov/"
+    },
+    {
+      "bioguideId": "H001067",
+      "name": "Richard Hudson",
+      "party": "R",
+      "state": "NC",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hudson.house.gov"
+    },
+    {
+      "bioguideId": "H001101",
+      "name": "Pat Harrigan",
+      "party": "R",
+      "state": "NC",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://harrigan.house.gov/"
+    },
+    {
+      "bioguideId": "E000246",
+      "name": "Chuck Edwards",
+      "party": "R",
+      "state": "NC",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://edwards.house.gov"
+    },
+    {
+      "bioguideId": "A000370",
+      "name": "Alma S. Adams",
+      "party": "D",
+      "state": "NC",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://adams.house.gov"
+    },
+    {
+      "bioguideId": "K000405",
+      "name": "Brad Knott",
+      "party": "R",
+      "state": "NC",
+      "district": 13,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://knott.house.gov/"
+    },
+    {
+      "bioguideId": "M001236",
+      "name": "Tim Moore",
+      "party": "R",
+      "state": "NC",
+      "district": 14,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://timmoore.house.gov/"
+    },
+    {
+      "bioguideId": "B001305",
+      "name": "Ted Budd",
+      "party": "R",
+      "state": "NC",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.budd.senate.gov/"
+    },
+    {
+      "bioguideId": "T000476",
+      "name": "Thom Tillis",
+      "party": "R",
+      "state": "NC",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.tillis.senate.gov"
+    },
+    {
+      "bioguideId": "F000482",
+      "name": "Julie Fedorchak",
+      "party": "R",
+      "state": "ND",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fedorchak.house.gov/"
+    },
+    {
+      "bioguideId": "H001061",
+      "name": "John Hoeven",
+      "party": "R",
+      "state": "ND",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.hoeven.senate.gov"
+    },
+    {
+      "bioguideId": "C001096",
+      "name": "Kevin Cramer",
+      "party": "R",
+      "state": "ND",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.cramer.senate.gov"
+    },
+    {
+      "bioguideId": "F000474",
+      "name": "Mike Flood",
+      "party": "R",
+      "state": "NE",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://flood.house.gov/"
+    },
+    {
+      "bioguideId": "B001298",
+      "name": "Don Bacon",
+      "party": "R",
+      "state": "NE",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bacon.house.gov"
+    },
+    {
+      "bioguideId": "S001172",
+      "name": "Adrian Smith",
+      "party": "R",
+      "state": "NE",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://adriansmith.house.gov/"
+    },
+    {
+      "bioguideId": "F000463",
+      "name": "Deb Fischer",
+      "party": "R",
+      "state": "NE",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.fischer.senate.gov"
+    },
+    {
+      "bioguideId": "R000618",
+      "name": "Pete Ricketts",
+      "party": "R",
+      "state": "NE",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.ricketts.senate.gov"
+    },
+    {
+      "bioguideId": "P000614",
+      "name": "Chris Pappas",
+      "party": "D",
+      "state": "NH",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://pappas.house.gov"
+    },
+    {
+      "bioguideId": "G000604",
+      "name": "Maggie Goodlander",
+      "party": "D",
+      "state": "NH",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://goodlander.house.gov/"
+    },
+    {
+      "bioguideId": "S001181",
+      "name": "Jeanne Shaheen",
+      "party": "D",
+      "state": "NH",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.shaheen.senate.gov"
+    },
+    {
+      "bioguideId": "H001076",
+      "name": "Margaret Wood Hassan",
+      "party": "D",
+      "state": "NH",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.hassan.senate.gov"
+    },
+    {
+      "bioguideId": "N000188",
+      "name": "Donald Norcross",
+      "party": "D",
+      "state": "NJ",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://norcross.house.gov"
+    },
+    {
+      "bioguideId": "V000133",
+      "name": "Jefferson Van Drew",
+      "party": "R",
+      "state": "NJ",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://vandrew.house.gov"
+    },
+    {
+      "bioguideId": "C001136",
+      "name": "Herbert C. Conaway, Jr.",
+      "party": "D",
+      "state": "NJ",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://conaway.house.gov/"
+    },
+    {
+      "bioguideId": "S000522",
+      "name": "Christopher H. Smith",
+      "party": "R",
+      "state": "NJ",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://chrissmith.house.gov/"
+    },
+    {
+      "bioguideId": "G000583",
+      "name": "Josh Gottheimer",
+      "party": "D",
+      "state": "NJ",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gottheimer.house.gov"
+    },
+    {
+      "bioguideId": "P000034",
+      "name": "Frank Pallone, Jr.",
+      "party": "D",
+      "state": "NJ",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://pallone.house.gov"
+    },
+    {
+      "bioguideId": "K000398",
+      "name": "Thomas H. Kean, Jr.",
+      "party": "R",
+      "state": "NJ",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://kean.house.gov"
+    },
+    {
+      "bioguideId": "M001226",
+      "name": "Robert Menendez",
+      "party": "D",
+      "state": "NJ",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://menendez.house.gov"
+    },
+    {
+      "bioguideId": "P000621",
+      "name": "Nellie Pou",
+      "party": "D",
+      "state": "NJ",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://pou.house.gov/"
+    },
+    {
+      "bioguideId": "M001229",
+      "name": "LaMonica McIver",
+      "party": "D",
+      "state": "NJ",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mciver.house.gov/"
+    },
+    {
+      "bioguideId": "M001246",
+      "name": "Analilia Mejia",
+      "party": "D",
+      "state": "NJ",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mejia.house.gov/"
+    },
+    {
+      "bioguideId": "W000822",
+      "name": "Bonnie Watson Coleman",
+      "party": "D",
+      "state": "NJ",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://watsoncoleman.house.gov/"
+    },
+    {
+      "bioguideId": "K000394",
+      "name": "Andy Kim",
+      "party": "D",
+      "state": "NJ",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.kim.senate.gov/"
+    },
+    {
+      "bioguideId": "B001288",
+      "name": "Cory A. Booker",
+      "party": "D",
+      "state": "NJ",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.booker.senate.gov"
+    },
+    {
+      "bioguideId": "S001218",
+      "name": "Melanie A. Stansbury",
+      "party": "D",
+      "state": "NM",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://stansbury.house.gov/"
+    },
+    {
+      "bioguideId": "V000136",
+      "name": "Gabe Vasquez",
+      "party": "D",
+      "state": "NM",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://vasquez.house.gov"
+    },
+    {
+      "bioguideId": "L000273",
+      "name": "Teresa Leger Fernandez",
+      "party": "D",
+      "state": "NM",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fernandez.house.gov"
+    },
+    {
+      "bioguideId": "L000570",
+      "name": "Ben Ray Luján",
+      "party": "D",
+      "state": "NM",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.lujan.senate.gov"
+    },
+    {
+      "bioguideId": "H001046",
+      "name": "Martin Heinrich",
+      "party": "D",
+      "state": "NM",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.heinrich.senate.gov/"
+    },
+    {
+      "bioguideId": "T000468",
+      "name": "Dina Titus",
+      "party": "D",
+      "state": "NV",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://titus.house.gov/"
+    },
+    {
+      "bioguideId": "A000369",
+      "name": "Mark E. Amodei",
+      "party": "R",
+      "state": "NV",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://amodei.house.gov"
+    },
+    {
+      "bioguideId": "L000590",
+      "name": "Susie Lee",
+      "party": "D",
+      "state": "NV",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://susielee.house.gov"
+    },
+    {
+      "bioguideId": "H001066",
+      "name": "Steven Horsford",
+      "party": "D",
+      "state": "NV",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://horsford.house.gov"
+    },
+    {
+      "bioguideId": "C001113",
+      "name": "Catherine Cortez Masto",
+      "party": "D",
+      "state": "NV",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.cortezmasto.senate.gov"
+    },
+    {
+      "bioguideId": "R000608",
+      "name": "Jacky Rosen",
+      "party": "D",
+      "state": "NV",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.rosen.senate.gov"
+    },
+    {
+      "bioguideId": "L000598",
+      "name": "Nick LaLota",
+      "party": "R",
+      "state": "NY",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://lalota.house.gov"
+    },
+    {
+      "bioguideId": "G000597",
+      "name": "Andrew R. Garbarino",
+      "party": "R",
+      "state": "NY",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://garbarino.house.gov"
+    },
+    {
+      "bioguideId": "S001201",
+      "name": "Thomas R. Suozzi",
+      "party": "D",
+      "state": "NY",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://suozzi.house.gov"
+    },
+    {
+      "bioguideId": "G000602",
+      "name": "Laura Gillen",
+      "party": "D",
+      "state": "NY",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gillen.house.gov/"
+    },
+    {
+      "bioguideId": "M001137",
+      "name": "Gregory W. Meeks",
+      "party": "D",
+      "state": "NY",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://meeks.house.gov"
+    },
+    {
+      "bioguideId": "M001188",
+      "name": "Grace Meng",
+      "party": "D",
+      "state": "NY",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://meng.house.gov"
+    },
+    {
+      "bioguideId": "V000081",
+      "name": "Nydia M. Velázquez",
+      "party": "D",
+      "state": "NY",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://velazquez.house.gov"
+    },
+    {
+      "bioguideId": "J000294",
+      "name": "Hakeem S. Jeffries",
+      "party": "D",
+      "state": "NY",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://jeffries.house.gov"
+    },
+    {
+      "bioguideId": "C001067",
+      "name": "Yvette D. Clarke",
+      "party": "D",
+      "state": "NY",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://clarke.house.gov/"
+    },
+    {
+      "bioguideId": "G000599",
+      "name": "Daniel S. Goldman",
+      "party": "D",
+      "state": "NY",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://goldman.house.gov"
+    },
+    {
+      "bioguideId": "M000317",
+      "name": "Nicole Malliotakis",
+      "party": "R",
+      "state": "NY",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://malliotakis.house.gov"
+    },
+    {
+      "bioguideId": "N000002",
+      "name": "Jerrold Nadler",
+      "party": "D",
+      "state": "NY",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://nadler.house.gov"
+    },
+    {
+      "bioguideId": "E000297",
+      "name": "Adriano Espaillat",
+      "party": "D",
+      "state": "NY",
+      "district": 13,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://espaillat.house.gov"
+    },
+    {
+      "bioguideId": "O000172",
+      "name": "Alexandria Ocasio-Cortez",
+      "party": "D",
+      "state": "NY",
+      "district": 14,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ocasio-cortez.house.gov/"
+    },
+    {
+      "bioguideId": "T000486",
+      "name": "Ritchie Torres",
+      "party": "D",
+      "state": "NY",
+      "district": 15,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ritchietorres.house.gov"
+    },
+    {
+      "bioguideId": "L000606",
+      "name": "George Latimer",
+      "party": "D",
+      "state": "NY",
+      "district": 16,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://latimer.house.gov/"
+    },
+    {
+      "bioguideId": "L000599",
+      "name": "Michael Lawler",
+      "party": "R",
+      "state": "NY",
+      "district": 17,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://lawler.house.gov"
+    },
+    {
+      "bioguideId": "R000579",
+      "name": "Patrick Ryan",
+      "party": "D",
+      "state": "NY",
+      "district": 18,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://patryan.house.gov/"
+    },
+    {
+      "bioguideId": "R000622",
+      "name": "Josh Riley",
+      "party": "D",
+      "state": "NY",
+      "district": 19,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://riley.house.gov/"
+    },
+    {
+      "bioguideId": "T000469",
+      "name": "Paul Tonko",
+      "party": "D",
+      "state": "NY",
+      "district": 20,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://tonko.house.gov/"
+    },
+    {
+      "bioguideId": "S001196",
+      "name": "Elise M. Stefanik",
+      "party": "R",
+      "state": "NY",
+      "district": 21,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://stefanik.house.gov/"
+    },
+    {
+      "bioguideId": "M001231",
+      "name": "John W. Mannion",
+      "party": "D",
+      "state": "NY",
+      "district": 22,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mannion.house.gov/"
+    },
+    {
+      "bioguideId": "L000600",
+      "name": "Nicholas A. Langworthy",
+      "party": "R",
+      "state": "NY",
+      "district": 23,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://langworthy.house.gov"
+    },
+    {
+      "bioguideId": "T000478",
+      "name": "Claudia Tenney",
+      "party": "R",
+      "state": "NY",
+      "district": 24,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://tenney.house.gov/"
+    },
+    {
+      "bioguideId": "M001206",
+      "name": "Joseph D. Morelle",
+      "party": "D",
+      "state": "NY",
+      "district": 25,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://morelle.house.gov"
+    },
+    {
+      "bioguideId": "K000402",
+      "name": "Timothy M. Kennedy",
+      "party": "D",
+      "state": "NY",
+      "district": 26,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://kennedy.house.gov"
+    },
+    {
+      "bioguideId": "S000148",
+      "name": "Charles E. Schumer",
+      "party": "D",
+      "state": "NY",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.schumer.senate.gov/"
+    },
+    {
+      "bioguideId": "G000555",
+      "name": "Kirsten E. Gillibrand",
+      "party": "D",
+      "state": "NY",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.gillibrand.senate.gov"
+    },
+    {
+      "bioguideId": "L000601",
+      "name": "Greg Landsman",
+      "party": "D",
+      "state": "OH",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://landsman.house.gov"
+    },
+    {
+      "bioguideId": "T000490",
+      "name": "David J. Taylor",
+      "party": "R",
+      "state": "OH",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://taylor.house.gov/"
+    },
+    {
+      "bioguideId": "B001281",
+      "name": "Joyce Beatty",
+      "party": "D",
+      "state": "OH",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://beatty.house.gov"
+    },
+    {
+      "bioguideId": "J000289",
+      "name": "Jim Jordan",
+      "party": "R",
+      "state": "OH",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://jordan.house.gov/"
+    },
+    {
+      "bioguideId": "L000566",
+      "name": "Robert E. Latta",
+      "party": "R",
+      "state": "OH",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://latta.house.gov/"
+    },
+    {
+      "bioguideId": "R000619",
+      "name": "Michael A. Rulli",
+      "party": "R",
+      "state": "OH",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://rulli.house.gov"
+    },
+    {
+      "bioguideId": "M001222",
+      "name": "Max L. Miller",
+      "party": "R",
+      "state": "OH",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://maxmiller.house.gov"
+    },
+    {
+      "bioguideId": "D000626",
+      "name": "Warren Davidson",
+      "party": "R",
+      "state": "OH",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://davidson.house.gov/"
+    },
+    {
+      "bioguideId": "K000009",
+      "name": "Marcy Kaptur",
+      "party": "D",
+      "state": "OH",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://kaptur.house.gov/"
+    },
+    {
+      "bioguideId": "T000463",
+      "name": "Michael R. Turner",
+      "party": "R",
+      "state": "OH",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://turner.house.gov/"
+    },
+    {
+      "bioguideId": "B001313",
+      "name": "Shontel M. Brown",
+      "party": "D",
+      "state": "OH",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://shontelbrown.house.gov"
+    },
+    {
+      "bioguideId": "B001306",
+      "name": "Troy Balderson",
+      "party": "R",
+      "state": "OH",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://balderson.house.gov"
+    },
+    {
+      "bioguideId": "S001223",
+      "name": "Emilia Strong Sykes",
+      "party": "D",
+      "state": "OH",
+      "district": 13,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://sykes.house.gov"
+    },
+    {
+      "bioguideId": "J000295",
+      "name": "David P. Joyce",
+      "party": "R",
+      "state": "OH",
+      "district": 14,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://joyce.house.gov"
+    },
+    {
+      "bioguideId": "C001126",
+      "name": "Mike Carey",
+      "party": "R",
+      "state": "OH",
+      "district": 15,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://carey.house.gov"
+    },
+    {
+      "bioguideId": "M001242",
+      "name": "Bernie Moreno",
+      "party": "R",
+      "state": "OH",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.moreno.senate.gov"
+    },
+    {
+      "bioguideId": "H001104",
+      "name": "Jon Husted",
+      "party": "R",
+      "state": "OH",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.husted.senate.gov/"
+    },
+    {
+      "bioguideId": "H001082",
+      "name": "Kevin Hern",
+      "party": "R",
+      "state": "OK",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hern.house.gov"
+    },
+    {
+      "bioguideId": "B001317",
+      "name": "Josh Brecheen",
+      "party": "R",
+      "state": "OK",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://brecheen.house.gov"
+    },
+    {
+      "bioguideId": "L000491",
+      "name": "Frank D. Lucas",
+      "party": "R",
+      "state": "OK",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://lucas.house.gov"
+    },
+    {
+      "bioguideId": "C001053",
+      "name": "Tom Cole",
+      "party": "R",
+      "state": "OK",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://cole.house.gov"
+    },
+    {
+      "bioguideId": "B000740",
+      "name": "Stephanie I. Bice",
+      "party": "R",
+      "state": "OK",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bice.house.gov"
+    },
+    {
+      "bioguideId": "A000383",
+      "name": "Alan Armstrong",
+      "party": "R",
+      "state": "OK",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.armstrong.senate.gov/"
+    },
+    {
+      "bioguideId": "L000575",
+      "name": "James Lankford",
+      "party": "R",
+      "state": "OK",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.lankford.senate.gov"
+    },
+    {
+      "bioguideId": "B001278",
+      "name": "Suzanne Bonamici",
+      "party": "D",
+      "state": "OR",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bonamici.house.gov"
+    },
+    {
+      "bioguideId": "B000668",
+      "name": "Cliff Bentz",
+      "party": "R",
+      "state": "OR",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bentz.house.gov"
+    },
+    {
+      "bioguideId": "D000635",
+      "name": "Maxine Dexter",
+      "party": "D",
+      "state": "OR",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://dexter.house.gov/"
+    },
+    {
+      "bioguideId": "H001094",
+      "name": "Val T. Hoyle",
+      "party": "D",
+      "state": "OR",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hoyle.house.gov"
+    },
+    {
+      "bioguideId": "B001326",
+      "name": "Janelle S. Bynum",
+      "party": "D",
+      "state": "OR",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bynum.house.gov/"
+    },
+    {
+      "bioguideId": "S001226",
+      "name": "Andrea Salinas",
+      "party": "D",
+      "state": "OR",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://salinas.house.gov"
+    },
+    {
+      "bioguideId": "M001176",
+      "name": "Jeff Merkley",
+      "party": "D",
+      "state": "OR",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.merkley.senate.gov"
+    },
+    {
+      "bioguideId": "W000779",
+      "name": "Ron Wyden",
+      "party": "D",
+      "state": "OR",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.wyden.senate.gov/"
+    },
+    {
+      "bioguideId": "F000466",
+      "name": "Brian K. Fitzpatrick",
+      "party": "R",
+      "state": "PA",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fitzpatrick.house.gov/"
+    },
+    {
+      "bioguideId": "B001296",
+      "name": "Brendan F. Boyle",
+      "party": "D",
+      "state": "PA",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://boyle.house.gov/"
+    },
+    {
+      "bioguideId": "E000296",
+      "name": "Dwight Evans",
+      "party": "D",
+      "state": "PA",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://evans.house.gov/"
+    },
+    {
+      "bioguideId": "D000631",
+      "name": "Madeleine Dean",
+      "party": "D",
+      "state": "PA",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://dean.house.gov"
+    },
+    {
+      "bioguideId": "S001205",
+      "name": "Mary Gay Scanlon",
+      "party": "D",
+      "state": "PA",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://scanlon.house.gov/"
+    },
+    {
+      "bioguideId": "H001085",
+      "name": "Chrissy Houlahan",
+      "party": "D",
+      "state": "PA",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://houlahan.house.gov/"
+    },
+    {
+      "bioguideId": "M001230",
+      "name": "Ryan Mackenzie",
+      "party": "R",
+      "state": "PA",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mackenzie.house.gov/"
+    },
+    {
+      "bioguideId": "B001327",
+      "name": "Robert P. Bresnahan, Jr.",
+      "party": "R",
+      "state": "PA",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bresnahan.house.gov/"
+    },
+    {
+      "bioguideId": "M001204",
+      "name": "Daniel Meuser",
+      "party": "R",
+      "state": "PA",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://meuser.house.gov"
+    },
+    {
+      "bioguideId": "P000605",
+      "name": "Scott Perry",
+      "party": "R",
+      "state": "PA",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://perry.house.gov/"
+    },
+    {
+      "bioguideId": "S001199",
+      "name": "Lloyd Smucker",
+      "party": "R",
+      "state": "PA",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://smucker.house.gov/"
+    },
+    {
+      "bioguideId": "L000602",
+      "name": "Summer L. Lee",
+      "party": "D",
+      "state": "PA",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://summerlee.house.gov"
+    },
+    {
+      "bioguideId": "J000302",
+      "name": "John Joyce",
+      "party": "R",
+      "state": "PA",
+      "district": 13,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://johnjoyce.house.gov/"
+    },
+    {
+      "bioguideId": "R000610",
+      "name": "Guy Reschenthaler",
+      "party": "R",
+      "state": "PA",
+      "district": 14,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://reschenthaler.house.gov/"
+    },
+    {
+      "bioguideId": "T000467",
+      "name": "Glenn Thompson",
+      "party": "R",
+      "state": "PA",
+      "district": 15,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://thompson.house.gov"
+    },
+    {
+      "bioguideId": "K000376",
+      "name": "Mike Kelly",
+      "party": "R",
+      "state": "PA",
+      "district": 16,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://kelly.house.gov"
+    },
+    {
+      "bioguideId": "D000530",
+      "name": "Christopher R. Deluzio",
+      "party": "D",
+      "state": "PA",
+      "district": 17,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://deluzio.house.gov"
+    },
+    {
+      "bioguideId": "M001243",
+      "name": "David McCormick",
+      "party": "R",
+      "state": "PA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mccormick.senate.gov/"
+    },
+    {
+      "bioguideId": "F000479",
+      "name": "John Fetterman",
+      "party": "D",
+      "state": "PA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.fetterman.senate.gov/"
+    },
+    {
+      "bioguideId": "H001103",
+      "name": "Pablo José Hernández",
+      "party": "D",
+      "state": "PR",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": false,
+      "officialWebsiteUrl": "https://hernandez.house.gov/"
+    },
+    {
+      "bioguideId": "A000380",
+      "name": "Gabe Amo",
+      "party": "D",
+      "state": "RI",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://amo.house.gov"
+    },
+    {
+      "bioguideId": "M001223",
+      "name": "Seth Magaziner",
+      "party": "D",
+      "state": "RI",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://magaziner.house.gov"
+    },
+    {
+      "bioguideId": "R000122",
+      "name": "Jack Reed",
+      "party": "D",
+      "state": "RI",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.reed.senate.gov/"
+    },
+    {
+      "bioguideId": "W000802",
+      "name": "Sheldon Whitehouse",
+      "party": "D",
+      "state": "RI",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.whitehouse.senate.gov/"
+    },
+    {
+      "bioguideId": "M000194",
+      "name": "Nancy Mace",
+      "party": "R",
+      "state": "SC",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mace.house.gov"
+    },
+    {
+      "bioguideId": "W000795",
+      "name": "Joe Wilson",
+      "party": "R",
+      "state": "SC",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://joewilson.house.gov/"
+    },
+    {
+      "bioguideId": "B001325",
+      "name": "Sheri Biggs",
+      "party": "R",
+      "state": "SC",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://sheribiggs.house.gov/"
+    },
+    {
+      "bioguideId": "T000480",
+      "name": "William R. Timmons IV",
+      "party": "R",
+      "state": "SC",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://timmons.house.gov/"
+    },
+    {
+      "bioguideId": "N000190",
+      "name": "Ralph Norman",
+      "party": "R",
+      "state": "SC",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://norman.house.gov"
+    },
+    {
+      "bioguideId": "C000537",
+      "name": "James E. Clyburn",
+      "party": "D",
+      "state": "SC",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://clyburn.house.gov/"
+    },
+    {
+      "bioguideId": "F000478",
+      "name": "Russell Fry",
+      "party": "R",
+      "state": "SC",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fry.house.gov"
+    },
+    {
+      "bioguideId": "G000608",
+      "name": "Darline Graham",
+      "party": "R",
+      "state": "SC",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.dgraham.senate.gov/"
+    },
+    {
+      "bioguideId": "S001184",
+      "name": "Tim Scott",
+      "party": "R",
+      "state": "SC",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.scott.senate.gov/"
+    },
+    {
+      "bioguideId": "J000301",
+      "name": "Dusty Johnson",
+      "party": "R",
+      "state": "SD",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://dustyjohnson.house.gov/"
+    },
+    {
+      "bioguideId": "T000250",
+      "name": "John Thune",
+      "party": "R",
+      "state": "SD",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.thune.senate.gov/"
+    },
+    {
+      "bioguideId": "R000605",
+      "name": "Mike Rounds",
+      "party": "R",
+      "state": "SD",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.rounds.senate.gov"
+    },
+    {
+      "bioguideId": "H001086",
+      "name": "Diana Harshbarger",
+      "party": "R",
+      "state": "TN",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://harshbarger.house.gov"
+    },
+    {
+      "bioguideId": "B001309",
+      "name": "Tim Burchett",
+      "party": "R",
+      "state": "TN",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://burchett.house.gov"
+    },
+    {
+      "bioguideId": "F000459",
+      "name": "Charles J. \"Chuck\" Fleischmann",
+      "party": "R",
+      "state": "TN",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fleischmann.house.gov/"
+    },
+    {
+      "bioguideId": "D000616",
+      "name": "Scott DesJarlais",
+      "party": "R",
+      "state": "TN",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://desjarlais.house.gov/"
+    },
+    {
+      "bioguideId": "O000175",
+      "name": "Andrew Ogles",
+      "party": "R",
+      "state": "TN",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ogles.house.gov"
+    },
+    {
+      "bioguideId": "R000612",
+      "name": "John W. Rose",
+      "party": "R",
+      "state": "TN",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://johnrose.house.gov/"
+    },
+    {
+      "bioguideId": "V000139",
+      "name": "Matt Van Epps",
+      "party": "R",
+      "state": "TN",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://vanepps.house.gov"
+    },
+    {
+      "bioguideId": "K000392",
+      "name": "David Kustoff",
+      "party": "R",
+      "state": "TN",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://kustoff.house.gov"
+    },
+    {
+      "bioguideId": "C001068",
+      "name": "Steve Cohen",
+      "party": "D",
+      "state": "TN",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://cohen.house.gov/"
+    },
+    {
+      "bioguideId": "H000601",
+      "name": "Bill Hagerty",
+      "party": "R",
+      "state": "TN",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.hagerty.senate.gov"
+    },
+    {
+      "bioguideId": "B001243",
+      "name": "Marsha Blackburn",
+      "party": "R",
+      "state": "TN",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.blackburn.senate.gov"
+    },
+    {
+      "bioguideId": "M001224",
+      "name": "Nathaniel Moran",
+      "party": "R",
+      "state": "TX",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://moran.house.gov"
+    },
+    {
+      "bioguideId": "C001120",
+      "name": "Dan Crenshaw",
+      "party": "R",
+      "state": "TX",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://crenshaw.house.gov/"
+    },
+    {
+      "bioguideId": "S001224",
+      "name": "Keith Self",
+      "party": "R",
+      "state": "TX",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://keithself.house.gov"
+    },
+    {
+      "bioguideId": "F000246",
+      "name": "Pat Fallon",
+      "party": "R",
+      "state": "TX",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fallon.house.gov"
+    },
+    {
+      "bioguideId": "G000589",
+      "name": "Lance Gooden",
+      "party": "R",
+      "state": "TX",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gooden.house.gov"
+    },
+    {
+      "bioguideId": "E000071",
+      "name": "Jake Ellzey",
+      "party": "R",
+      "state": "TX",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://ellzey.house.gov/"
+    },
+    {
+      "bioguideId": "F000468",
+      "name": "Lizzie Fletcher",
+      "party": "D",
+      "state": "TX",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fletcher.house.gov"
+    },
+    {
+      "bioguideId": "L000603",
+      "name": "Morgan Luttrell",
+      "party": "R",
+      "state": "TX",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://luttrell.house.gov"
+    },
+    {
+      "bioguideId": "G000553",
+      "name": "Al Green",
+      "party": "D",
+      "state": "TX",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://algreen.house.gov"
+    },
+    {
+      "bioguideId": "M001157",
+      "name": "Michael T. McCaul",
+      "party": "R",
+      "state": "TX",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mccaul.house.gov"
+    },
+    {
+      "bioguideId": "P000048",
+      "name": "August Pfluger",
+      "party": "R",
+      "state": "TX",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://pfluger.house.gov"
+    },
+    {
+      "bioguideId": "G000601",
+      "name": "Craig A. Goldman",
+      "party": "R",
+      "state": "TX",
+      "district": 12,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://craiggoldman.house.gov/"
+    },
+    {
+      "bioguideId": "J000304",
+      "name": "Ronny Jackson",
+      "party": "R",
+      "state": "TX",
+      "district": 13,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://jackson.house.gov"
+    },
+    {
+      "bioguideId": "W000814",
+      "name": "Randy K. Weber, Sr.",
+      "party": "R",
+      "state": "TX",
+      "district": 14,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://weber.house.gov"
+    },
+    {
+      "bioguideId": "D000594",
+      "name": "Monica De La Cruz",
+      "party": "R",
+      "state": "TX",
+      "district": 15,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://delacruz.house.gov"
+    },
+    {
+      "bioguideId": "E000299",
+      "name": "Veronica Escobar",
+      "party": "D",
+      "state": "TX",
+      "district": 16,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://escobar.house.gov"
+    },
+    {
+      "bioguideId": "S000250",
+      "name": "Pete Sessions",
+      "party": "R",
+      "state": "TX",
+      "district": 17,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://sessions.house.gov"
+    },
+    {
+      "bioguideId": "M001245",
+      "name": "Christian D. Menefee",
+      "party": "D",
+      "state": "TX",
+      "district": 18,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "http://menefee.house.gov/"
+    },
+    {
+      "bioguideId": "A000375",
+      "name": "Jodey C. Arrington",
+      "party": "R",
+      "state": "TX",
+      "district": 19,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://arrington.house.gov"
+    },
+    {
+      "bioguideId": "C001091",
+      "name": "Joaquin Castro",
+      "party": "D",
+      "state": "TX",
+      "district": 20,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://castro.house.gov"
+    },
+    {
+      "bioguideId": "R000614",
+      "name": "Chip Roy",
+      "party": "R",
+      "state": "TX",
+      "district": 21,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://roy.house.gov"
+    },
+    {
+      "bioguideId": "N000026",
+      "name": "Troy E. Nehls",
+      "party": "R",
+      "state": "TX",
+      "district": 22,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://nehls.house.gov"
+    },
+    {
+      "bioguideId": "V000134",
+      "name": "Beth Van Duyne",
+      "party": "R",
+      "state": "TX",
+      "district": 24,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://vanduyne.house.gov"
+    },
+    {
+      "bioguideId": "W000816",
+      "name": "Roger Williams",
+      "party": "R",
+      "state": "TX",
+      "district": 25,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://williams.house.gov"
+    },
+    {
+      "bioguideId": "G000603",
+      "name": "Brandon Gill",
+      "party": "R",
+      "state": "TX",
+      "district": 26,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gill.house.gov/"
+    },
+    {
+      "bioguideId": "C001115",
+      "name": "Michael Cloud",
+      "party": "R",
+      "state": "TX",
+      "district": 27,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://cloud.house.gov"
+    },
+    {
+      "bioguideId": "C001063",
+      "name": "Henry Cuellar",
+      "party": "D",
+      "state": "TX",
+      "district": 28,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://cuellar.house.gov/"
+    },
+    {
+      "bioguideId": "G000587",
+      "name": "Sylvia R. Garcia",
+      "party": "D",
+      "state": "TX",
+      "district": 29,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://sylviagarcia.house.gov/"
+    },
+    {
+      "bioguideId": "C001130",
+      "name": "Jasmine Crockett",
+      "party": "D",
+      "state": "TX",
+      "district": 30,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://crockett.house.gov"
+    },
+    {
+      "bioguideId": "C001051",
+      "name": "John R. Carter",
+      "party": "R",
+      "state": "TX",
+      "district": 31,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://carter.house.gov/"
+    },
+    {
+      "bioguideId": "J000310",
+      "name": "Julie Johnson",
+      "party": "D",
+      "state": "TX",
+      "district": 32,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://juliejohnson.house.gov/"
+    },
+    {
+      "bioguideId": "V000131",
+      "name": "Marc A. Veasey",
+      "party": "D",
+      "state": "TX",
+      "district": 33,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://veasey.house.gov"
+    },
+    {
+      "bioguideId": "G000581",
+      "name": "Vicente Gonzalez",
+      "party": "D",
+      "state": "TX",
+      "district": 34,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gonzalez.house.gov"
+    },
+    {
+      "bioguideId": "C001131",
+      "name": "Greg Casar",
+      "party": "D",
+      "state": "TX",
+      "district": 35,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://casar.house.gov"
+    },
+    {
+      "bioguideId": "B001291",
+      "name": "Brian Babin",
+      "party": "R",
+      "state": "TX",
+      "district": 36,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://babin.house.gov"
+    },
+    {
+      "bioguideId": "D000399",
+      "name": "Lloyd Doggett",
+      "party": "D",
+      "state": "TX",
+      "district": 37,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://doggett.house.gov"
+    },
+    {
+      "bioguideId": "H001095",
+      "name": "Wesley Hunt",
+      "party": "R",
+      "state": "TX",
+      "district": 38,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hunt.house.gov"
+    },
+    {
+      "bioguideId": "C001056",
+      "name": "John Cornyn",
+      "party": "R",
+      "state": "TX",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.cornyn.senate.gov/"
+    },
+    {
+      "bioguideId": "C001098",
+      "name": "Ted Cruz",
+      "party": "R",
+      "state": "TX",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.cruz.senate.gov"
+    },
+    {
+      "bioguideId": "M001213",
+      "name": "Blake D. Moore",
+      "party": "R",
+      "state": "UT",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://blakemoore.house.gov"
+    },
+    {
+      "bioguideId": "M001228",
+      "name": "Celeste Maloy",
+      "party": "R",
+      "state": "UT",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://maloy.house.gov"
+    },
+    {
+      "bioguideId": "K000403",
+      "name": "Mike Kennedy",
+      "party": "R",
+      "state": "UT",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mikekennedy.house.gov/"
+    },
+    {
+      "bioguideId": "O000086",
+      "name": "Burgess Owens",
+      "party": "R",
+      "state": "UT",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://owens.house.gov"
+    },
+    {
+      "bioguideId": "C001114",
+      "name": "John R. Curtis",
+      "party": "R",
+      "state": "UT",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.curtis.senate.gov/"
+    },
+    {
+      "bioguideId": "L000577",
+      "name": "Mike Lee",
+      "party": "R",
+      "state": "UT",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.lee.senate.gov/"
+    },
+    {
+      "bioguideId": "W000804",
+      "name": "Robert J. Wittman",
+      "party": "R",
+      "state": "VA",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://wittman.house.gov/"
+    },
+    {
+      "bioguideId": "K000399",
+      "name": "Jennifer A. Kiggans",
+      "party": "R",
+      "state": "VA",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://kiggans.house.gov"
+    },
+    {
+      "bioguideId": "S000185",
+      "name": "Robert C. \"Bobby\" Scott",
+      "party": "D",
+      "state": "VA",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://bobbyscott.house.gov"
+    },
+    {
+      "bioguideId": "M001227",
+      "name": "Jennifer L. McClellan",
+      "party": "D",
+      "state": "VA",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcclellan.house.gov/"
+    },
+    {
+      "bioguideId": "M001239",
+      "name": "John J. McGuire III",
+      "party": "R",
+      "state": "VA",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://mcguire.house.gov/"
+    },
+    {
+      "bioguideId": "C001118",
+      "name": "Ben Cline",
+      "party": "R",
+      "state": "VA",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://cline.house.gov"
+    },
+    {
+      "bioguideId": "V000138",
+      "name": "Eugene Simon Vindman",
+      "party": "D",
+      "state": "VA",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://vindman.house.gov/"
+    },
+    {
+      "bioguideId": "B001292",
+      "name": "Donald S. Beyer, Jr.",
+      "party": "D",
+      "state": "VA",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://beyer.house.gov"
+    },
+    {
+      "bioguideId": "G000568",
+      "name": "H. Morgan Griffith",
+      "party": "R",
+      "state": "VA",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://morgangriffith.house.gov/"
+    },
+    {
+      "bioguideId": "S001230",
+      "name": "Suhas Subramanyam",
+      "party": "D",
+      "state": "VA",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://subramanyam.house.gov/"
+    },
+    {
+      "bioguideId": "W000831",
+      "name": "James R. Walkinshaw",
+      "party": "D",
+      "state": "VA",
+      "district": 11,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://walkinshaw.house.gov/"
+    },
+    {
+      "bioguideId": "W000805",
+      "name": "Mark R. Warner",
+      "party": "D",
+      "state": "VA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.warner.senate.gov"
+    },
+    {
+      "bioguideId": "K000384",
+      "name": "Tim Kaine",
+      "party": "D",
+      "state": "VA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.kaine.senate.gov/"
+    },
+    {
+      "bioguideId": "P000610",
+      "name": "Stacey E. Plaskett",
+      "party": "D",
+      "state": "VI",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": false,
+      "officialWebsiteUrl": "https://plaskett.house.gov/"
+    },
+    {
+      "bioguideId": "B001318",
+      "name": "Becca Balint",
+      "party": "D",
+      "state": "VT",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://balint.house.gov"
+    },
+    {
+      "bioguideId": "S000033",
+      "name": "Bernard Sanders",
+      "party": "I",
+      "state": "VT",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.sanders.senate.gov/"
+    },
+    {
+      "bioguideId": "W000800",
+      "name": "Peter Welch",
+      "party": "D",
+      "state": "VT",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.welch.senate.gov/"
+    },
+    {
+      "bioguideId": "D000617",
+      "name": "Suzan K. DelBene",
+      "party": "D",
+      "state": "WA",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://delbene.house.gov"
+    },
+    {
+      "bioguideId": "L000560",
+      "name": "Rick Larsen",
+      "party": "D",
+      "state": "WA",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://larsen.house.gov"
+    },
+    {
+      "bioguideId": "G000600",
+      "name": "Marie Gluesenkamp Perez",
+      "party": "D",
+      "state": "WA",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gluesenkampperez.house.gov"
+    },
+    {
+      "bioguideId": "N000189",
+      "name": "Dan Newhouse",
+      "party": "R",
+      "state": "WA",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://newhouse.house.gov"
+    },
+    {
+      "bioguideId": "B001322",
+      "name": "Michael Baumgartner",
+      "party": "R",
+      "state": "WA",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://baumgartner.house.gov/"
+    },
+    {
+      "bioguideId": "R000621",
+      "name": "Emily Randall",
+      "party": "D",
+      "state": "WA",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://randall.house.gov/"
+    },
+    {
+      "bioguideId": "J000298",
+      "name": "Pramila Jayapal",
+      "party": "D",
+      "state": "WA",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://jayapal.house.gov"
+    },
+    {
+      "bioguideId": "S001216",
+      "name": "Kim Schrier",
+      "party": "D",
+      "state": "WA",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://schrier.house.gov"
+    },
+    {
+      "bioguideId": "S000510",
+      "name": "Adam Smith",
+      "party": "D",
+      "state": "WA",
+      "district": 9,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://adamsmith.house.gov/"
+    },
+    {
+      "bioguideId": "S001159",
+      "name": "Marilyn Strickland",
+      "party": "D",
+      "state": "WA",
+      "district": 10,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://strickland.house.gov"
+    },
+    {
+      "bioguideId": "C000127",
+      "name": "Maria Cantwell",
+      "party": "D",
+      "state": "WA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.cantwell.senate.gov"
+    },
+    {
+      "bioguideId": "M001111",
+      "name": "Patty Murray",
+      "party": "D",
+      "state": "WA",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.murray.senate.gov/"
+    },
+    {
+      "bioguideId": "S001213",
+      "name": "Bryan Steil",
+      "party": "R",
+      "state": "WI",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://steil.house.gov"
+    },
+    {
+      "bioguideId": "P000607",
+      "name": "Mark Pocan",
+      "party": "D",
+      "state": "WI",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://pocan.house.gov"
+    },
+    {
+      "bioguideId": "V000135",
+      "name": "Derrick Van Orden",
+      "party": "R",
+      "state": "WI",
+      "district": 3,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://vanorden.house.gov"
+    },
+    {
+      "bioguideId": "M001160",
+      "name": "Gwen Moore",
+      "party": "D",
+      "state": "WI",
+      "district": 4,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://gwenmoore.house.gov"
+    },
+    {
+      "bioguideId": "F000471",
+      "name": "Scott Fitzgerald",
+      "party": "R",
+      "state": "WI",
+      "district": 5,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://fitzgerald.house.gov"
+    },
+    {
+      "bioguideId": "G000576",
+      "name": "Glenn Grothman",
+      "party": "R",
+      "state": "WI",
+      "district": 6,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://grothman.house.gov"
+    },
+    {
+      "bioguideId": "T000165",
+      "name": "Thomas P. Tiffany",
+      "party": "R",
+      "state": "WI",
+      "district": 7,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://tiffany.house.gov/"
+    },
+    {
+      "bioguideId": "W000829",
+      "name": "Tony Wied",
+      "party": "R",
+      "state": "WI",
+      "district": 8,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://wied.house.gov/"
+    },
+    {
+      "bioguideId": "J000293",
+      "name": "Ron Johnson",
+      "party": "R",
+      "state": "WI",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.ronjohnson.senate.gov/"
+    },
+    {
+      "bioguideId": "B001230",
+      "name": "Tammy Baldwin",
+      "party": "D",
+      "state": "WI",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.baldwin.senate.gov/"
+    },
+    {
+      "bioguideId": "M001205",
+      "name": "Carol D. Miller",
+      "party": "R",
+      "state": "WV",
+      "district": 1,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://miller.house.gov/"
+    },
+    {
+      "bioguideId": "M001235",
+      "name": "Riley M. Moore",
+      "party": "R",
+      "state": "WV",
+      "district": 2,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://rileymoore.house.gov/"
+    },
+    {
+      "bioguideId": "J000312",
+      "name": "James C. Justice",
+      "party": "R",
+      "state": "WV",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.justice.senate.gov/"
+    },
+    {
+      "bioguideId": "C001047",
+      "name": "Shelley Moore Capito",
+      "party": "R",
+      "state": "WV",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.capito.senate.gov"
+    },
+    {
+      "bioguideId": "H001096",
+      "name": "Harriet M. Hageman",
+      "party": "R",
+      "state": "WY",
+      "district": 0,
+      "chamber": "house",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://hageman.house.gov"
+    },
+    {
+      "bioguideId": "L000571",
+      "name": "Cynthia M. Lummis",
+      "party": "R",
+      "state": "WY",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.lummis.senate.gov"
+    },
+    {
+      "bioguideId": "B001261",
+      "name": "John Barrasso",
+      "party": "R",
+      "state": "WY",
+      "district": null,
+      "chamber": "senate",
+      "votingMember": true,
+      "officialWebsiteUrl": "https://www.barrasso.senate.gov"
+    }
+  ]
+}

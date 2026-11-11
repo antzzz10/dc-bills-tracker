@@ -1,0 +1,227 @@
+{
+  "generatedFrom": "representdc-data families.json \"dc-statehood-admission\" (reviewed 2026-11-08); GovInfo BILLSTATUS bulk data",
+  "note": "Cosponsor counts exclude withdrawn cosponsors. Rows with final: false are a snapshot of a Congress still in session; the live count is in statehood-cosponsors.json.",
+  "congresses": [
+    {
+      "congress": 115,
+      "startYear": 2017,
+      "endYear": 2019,
+      "final": true,
+      "house": {
+        "billNumber": "H.R. 1291",
+        "title": "Washington, D.C. Admission Act",
+        "sponsor": {
+          "bioguideId": "N000147",
+          "name": "Eleanor Holmes Norton",
+          "party": "D",
+          "state": "DC"
+        },
+        "introducedDate": "2017-03-01",
+        "cosponsors": 181,
+        "withdrawnCosponsors": 0,
+        "passedHouse": null,
+        "passedSenate": null,
+        "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/115/hr/BILLSTATUS-115hr1291.xml",
+        "congressGovUrl": "https://www.congress.gov/bill/115th-congress/house-bill/1291",
+        "retrievedAt": "2026-11-08T19:47:00.532Z"
+      },
+      "senate": {
+        "billNumber": "S. 1278",
+        "title": "Washington, D.C. Admission Act",
+        "sponsor": {
+          "bioguideId": "C000174",
+          "name": "Thomas R. Carper",
+          "party": "D",
+          "state": "DE"
+        },
+        "introducedDate": "2017-05-25",
+        "cosponsors": 30,
+        "withdrawnCosponsors": 0,
+        "passedHouse": null,
+        "passedSenate": null,
+        "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/115/s/BILLSTATUS-115s1278.xml",
+        "congressGovUrl": "https://www.congress.gov/bill/115th-congress/senate-bill/1278",
+        "retrievedAt": "2026-11-08T19:47:00.908Z"
+      },
+      "furthestAction": null
+    },
+    {
+      "congress": 116,
+      "startYear": 2019,
+      "endYear": 2021,
+      "final": true,
+      "house": {
+        "billNumber": "H.R. 51",
+        "title": "Washington, D.C. Admission Act",
+        "sponsor": {
+          "bioguideId": "N000147",
+          "name": "Eleanor Holmes Norton",
+          "party": "D",
+          "state": "DC"
+        },
+        "introducedDate": "2019-01-03",
+        "cosponsors": 227,
+        "withdrawnCosponsors": 1,
+        "passedHouse": "2020-06-26",
+        "passedSenate": null,
+        "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/116/hr/BILLSTATUS-116hr51.xml",
+        "congressGovUrl": "https://www.congress.gov/bill/116th-congress/house-bill/51",
+        "retrievedAt": "2026-11-08T19:47:01.272Z"
+      },
+      "senate": {
+        "billNumber": "S. 631",
+        "title": "Washington, D.C. Admission Act",
+        "sponsor": {
+          "bioguideId": "C000174",
+          "name": "Thomas R. Carper",
+          "party": "D",
+          "state": "DE"
+        },
+        "introducedDate": "2019-02-28",
+        "cosponsors": 42,
+        "withdrawnCosponsors": 0,
+        "passedHouse": null,
+        "passedSenate": null,
+        "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/116/s/BILLSTATUS-116s631.xml",
+        "congressGovUrl": "https://www.congress.gov/bill/116th-congress/senate-bill/631",
+        "retrievedAt": "2026-11-08T19:47:01.648Z"
+      },
+      "furthestAction": {
+        "text": "Passed House",
+        "date": "2020-06-26"
+      }
+    },
+    {
+      "congress": 117,
+      "startYear": 2021,
+      "endYear": 2023,
+      "final": true,
+      "house": {
+        "billNumber": "H.R. 51",
+        "title": "Washington, D.C. Admission Act",
+        "sponsor": {
+          "bioguideId": "N000147",
+          "name": "Eleanor Holmes Norton",
+          "party": "D",
+          "state": "DC"
+        },
+        "introducedDate": "2021-01-04",
+        "cosponsors": 216,
+        "withdrawnCosponsors": 0,
+        "passedHouse": "2021-04-22",
+        "passedSenate": null,
+        "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/117/hr/BILLSTATUS-117hr51.xml",
+        "congressGovUrl": "https://www.congress.gov/bill/117th-congress/house-bill/51",
+        "retrievedAt": "2026-11-08T19:47:02.008Z"
+      },
+      "senate": {
+        "billNumber": "S. 51",
+        "title": "Washington, D.C. Admission Act",
+        "sponsor": {
+          "bioguideId": "C000174",
+          "name": "Thomas R. Carper",
+          "party": "D",
+          "state": "DE"
+        },
+        "introducedDate": "2021-01-26",
+        "cosponsors": 45,
+        "withdrawnCosponsors": 0,
+        "passedHouse": null,
+        "passedSenate": null,
+        "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/117/s/BILLSTATUS-117s51.xml",
+        "congressGovUrl": "https://www.congress.gov/bill/117th-congress/senate-bill/51",
+        "retrievedAt": "2026-11-08T19:47:02.382Z"
+      },
+      "furthestAction": {
+        "text": "Passed House",
+        "date": "2021-04-22"
+      }
+    },
+    {
+      "congress": 118,
+      "startYear": 2023,
+      "endYear": 2025,
+      "final": true,
+      "house": {
+        "billNumber": "H.R. 51",
+        "title": "Washington, D.C. Admission Act",
+        "sponsor": {
+          "bioguideId": "N000147",
+          "name": "Eleanor Holmes Norton",
+          "party": "D",
+          "state": "DC"
+        },
+        "introducedDate": "2023-01-09",
+        "cosponsors": 211,
+        "withdrawnCosponsors": 0,
+        "passedHouse": null,
+        "passedSenate": null,
+        "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hr/BILLSTATUS-118hr51.xml",
+        "congressGovUrl": "https://www.congress.gov/bill/118th-congress/house-bill/51",
+        "retrievedAt": "2026-11-08T19:47:02.791Z"
+      },
+      "senate": {
+        "billNumber": "S. 51",
+        "title": "Washington, D.C. Admission Act",
+        "sponsor": {
+          "bioguideId": "C000174",
+          "name": "Thomas R. Carper",
+          "party": "D",
+          "state": "DE"
+        },
+        "introducedDate": "2023-01-24",
+        "cosponsors": 46,
+        "withdrawnCosponsors": 0,
+        "passedHouse": null,
+        "passedSenate": null,
+        "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/118/s/BILLSTATUS-118s51.xml",
+        "congressGovUrl": "https://www.congress.gov/bill/118th-congress/senate-bill/51",
+        "retrievedAt": "2026-11-08T19:47:03.170Z"
+      },
+      "furthestAction": null
+    },
+    {
+      "congress": 119,
+      "startYear": 2025,
+      "endYear": 2027,
+      "final": false,
+      "house": {
+        "billNumber": "H.R. 51",
+        "title": "Washington, D.C. Admission Act",
+        "sponsor": {
+          "bioguideId": "N000147",
+          "name": "Eleanor Holmes Norton",
+          "party": "D",
+          "state": "DC"
+        },
+        "introducedDate": "2025-01-03",
+        "cosponsors": 209,
+        "withdrawnCosponsors": 0,
+        "passedHouse": null,
+        "passedSenate": null,
+        "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/hr/BILLSTATUS-119hr51.xml",
+        "congressGovUrl": "https://www.congress.gov/bill/119th-congress/house-bill/51",
+        "retrievedAt": "2026-11-08T19:47:07.043Z"
+      },
+      "senate": {
+        "billNumber": "S. 51",
+        "title": "Washington, D.C. Admission Act",
+        "sponsor": {
+          "bioguideId": "V000128",
+          "name": "Chris Van Hollen",
+          "party": "D",
+          "state": "MD"
+        },
+        "introducedDate": "2025-01-09",
+        "cosponsors": 43,
+        "withdrawnCosponsors": 0,
+        "passedHouse": null,
+        "passedSenate": null,
+        "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/s/BILLSTATUS-119s51.xml",
+        "congressGovUrl": "https://www.congress.gov/bill/119th-congress/senate-bill/51",
+        "retrievedAt": "2026-11-08T19:47:39.847Z"
+      },
+      "furthestAction": null
+    }
+  ]
+}
