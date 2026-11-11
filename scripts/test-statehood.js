@@ -122,6 +122,31 @@ test('pagination.next off the API, or carrying credentials: refused, key never s
   }
 });
 
+test('a request that never answers times out and is retried, then reported', async () => {
+  let calls = 0;
+  const res = await fetchJsonWithRetry('u', {
+    retries: 1, timeoutMs: 20, sleepImpl: async () => {},
+    fetchImpl: (url, { signal }) => {
+      calls++;
+      return new Promise((_, reject) => signal.addEventListener('abort', () => reject(signal.reason)));
+    }
+  });
+  assert.equal(res.ok, false);
+  assert.equal(calls, 2);
+  assert.match(res.reason, /timeout|abort/i);
+});
+
+test('a timed-out page makes the list incomplete', async () => {
+  const { r } = await run({ 0: [json(200, page([row('A1')], 2, 2, NEXT(1)))] }, {
+    retries: 0, timeoutMs: 20,
+    fetchImpl: (url, { signal }) => new URL(url).searchParams.get('offset') === '1'
+      ? new Promise((_, reject) => signal.addEventListener('abort', () => reject(signal.reason)))
+      : Promise.resolve(json(200, page([row('A1')], 2, 2, NEXT(1))))
+  });
+  assert.equal(r.complete, false);
+  assert.match(r.reason, /page 2/);
+});
+
 test('network error text carrying the key is redacted', async () => {
   const res = await fetchJsonWithRetry('u', {
     retries: 0, sleepImpl: async () => {},
@@ -170,6 +195,9 @@ test('payload: incomplete row has no checkedAt; past-Congress row is not current
   assert.equal(senate.totals, null); // unavailable, not zero
 });
 
+// AbortSignal.timeout's timer is unref'd: with a mocked fetch (no socket) nothing else
+// holds the event loop open, so keep it alive while the tests run.
+const keepAlive = setInterval(() => {}, 1000);
 let failed = 0;
 for (const [name, fn] of tests) {
   try {
@@ -180,6 +208,7 @@ for (const [name, fn] of tests) {
     console.error(`✗ ${name}\n   ${e.message}`);
   }
 }
+clearInterval(keepAlive);
 if (failed) {
   console.error(`\n${failed} of ${tests.length} failed`);
   process.exit(1);

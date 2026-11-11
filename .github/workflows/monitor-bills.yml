@@ -39,8 +39,11 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-24.04
-    # A healthy run takes ~2-3 minutes. Fail loudly rather than hanging.
-    timeout-minutes: 20
+    # A healthy run takes ~3-5 minutes. On 2026-11-10 Congress.gov answered slowly and two
+    # runs were cancelled at the old 20-minute limit mid-check (nothing committed, no email).
+    # Every request now has a 30-second deadline, so a run can't hang; 45 minutes leaves
+    # room for a slow API day while still failing loudly if something is truly stuck.
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repository

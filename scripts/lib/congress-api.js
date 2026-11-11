@@ -16,7 +16,7 @@ export function isRetryableStatus(status) {
 }
 
 /**
- * GET a JSON document, retrying 429/5xx and network errors with exponential backoff.
+ * GET a JSON document, retrying 429/5xx, timeouts and network errors with exponential backoff.
  * Honours Retry-After (seconds) when the API sends one, capped so a bad header can't stall
  * the job past its timeout.
  *
@@ -26,6 +26,9 @@ export async function fetchJsonWithRetry(url, {
   retries = 4,
   baseDelayMs = 1000,
   maxDelayMs = 30000,
+  // Per-attempt deadline, matching monitor-bills.js's REQUEST_TIMEOUT_MS: a request that
+  // never answers is a failed attempt (retried), never a hung run.
+  timeoutMs = 30000,
   fetchImpl = fetch,
   sleepImpl = sleep
 } = {}) {
@@ -37,7 +40,7 @@ export async function fetchJsonWithRetry(url, {
       await sleepImpl(backoff);
     }
     try {
-      const response = await fetchImpl(url);
+      const response = await fetchImpl(url, { signal: AbortSignal.timeout(timeoutMs) });
       if (response.ok) {
         try {
           return { ok: true, data: await response.json() };

@@ -28,8 +28,10 @@ concurrency:
 jobs:
   roster:
     runs-on: ubuntu-24.04
-    # ~540 member records at the monitor's 300 ms spacing: about 4-5 minutes.
-    timeout-minutes: 20
+    # ~540 member records at the monitor's 300 ms spacing: about 4-5 minutes on a normal
+    # day. Each request has a 30-second deadline with retries; on a slow API day (as on
+    # 2026-11-10) the run can take far longer, so the same 45-minute limit as the monitor.
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repository
