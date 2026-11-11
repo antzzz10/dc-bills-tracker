@@ -1,0 +1,15 @@
+**0 BLOCKER, 1 MATERIAL, 2 NOTE.** Fix the health-accounting gap before proceeding.
+
+- **MATERIAL — Roll-call timeouts do not count against health.** [scripts/monitor-bills.js:21](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:21) applies the deadline to vote requests, but the existing catch at [line 192](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:192) swallows the timeout and returns `null`. Nothing adds it to `missingParts`. An in-memory end-to-end fixture reproduced `errorCount: 0`, `checkFailed: false`, and an advanced `lastChecked` despite the vote timeout. Existing tallies are preserved, but the incomplete check is reported as healthy. Propagate the missing-vote information into lookup health while retaining valid passage evidence.
+
+- **NOTE — Caller options can disable the deadline.** [scripts/monitor-bills.js:21](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:21): ordinary options survive correctly, but `{ signal: customSignal }`, `{ signal: undefined }`, or `{ signal: null }` replaces the timeout. All three current callers omit options, so this is a future-use concern. Combine signals if the wrapper must guarantee a deadline.
+
+- **NOTE — Forty-five minutes cannot guarantee a report during widespread stalls.** [.github/workflows/monitor-bills.yml:46](/Users/andriathomas/Projects/dc-bills-tracker/.github/workflows/monitor-bills.yml:46): 113 bill-detail requests timing out sequentially require **56.5 minutes**, before any actions or vote requests. A broad stall can therefore still cancel the job before its report/email. The increase provides useful headroom for the observed 1,099-second run, but guaranteed reporting would require an overall deadline or early outage cutoff.
+
+Other requested checks:
+
+- **Withdrawn cosponsors:** the replacement preserves semantics. Both `bill.cosponsors.count` and the old `pagination.count` exclude withdrawals; `countIncludingWithdrawnCosponsors` includes them. The official documentation explicitly distinguishes both pairs. [Library of Congress documentation](https://github.com/LibraryOfCongress/api.congress.gov/blob/main/Documentation/BillEndpoint.md)
+- **Absent block:** zero is consistent with the supplied live observations; I found no contrary evidence for the tracked bills. The documentation does not explicitly guarantee omission means zero. Present-but-malformed blocks correctly become incomplete. The comment at [line 486](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:486), “Missing means unknown, not 0,” contradicts the following branch.
+- **Recovery workflows:** compatible with 45-minute runs. The shared classifier treats in-progress runs as active; its two-hour threshold applies to queued runs. The retrier’s ten-minute limit covers dispatch confirmation, not monitoring completion. Executed runs cancelled at the job limit remain intentionally ineligible for immediate infrastructure retry.
+
+Syntax, diff whitespace, bill-data lint, and published-claims checks passed. Fixtures ran entirely in memory; no files changed and no live monitor run was repeated.

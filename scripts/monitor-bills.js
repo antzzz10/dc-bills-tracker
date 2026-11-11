@@ -12,6 +12,17 @@ import { dirname, join } from 'path';
 import { CURRENT_CONGRESS } from './config.js';
 import { isProvision } from '../src/lib/measureStatus.js';
 
+// Every network call gets a deadline. On 2026-11-10 one Congress.gov request never
+// answered, and with no timeout the whole run sat until GitHub cancelled it at 20 minutes:
+// nothing checked, nothing deployed, no email. A timed-out request now fails like any
+// other lookup and counts against the run's health.
+const REQUEST_TIMEOUT_MS = 30000;
+const fetch = (url, options = {}) => {
+  const deadline = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
+  const signal = options.signal ? AbortSignal.any([options.signal, deadline]) : deadline;
+  return globalThis.fetch(url, { ...options, signal });
+};
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -99,6 +110,11 @@ function buildVoteSourceUrl(chamber, year, session, rollCallNumber) {
 // bill was introduced, with the parties reversed. Deriving the session fixes the cause;
 // checking the returned vote's own legislation ID catches anything else that would put a
 // stranger's vote on a bill card.
+// A vote we tried and failed to fetch (HTTP error, timeout), as distinct from one we
+// deliberately skipped (wrong Congress, wrong bill). Only a failure makes the record
+// incomplete, so it counts against the run's health (Codex, 2026-11-10).
+const VOTE_FETCH_FAILED = Object.freeze({ failed: true });
+
 async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
   try {
     // Sessions run 1..2 within a Congress; anything else means the action date is bogus.
@@ -115,7 +131,7 @@ async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
 
     if (!response.ok) {
       console.log(`  ⚠️  Could not fetch roll call vote ${chamber} ${rollCallNumber} (session ${session}): HTTP ${response.status}`);
-      return null;
+      return VOTE_FETCH_FAILED;
     }
 
     const data = await response.json();
@@ -183,7 +199,7 @@ async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
     };
   } catch (error) {
     console.log(`  ⚠️  Error fetching roll call vote: ${error.message}`);
-    return null;
+    return VOTE_FETCH_FAILED;
   }
 }
 
@@ -295,7 +311,9 @@ async function detectPassage(actions, chamber, expected) {
 
         // Fetch vote details
         const voteData = await fetchRollCallVote('house', new Date(actionDate).getFullYear(), rollNumber, expected);
-        if (voteData) {
+        if (voteData === VOTE_FETCH_FAILED) {
+          passageInfo.voteFetchFailed = true;
+        } else if (voteData) {
           passageInfo.houseVote = voteData;
           console.log(`  ✓ House vote data: ${voteData.yeas}-${voteData.nays}`);
         }
@@ -325,7 +343,9 @@ async function detectPassage(actions, chamber, expected) {
 
         // Fetch vote details
         const voteData = await fetchRollCallVote('senate', new Date(actionDate).getFullYear(), rollNumber, expected);
-        if (voteData) {
+        if (voteData === VOTE_FETCH_FAILED) {
+          passageInfo.voteFetchFailed = true;
+        } else if (voteData) {
           passageInfo.senateVote = voteData;
           console.log(`  ✓ Senate vote data: ${voteData.yeas}-${voteData.nays}`);
         }
@@ -409,7 +429,6 @@ async function fetchBillStatus(billNumber, congress) {
   // limit=250: the API defaults to 20 actions per page, and the busiest tracked measure
   // already has 53. A truncated list can hide a passage action.
   const actionsUrl = `${API_BASE_URL}/bill/${congress}/${billType}/${number}/actions?api_key=${CONGRESS_API_KEY}&limit=250`;
-  const cosponsorsUrl = `${API_BASE_URL}/bill/${congress}/${billType}/${number}/cosponsors?api_key=${CONGRESS_API_KEY}`;
 
   try {
     // Fetch basic bill info
@@ -471,20 +490,21 @@ async function fetchBillStatus(billNumber, congress) {
     } catch (e) {
       missingParts.push(`actions (${e.message})`);
     }
+    if (passageInfo?.voteFetchFailed) missingParts.push('roll-call vote');
     const actionsOk = !missingParts.some(p => p.startsWith('actions'));
 
-    // Fetch cosponsors count
+    // Cosponsor count from the bill record itself. The separate /cosponsors request took
+    // about 17 seconds per bill on 2026-11-10, enough to push a run past GitHub's 20-minute
+    // limit; the bill record's count is the same number (checked on H.R. 51, S. 402 and
+    // H.R. 1022) and arrives with the request already made. The API leaves the block out
+    // for a bill with no cosponsors (checked on H.R. 9362); a block without a count is unknown.
     let cosponsorsCount = 0;
-    try {
-      const cosponsorsResponse = await fetch(cosponsorsUrl);
-      if (!cosponsorsResponse.ok) {
-        missingParts.push(`cosponsors (HTTP ${cosponsorsResponse.status})`);
-      } else {
-        const cosponsorsData = await cosponsorsResponse.json();
-        cosponsorsCount = cosponsorsData.pagination?.count || 0;
-      }
-    } catch (e) {
-      missingParts.push(`cosponsors (${e.message})`);
+    if (Number.isInteger(bill.cosponsors?.count)) {
+      cosponsorsCount = bill.cosponsors.count;
+    } else if (bill.cosponsors === undefined) {
+      cosponsorsCount = 0; // the API omits the block for a bill with no cosponsors
+    } else {
+      missingParts.push('cosponsors (no count in the bill record)');
     }
     const cosponsorsOk = !missingParts.some(p => p.startsWith('cosponsors'));
     if (missingParts.length) {
