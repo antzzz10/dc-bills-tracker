@@ -53,7 +53,7 @@ See `decisions/2026-07-21-routine-position-category.md` for the full design disc
 
 ### A fourth `position`: `statehood-barrier` — harder to become a state
 
-Some measures change nothing about how DC is governed today, but would make statehood itself harder to win. **H.J.Res. 141** is the first: a constitutional amendment requiring two-thirds of both chambers to admit any new state, where ordinary legislation and a simple majority are enough today.
+Some measures change nothing about how DC is governed today, but would make statehood itself harder to win. **H.J.Res. 141** is the first: a constitutional amendment requiring two-thirds of both chambers to admit any new state, where an ordinary law is enough today.
 
 - **It fails all three prongs,** because the test is about home rule. Calling it an attack would stretch the test; leaving it out would hide a real obstacle. So it has its own position and its own section, "Barriers to statehood".
 - **It carries no `attackType`.** `direct` and `partial` describe home-rule incursions. "Partial" would also read as lesser, and a higher bar for statehood is not a lesser matter. `lint-bills.js` fails if a barrier carries one.

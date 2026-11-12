@@ -8,7 +8,7 @@
  *     Writes PROVISIONAL-REVIEW.md (also prints to stdout) listing every
  *     provisional bill/rider/supportBill, sorted by relevanceScore desc.
  *
- *   node scripts/review-provisional.js --confirm <id> --position <oppose|support|routine|statehood-barrier> --attackType <direct|partial> [--priority <high|medium|low|watching>] [--category <id>]
+ *   node scripts/review-provisional.js --confirm <id> --position <oppose|support|routine|statehood-barrier> [--attackType <direct|partial>; omit for statehood-barrier] [--priority <high|medium|low|watching>] [--category <id>]
  *     Clears provisional, applies the reviewed classification, and moves the
  *     entry into the correct section (bills/supportBills/routineBills/statehoodBarriers) if
  *     position changed — lint-bills.js requires position to match section.
@@ -74,7 +74,7 @@ function report() {
     'do not treat that as a finding. Confirm or reject each one:',
     '',
     '```',
-    'node scripts/review-provisional.js --confirm <id> --position <oppose|support|routine|statehood-barrier> --attackType <direct|partial> [--priority <high|medium|low|watching>]',
+    'node scripts/review-provisional.js --confirm <id> --position <oppose|support|routine|statehood-barrier> [--attackType <direct|partial>; omit for statehood-barrier] [--priority <high|medium|low|watching>]',
     'node scripts/review-provisional.js --reject <id>',
     '```',
     '',

@@ -7,7 +7,7 @@
 LWV DC lists H.J.Res. 141 (Rep. Barrett) among its attacks on home rule. It is a constitutional amendment requiring two-thirds of both chambers to admit any new state. We didn't track it. Should we, and where?
 
 - It doesn't mention DC and changes nothing about how DC is governed, so it fails all three prongs of the attack test.
-- It would raise the vote DC statehood needs above what ordinary legislation requires today.
+- It would raise the bar for DC statehood above what an ordinary law requires today.
 
 ## Decision
 
