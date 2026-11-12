@@ -61,7 +61,7 @@ const statehoodStorePath = join(__dirname, '../src/data/statehood-cosponsors.jso
 // support bills drifted (H.R. 51's cosponsors went stale) and S. 1077, a routine measure,
 // sat at no stage for eight months after passing the Senate. Riders are handled apart —
 // see checkRiderParent — because a rider is a provision, not a bill.
-const SECTIONS = ['bills', 'riders', 'supportBills', 'routineBills'];
+const SECTIONS = ['bills', 'riders', 'supportBills', 'routineBills', 'statehoodBarriers'];
 
 // Parse bill number to API format
 function parseBillNumber(billNumber) {
@@ -1025,8 +1025,8 @@ async function monitorBills() {
   }
   let statehoodTouched = false;
 
-  // Bills, support bills and routine measures: full status update per entry.
-  const entrySections = ['bills', 'supportBills', 'routineBills'];
+  // Bills, support bills, routine measures and statehood barriers: full status update per entry.
+  const entrySections = ['bills', 'supportBills', 'routineBills', 'statehoodBarriers'];
   const entryTotal = entrySections.reduce((n, s) => n + (billsData[s] || []).length, 0);
   let i = 0;
   for (const section of entrySections) {
@@ -1268,6 +1268,7 @@ function escapeHtml(str) {
 function sectionTag(item) {
   if (item.section === 'supportBills') return ' <em>(support bill)</em>';
   if (item.section === 'routineBills') return ' <em>(routine measure)</em>';
+  if (item.section === 'statehoodBarriers') return ' <em>(barrier to statehood)</em>';
   return '';
 }
 
@@ -1345,7 +1346,7 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, checkedBySect
   }
 
   const hasNotableChanges = sections.length > 0;
-  const sectionNames = { bills: 'anti-D.C. bill entries', riders: 'riders', supportBills: 'support bills', routineBills: 'routine' };
+  const sectionNames = { bills: 'anti-D.C. bill entries', riders: 'riders', supportBills: 'support bills', routineBills: 'routine', statehoodBarriers: 'statehood barriers' };
   const checkedParts = Object.entries(checkedBySection).filter(([, n]) => n > 0).map(([s, n]) => `${n} ${sectionNames[s] || s}`);
   const checkedLine = checkedParts.length ? ` (${checkedParts.join(', ')})` : '';
   const intro = hasNotableChanges

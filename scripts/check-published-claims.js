@@ -39,7 +39,7 @@ const fail = (claim, why) => failures.push(`${claim}\n     → ${why}`);
 // own check.
 const isArchivedHere = item => item.outcome?.archived === true;
 const reviewed = list => (data[list] || []).filter(item => !item.provisional && !isArchivedHere(item));
-const archivedEntries = ['bills', 'riders', 'routineBills']
+const archivedEntries = ['bills', 'riders', 'routineBills', 'statehoodBarriers']
   .flatMap(list => (data[list] || []).filter(item => !item.provisional && isArchivedHere(item)));
 // Cleared at least one chamber, per stage. Independent of the module's list.
 const ADVANCED_HERE = ['passed-house', 'passed-senate', 'passed-both', 'enacted',
@@ -48,6 +48,7 @@ const hasAdvanced = item => ADVANCED_HERE.includes(item.status?.stage);
 const bills = reviewed('bills');
 const riders = reviewed('riders');
 const routineBills = reviewed('routineBills');
+const statehoodBarriers = reviewed('statehoodBarriers');
 const opposeById = new Map(
   [...bills, ...riders, ...routineBills].map(b => [(b.billNumbers || [])[0], b])
 );
@@ -294,6 +295,9 @@ if (facts) {
     const more = {
       introducedThisCongress: independentCount([...all, ...archivedEntries.filter(b => b.position === 'oppose')]),
       'routine.advanced': independentCount(routineBills.filter(hasAdvanced)),
+      // Barriers to statehood are counted apart from the anti-DC totals (2026-11-12).
+      'statehoodBarriers.total': independentCount(statehoodBarriers),
+      'statehoodBarriers.advanced': independentCount(statehoodBarriers.filter(hasAdvanced)),
       'archived.total': independentCount(archivedEntries),
       'archived.riders': archivedEntries.filter(b => b.type === 'rider').length,
       'archived.resolutions': independentCount(archivedEntries.filter(isRes)),
@@ -305,7 +309,7 @@ if (facts) {
       'passedBreakdown.resolutions': independentCount(advanced.filter(isRes)),
       'passedBreakdown.bills': expected.passedBills - independentCount(advanced.filter(isRes)) - advanced.filter(b => b.type === 'rider').length,
       'passed.length': expected.passedBills,
-      provisionalAwaitingReview: ['bills', 'riders', 'routineBills'].flatMap(l => data[l] || []).filter(b => b.provisional).length
+      provisionalAwaitingReview: ['bills', 'riders', 'routineBills', 'statehoodBarriers'].flatMap(l => data[l] || []).filter(b => b.provisional).length
     };
     const read = path => path === 'passed.length'
       ? (Array.isArray(stats.passed) ? stats.passed.length : null)
@@ -321,7 +325,7 @@ if (facts) {
 // ---------------------------------------------------------------------------
 // An outcome is hand-verified, so the gate can't recompute it. It can require that each
 // one says what it is, where it was checked and when, and that it agrees with the stage.
-for (const item of ['bills', 'riders', 'routineBills'].flatMap(list => data[list] || [])) {
+for (const item of ['bills', 'riders', 'routineBills', 'statehoodBarriers'].flatMap(list => data[list] || [])) {
   const o = item.outcome;
   if (!o) continue;
   const claim = `outcome ${item.id}: "${o.summary || ''}"`;

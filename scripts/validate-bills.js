@@ -100,6 +100,7 @@ async function main() {
     ...(billsData.riders || []),
     ...(billsData.supportBills || []),
     ...(billsData.routineBills || []),
+    ...(billsData.statehoodBarriers || []),
   ];
 
   let candidates;

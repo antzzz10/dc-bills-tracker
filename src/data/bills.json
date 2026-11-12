@@ -5091,5 +5091,45 @@
         }
       }
     }
+  ],
+  "statehoodBarriers": [
+    {
+      "id": "hjres141",
+      "billNumbers": [
+        "H.J.Res. 141"
+      ],
+      "title": "Proposing an amendment to the Constitution of the United States to require the concurrence of two-thirds of both Houses of Congress for the admission of new States into the Union.",
+      "sponsors": [
+        "Rep Tom Barrett"
+      ],
+      "description": "Would amend the Constitution to require a two-thirds vote of both the House and the Senate to admit any new state. Today Congress admits a state by ordinary legislation, which takes a simple majority in each chamber. The resolution does not name DC, but it would raise the vote DC statehood needs",
+      "category": "other",
+      "position": "statehood-barrier",
+      "type": "bill",
+      "priority": "low",
+      "prioritySource": "manual",
+      "provisional": false,
+      "reviewedDate": "2026-11-12",
+      "reviewMethod": "manual-three-prong",
+      "constitutionalAmendment": true,
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/141",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on the Judiciary.",
+        "lastActionDate": "2026-01-21",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Judiciary"
+        ],
+        "introducedDate": "2026-01-21"
+      },
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-11",
+      "passage": {}
+    }
   ]
 }

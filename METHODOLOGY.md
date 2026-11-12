@@ -51,6 +51,18 @@ Some bills are neither an attack nor an advocacy win: they're Congress performin
 
 See `decisions/2026-07-21-routine-position-category.md` for the full design discussion.
 
+### A fourth `position`: `statehood-barrier` — harder to become a state
+
+Some measures change nothing about how DC is governed today, but would make statehood itself harder to win. **H.J.Res. 141** is the first: a constitutional amendment requiring two-thirds of both chambers to admit any new state, where ordinary legislation and a simple majority are enough today.
+
+- **It fails all three prongs,** because the test is about home rule. Calling it an attack would stretch the test; leaving it out would hide a real obstacle. So it has its own position and its own section, "Barriers to statehood".
+- **It carries no `attackType`.** `direct` and `partial` describe home-rule incursions. "Partial" would also read as lesser, and a higher bar for statehood is not a lesser matter. `lint-bills.js` fails if a barrier carries one.
+- **It is counted apart.** Barriers are never in the anti-DC totals (`totalBills`, `introducedThisCongress`, `pendingBills`, `passedBills`). `stats.json` publishes them in their own `statehoodBarriers` block, the same way routine measures have theirs.
+- **A measure that names no place still qualifies** if its effect is to raise the bar for DC statehood. A measure that also interferes with DC's government today is an attack and goes in the attack list.
+- The daily status check covers the section like any other.
+
+See `decisions/2026-11-12-statehood-barriers-category.md`.
+
 ## How priority is assigned
 
 Priority measures **legislative momentum** — how urgently advocates need to pay attention — not severity of harm. Severity is carried by `attackType` and the bill's category, not by rank. Assigned by `calculatePriority` in `scripts/monitor-bills.js`, recomputed daily from Congress.gov data:

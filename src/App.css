@@ -270,6 +270,10 @@
   border-left-color: var(--navy-600);
 }
 
+.barriers-header {
+  border-left-color: var(--dc-red);
+}
+
 .collapsible {
   cursor: pointer;
   transition: all var(--dur) var(--ease);

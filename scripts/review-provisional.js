@@ -8,9 +8,9 @@
  *     Writes PROVISIONAL-REVIEW.md (also prints to stdout) listing every
  *     provisional bill/rider/supportBill, sorted by relevanceScore desc.
  *
- *   node scripts/review-provisional.js --confirm <id> --position <oppose|support|routine> --attackType <direct|partial> [--priority <high|medium|low|watching>] [--category <id>]
+ *   node scripts/review-provisional.js --confirm <id> --position <oppose|support|routine|statehood-barrier> --attackType <direct|partial> [--priority <high|medium|low|watching>] [--category <id>]
  *     Clears provisional, applies the reviewed classification, and moves the
- *     entry into the correct section (bills/supportBills/routineBills) if
+ *     entry into the correct section (bills/supportBills/routineBills/statehoodBarriers) if
  *     position changed — lint-bills.js requires position to match section.
  *     attackType is required for oppose and routine, optional for support.
  *
@@ -33,7 +33,7 @@ const flag = (name) => {
   return i === -1 ? null : args[i + 1];
 };
 
-const SECTIONS = ['bills', 'riders', 'supportBills', 'routineBills'];
+const SECTIONS = ['bills', 'riders', 'supportBills', 'routineBills', 'statehoodBarriers'];
 
 function loadBills() {
   return JSON.parse(readFileSync(billsPath, 'utf-8'));
@@ -74,7 +74,7 @@ function report() {
     'do not treat that as a finding. Confirm or reject each one:',
     '',
     '```',
-    'node scripts/review-provisional.js --confirm <id> --position <oppose|support|routine> --attackType <direct|partial> [--priority <high|medium|low|watching>]',
+    'node scripts/review-provisional.js --confirm <id> --position <oppose|support|routine|statehood-barrier> --attackType <direct|partial> [--priority <high|medium|low|watching>]',
     'node scripts/review-provisional.js --reject <id>',
     '```',
     '',
@@ -112,8 +112,8 @@ function confirm(id) {
   const priority = flag('--priority');
   const category = flag('--category');
 
-  if (!position || !['oppose', 'support', 'routine'].includes(position)) {
-    console.error('--position <oppose|support|routine> is required');
+  if (!position || !['oppose', 'support', 'routine', 'statehood-barrier'].includes(position)) {
+    console.error('--position <oppose|support|routine|statehood-barrier> is required');
     process.exit(1);
   }
   // lint-bills.js requires attackType on non-provisional oppose/routine bills —
@@ -121,6 +121,11 @@ function confirm(id) {
   // label itself. supportBills entries mostly go without one.
   if ((position === 'oppose' || position === 'routine') && (!attackType || !['direct', 'partial'].includes(attackType))) {
     console.error(`--attackType <direct|partial> is required when --position ${position}`);
+    process.exit(1);
+  }
+  // A statehood barrier is not a home-rule incursion: no attackType (lint-bills.js check 3).
+  if (position === 'statehood-barrier' && attackType) {
+    console.error('--attackType does not apply when --position statehood-barrier');
     process.exit(1);
   }
   if (attackType && !['direct', 'partial'].includes(attackType)) {
@@ -141,7 +146,7 @@ function confirm(id) {
   if (category) bill.category = category;
   bill.prioritySource = bill.prioritySource === 'auto-discovered' ? 'manual' : bill.prioritySource;
 
-  const targetSection = { support: 'supportBills', routine: 'routineBills', oppose: 'bills' }[position];
+  const targetSection = { support: 'supportBills', routine: 'routineBills', oppose: 'bills', 'statehood-barrier': 'statehoodBarriers' }[position];
   if (targetSection !== section) {
     data[section].splice(idx, 1);
     data[targetSection] = data[targetSection] || [];

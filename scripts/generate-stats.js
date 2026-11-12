@@ -40,14 +40,18 @@ const active = (list) => (list || []).filter(isActive);
 const bills = active(billsData.bills);
 const riders = active(billsData.riders);
 const routineBills = active(billsData.routineBills);
-const archived = ['bills', 'riders', 'routineBills']
+// Barriers to statehood (H.J.Res. 141): measures that would make statehood harder to win
+// without changing how D.C. is governed today. Their own block, never in the anti-DC
+// totals (Andria, 2026-11-12; decisions/2026-11-12-statehood-barriers-category.md).
+const statehoodBarriers = active(billsData.statehoodBarriers);
+const archived = ['bills', 'riders', 'routineBills', 'statehoodBarriers']
   .flatMap(section => reviewed(billsData[section]))
   .filter(isArchived);
 
 const provisionalCount =
   (billsData.bills || []).length + (billsData.riders || []).length +
-  (billsData.routineBills || []).length -
-  (bills.length + riders.length + routineBills.length + archived.length);
+  (billsData.routineBills || []).length + (billsData.statehoodBarriers || []).length -
+  (bills.length + riders.length + routineBills.length + statehoodBarriers.length + archived.length);
 
 // Riders can advance too: one enacted in a funding law is law (2026-11-09).
 const passedBills = [...bills, ...riders].filter(hasAdvanced);
@@ -95,6 +99,10 @@ const stats = {
   routine: {
     total: countUnits(routineBills).total,
     advanced: countUnits(routineAdvanced).total
+  },
+  statehoodBarriers: {
+    total: countUnits(statehoodBarriers).total,
+    advanced: countUnits(statehoodBarriers.filter(hasAdvanced)).total
   },
   // Final and outside every count above (Andria, 2026-11-09). Kept for the record.
   archived: { total: countUnits(archived).total, ...countUnits(archived) },

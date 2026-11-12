@@ -86,9 +86,9 @@ jobs:
           node --input-type=module << 'EOF'
           import { readFileSync } from 'fs';
           const data = JSON.parse(readFileSync('src/data/bills.json', 'utf-8'));
-          // Every section the monitor scans. Since 2026-11 that is all four; riders are
+          // Every section the monitor scans. Since 2026-11 that is all of them; riders are
           // validated through the spending bill they sit on.
-          const scanned = ['bills', 'riders', 'supportBills', 'routineBills'].flatMap(s => data[s] || []);
+          const scanned = ['bills', 'riders', 'supportBills', 'routineBills', 'statehoodBarriers'].flatMap(s => data[s] || []);
           const unvalidated = scanned.filter(b => !b.congressValidated);
           if (unvalidated.length > 0) {
             console.log(`⚠️  WARNING: ${unvalidated.length} of ${scanned.length} scanned bill(s) have never been confirmed on Congress.gov:`);

@@ -6,6 +6,7 @@ import Nav from './components/Nav'
 import Footer from './components/Footer'
 import CategoryFilter from './components/CategoryFilter'
 import CategoryGroup from './components/CategoryGroup'
+import BillCard from './components/BillCard'
 import SearchBar from './components/SearchBar'
 import DownloadButton from './components/DownloadButton'
 import UpdateBanner from './components/UpdateBanner'
@@ -69,7 +70,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [showOtherBills, setShowOtherBills] = useState(false)
 
-  const { filteredBills, filteredRiders, passedBills, archivedItems, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, totalCount, archivedCount, pendingCount, passedCount, routineCount } = useMemo(() => {
+  const { filteredBills, filteredRiders, passedBills, archivedItems, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, barrierBills, totalCount, archivedCount, pendingCount, passedCount, routineCount, barrierCount } = useMemo(() => {
     // Exclude provisional (auto-discovered, not-yet-human-reviewed) entries from
     // the public oppose/routine sections — their `position` is an unverified
     // default, not a reviewed classification. They still surface in Recent
@@ -85,7 +86,9 @@ function App() {
     const allBills = (billsData.bills || []).filter(isActive)
     const allRiders = (billsData.riders || []).filter(isActive)
     const allRoutineBills = (billsData.routineBills || []).filter(isActive)
-    let archivedItems = ['bills', 'riders', 'routineBills']
+    // Barriers to statehood: their own section and count, never anti-DC (2026-11-12).
+    let barrierBills = (billsData.statehoodBarriers || []).filter(isActive)
+    let archivedItems = ['bills', 'riders', 'routineBills', 'statehoodBarriers']
       .flatMap(section => billsData[section] || [])
       .filter(item => !item.provisional && isArchived(item))
 
@@ -111,6 +114,7 @@ function App() {
       filteredRoutineBills = filteredRoutineBills.filter(bill =>
         selectedCategories.includes(bill.category)
       )
+      barrierBills = barrierBills.filter(bill => selectedCategories.includes(bill.category))
       archivedItems = archivedItems.filter(item => selectedCategories.includes(item.category))
     }
 
@@ -120,6 +124,7 @@ function App() {
       filteredAllBills = filteredAllBills.filter(searchFilter(term))
       filteredRiders = filteredRiders.filter(searchFilter(term))
       filteredRoutineBills = filteredRoutineBills.filter(searchFilter(term))
+      barrierBills = barrierBills.filter(searchFilter(term))
       archivedItems = archivedItems.filter(searchFilter(term))
     }
 
@@ -162,10 +167,11 @@ function App() {
     const pendingCount = countUnits([...filtered, ...filteredRiders]).total
     const passedCount = countUnits(passedBills).total
     const routineCount = countUnits(filteredRoutineBills).total
+    const barrierCount = countUnits(barrierBills).total
     const archivedCount = countUnits(archivedItems).total
     // Everything the search found, archived matches included, so a search that only
     // matches an archived amendment doesn't say "0 items found" above its card.
-    const totalCount = pendingCount + passedCount + routineCount + archivedCount
+    const totalCount = pendingCount + passedCount + routineCount + barrierCount + archivedCount
 
     return {
       filteredBills: filtered,
@@ -176,11 +182,13 @@ function App() {
       otherBillsGroups,
       riderGroups,
       routineGroups,
+      barrierBills,
       totalCount,
       archivedCount,
       pendingCount,
       passedCount,
-      routineCount
+      routineCount,
+      barrierCount
     }
   }, [selectedCategories, searchTerm])
 
@@ -285,10 +293,11 @@ function App() {
         <div className="results-header">
           <h2>
             {totalCount} {totalCount === 1 ? 'item' : 'items'} found
-            {(passedCount > 0 || routineCount > 0 || archivedCount > 0) && (
+            {(passedCount > 0 || routineCount > 0 || barrierCount > 0 || archivedCount > 0) && (
               <span className="count-breakdown"> ({[
                 `${pendingCount} pending`,
                 passedCount > 0 && `${passedCount} passed`,
+                barrierCount > 0 && `${barrierCount} ${barrierCount === 1 ? 'barrier' : 'barriers'} to statehood`,
                 routineCount > 0 && `${routineCount} routine`,
                 archivedCount > 0 && `${archivedCount} archived`,
               ].filter(Boolean).join(', ')})</span>
@@ -405,6 +414,24 @@ function App() {
                 </div>
               </div>
               )}
+              {/* Barriers to statehood: measures that would make statehood harder to win without
+                  changing how D.C. is governed today (H.J.Res. 141). Not home-rule attacks, so
+                  they sit outside the pending section and every anti-DC count, and carry no
+                  direct/partial tag. See METHODOLOGY.md. */}
+              {barrierBills.length > 0 && (
+                <div className="priority-section">
+                  <div className="section-header barriers-header">
+                    <h2><Icon name="alert-triangle" size={18} /> Barriers to statehood ({barrierCount})</h2>
+                    <p className="section-description">
+                      Measures that would make D.C. statehood harder to win without changing how D.C. is governed today. Counted separately from the bills above.
+                    </p>
+                  </div>
+                  {barrierBills.map(bill => (
+                    <BillCard key={bill.id} bill={bill} />
+                  ))}
+                </div>
+              )}
+
               {/* Outside the pending section on purpose: a routine measure can have passed a
                   chamber (S. 1077 passed the Senate), and the pending intro says none have.
                   Everyday Indignities Section — bills that are neither attacks nor
