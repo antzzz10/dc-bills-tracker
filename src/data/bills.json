@@ -1902,13 +1902,14 @@
     {
       "id": "s900",
       "billNumbers": [
-        "S. 900"
+        "S. 900",
+        "H.R. 1421"
       ],
       "title": "Make American Flags in America Act of 2025",
       "sponsors": [
         "Sen Ted Cruz"
       ],
-      "description": "Would prohibit the purchase or display of U.S. flags not made in America",
+      "description": "Senate companion to H.R. 1421. Requires U.S. flags on federal property to be domestically manufactured. Defines the DC government as a \"federal agency,\" reinforcing the constitutional framework that denies DC self-governance. No state government is classified this way",
       "category": "other",
       "position": "oppose",
       "type": "bill",
@@ -3023,6 +3024,84 @@
         "introducedDate": "2026-08-06"
       },
       "attackType": "direct",
+      "passage": {}
+    },
+    {
+      "id": "s3710",
+      "billNumbers": [
+        "S. 3710",
+        "H.R. 954"
+      ],
+      "title": "SOAR Permanent Authorization Act",
+      "fullTitle": "Scholarships for Opportunity and Results Permanent Authorization Act",
+      "sponsors": [
+        "Sen Ron Johnson"
+      ],
+      "description": "Senate version of H.R. 954, with added provisions. Would permanently authorize $75 million a year for the federally imposed SOAR program, split evenly among private-school vouchers, DC public schools and DC charter schools, starting in fiscal year 2027. Would also extend vouchers to pre-K, allow the grant to the organization that runs the voucher program to be renewed for up to five more years without competition, and let a majority of that organization's board live anywhere in the Washington region instead of in DC",
+      "category": "education",
+      "position": "oppose",
+      "type": "bill",
+      "attackType": "direct",
+      "priority": "low",
+      "prioritySource": "manual",
+      "provisional": false,
+      "reviewedDate": "2026-11-12",
+      "reviewMethod": "manual-three-prong",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/senate-bill/3710",
+      "status": {
+        "stage": null,
+        "lastAction": "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+        "lastActionDate": "2026-01-28",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 1,
+        "committees": [
+          "Homeland Security and Governmental Affairs"
+        ],
+        "introducedDate": "2026-01-28"
+      },
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-11",
+      "passage": {}
+    },
+    {
+      "id": "hr9775",
+      "billNumbers": [
+        "H.R. 9775"
+      ],
+      "title": "Concealed Crime Prevention Act",
+      "sponsors": [
+        "Rep Tim Burchett"
+      ],
+      "description": "Would amend DC's criminal code to add mandatory prison time for anyone who wears a ski mask while committing a crime in DC: at least six months for a misdemeanor and at least two years for a felony, served on top of any other sentence. Congress would be writing local criminal law, which it could not do to a state",
+      "category": "crime",
+      "position": "oppose",
+      "type": "bill",
+      "attackType": "direct",
+      "priority": "low",
+      "prioritySource": "manual",
+      "provisional": false,
+      "reviewedDate": "2026-11-12",
+      "reviewMethod": "manual-three-prong",
+      "congressGovLink": "https://www.congress.gov/bill/119th-congress/house-bill/9775",
+      "status": {
+        "stage": null,
+        "lastAction": "Referred to the House Committee on Oversight and Government Reform.",
+        "lastActionDate": "2026-07-20",
+        "hasCommitteeHearing": false,
+        "hasCommitteeMarkup": false,
+        "hasFloorVote": false,
+        "cosponsors": 0,
+        "committees": [
+          "Oversight and Government Reform"
+        ],
+        "introducedDate": "2026-07-20"
+      },
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-11",
       "passage": {}
     }
   ],
