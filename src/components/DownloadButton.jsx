@@ -112,7 +112,7 @@ function DownloadButton({ filteredBills, filteredRiders, filteredBarriers = [] }
     doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 33)
     doc.text(`Last Updated: ${__BUILD_DATE__}`, 14, 38)
     // Measures, not entries (src/lib/measureCounts.js): H.R. 1968 is three rows, one law.
-    doc.text(`Total: ${describeKinds(countUnits([...bills, ...(riders || [])]))}`, 14, 43)
+    doc.text(`Total: ${describeKinds(countUnits([...bills, ...(riders || [])])) || 'no anti-D.C. bills, resolutions or budget riders'}`, 14, 43)
     const barrierCount = countUnits(barriers || []).total
     if (barrierCount > 0) {
       doc.text(`Listed separately, not in the total: ${barrierNote(barrierCount)}`, 14, 48)
