@@ -314,6 +314,7 @@ function App() {
             <DownloadButton
               filteredBills={[...filteredBills, ...passedBills.filter(b => b.type !== 'rider')]}
               filteredRiders={[...filteredRiders, ...passedBills.filter(b => b.type === 'rider')]}
+              filteredBarriers={barrierBills}
             />
           </div>
         </div>
