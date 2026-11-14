@@ -1,6 +1,6 @@
 # Plan: automatic Bluesky posts from the bill tracker
 
-**Version:** v0.2, 2026-11-13 · Answers recorded; shadow mode built · v0.1 (2026-11-10) is in `docs/outdated/` · Builds on the manual posting workflow in `representdc-main/.github/workflows/post-to-bluesky.yml` (live 2026-11-10)
+**Version:** v0.2.1, 2026-11-14 · Post guardrails added · v0.2 (2026-11-13): answers recorded; shadow mode built · v0.1 (2026-11-10) is in `docs/outdated/` · Builds on the manual posting workflow in `representdc-main/.github/workflows/post-to-bluesky.yml` (live 2026-11-10)
 
 ## ✏️ YOUR INPUT GOES HERE
 
@@ -54,6 +54,12 @@ These are the wording changes from v0.1, flagged per your copy rule (old → new
 | New measure | `New anti-DC bill: H.R. 6578, Charlie Kirk Freedom of Speech Plaza Act, introduced Dec 10, 2025. billtracker.representdc.org` |
 | Cosponsors | `Anti-DC bill H.R. 6578, Charlie Kirk Freedom of Speech Plaza Act, now has 3 cosponsors, up from 2. billtracker.representdc.org` |
 | Busy day (4+ events) | `Tracker update: 1 measure became law; 2 measures passed or were agreed to in a chamber; 3 measures gained or lost cosponsors. billtracker.representdc.org` |
+
+**Post guardrails** (Andria, 2026-11-14; they apply to every post, automatic or one-off):
+- **The facts are in the post.** Numbers, names and outcomes go in the text itself. No teasers ("check the site for details").
+- **The link is a reference, never the fact.** A reader who never clicks still gets the whole fact.
+- **Too long for one post → a thread,** not a shorter post with a link.
+- **"At least" for counts still being settled,** such as election results not yet all called: count only what's verified.
 
 **Rules:**
 - **Vote tally:** only when there's an official roll call.
