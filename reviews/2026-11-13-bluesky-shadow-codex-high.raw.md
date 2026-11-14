@@ -1,0 +1,29 @@
+**0 BLOCKER, 5 MATERIAL, 3 NOTE.** Fix the MATERIAL findings before relying on the shadow trial as go-live evidence.
+
+`node scripts/test-bluesky-posts.js` passed all checks. Additional in-memory replays exposed cases the suite misses. No files edited.
+
+1. **MATERIAL — Existing amendments produce false and duplicate posts.** [scripts/lib/bluesky-posts.js:67](/Users/andriathomas/Projects/dc-bills-tracker/scripts/lib/bluesky-posts.js:67)  
+   The exclusion depends on `isProvision`, but existing `hr5242-perry-cameras` and `hr5242-perry-rightturn` records have `type: "bill"` and only the parent’s number. One H.R. 5242 cosponsor change from 1→2 produces **three posts**, including claims that each amendment has two cosponsors. The same eligibility gap admits three H.R. 1968 provision entries. Parent passage can likewise become amendment passage news. The test at [scripts/test-bluesky-posts.js:82](/Users/andriathomas/Projects/dc-bills-tracker/scripts/test-bluesky-posts.js:82) repeats the incomplete classification check, so it passes. This contradicts the plan’s amendment exclusion.
+
+2. **MATERIAL — Unverified seed values can turn corrections into news.** [scripts/lib/bluesky-posts.js:91](/Users/andriathomas/Projects/dc-bills-tracker/scripts/lib/bluesky-posts.js:91), [scripts/lib/bluesky-posts.js:122](/Users/andriathomas/Projects/dc-bills-tracker/scripts/lib/bluesky-posts.js:122)  
+   First-run seeding ignores `freshCosponsors` and trusts stored counts. New-entry initialization also falls back to stored counts when the lookup fails. An otherwise healthy run can therefore establish a hand-entered error as the historical baseline. A later successful lookup announces its correction as a gain/loss. Replayed with existing protected H.J.Res. 142: stored count 0, fresh count 1 on **both runs**; the first seeds 0, the second announces “up from 0” despite identical API observations. Baselines need verified observations; unknown counts should initialize silently on recovery.
+
+3. **MATERIAL — Fresh cosponsor counts can advance the ledger without updating committed bill data.** [scripts/monitor-bills.js:1093](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:1093), [scripts/lib/bluesky-posts.js:128](/Users/andriathomas/Projects/dc-bills-tracker/scripts/lib/bluesky-posts.js:128)  
+   `freshCosponsors` is populated even when `updateBillsJson` preserves a `manualOverride` or outcome and refuses content changes. The collector then posts and advances the count without checking persisted agreement. For existing `hjres142-sjres102`, fresh count 1 yields ledger count 1 while `bills.json` remains 0. This contradicts the workflow’s “the two never disagree” claim at [.github/workflows/monitor-bills.yml:168](/Users/andriathomas/Projects/dc-bills-tracker/.github/workflows/monitor-bills.yml:168). Cosponsors need the persisted-data agreement protection already used for stages.
+
+4. **MATERIAL — Planning failures can consume an event or leave an unrecoverable stage mismatch.** [scripts/monitor-bills.js:1424](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:1424), [scripts/monitor-bills.js:1431](/Users/andriathomas/Projects/dc-bills-tracker/scripts/monitor-bills.js:1431)  
+   The ledger is written before the artifact. If artifact writing fails, the catch returns no posts, but the advanced ledger remains eligible for commit. An in-memory failure replay consumed a House-passage event; the next run produced nothing. Conversely, a failure before ledger advancement still lets updated bills commit, and subsequent runs supply no `passedBills` event because their stage is already current. Planning failures must prevent committing an inconsistent result, and ledger advancement must follow successful output preparation.
+
+5. **MATERIAL — “It now goes to the President” can contradict the fetched record.** [scripts/lib/bluesky-posts.js:168](/Users/andriathomas/Projects/dc-bills-tracker/scripts/lib/bluesky-posts.js:168)  
+   The monitor’s detector retains `passed-both` after a veto; that stage does not establish what happens *now*. Replaying House passage, Senate passage without amendment, then “Vetoed by President” still produces “It now goes to the President.” This can occur when a check catches up after multiple developments. Remove that sentence or require evidence of the current presentment state. The plan repeats the overstatement at [docs/2026-11-10-bluesky-auto-posting-plan.md:44](/Users/andriathomas/Projects/dc-bills-tracker/docs/2026-11-10-bluesky-auto-posting-plan.md:44).
+
+- **NOTE — “Anti-statehood” adds an interpretation.** [scripts/lib/bluesky-posts.js:30](/Users/andriathomas/Projects/dc-bills-tracker/scripts/lib/bluesky-posts.js:30)  
+  The established classification is “Barriers to statehood.” Calling “anti-statehood” the tracker’s own label in plan line 35 is inaccurate. Prefer the established wording.
+
+- **NOTE — Ledger identity lacks Congress and bill identity.** [scripts/lib/bluesky-posts.js:113](/Users/andriathomas/Projects/dc-bills-tracker/scripts/lib/bluesky-posts.js:113)  
+  Reusing an ID in a later Congress suppresses its new-measure event and compares unrelated counts. Qualify ledger identity or explicitly migrate it at the switch.
+
+- **NOTE — Summary posts bypass the grapheme guard.** [scripts/lib/bluesky-posts.js:232](/Users/andriathomas/Projects/dc-bills-tracker/scripts/lib/bluesky-posts.js:232)  
+  Individual posts use grapheme counting and title removal; the summary has no length check. The suite verifies 115 current new-entry texts, but not mixed summaries or all stage templates.
+
+The normal workflow dry-run, unhealthy-run, failed-push, and permitted roster-only rebase paths preserve paired committed data and ledger state. “Became law” is appropriate for a verified enactment; the concrete wording failure found is the presentment claim above.

@@ -13,6 +13,7 @@ import { CURRENT_CONGRESS } from './config.js';
 import { isProvision } from '../src/lib/measureStatus.js';
 import { fetchFullCosponsorList, nextStoreRecord, sponsorRecord, congressGovBillUrl } from './lib/statehood.js';
 import { redactKey } from './lib/congress-api.js';
+import { collectEvents, composePosts } from './lib/bluesky-posts.js';
 
 // Every network call gets a deadline. On 2026-11-10 one Congress.gov request never
 // answered, and with no timeout the whole run sat until GitHub cancelled it at 20 minutes:
@@ -967,6 +968,12 @@ async function monitorBills() {
   const changes = [];
   const errors = [];
   const passedBills = [];
+  // Cosponsor counts read from Congress.gov this run, by entry id: what the Bluesky post
+  // builder may call a change. An entry whose count didn't arrive is absent.
+  const freshCosponsors = new Map();
+  // Entries whose own Congress.gov lookup succeeded this run: a new entry is announced
+  // only once its number has resolved.
+  const looked = new Set();
   // Health is measured per record we tried to reach, across every section. Entries that
   // share a record (H.R. 1968's three provisions, H.R. 5166's 17 riders) are one lookup,
   // so a single bad number can't masquerade as a fleet-wide outage, or the reverse.
@@ -1075,6 +1082,7 @@ async function monitorBills() {
       const updateResult = updateBillsJson(section, bill.id, status.passageInfo, status);
       if (updateResult.stageChanged) {
         passedBills.push({
+          id: bill.id,
           section,
           billNumber: status.billNumber,
           title: bill.title,
@@ -1085,6 +1093,8 @@ async function monitorBills() {
       }
 
       changes.push(changeRecord(bill.id, section, bill.title, status, priorityInfo, bill.status));
+      looked.add(bill.id);
+      if (Number.isInteger(status.cosponsorsCount)) freshCosponsors.set(bill.id, status.cosponsorsCount);
       checkedBySection[section]++;
       logPriority(priorityInfo);
     }
@@ -1182,7 +1192,7 @@ async function monitorBills() {
   }
 
   // Generate report
-  generateReport(changes, errors, passedBills, { attempted, checkedBySection });
+  generateReport(changes, errors, passedBills, { attempted, checkedBySection, freshCosponsors, looked });
 }
 
 // Priority tiers for detecting escalation (watching and low are both "baseline")
@@ -1272,8 +1282,23 @@ function sectionTag(item) {
   return '';
 }
 
-function buildSummaryHtml({ diff, passedBills, errors, totalBills, checkedBySection = {}, timestamp, previousTimestamp, runUrl }) {
+function buildSummaryHtml({ diff, passedBills, errors, totalBills, checkedBySection = {}, timestamp, previousTimestamp, runUrl, bluesky = { posts: [], seeded: false, skipped: null } }) {
   const sections = [];
+
+  // Shadow mode (2026-11-13 → two weeks): the exact posts, nothing published. Shown first
+  // so a wrong post is caught before posting goes live.
+  if (bluesky.skipped === 'planning failed') {
+    sections.push(`<h3 style="margin:20px 0 8px;color:#b91c1c;">🦋 Bluesky post planning failed</h3><p style="margin:0;">Nothing would post today, and this run's data was not saved (the next healthy run redoes it). The run log has the error.</p>`);
+  }
+  if (bluesky.posts.length > 0 || bluesky.seeded) {
+    const rows = bluesky.posts
+      .map(p => `<li style="margin:0 0 8px;"><span style="white-space:pre-wrap;">${escapeHtml(p.text)}</span></li>`)
+      .join('');
+    const note = bluesky.seeded
+      ? 'First run: today\'s data was recorded as the starting point, so nothing would post today.'
+      : 'Shadow mode: nothing was posted. Reply if any of these is wrong.';
+    sections.push(`<h3 style="margin:20px 0 8px;color:#0560ff;">🦋 Would post to Bluesky (${bluesky.posts.length})</h3>${rows ? `<ul style="margin:0;padding-left:20px;">${rows}</ul>` : ''}<p style="margin:4px 0 0;color:#6b7280;font-size:13px;">${note}</p>`);
+  }
 
   if (passedBills.length > 0) {
     const rows = passedBills.map(p => {
@@ -1380,8 +1405,45 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, checkedBySect
   `.trim();
 }
 
+// Bluesky posts for this run (scripts/lib/bluesky-posts.js). Shadow mode: the posts go in
+// the email and in bluesky-would-post.json; nothing is published. Only a healthy check
+// plans posts, and the ledger it advances is committed only with a healthy run's data
+// (the workflow's commit step), so an unhealthy or dry run leaves nothing half-posted.
+function planBlueskyPosts({ passedBills, freshCosponsors, looked, lookupsFailed, changes, timestamp }) {
+  const none = reason => ({ posts: [], seeded: false, skipped: reason });
+  if (lookupsFailed || changes.length === 0) return none('check unhealthy');
+  const ledgerPath = join(__dirname, '../bluesky-ledger.json');
+  try {
+    // undefined only when the file doesn't exist (the first run seeds). A file that exists
+    // is parsed and validated, so a corrupt or emptied ledger fails the run, never reseeds.
+    let ledger;
+    try {
+      ledger = JSON.parse(readFileSync(ledgerPath, 'utf-8'));
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+    const fresh = JSON.parse(readFileSync(billsPath, 'utf-8'));
+    const { events, ledger: next, seeded } = collectEvents({
+      billsData: fresh, passed: passedBills, looked, freshCosponsors, ledger, currentCongress: CONGRESS_NUMBER, now: timestamp
+    });
+    const posts = composePosts(events);
+    // The posts are written before the ledger moves on, so a failure here never marks an
+    // event as posted when no post was prepared.
+    writeFileSync(join(__dirname, '../bluesky-would-post.json'), JSON.stringify({
+      timestamp, mode: 'shadow', seeded, posts: posts.map(p => ({ kind: p.kind, text: p.text, ids: p.events.map(e => e.entry.id) }))
+    }, null, 2));
+    writeFileSync(ledgerPath, JSON.stringify(next, null, 2) + '\n');
+    console.log(`🦋 Bluesky (shadow): ${seeded ? 'ledger seeded, ' : ''}${posts.length} post(s) would go out`);
+    posts.forEach(p => console.log(`   ${p.text}`));
+    return { posts, seeded, skipped: null };
+  } catch (error) {
+    console.error('Bluesky post planning failed:', error.message);
+    return none('planning failed');
+  }
+}
+
 // Generate summary report
-function generateReport(changes, errors, passedBills, { attempted, checkedBySection }) {
+function generateReport(changes, errors, passedBills, { attempted, checkedBySection, freshCosponsors = new Map(), looked = new Set() }) {
   console.log('📋 BILL STATUS REPORT');
   console.log('='.repeat(80));
   console.log(`Congress.gov records looked up: ${attempted}`);
@@ -1484,6 +1546,20 @@ function generateReport(changes, errors, passedBills, { attempted, checkedBySect
 
   console.log('\n' + '='.repeat(80));
 
+  // A run is only trustworthy if most lookups actually succeeded. Below that bar the
+  // data is not verified, so downstream steps must not commit, deploy, or claim success.
+  const MAX_ERROR_RATE = 0.25;
+  // Across every section: a run that reached the 78 oppose bills but none of the support
+  // bills is not a healthy check of the tracker.
+  const errorRate = attempted > 0 ? errors.length / attempted : 1;
+  const lookupsFailed = errorRate > MAX_ERROR_RATE;
+
+  const bluesky = planBlueskyPosts({ passedBills, freshCosponsors, looked, lookupsFailed, changes, timestamp });
+  // Fail closed: if posts couldn't be planned, this run's data is not committed either.
+  // Otherwise bills.json would record a new stage that the next run no longer reports as
+  // a change, and its post would be lost for good. The next healthy run redoes both.
+  const checkFailed = lookupsFailed || bluesky.skipped === 'planning failed';
+
   // Build the diff-based summary that gets emailed (this file, not the full report, is the email content)
   const diff = diffAgainstPrevious(changes, previousEntry ? previousEntry.changes : []);
   const hasMeaningfulChanges = passedBills.length > 0 ||
@@ -1493,6 +1569,7 @@ function generateReport(changes, errors, passedBills, { attempted, checkedBySect
     diff.newFloorVotes.length > 0 ||
     diff.cosponsorJumps.length > 0 ||
     diff.newBills.length > 0 ||
+    bluesky.posts.length > 0 ||
     errors.length > 0;
 
   const runUrl = (process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY && process.env.GITHUB_RUN_ID)
@@ -1507,20 +1584,13 @@ function generateReport(changes, errors, passedBills, { attempted, checkedBySect
     checkedBySection,
     timestamp,
     previousTimestamp: previousEntry ? previousEntry.timestamp : null,
-    runUrl
+    runUrl,
+    bluesky
   });
 
   const summaryPath = join(__dirname, '../monitoring-summary.html');
   writeFileSync(summaryPath, summaryHtml);
   console.log(`💾 Summary saved to: ${summaryPath}`);
-
-  // A run is only trustworthy if most lookups actually succeeded. Below that bar the
-  // data is not verified, so downstream steps must not commit, deploy, or claim success.
-  const MAX_ERROR_RATE = 0.25;
-  // Across every section: a run that reached the 78 oppose bills but none of the support
-  // bills is not a healthy check of the tracker.
-  const errorRate = attempted > 0 ? errors.length / attempted : 1;
-  const checkFailed = errorRate > MAX_ERROR_RATE;
 
   const metaPath = join(__dirname, '../monitoring-meta.json');
   writeFileSync(metaPath, JSON.stringify({
@@ -1532,7 +1602,9 @@ function generateReport(changes, errors, passedBills, { attempted, checkedBySect
     errorCount: errors.length,
     errorRate: Number(errorRate.toFixed(3)),
     checkFailed,
-    hasMeaningfulChanges
+    hasMeaningfulChanges,
+    blueskyWouldPost: bluesky.posts.length,
+    blueskyPlanningFailed: bluesky.skipped === 'planning failed'
   }, null, 2));
   console.log(`💾 Meta saved to: ${metaPath}`);
 

@@ -130,6 +130,10 @@ jobs:
             ERROR_COUNT=$(jq -r '.errorCount' monitoring-meta.json)
             TOTAL_BILLS=$(jq -r '.totalBills' monitoring-meta.json)
             CHECK_FAILED=$(jq -r '.checkFailed' monitoring-meta.json)
+            # Bluesky post planning can fail the check on its own (scripts/monitor-bills.js
+            # planBlueskyPosts); the subject and error then name it instead of the lookups.
+            PLANNING_FAILED=$(jq -r '.blueskyPlanningFailed // false' monitoring-meta.json)
+            echo "planning_failed=$PLANNING_FAILED" >> $GITHUB_OUTPUT
             echo "has_meaningful_changes=$HAS_MEANINGFUL" >> $GITHUB_OUTPUT
             echo "passed_count=$PASSED_COUNT" >> $GITHUB_OUTPUT
             echo "error_count=$ERROR_COUNT" >> $GITHUB_OUTPUT
@@ -152,6 +156,7 @@ jobs:
             monitoring-summary.html
             monitoring-meta.json
             bill-status-history.json
+            bluesky-would-post.json
           retention-days: 90
 
       - name: Commit and push updates
@@ -162,7 +167,11 @@ jobs:
           # statehood-cosponsors.json: the statehood bill's last complete cosponsor lists
           # (scripts/lib/statehood.js). The published public/api/statehood-*.json files are
           # derived from it by every build, so they are not committed.
+          # bluesky-ledger.json: what each entry's state was when last (shadow-)posted, so a
+          # Bluesky post goes out once (scripts/lib/bluesky-posts.js). Committed only with a
+          # healthy run's data, like bills.json, so the two never disagree.
           git add bill-status-history.json src/data/bills.json src/data/statehood-cosponsors.json
+          if [ -f bluesky-ledger.json ]; then git add bluesky-ledger.json; fi
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
@@ -224,7 +233,9 @@ jobs:
           # "notable changes found" — because errors feed hasMeaningfulChanges — so a
           # total API outage arrived in the inbox looking like a productive run.
           subject: >-
-            ${{ steps.summary_meta.outputs.check_failed == 'true'
+            ${{ steps.summary_meta.outputs.planning_failed == 'true'
+              && '⚠️ DC Bills: CHECK FAILED — Bluesky post planning failed, data NOT saved'
+              || steps.summary_meta.outputs.check_failed == 'true'
               && format('⚠️ DC Bills: CHECK FAILED — {0}/{1} lookups errored, data NOT verified',
                         steps.summary_meta.outputs.error_count, steps.summary_meta.outputs.total_bills)
               || (steps.summary_meta.outputs.has_meaningful_changes == 'true'
@@ -241,5 +252,9 @@ jobs:
       - name: Fail the run when the check was unhealthy
         if: steps.summary_meta.outputs.check_failed == 'true'
         run: |
-          echo "::error::Bill check unhealthy: ${{ steps.summary_meta.outputs.error_count }}/${{ steps.summary_meta.outputs.total_bills }} lookups failed. Nothing was committed or deployed, and lastChecked was not stamped."
+          if [ "${{ steps.summary_meta.outputs.planning_failed }}" = "true" ]; then
+            echo "::error::Bluesky post planning failed (see the monitor log). Nothing was committed or deployed, and lastChecked was not stamped."
+          else
+            echo "::error::Bill check unhealthy: ${{ steps.summary_meta.outputs.error_count }}/${{ steps.summary_meta.outputs.total_bills }} lookups failed. Nothing was committed or deployed, and lastChecked was not stamped."
+          fi
           exit 1

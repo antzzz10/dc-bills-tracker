@@ -23,6 +23,7 @@ dist-ssr
 monitoring-report.txt
 monitoring-summary.html
 monitoring-meta.json
+bluesky-would-post.json
 
 # Editor directories and files
 .vscode/*
