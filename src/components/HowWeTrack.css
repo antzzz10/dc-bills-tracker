@@ -1,0 +1,37 @@
+.how-we-track {
+  margin: var(--s-8) 0 0;
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--line);
+  max-width: 720px;
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  /* The nav is sticky; keep the heading visible when opened from a #how-we-track link. */
+  scroll-margin-top: 96px;
+}
+
+.how-we-track h2 {
+  font-size: var(--fs-h2);
+  color: var(--navy);
+  margin: 0 0 var(--s-3);
+}
+
+.how-we-track h3 {
+  font-size: var(--fs-lg);
+  color: var(--navy);
+  margin: var(--s-5) 0 var(--s-2);
+}
+
+.how-we-track p,
+.how-we-track ol {
+  margin: 0 0 var(--s-3);
+}
+
+.how-we-track ol {
+  padding-left: var(--s-5);
+}
+
+.how-we-track li {
+  margin-bottom: var(--s-1);
+}
+

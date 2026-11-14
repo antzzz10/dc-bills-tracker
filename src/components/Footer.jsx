@@ -37,14 +37,18 @@ function Footer() {
               D.C. resident to track anti-DC legislation. Not affiliated with any
               organization.
             </p>
-            <a
-              className="footer-feedback-link"
-              href="https://docs.google.com/forms/d/e/1FAIpQLScoQfgfU-vHBN0EXqGp51Vv79oT2iS-1_uPTzoPtpmFlQ58kQ/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Send feedback <Icon name="external-link" size={15} />
-            </a>
+            <div className="footer-links footer-feedback-link">
+              <a href="#how-we-track">
+                How we decide what's tracked <Icon name="arrow-right" size={15} />
+              </a>
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScoQfgfU-vHBN0EXqGp51Vv79oT2iS-1_uPTzoPtpmFlQ58kQ/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Send feedback <Icon name="external-link" size={15} />
+              </a>
+            </div>
           </div>
         </div>
 

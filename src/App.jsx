@@ -4,6 +4,7 @@ import billsData from './data/bills.json'
 import Icon from './components/Icon'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
+import HowWeTrack from './components/HowWeTrack'
 import CategoryFilter from './components/CategoryFilter'
 import CategoryGroup from './components/CategoryGroup'
 import BillCard from './components/BillCard'
@@ -462,6 +463,8 @@ function App() {
           )}
 
         </div>
+
+        <HowWeTrack />
 
         {/* <ContactSection /> */}
         {/* Contact section hidden until Google Form is set up - see FEEDBACK-SETUP.md */}
