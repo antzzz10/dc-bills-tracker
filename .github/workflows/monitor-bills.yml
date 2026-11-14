@@ -69,6 +69,10 @@ jobs:
       - name: Test statehood cosponsor fetch (offline)
         run: node scripts/test-statehood.js
 
+      # Offline tests for reading Senate tallies from senate.gov's XML records.
+      - name: Test Senate vote parsing (offline)
+        run: node scripts/test-senate-votes.js
+
       - name: Lint bill data (consistency + golden-label eval)
         run: node scripts/lint-bills.js
 

@@ -14,6 +14,7 @@ import { isProvision } from '../src/lib/measureStatus.js';
 import { fetchFullCosponsorList, nextStoreRecord, sponsorRecord, congressGovBillUrl } from './lib/statehood.js';
 import { redactKey } from './lib/congress-api.js';
 import { collectEvents, composePosts } from './lib/bluesky-posts.js';
+import { fetchSenateVote } from './lib/senate-votes.js';
 
 // Every network call gets a deadline. On 2026-11-10 one Congress.gov request never
 // answered, and with no timeout the whole run sat until GitHub cancelled it at 20 minutes:
@@ -128,8 +129,26 @@ async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
       return null;
     }
 
-    // Use new house-vote/senate-vote endpoints (2025 API format)
-    const chamberEndpoint = chamber === 'house' ? 'house-vote' : 'senate-vote';
+    // Congress.gov has no Senate vote endpoint (/senate-vote is 404 everywhere), so
+    // Senate tallies come from senate.gov's own XML record (scripts/lib/senate-votes.js).
+    if (chamber === 'senate') {
+      const result = await fetchSenateVote({
+        congress: CONGRESS_NUMBER, session, rollCallNumber,
+        billType: expected?.billType, number: expected?.number
+      });
+      if (result.ok) {
+        return { ...result.vote, source: buildVoteSourceUrl(chamber, year, session, rollCallNumber) };
+      }
+      if (result.skip) {
+        console.log(`  ❌ Senate roll call ${rollCallNumber} (session ${session}) not used: ${result.reason}`);
+        return null;
+      }
+      console.log(`  ⚠️  Could not read Senate roll call ${rollCallNumber} (session ${session}): ${result.reason}`);
+      return VOTE_FETCH_FAILED;
+    }
+
+    // House votes: Congress.gov's house-vote endpoint (2025 API format).
+    const chamberEndpoint = 'house-vote';
     const voteUrl = `${API_BASE_URL}/${chamberEndpoint}/${CONGRESS_NUMBER}/${session}/${rollCallNumber}?api_key=${CONGRESS_API_KEY}`;
     const response = await fetch(voteUrl);
 
