@@ -1,0 +1,13 @@
+**0 BLOCKER / 1 MATERIAL.** Make one wording change before publishing.
+
+- **MATERIAL — “209 cosponsors in the House today” suggests 209 currently serving members.** The [source data](/Users/andriathomas/Projects/dc-bills-tracker/src/data/statehood-cosponsors.json:24) contains 209 recorded cosponsors, checked November 13. Seven are absent from the current House roster: Cherfilus-McCormick, Connolly, Grijalva, Scott, Swalwell, Turner, and Sherrill. The linked page’s [source explicitly explains this distinction](/Users/andriathomas/Projects/representdc-main/src/components/MemberLookup.jsx:10). **Smallest fix:** replace “has 209 cosponsors in the House today” with **“has 209 recorded House cosponsors.”**
+
+- **NOTE — “including 2 non-voting members” is correct.** They are Resident Commissioner **Pablo José Hernández (Puerto Rico)** and Delegate **Stacey E. Plaskett (Virgin Islands)**. Norton is the sponsor, excluded from the 209. “House cosponsors” correctly includes these territorial representatives; neither should be described as a voting representative. [Official cosponsor list](https://www.congress.gov/bill/119th-congress/house-bill/51/cosponsors).
+
+- **NOTE — January 3, 2027 is the correct constitutional start.** The 120th Congress begins at noon. Its first meeting can occur on another date prescribed by law, so **“starts” is preferable to “convenes.”** Optional copy polish: “Jan. 3, 2027.” [20th Amendment, §§1–2](https://www.archives.gov/founding-docs/amendments-11-27#xx).
+
+- **NOTE — Reintroduction and renewed cosponsorship are correct.** If unenacted when this Congress ends, the proposal must be reintroduced for further consideration. Cosponsorship attaches to the particular bill; members must cosponsor the new bill, with no automatic carryover. “Sign on again” is sound plain language. Reintroduction need not happen on January 3. [CRS on reintroduction](https://www.congress.gov/crs-product/R48533), [CRS on cosponsorship](https://www.congress.gov/crs-product/RS22477).
+
+- **NOTE — Page count matches in local source; live verification remains incomplete.** The generated page data reports **209 cosponsors / 2 non-voting**, and [StatehoodBill.jsx](/Users/andriathomas/Projects/representdc-main/src/StatehoodBill.jsx:62) displays those totals. The deployed page could not be retrieved. Congress.gov’s retrieved snapshot was labeled eight months old and showed 205, so I cannot independently certify its November 14 count; 209 matches your supplied current figure and the local data.
+
+No files edited.
