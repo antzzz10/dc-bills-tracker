@@ -1,0 +1,591 @@
+{
+  "seededAt": "2026-11-14T13:42:52.807Z",
+  "updatedAt": "2026-11-14T13:42:52.807Z",
+  "entries": {
+    "hr6578": {
+      "measure": "119:H.R.6578",
+      "stage": null,
+      "cosponsors": 2
+    },
+    "hr7068": {
+      "measure": "119:H.R.7068",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "s440-hr1089": {
+      "measure": "119:S.440",
+      "stage": null,
+      "cosponsors": 2
+    },
+    "hr3877": {
+      "measure": "119:H.R.3877",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr277": {
+      "measure": "119:H.R.277",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr2096": {
+      "measure": "119:H.R.2096",
+      "stage": "passed-house",
+      "cosponsors": 3
+    },
+    "hr2056-s1522": {
+      "measure": "119:H.R.2056",
+      "stage": "passed-house",
+      "cosponsors": 1
+    },
+    "hr4922-s2686": {
+      "measure": "119:H.R.4922",
+      "stage": "passed-house",
+      "cosponsors": 8
+    },
+    "hjres114": {
+      "measure": "119:H.J.RES.114",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr5015": {
+      "measure": "119:H.R.5015",
+      "stage": null,
+      "cosponsors": 5
+    },
+    "hr5016": {
+      "measure": "119:H.R.5016",
+      "stage": null,
+      "cosponsors": 5
+    },
+    "s2706": {
+      "measure": "119:S.2706",
+      "stage": null,
+      "cosponsors": 3
+    },
+    "hr5140": {
+      "measure": "119:H.R.5140",
+      "stage": "passed-house",
+      "cosponsors": 6
+    },
+    "hr5143": {
+      "measure": "119:H.R.5143",
+      "stage": "passed-house",
+      "cosponsors": 2
+    },
+    "hr5107-s2687": {
+      "measure": "119:H.R.5107",
+      "stage": "passed-house",
+      "cosponsors": 29
+    },
+    "hr5207": {
+      "measure": "119:H.R.5207",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr5214": {
+      "measure": "119:H.R.5214",
+      "stage": "passed-house",
+      "cosponsors": 3
+    },
+    "hr5172": {
+      "measure": "119:H.R.5172",
+      "stage": null,
+      "cosponsors": 2
+    },
+    "hr5242-secondchance": {
+      "measure": "119:H.R.5242",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr5163": {
+      "measure": "119:H.R.5163",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "s2517": {
+      "measure": "119:S.2517",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "s2815": {
+      "measure": "119:S.2815",
+      "stage": null,
+      "cosponsors": 3
+    },
+    "hr5125-s2854": {
+      "measure": "119:H.R.5125",
+      "stage": "passed-house",
+      "cosponsors": 2
+    },
+    "hr5179": {
+      "measure": "119:H.R.5179",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr884-s2636": {
+      "measure": "119:H.R.884",
+      "stage": "passed-house",
+      "cosponsors": 14
+    },
+    "hr2562": {
+      "measure": "119:H.R.2562",
+      "stage": null,
+      "cosponsors": 2
+    },
+    "hconres14-cruz": {
+      "measure": "119:H.CON.RES.14",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr4851": {
+      "measure": "119:H.R.4851",
+      "stage": null,
+      "cosponsors": 4
+    },
+    "hr7-s186": {
+      "measure": "119:H.R.7",
+      "stage": null,
+      "cosponsors": 135
+    },
+    "hr1968-abortion": {
+      "measure": "119:H.R.1968",
+      "stage": "enacted",
+      "cosponsors": 0
+    },
+    "hjres82": {
+      "measure": "119:H.J.RES.82",
+      "stage": null,
+      "cosponsors": 13
+    },
+    "s2907-hr5483": {
+      "measure": "119:S.2907",
+      "stage": null,
+      "cosponsors": 12
+    },
+    "hr1016": {
+      "measure": "119:H.R.1016",
+      "stage": null,
+      "cosponsors": 9
+    },
+    "hr1968-marijuana": {
+      "measure": "119:H.R.1968",
+      "stage": "enacted",
+      "cosponsors": 0
+    },
+    "s1450": {
+      "measure": "119:S.1450",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "sjres68-hjres109": {
+      "measure": "119:S.J.RES.68",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "s218-hr4558": {
+      "measure": "119:S.218",
+      "stage": null,
+      "cosponsors": 3
+    },
+    "s614-hr1738": {
+      "measure": "119:S.614",
+      "stage": null,
+      "cosponsors": 9
+    },
+    "hr1774": {
+      "measure": "119:H.R.1774",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr2522": {
+      "measure": "119:H.R.2522",
+      "stage": null,
+      "cosponsors": 3
+    },
+    "hr5242-perry-cameras": {
+      "measure": "119:H.R.5242",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr5242-perry-rightturn": {
+      "measure": "119:H.R.5242",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr5525": {
+      "measure": "119:H.R.5525",
+      "stage": null,
+      "cosponsors": 2
+    },
+    "s2998": {
+      "measure": "119:S.2998",
+      "stage": null,
+      "cosponsors": 5
+    },
+    "hr69": {
+      "measure": "119:H.R.69",
+      "stage": null,
+      "cosponsors": 2
+    },
+    "s204-hr650": {
+      "measure": "119:S.204",
+      "stage": null,
+      "cosponsors": 6
+    },
+    "sconres7-lee": {
+      "measure": "119:S.CON.RES.7",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr1968-budget": {
+      "measure": "119:H.R.1968",
+      "stage": "enacted",
+      "cosponsors": 0
+    },
+    "s900": {
+      "measure": "119:S.900",
+      "stage": null,
+      "cosponsors": 7
+    },
+    "hr3766": {
+      "measure": "119:H.R.3766",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "s1991-hr4311": {
+      "measure": "119:S.1991",
+      "stage": null,
+      "cosponsors": 15
+    },
+    "hr4519-s2565": {
+      "measure": "119:H.R.4519",
+      "stage": null,
+      "cosponsors": 11
+    },
+    "s2404-hr4670": {
+      "measure": "119:S.2404",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr4788": {
+      "measure": "119:H.R.4788",
+      "stage": null,
+      "cosponsors": 45
+    },
+    "hr5183": {
+      "measure": "119:H.R.5183",
+      "stage": null,
+      "cosponsors": 3
+    },
+    "hr5474": {
+      "measure": "119:H.R.5474",
+      "stage": null,
+      "cosponsors": 3
+    },
+    "hr6372-s3327": {
+      "measure": "119:H.R.6372",
+      "stage": null,
+      "cosponsors": 27
+    },
+    "hjres142-sjres102": {
+      "measure": "119:H.J.RES.142",
+      "stage": "enacted",
+      "cosponsors": null
+    },
+    "hr5815": {
+      "measure": "119:H.R.5815",
+      "stage": null,
+      "cosponsors": 18
+    },
+    "hr5181": {
+      "measure": "119:H.R.5181",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr1686": {
+      "measure": "119:H.R.1686",
+      "stage": null,
+      "cosponsors": 2
+    },
+    "hr1421": {
+      "measure": "119:H.R.1421",
+      "stage": null,
+      "cosponsors": 53
+    },
+    "hr954": {
+      "measure": "119:H.R.954",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hjres31": {
+      "measure": "119:H.J.RES.31",
+      "stage": null,
+      "cosponsors": 8
+    },
+    "s487": {
+      "measure": "119:S.487",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "s3290": {
+      "measure": "119:S.3290",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "s4150": {
+      "measure": "119:S.4150",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr5103": {
+      "measure": "119:H.R.5103",
+      "stage": "passed-house",
+      "cosponsors": 4
+    },
+    "hr8297": {
+      "measure": "119:H.R.8297",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr8455": {
+      "measure": "119:H.R.8455",
+      "stage": null,
+      "cosponsors": 3
+    },
+    "hr8801": {
+      "measure": "119:H.R.8801",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hjres192-sjres195": {
+      "measure": "119:H.J.RES.192",
+      "stage": null,
+      "cosponsors": 7
+    },
+    "hjres193-sjres194": {
+      "measure": "119:H.J.RES.193",
+      "stage": null,
+      "cosponsors": 8
+    },
+    "hr7196": {
+      "measure": "119:H.R.7196",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr9720": {
+      "measure": "119:H.R.9720",
+      "stage": null,
+      "cosponsors": 21
+    },
+    "hr10098": {
+      "measure": "119:H.R.10098",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "s5147": {
+      "measure": "119:S.5147",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr10067-s5274": {
+      "measure": "119:H.R.10067",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "s3710": {
+      "measure": "119:S.3710",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr9775": {
+      "measure": "119:H.R.9775",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr5093": {
+      "measure": "119:H.R.5093",
+      "stage": null,
+      "cosponsors": 6
+    },
+    "s402": {
+      "measure": "119:S.402",
+      "stage": null,
+      "cosponsors": 2
+    },
+    "hr51": {
+      "measure": "119:H.R.51",
+      "stage": null,
+      "cosponsors": 209
+    },
+    "hr7881": {
+      "measure": "119:H.R.7881",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr1537": {
+      "measure": "119:H.R.1537",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr5698": {
+      "measure": "119:H.R.5698",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr5092": {
+      "measure": "119:H.R.5092",
+      "stage": null,
+      "cosponsors": 5
+    },
+    "hr2693": {
+      "measure": "119:H.R.2693",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hr9362": {
+      "measure": "119:H.R.9362",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr6950": {
+      "measure": "119:H.R.6950",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "s4837": {
+      "measure": "119:S.4837",
+      "stage": null,
+      "cosponsors": 4
+    },
+    "s51": {
+      "measure": "119:S.51",
+      "stage": null,
+      "cosponsors": 43
+    },
+    "hr214": {
+      "measure": "119:H.R.214",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr356": {
+      "measure": "119:H.R.356",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "s2688": {
+      "measure": "119:S.2688",
+      "stage": null,
+      "cosponsors": 12
+    },
+    "s2689": {
+      "measure": "119:S.2689",
+      "stage": null,
+      "cosponsors": 11
+    },
+    "hr565": {
+      "measure": "119:H.R.565",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr3047": {
+      "measure": "119:H.R.3047",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr4815": {
+      "measure": "119:H.R.4815",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr4956": {
+      "measure": "119:H.R.4956",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr806": {
+      "measure": "119:H.R.806",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr5654": {
+      "measure": "119:H.R.5654",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr4300": {
+      "measure": "119:H.R.4300",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr6928": {
+      "measure": "119:H.R.6928",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr6339": {
+      "measure": "119:H.R.6339",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr5754": {
+      "measure": "119:H.R.5754",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr4378": {
+      "measure": "119:H.R.4378",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr4088": {
+      "measure": "119:H.R.4088",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr4259": {
+      "measure": "119:H.R.4259",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr7020": {
+      "measure": "119:H.R.7020",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr4061": {
+      "measure": "119:H.R.4061",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr3850": {
+      "measure": "119:H.R.3850",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr1173": {
+      "measure": "119:H.R.1173",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr5856": {
+      "measure": "119:H.R.5856",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr4574": {
+      "measure": "119:H.R.4574",
+      "stage": null,
+      "cosponsors": 0
+    },
+    "hr1022": {
+      "measure": "119:H.R.1022",
+      "stage": null,
+      "cosponsors": 1
+    },
+    "hjres141": {
+      "measure": "119:H.J.RES.141",
+      "stage": null,
+      "cosponsors": 0
+    }
+  }
+}
