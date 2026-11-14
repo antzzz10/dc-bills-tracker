@@ -5,16 +5,46 @@ import './HowWeTrack.css'
 // Anchor #how-we-track is the link to share when someone asks how measures are chosen.
 // Keep the two in step: a rule change there needs a wording change here.
 function HowWeTrack() {
-  const ref = useRef(null)
-  // The page renders client-side, so a shared #how-we-track link can load before this
-  // section exists; scroll to it once it does (same approach as BillCard's #bill-id links).
+  const sectionRef = useRef(null)
+  const detailsRef = useRef(null)
+  // Collapsed by default so it doesn't rival the bill lists (Andria, 2026-11-14). A shared
+  // #how-we-track link, or the footer link, opens it and scrolls to it. The page renders
+  // client-side, so the initial hash is handled on mount (as BillCard does for #bill-id).
   useEffect(() => {
-    if (window.location.hash === '#how-we-track') ref.current?.scrollIntoView()
+    const openIfTargeted = () => {
+      if (window.location.hash !== '#how-we-track') return
+      if (detailsRef.current) detailsRef.current.open = true
+      sectionRef.current?.scrollIntoView()
+    }
+    // A click on a #how-we-track link when the hash is already set fires no hashchange
+    // (e.g. the reader closed the section, then used the footer link again). Plain primary
+    // clicks only: a Cmd/Ctrl-click opens a new tab and shouldn't move this one.
+    let timer
+    const onClick = (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+      if (!e.target.closest?.('a[href="#how-we-track"]')) return
+      clearTimeout(timer)
+      timer = setTimeout(openIfTargeted, 0)
+    }
+    openIfTargeted()
+    window.addEventListener('hashchange', openIfTargeted)
+    document.addEventListener('click', onClick)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('hashchange', openIfTargeted)
+      document.removeEventListener('click', onClick)
+    }
   }, [])
 
+  // The h2 sits outside <summary> because some screen readers drop heading semantics
+  // inside it (Codex, 2026-11-14); it's visually hidden, and the summary shows the same text.
   return (
-    <section ref={ref} className="how-we-track" id="how-we-track" aria-labelledby="how-we-track-title">
-      <h2 id="how-we-track-title">How we decide what's tracked</h2>
+    <section ref={sectionRef} className="how-we-track" id="how-we-track" aria-labelledby="how-we-track-title">
+      <h2 id="how-we-track-title" className="how-we-track-sr">How we decide what's tracked</h2>
+      <details ref={detailsRef}>
+      <summary>
+        <span className="how-we-track-summary-text">How we decide what's tracked</span>
+      </summary>
       <p>
         A person reviews every bill, resolution and budget rider against the rules below before
         it's classified or counted. A measure our automated search has just found can appear under
@@ -92,6 +122,7 @@ function HowWeTrack() {
         lists it or we flag it, except a partial one, which needs activity in Congress to be high
         priority. Priority doesn't rank how harmful a measure is.
       </p>
+      </details>
     </section>
   )
 }
