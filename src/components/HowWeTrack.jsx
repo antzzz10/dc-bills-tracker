@@ -109,7 +109,7 @@ function HowWeTrack() {
         <a href="https://freedcproject.org/congress" target="_blank" rel="noopener noreferrer">
           Free DC
         </a>
-        's list of bills it opposes, the D.C. Statehood Scorecard, news coverage and readers' tips,
+        's public list of bills that attack D.C., the D.C. Statehood Scorecard, news coverage and readers' tips,
         and a weekly automated search of Congress.gov for bills that mention D.C. The search only
         finds candidates: it can tell that a bill mentions D.C., not whether the bill harms D.C., so
         a person decides.
@@ -118,9 +118,11 @@ function HowWeTrack() {
       <h3>Priority</h3>
       <p>
         Priority mostly shows how much is happening to a measure in Congress: hearings, committee
-        votes, floor votes and cosponsors. A measure against D.C. is also high priority when Free DC
-        lists it or we flag it, except a partial one, which needs activity in Congress to be high
-        priority. Priority doesn't rank how harmful a measure is.
+        votes, floor votes and cosponsors. A measure against D.C. is also high priority when we flag
+        it, for example because Free DC has called it out publicly. A partial one needs activity in
+        Congress to be high priority. Free DC's public list doesn't rank bills; the group says it
+        opposes every bill in Congress that tries to interfere with D.C.'s self-government. Our
+        priority doesn't rank how harmful a measure is either.
       </p>
       </details>
     </section>

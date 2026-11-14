@@ -353,7 +353,7 @@ function App() {
                   <div className="section-header high-priority-header">
                     <h2><Icon name="alert-circle" size={18} /> High priority bills ({countUnits(highPriorityGroups.flatMap(g => g.bills)).total})</h2>
                     <p className="section-description">
-                      Bills with significant legislative activity or identified as high-priority threats by FreeDC
+                      Bills with significant legislative activity, or that we've flagged, such as bills Free DC has called out publicly
                     </p>
                   </div>
                   {highPriorityGroups.map(group => (
