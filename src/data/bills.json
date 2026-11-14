@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-11-12",
-  "lastChecked": "2026-11-14T18:52:37.714Z",
+  "lastUpdated": "2026-11-14",
+  "lastChecked": "2026-11-14T20:19:32.797Z",
   "categories": [
     {
       "id": "abolishing",
@@ -1246,6 +1246,29 @@
           },
           "source": "https://clerk.house.gov/Votes/202570",
           "verifiedOn": "2026-08-23"
+        },
+        "senate": {
+          "date": "2025-03-14",
+          "vote": {
+            "yeas": 54,
+            "nays": 46,
+            "byParty": {
+              "republican": {
+                "yeas": 52,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 1,
+                "nays": 44
+              },
+              "independent": {
+                "yeas": 1,
+                "nays": 1
+              }
+            }
+          },
+          "source": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00133.htm",
+          "verifiedOn": "2026-11-14"
         }
       },
       "attackType": "direct",
@@ -1396,6 +1419,29 @@
           },
           "source": "https://clerk.house.gov/Votes/202570",
           "verifiedOn": "2026-08-23"
+        },
+        "senate": {
+          "date": "2025-03-14",
+          "vote": {
+            "yeas": 54,
+            "nays": 46,
+            "byParty": {
+              "republican": {
+                "yeas": 52,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 1,
+                "nays": 44
+              },
+              "independent": {
+                "yeas": 1,
+                "nays": 1
+              }
+            }
+          },
+          "source": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00133.htm",
+          "verifiedOn": "2026-11-14"
         }
       },
       "attackType": "direct",
@@ -1892,6 +1938,29 @@
           },
           "source": "https://clerk.house.gov/Votes/202570",
           "verifiedOn": "2026-08-23"
+        },
+        "senate": {
+          "date": "2025-03-14",
+          "vote": {
+            "yeas": 54,
+            "nays": 46,
+            "byParty": {
+              "republican": {
+                "yeas": 52,
+                "nays": 1
+              },
+              "democrat": {
+                "yeas": 1,
+                "nays": 44
+              },
+              "independent": {
+                "yeas": 1,
+                "nays": 1
+              }
+            }
+          },
+          "source": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00133.htm",
+          "verifiedOn": "2026-11-14"
         }
       },
       "attackType": "direct",
