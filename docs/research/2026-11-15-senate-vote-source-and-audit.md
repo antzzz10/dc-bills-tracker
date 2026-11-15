@@ -45,7 +45,9 @@ For a bill that passed the Senate by roll call: the totals, the date and the par
 5. A hand-entered tally on a locked entry (H.J.Res. 142) is never changed, but the run now reports an error if it stops matching the official record.
 6. Senate tallies are no longer requested for resolutions, whose tallies the site doesn't show. That was 2 of the 5 daily errors.
 
-Codex reviewed the change at medium and high effort on Nov 15, 2026 (`reviews/2026-11-15-senate-vote-fallback-codex-*.raw.md`). Rules 2 (date), 3 (one-vote margins), 4 (announcements) and 5 came from those reviews.
+7. The tally shown is the latest Senate passage's. If the Senate later passes the bill again without a roll call, the run reports the stored tally as out of date for a person to correct.
+
+Codex reviewed the change at medium and high effort on Nov 15, 2026, then rechecked the fixes four times; the last pass found nothing further (`reviews/2026-11-15-senate-vote-fallback-codex-*.raw.md`). Rules 2 (date), 3 (one-vote margins), 4 (announcements), 5 and 7 came from those reviews.
 
 ## Audit of published numbers (Nov 15, 2026)
 
