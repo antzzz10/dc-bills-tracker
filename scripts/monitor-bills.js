@@ -14,7 +14,7 @@ import { isProvision } from '../src/lib/measureStatus.js';
 import { fetchFullCosponsorList, nextStoreRecord, sponsorRecord, congressGovBillUrl } from './lib/statehood.js';
 import { redactKey } from './lib/congress-api.js';
 import { collectEvents, composePosts } from './lib/bluesky-posts.js';
-import { fetchSenateVote } from './lib/senate-votes.js';
+import { fetchSenateVote, reconcileSenateVote, parseActionTally, combineActionVotes, mergeSenateVote, checkLockedSenateVote } from './lib/senate-votes.js';
 
 // Every network call gets a deadline. On 2026-11-10 one Congress.gov request never
 // answered, and with no timeout the whole run sat until GitHub cancelled it at 20 minutes:
@@ -120,6 +120,16 @@ function buildVoteSourceUrl(chamber, year, session, rollCallNumber) {
 // incomplete, so it counts against the run's health (Codex, 2026-11-10).
 const VOTE_FETCH_FAILED = Object.freeze({ failed: true });
 
+// One request to senate.gov per roll call per run: Congress.gov lists a passage twice (the
+// action and its "Passed/agreed to in Senate" marker), and several entries can share a
+// bill. Only senate.gov's answer is kept; each action's own totals and date are still
+// checked against it (Codex, 2026-11-15).
+const senateFetchMemo = new Map();
+// Set once senate.gov has refused a request after its retries. When it refuses one it
+// refuses them all (it did on 2026-11-14), so the rest of the run asks once each instead
+// of spending the job's time limit on retries.
+let senateGovUnreachable = false;
+
 async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
   try {
     // Sessions run 1..2 within a Congress; anything else means the action date is bogus.
@@ -130,14 +140,28 @@ async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
     }
 
     // Congress.gov has no Senate vote endpoint (/senate-vote is 404 everywhere), so
-    // Senate tallies come from senate.gov's own XML record (scripts/lib/senate-votes.js).
+    // Senate tallies come from senate.gov's own XML record, checked against the totals in
+    // Congress.gov's action line. When senate.gov can't be reached, those totals are used
+    // alone, without party rows (scripts/lib/senate-votes.js).
     if (chamber === 'senate') {
-      const result = await fetchSenateVote({
+      const memoKey = `${session}:${Number(rollCallNumber)}:${expected?.billType}:${expected?.number}`;
+      const wanted = {
         congress: CONGRESS_NUMBER, session, rollCallNumber,
         billType: expected?.billType, number: expected?.number
-      });
+      };
+      if (!senateFetchMemo.has(memoKey)) {
+        senateFetchMemo.set(memoKey, await fetchSenateVote(wanted, senateGovUnreachable ? { retryDelaysMs: [] } : {}));
+      }
+      const fetched = senateFetchMemo.get(memoKey);
+      if (fetched.unreachable) senateGovUnreachable = true;
+      const result = reconcileSenateVote(fetched, wanted, { tally: expected?.tally, actionDate: expected?.actionDate });
+      const source = buildVoteSourceUrl(chamber, year, session, rollCallNumber);
+      if (result.ok && result.totalsOnly) {
+        console.log(`  ⚠️  senate.gov unreachable for roll call ${rollCallNumber} (${result.unreachableReason}); using Congress.gov's totals`);
+        return { ...result.vote, source, totalsOnly: true, unreachableReason: result.unreachableReason };
+      }
       if (result.ok) {
-        return { ...result.vote, source: buildVoteSourceUrl(chamber, year, session, rollCallNumber) };
+        return { ...result.vote, source };
       }
       if (result.skip) {
         console.log(`  ❌ Senate roll call ${rollCallNumber} (session ${session}) not used: ${result.reason}`);
@@ -231,6 +255,7 @@ async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
 // every measure type and every method, voice votes and unanimous consent included. The
 // tally-specific matches below miss voice votes (S. 1077's Senate passage was one).
 const PASSAGE_MARKER = { house: /^Passed\/agreed to in House/i, senate: /^Passed\/agreed to in Senate/i };
+const RESOLUTION_TYPES = ['hres', 'sres', 'hconres', 'sconres'];
 
 // One definition of "this action is a chamber passing the measure", shared by the tally
 // detection in detectPassage and the finality helpers below, so they never disagree:
@@ -289,6 +314,7 @@ async function detectPassage(actions, chamber, expected) {
     senateVote: null,
     stage: null
   };
+  const senateRolls = new Map();
 
   // Sort actions by date (most recent first)
   const sortedActions = [...actions].sort((a, b) => {
@@ -361,18 +387,38 @@ async function detectPassage(actions, chamber, expected) {
         }
       }
 
-      if (rollNumber) {
+      // A resolution's tally is never published (its votes are cleared below), so its
+      // record isn't requested: two of the five daily Senate errors in November 2026 were
+      // for tallies the site doesn't show.
+      if (rollNumber && RESOLUTION_TYPES.includes(expected?.billType)) {
+        console.log(`  🗳️  Senate agreement by roll call ${rollNumber} (tally not published for resolutions)`);
+      } else if (rollNumber) {
         console.log(`  🗳️  Detected Senate passage with roll call ${rollNumber}`);
 
-        // Fetch vote details
-        const voteData = await fetchRollCallVote('senate', new Date(actionDate).getFullYear(), rollNumber, expected);
-        if (voteData === VOTE_FETCH_FAILED) {
-          passageInfo.voteFetchFailed = true;
-        } else if (voteData) {
-          passageInfo.senateVote = voteData;
-          console.log(`  ✓ Senate vote data: ${voteData.yeas}-${voteData.nays}`);
-        }
+        // Fetch vote details. The action's own tally and date go along as the second
+        // official record: a cross-check, and the fallback when senate.gov is unreachable.
+        const voteData = await fetchRollCallVote('senate', new Date(actionDate).getFullYear(), rollNumber,
+          { ...expected, tally: parseActionTally(actionText), actionDate });
+        // Congress.gov cites one vote on two action lines. Each line is checked on its
+        // own; the outcomes are combined per roll call after the loop.
+        const seen = senateRolls.get(rollNumber) || { votes: [], failed: false };
+        if (voteData === VOTE_FETCH_FAILED) seen.failed = true;
+        else if (voteData) seen.votes.push(voteData);
+        senateRolls.set(rollNumber, seen);
       }
+    }
+  }
+
+  // One result per Senate roll call, in the order the actions were read (so the vote that
+  // ends up shown is the same one as before this bookkeeping existed). The rule for
+  // combining the lines is combineActionVotes in scripts/lib/senate-votes.js.
+  for (const [rollNumber, seen] of senateRolls) {
+    const combined = combineActionVotes(seen);
+    if (combined.disagree) console.log(`  ❌ Congress.gov's action lines disagree about Senate roll call ${rollNumber}; not used`);
+    if (combined.failed) passageInfo.voteFetchFailed = true;
+    if (combined.vote) {
+      passageInfo.senateVote = combined.vote;
+      console.log(`  ✓ Senate vote data: ${combined.vote.yeas}-${combined.vote.nays}`);
     }
   }
 
@@ -385,7 +431,7 @@ async function detectPassage(actions, chamber, expected) {
   // concurrent resolutions are "agreed to", never passed or enacted; Congress.gov marks
   // each chamber's agreement with a "Passed/agreed to in <chamber>" action.
   const { billType, title } = expected || {};
-  if (['hres', 'sres', 'hconres', 'sconres'].includes(billType)) {
+  if (RESOLUTION_TYPES.includes(billType)) {
     const agreedHouse = actions.some(a => /^Passed\/agreed to in House/i.test(a.text || ''));
     const agreedSenate = actions.some(a => /^Passed\/agreed to in Senate/i.test(a.text || ''));
     passageInfo.houseVote = null;
@@ -731,6 +777,7 @@ function updateBillsJson(section, billId, passageInfo, status) {
 
     let updated = false;
     let stageChanged = false;
+    let senateNote = null;
 
     // A successful fetch *is* the validation: validate-bills.js confirms a bill by doing
     // the same GET /bill/{congress}/{type}/{number} and checking res.ok, which the monitor
@@ -762,6 +809,12 @@ function updateBillsJson(section, billId, passageInfo, status) {
     // provision's. H.Con.Res. 14 was agreed to; S.Amdt. 2195 to it never got a vote.
     const protectedEntry = bill.manualOverride || bill.outcome || isProvision(bill);
     if (protectedEntry) {
+      // A locked entry keeps its hand-entered Senate tally, but a disagreement with the
+      // official record is still reported (Codex, 2026-11-15). Provisions and verified
+      // outcomes are left out: the bill number's vote isn't theirs.
+      if (bill.manualOverride && passageInfo.senateVote && bill.passage?.senate) {
+        senateNote = checkLockedSenateVote(bill.passage.senate, passageInfo.senateVote);
+      }
       console.log(`  🔒 Skipping ${billId}: ${bill.manualOverride ? 'manual override is set (preserving manual edits)' : 'provision or verified outcome; its own status is not this bill number\'s'}`);
       if (updated) {
         // Only ever the validation stamp, and only the first time — no lastUpdated bump,
@@ -769,7 +822,7 @@ function updateBillsJson(section, billId, passageInfo, status) {
         writeFileSync(billsPath, JSON.stringify(billsData, null, 2));
         console.log(`  💾 Updated bills.json`);
       }
-      return { updated, stageChanged: false };
+      return { updated, stageChanged: false, senateNote };
     }
 
     // Update status stage, but never move a bill backwards. An enacted bill keeps its
@@ -852,27 +905,19 @@ function updateBillsJson(section, billId, passageInfo, status) {
     }
 
     if (passageInfo.senateVote) {
+      // What to store when senate.gov was unreachable and only Congress.gov's totals
+      // arrived is decided in scripts/lib/senate-votes.js: a stored record with party
+      // rows is never replaced by one without, and a disagreement changes nothing.
       const existingVote = bill.passage.senate;
-      const needsUpdate = !existingVote ||
-                          existingVote.vote.yeas !== passageInfo.senateVote.yeas ||
-                          existingVote.vote.nays !== passageInfo.senateVote.nays ||
-                          existingVote.date !== passageInfo.senateVote.date ||
-                          !existingVote.source;
-
-      if (needsUpdate) {
-        bill.passage.senate = {
-          date: passageInfo.senateVote.date,
-          vote: {
-            yeas: passageInfo.senateVote.yeas,
-            nays: passageInfo.senateVote.nays,
-            byParty: passageInfo.senateVote.byParty
-          },
-          source: passageInfo.senateVote.source,
-          verifiedOn: new Date().toISOString().split('T')[0]
-        };
+      const merged = mergeSenateVote(existingVote, passageInfo.senateVote, new Date().toISOString().split('T')[0]);
+      senateNote = merged.note;
+      if (merged.record) {
+        bill.passage.senate = merged.record;
         updated = true;
         const action = existingVote ? 'Updated' : 'Added';
-        console.log(`  ✓ ${action} Senate vote data: ${passageInfo.senateVote.yeas}-${passageInfo.senateVote.nays}`);
+        console.log(`  ✓ ${action} Senate vote data: ${passageInfo.senateVote.yeas}-${passageInfo.senateVote.nays}${passageInfo.senateVote.totalsOnly ? ' (totals only, from Congress.gov)' : ''}`);
+      } else if (passageInfo.senateVote.totalsOnly && !senateNote) {
+        console.log(`  ✓ Stored Senate vote kept; its totals match Congress.gov's`);
       }
     }
 
@@ -906,7 +951,7 @@ function updateBillsJson(section, billId, passageInfo, status) {
       console.log(`  💾 Updated bills.json`);
     }
 
-    return { updated, stageChanged };
+    return { updated, stageChanged, senateNote };
   } catch (error) {
     console.log(`  ❌ Error updating bills.json:`, error.message);
     return { updated: false, stageChanged: false };
@@ -986,6 +1031,9 @@ async function monitorBills() {
 
   const changes = [];
   const errors = [];
+  // Things a reader of the email should know that aren't failed lookups: today, a Senate
+  // vote shown with totals but no party rows because senate.gov refused this run.
+  const knownGaps = [];
   const passedBills = [];
   // Cosponsor counts read from Congress.gov this run, by entry id: what the Bluesky post
   // builder may call a change. An entry whose count didn't arrive is absent.
@@ -1099,6 +1147,14 @@ async function monitorBills() {
       // Persist tracked status (stage, votes, cosponsors, hearing/markup/floor flags) for every bill,
       // not just ones that passed a chamber — cosponsor/committee movement matters on its own.
       const updateResult = updateBillsJson(section, bill.id, status.passageInfo, status);
+      if (updateResult.senateNote) {
+        // Entries can share a bill number (H.R. 1968 has three); report each note once.
+        const list = updateResult.senateNote.kind === 'conflict' ? errors : knownGaps;
+        const reason = updateResult.senateNote.text;
+        if (!list.some(e => e.billNumber === status.billNumber && e.reason === reason)) {
+          list.push({ billNumber: status.billNumber, section, reason });
+        }
+      }
       if (updateResult.stageChanged) {
         passedBills.push({
           id: bill.id,
@@ -1107,7 +1163,8 @@ async function monitorBills() {
           title: bill.title,
           stage: status.passageInfo.stage,
           houseVote: status.passageInfo.houseVote,
-          senateVote: status.passageInfo.senateVote
+          // A tally the merge refused must not be announced either (Codex, 2026-11-15).
+          senateVote: updateResult.senateNote?.kind === 'conflict' ? null : status.passageInfo.senateVote
         });
       }
 
@@ -1204,14 +1261,16 @@ async function monitorBills() {
       }
       if (passed.senateVote) {
         console.log(`   Senate: ${passed.senateVote.yeas}-${passed.senateVote.nays} on ${passed.senateVote.date}`);
-        console.log(`   Party breakdown: R ${passed.senateVote.byParty.republican.yeas}-${passed.senateVote.byParty.republican.nays}, D ${passed.senateVote.byParty.democrat.yeas}-${passed.senateVote.byParty.democrat.nays}`);
+        if (passed.senateVote.byParty) {
+          console.log(`   Party breakdown: R ${passed.senateVote.byParty.republican.yeas}-${passed.senateVote.byParty.republican.nays}, D ${passed.senateVote.byParty.democrat.yeas}-${passed.senateVote.byParty.democrat.nays}`);
+        }
       }
     });
     console.log('\n' + '='.repeat(80) + '\n');
   }
 
   // Generate report
-  generateReport(changes, errors, passedBills, { attempted, checkedBySection, freshCosponsors, looked });
+  generateReport(changes, errors, passedBills, { attempted, checkedBySection, freshCosponsors, looked, knownGaps });
 }
 
 // Priority tiers for detecting escalation (watching and low are both "baseline")
@@ -1301,7 +1360,7 @@ function sectionTag(item) {
   return '';
 }
 
-function buildSummaryHtml({ diff, passedBills, errors, totalBills, checkedBySection = {}, timestamp, previousTimestamp, runUrl, bluesky = { posts: [], seeded: false, skipped: null } }) {
+function buildSummaryHtml({ diff, passedBills, errors, knownGaps = [], totalBills, checkedBySection = {}, timestamp, previousTimestamp, runUrl, bluesky = { posts: [], seeded: false, skipped: null } }) {
   const sections = [];
 
   // Shadow mode (2026-11-13 → two weeks): the exact posts, nothing published. Shown first
@@ -1322,9 +1381,10 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, checkedBySect
   if (passedBills.length > 0) {
     const rows = passedBills.map(p => {
       const vote = p.houseVote || p.senateVote;
-      const voteText = vote
-        ? ` — ${vote.yeas}-${vote.nays} (R ${vote.byParty.republican.yeas}-${vote.byParty.republican.nays}, D ${vote.byParty.democrat.yeas}-${vote.byParty.democrat.nays})`
+      const partyText = vote?.byParty
+        ? ` (R ${vote.byParty.republican.yeas}-${vote.byParty.republican.nays}, D ${vote.byParty.democrat.yeas}-${vote.byParty.democrat.nays})`
         : '';
+      const voteText = vote ? ` — ${vote.yeas}-${vote.nays}${partyText}` : '';
       const action = p.section === 'bills'
         ? `<br><em>Action to consider:</em> publish an urgent alert on the site and/or a newsletter update.`
         : '';
@@ -1387,6 +1447,13 @@ function buildSummaryHtml({ diff, passedBills, errors, totalBills, checkedBySect
       ? 'Every lookup failed — this is an API-wide problem (outage, key, or rate limit), not bad bill numbers. Bill data was NOT verified this run.'
       : 'Check bill number formatting or Congress.gov API status.';
     sections.push(`<h3 style="margin:20px 0 8px;color:#b91c1c;">⚠️ Fetch errors (${errors.length} of ${totalBills})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul><p style="margin:4px 0 0;"><em>Action to consider:</em> ${escapeHtml(guidance)}</p>`);
+  }
+
+  if (knownGaps.length > 0) {
+    const rows = knownGaps
+      .map(g => `<li>${escapeHtml(g.billNumber)}: ${escapeHtml(g.reason)}</li>`)
+      .join('');
+    sections.push(`<h3 style="margin:20px 0 8px;color:#b45309;">🟡 Known gap, not an error (${knownGaps.length})</h3><ul style="margin:0;padding-left:20px;">${rows}</ul><p style="margin:4px 0 0;">senate.gov sometimes refuses requests from GitHub's servers. The site shows the vote totals without the party rows until a later run reads the Senate's record. Nothing to do unless this repeats for several days.</p>`);
   }
 
   const hasNotableChanges = sections.length > 0;
@@ -1462,7 +1529,7 @@ function planBlueskyPosts({ passedBills, freshCosponsors, looked, lookupsFailed,
 }
 
 // Generate summary report
-function generateReport(changes, errors, passedBills, { attempted, checkedBySection, freshCosponsors = new Map(), looked = new Set() }) {
+function generateReport(changes, errors, passedBills, { attempted, checkedBySection, freshCosponsors = new Map(), looked = new Set(), knownGaps = [] }) {
   console.log('📋 BILL STATUS REPORT');
   console.log('='.repeat(80));
   console.log(`Congress.gov records looked up: ${attempted}`);
@@ -1516,6 +1583,12 @@ function generateReport(changes, errors, passedBills, { attempted, checkedBySect
   byPriority.watching.forEach(change => {
     console.log(`  ${change.billNumber}: ${change.bill}`);
   });
+
+  if (knownGaps.length > 0) {
+    console.log('\n\n🟡 KNOWN GAPS (not errors)');
+    console.log('-'.repeat(80));
+    knownGaps.forEach(g => console.log(`  ${g.billNumber}: ${g.reason}`));
+  }
 
   if (errors.length > 0) {
     console.log('\n\n❌ ERRORS');
@@ -1589,6 +1662,7 @@ function generateReport(changes, errors, passedBills, { attempted, checkedBySect
     diff.cosponsorJumps.length > 0 ||
     diff.newBills.length > 0 ||
     bluesky.posts.length > 0 ||
+    knownGaps.length > 0 ||
     errors.length > 0;
 
   const runUrl = (process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY && process.env.GITHUB_RUN_ID)
@@ -1599,6 +1673,7 @@ function generateReport(changes, errors, passedBills, { attempted, checkedBySect
     diff,
     passedBills,
     errors,
+    knownGaps,
     totalBills: attempted,
     checkedBySection,
     timestamp,
@@ -1619,6 +1694,7 @@ function generateReport(changes, errors, passedBills, { attempted, checkedBySect
     checkedBySection,
     passedCount: passedBills.length,
     errorCount: errors.length,
+    knownGapCount: knownGaps.length,
     errorRate: Number(errorRate.toFixed(3)),
     checkFailed,
     hasMeaningfulChanges,
