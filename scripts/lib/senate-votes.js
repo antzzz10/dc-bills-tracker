@@ -281,6 +281,38 @@ export function combineActionVotes({ votes = [], failed = false, noEvidence = fa
   return { vote: votes.find(v => !v.totalsOnly) || first, failed: false, disagree: false };
 }
 
+/**
+ * Which Senate vote a bill shows, from all its Senate passage actions.
+ *   passages: one per passage action line, { date, rollKey } (rollKey null for a voice
+ *     vote or unanimous consent, or when no tally is wanted).
+ *   rolls: Map of rollKey → { rollNumber, votes, failed, noEvidence } (see combineActionVotes).
+ * The vote shown is the latest passage's. If that passage had no roll call, or two
+ * different passages share the latest date (Congress.gov gives no reliable order within a
+ * day), no tally is shown: an earlier vote never stands in for the latest passage.
+ * A substantive failure on any roll call, shown or not, is reported.
+ * Returns { vote, failed, messages }.
+ */
+export function selectSenateVote(passages, rolls) {
+  const messages = [];
+  let failed = false;
+  const combined = new Map();
+  for (const [key, seen] of rolls) {
+    const c = combineActionVotes(seen);
+    combined.set(key, c);
+    if (c.disagree) messages.push(`Congress.gov's action lines disagree about Senate roll call ${seen.rollNumber}; not used`);
+    if (c.failed) failed = true;
+  }
+  if (passages.length === 0) return { vote: null, failed, messages };
+  const latestDate = passages.map(p => String(p.date)).sort().pop();
+  const latestKeys = new Set(passages.filter(p => String(p.date) === latestDate).map(p => p.rollKey));
+  if (latestKeys.size > 1) {
+    messages.push(`more than one Senate passage on ${latestDate}; no tally shown`);
+    return { vote: null, failed, messages };
+  }
+  const [key] = latestKeys;
+  return { vote: key === null ? null : (combined.get(key)?.vote || null), failed, messages };
+}
+
 const sameParty = (a, b) => JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
 
 /**

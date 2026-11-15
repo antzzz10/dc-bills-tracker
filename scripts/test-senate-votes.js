@@ -5,7 +5,7 @@
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { parseSenateVote, fetchSenateVote, resolveSenateVote, reconcileSenateVote, combineActionVotes, mergeSenateVote, checkLockedSenateVote, parseActionTally, senateVoteXmlUrl, normalizeDocumentType } from './lib/senate-votes.js';
+import { parseSenateVote, fetchSenateVote, resolveSenateVote, reconcileSenateVote, combineActionVotes, selectSenateVote, mergeSenateVote, checkLockedSenateVote, parseActionTally, senateVoteXmlUrl, normalizeDocumentType } from './lib/senate-votes.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const fixture = (session, roll) =>
@@ -252,6 +252,25 @@ console.log('\nOne senate.gov answer, several Congress.gov action lines');
   check('the record with party rows wins over totals', combineActionVotes({ votes: [t(51, 48), fullVote], failed: false }).vote === fullVote);
   check('no answer at all: failed stays failed', (r => !r.vote && r.failed)(combineActionVotes({ votes: [], failed: true })));
   check('no lookups made: nothing, no failure', (r => !r.vote && !r.failed)(combineActionVotes({ votes: [], failed: false })));
+}
+
+console.log('\nWhich passage\'s vote is shown');
+{
+  const v = (yeas, nays, date) => ({ yeas, nays, date, byParty: {} });
+  const roll = (rollNumber, votes, extra = {}) => ({ rollNumber, votes, failed: false, noEvidence: false, ...extra });
+  const march = v(54, 46, '2025-03-14'), april = v(60, 40, '2025-04-20');
+  const two = [{ date: '2025-03-14', rollKey: '2025:133' }, { date: '2025-03-14', rollKey: '2025:133' }];
+  check('one passage cited on two lines: its vote', selectSenateVote(two, new Map([['2025:133', roll(133, [march, march])]])).vote === march);
+  const both = new Map([['2025:200', roll(200, [april])], ['2025:133', roll(133, [march])]]);
+  const twoPassages = [{ date: '2025-04-20', rollKey: '2025:200' }, { date: '2025-03-14', rollKey: '2025:133' }];
+  check('two passages: the later one\'s vote, whatever the order read', selectSenateVote(twoPassages, both).vote === april && selectSenateVote([...twoPassages].reverse(), new Map([...both].reverse())).vote === april);
+  check('later passage by unanimous consent: the earlier tally is not shown', (r => r.vote === null && !r.failed)(selectSenateVote([{ date: '2025-04-20', rollKey: null }, { date: '2025-03-14', rollKey: '2025:133' }], new Map([['2025:133', roll(133, [march])]]))));
+  check('two different passages on the same day: no tally shown', (r => r.vote === null && r.messages.length === 1)(selectSenateVote([{ date: '2025-04-20', rollKey: '2025:133' }, { date: '2025-04-20', rollKey: '2025:200' }], new Map([['2025:133', roll(133, [v(54, 46, '2025-04-20')])], ['2025:200', roll(200, [april])]]))));
+  check('the later vote failed: no tally, reported, earlier one not used', (r => r.vote === null && r.failed)(selectSenateVote(twoPassages, new Map([['2025:200', roll(200, [], { failed: true })], ['2025:133', roll(133, [march])]]))));
+  check('an earlier vote failed: the later one is shown and the failure is still reported', (r => r.vote === april && r.failed)(selectSenateVote(twoPassages, new Map([['2025:200', roll(200, [april])], ['2025:133', roll(133, [], { failed: true })]]))));
+  check('same roll number in two sessions: kept apart', selectSenateVote([{ date: '2026-01-30', rollKey: '2026:20' }, { date: '2025-01-30', rollKey: '2025:20' }], new Map([['2026:20', roll(20, [v(71, 29, '2026-01-30')])], ['2025:20', roll(20, [v(60, 40, '2025-01-30')])]])).vote?.yeas === 71);
+  check('a voice vote only: nothing, no failure', (r => r.vote === null && !r.failed)(selectSenateVote([{ date: '2025-03-14', rollKey: null }], new Map())));
+  check('no Senate passage: nothing', (r => r.vote === null && !r.failed)(selectSenateVote([], new Map())));
 }
 
 console.log('\nWhat gets stored');

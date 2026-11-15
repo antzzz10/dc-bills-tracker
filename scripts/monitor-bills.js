@@ -14,7 +14,7 @@ import { isProvision } from '../src/lib/measureStatus.js';
 import { fetchFullCosponsorList, nextStoreRecord, sponsorRecord, congressGovBillUrl } from './lib/statehood.js';
 import { redactKey } from './lib/congress-api.js';
 import { collectEvents, composePosts } from './lib/bluesky-posts.js';
-import { fetchSenateVote, reconcileSenateVote, parseActionTally, combineActionVotes, mergeSenateVote, checkLockedSenateVote } from './lib/senate-votes.js';
+import { fetchSenateVote, reconcileSenateVote, parseActionTally, selectSenateVote, mergeSenateVote, checkLockedSenateVote } from './lib/senate-votes.js';
 
 // Every network call gets a deadline. On 2026-11-10 one Congress.gov request never
 // answered, and with no timeout the whole run sat until GitHub cancelled it at 20 minutes:
@@ -318,6 +318,7 @@ async function detectPassage(actions, chamber, expected) {
     stage: null
   };
   const senateRolls = new Map();
+  const senatePassages = [];
 
   // Sort actions by date (most recent first)
   const sortedActions = [...actions].sort((a, b) => {
@@ -390,6 +391,11 @@ async function detectPassage(actions, chamber, expected) {
         }
       }
 
+      // Roll numbers restart each session, so the year is part of the vote's identity.
+      const wantsTally = rollNumber && !RESOLUTION_TYPES.includes(expected?.billType);
+      const rollKey = wantsTally ? `${new Date(actionDate).getFullYear()}:${Number(rollNumber)}` : null;
+      senatePassages.push({ date: actionDate, rollKey });
+
       // A resolution's tally is never published (its votes are cleared below), so its
       // record isn't requested: two of the five daily Senate errors in November 2026 were
       // for tallies the site doesn't show.
@@ -404,8 +410,6 @@ async function detectPassage(actions, chamber, expected) {
           { ...expected, tally: parseActionTally(actionText), actionDate });
         // Congress.gov cites one vote on two action lines. Each line is checked on its
         // own; the outcomes are combined per roll call after the loop.
-        // Roll numbers restart each session, so the year is part of the vote's identity.
-        const rollKey = `${new Date(actionDate).getFullYear()}:${Number(rollNumber)}`;
         const seen = senateRolls.get(rollKey) || { rollNumber, votes: [], failed: false, noEvidence: false };
         if (voteData === VOTE_FETCH_FAILED) seen.failed = true;
         else if (voteData === VOTE_NO_EVIDENCE) seen.noEvidence = true;
@@ -415,18 +419,16 @@ async function detectPassage(actions, chamber, expected) {
     }
   }
 
-  // The Senate vote shown is the most recent passage's: actions were read newest first,
-  // so that is the first roll call recorded. If it couldn't be established, an earlier
-  // passage's tally is not shown in its place (Codex, 2026-11-15). The rule for combining
-  // a vote's action lines is combineActionVotes in scripts/lib/senate-votes.js.
-  const latestSenateRoll = senateRolls.values().next().value;
-  if (latestSenateRoll) {
-    const combined = combineActionVotes(latestSenateRoll);
-    if (combined.disagree) console.log(`  ❌ Congress.gov's action lines disagree about Senate roll call ${latestSenateRoll.rollNumber}; not used`);
-    if (combined.failed) passageInfo.voteFetchFailed = true;
-    if (combined.vote) {
-      passageInfo.senateVote = combined.vote;
-      console.log(`  ✓ Senate vote data: ${combined.vote.yeas}-${combined.vote.nays}`);
+  // Which Senate vote is shown, and whether any lookup failed, is decided by
+  // selectSenateVote in scripts/lib/senate-votes.js: the latest passage's vote only, and
+  // every roll call's failures reported (Codex, 2026-11-15).
+  {
+    const selected = selectSenateVote(senatePassages, senateRolls);
+    selected.messages.forEach(m => console.log(`  ❌ ${m}`));
+    if (selected.failed) passageInfo.voteFetchFailed = true;
+    if (selected.vote) {
+      passageInfo.senateVote = selected.vote;
+      console.log(`  ✓ Senate vote data: ${selected.vote.yeas}-${selected.vote.nays}`);
     }
   }
 
