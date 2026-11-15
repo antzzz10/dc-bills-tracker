@@ -119,6 +119,9 @@ function buildVoteSourceUrl(chamber, year, session, rollCallNumber) {
 // deliberately skipped (wrong Congress, wrong bill). Only a failure makes the record
 // incomplete, so it counts against the run's health (Codex, 2026-11-10).
 const VOTE_FETCH_FAILED = Object.freeze({ failed: true });
+// senate.gov was unreachable and this action line had no tally of its own to fall back on.
+// Forgiven if another line citing the same vote has one (combineActionVotes).
+const VOTE_NO_EVIDENCE = Object.freeze({ noEvidence: true });
 
 // One request to senate.gov per roll call per run: Congress.gov lists a passage twice (the
 // action and its "Passed/agreed to in Senate" marker), and several entries can share a
@@ -168,7 +171,7 @@ async function fetchRollCallVote(chamber, year, rollCallNumber, expected) {
         return null;
       }
       console.log(`  ⚠️  Could not read Senate roll call ${rollCallNumber} (session ${session}): ${result.reason}`);
-      return VOTE_FETCH_FAILED;
+      return fetched.unreachable && !expected?.tally ? VOTE_NO_EVIDENCE : VOTE_FETCH_FAILED;
     }
 
     // House votes: Congress.gov's house-vote endpoint (2025 API format).
@@ -401,20 +404,25 @@ async function detectPassage(actions, chamber, expected) {
           { ...expected, tally: parseActionTally(actionText), actionDate });
         // Congress.gov cites one vote on two action lines. Each line is checked on its
         // own; the outcomes are combined per roll call after the loop.
-        const seen = senateRolls.get(rollNumber) || { votes: [], failed: false };
+        // Roll numbers restart each session, so the year is part of the vote's identity.
+        const rollKey = `${new Date(actionDate).getFullYear()}:${Number(rollNumber)}`;
+        const seen = senateRolls.get(rollKey) || { rollNumber, votes: [], failed: false, noEvidence: false };
         if (voteData === VOTE_FETCH_FAILED) seen.failed = true;
+        else if (voteData === VOTE_NO_EVIDENCE) seen.noEvidence = true;
         else if (voteData) seen.votes.push(voteData);
-        senateRolls.set(rollNumber, seen);
+        senateRolls.set(rollKey, seen);
       }
     }
   }
 
-  // One result per Senate roll call, in the order the actions were read (so the vote that
-  // ends up shown is the same one as before this bookkeeping existed). The rule for
-  // combining the lines is combineActionVotes in scripts/lib/senate-votes.js.
-  for (const [rollNumber, seen] of senateRolls) {
-    const combined = combineActionVotes(seen);
-    if (combined.disagree) console.log(`  ❌ Congress.gov's action lines disagree about Senate roll call ${rollNumber}; not used`);
+  // The Senate vote shown is the most recent passage's: actions were read newest first,
+  // so that is the first roll call recorded. If it couldn't be established, an earlier
+  // passage's tally is not shown in its place (Codex, 2026-11-15). The rule for combining
+  // a vote's action lines is combineActionVotes in scripts/lib/senate-votes.js.
+  const latestSenateRoll = senateRolls.values().next().value;
+  if (latestSenateRoll) {
+    const combined = combineActionVotes(latestSenateRoll);
+    if (combined.disagree) console.log(`  ❌ Congress.gov's action lines disagree about Senate roll call ${latestSenateRoll.rollNumber}; not used`);
     if (combined.failed) passageInfo.voteFetchFailed = true;
     if (combined.vote) {
       passageInfo.senateVote = combined.vote;
@@ -812,7 +820,7 @@ function updateBillsJson(section, billId, passageInfo, status) {
       // A locked entry keeps its hand-entered Senate tally, but a disagreement with the
       // official record is still reported (Codex, 2026-11-15). Provisions and verified
       // outcomes are left out: the bill number's vote isn't theirs.
-      if (bill.manualOverride && passageInfo.senateVote && bill.passage?.senate) {
+      if (bill.manualOverride && !bill.outcome && !isProvision(bill) && passageInfo.senateVote && bill.passage?.senate) {
         senateNote = checkLockedSenateVote(bill.passage.senate, passageInfo.senateVote);
       }
       console.log(`  🔒 Skipping ${billId}: ${bill.manualOverride ? 'manual override is set (preserving manual edits)' : 'provision or verified outcome; its own status is not this bill number\'s'}`);

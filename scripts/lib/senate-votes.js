@@ -262,14 +262,19 @@ export function reconcileSenateVote(result, expected, { tally = null, actionDate
 
 /**
  * Combine the answers for one roll call from each Congress.gov action line that cites it.
- *   votes: the accepted answers; failed: whether any line's lookup failed.
- * Lines that cite the same vote must agree on totals and date, or nothing is used. A
- * failed line counts only if no other line gave an answer: the bare "Passed/agreed to"
- * marker can lack what the full line has. The fuller record (with party rows) wins.
+ *   votes: the accepted answers.
+ *   failed: a line's lookup failed for a reason of substance (a disagreement between the
+ *     two sources, an unreadable record, a refused tie-break guess, a 404).
+ *   noEvidence: senate.gov was unreachable and a line carried no tally to fall back on.
+ * Any failure of substance voids the vote, whatever the other lines say. Lines must also
+ * agree with each other on totals and date. Only `noEvidence` is forgiven when another
+ * line answered: the bare "Passed/agreed to" marker can lack what the full line has.
+ * The fuller record (with party rows) wins.
  */
-export function combineActionVotes({ votes = [], failed = false }) {
+export function combineActionVotes({ votes = [], failed = false, noEvidence = false }) {
+  if (failed) return { vote: null, failed: true, disagree: false };
   const first = votes[0];
-  if (!first) return { vote: null, failed, disagree: false };
+  if (!first) return { vote: null, failed: noEvidence, disagree: false };
   if (votes.some(v => v.yeas !== first.yeas || v.nays !== first.nays || v.date !== first.date)) {
     return { vote: null, failed: true, disagree: true };
   }
