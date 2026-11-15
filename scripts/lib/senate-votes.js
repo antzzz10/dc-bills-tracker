@@ -290,7 +290,8 @@ export function combineActionVotes({ votes = [], failed = false, noEvidence = fa
  * different passages share the latest date (Congress.gov gives no reliable order within a
  * day), no tally is shown: an earlier vote never stands in for the latest passage.
  * A substantive failure on any roll call, shown or not, is reported.
- * Returns { vote, failed, messages }.
+ * Returns { vote, failed, messages, latestWithoutRoll }: the last is the latest passage's
+ * date when that passage is known to have had no roll call wanted here, else null.
  */
 export function selectSenateVote(passages, rolls) {
   const messages = [];
@@ -302,15 +303,16 @@ export function selectSenateVote(passages, rolls) {
     if (c.disagree) messages.push(`Congress.gov's action lines disagree about Senate roll call ${seen.rollNumber}; not used`);
     if (c.failed) failed = true;
   }
-  if (passages.length === 0) return { vote: null, failed, messages };
+  if (passages.length === 0) return { vote: null, failed, messages, latestWithoutRoll: null };
   const latestDate = passages.map(p => String(p.date)).sort().pop();
   const latestKeys = new Set(passages.filter(p => String(p.date) === latestDate).map(p => p.rollKey));
   if (latestKeys.size > 1) {
     messages.push(`more than one Senate passage on ${latestDate}; no tally shown`);
-    return { vote: null, failed, messages };
+    return { vote: null, failed, messages, latestWithoutRoll: null };
   }
   const [key] = latestKeys;
-  return { vote: key === null ? null : (combined.get(key)?.vote || null), failed, messages };
+  if (key === null) return { vote: null, failed, messages, latestWithoutRoll: latestDate };
+  return { vote: combined.get(key)?.vote || null, failed, messages, latestWithoutRoll: null };
 }
 
 const sameParty = (a, b) => JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
@@ -369,4 +371,18 @@ export function checkLockedSenateVote(existing, fresh) {
     return { kind: 'conflict', text: `hand-entered Senate vote date ${existing.date} differs from ${where} ${fresh.date}; the entry is locked, so nothing was changed` };
   }
   return null;
+}
+
+/**
+ * A stored Senate tally from a passage the Senate later replaced. It happens: H.J.Res. 122
+ * (104th) passed 60-37, the passage was vitiated, and it passed again by unanimous consent
+ * three days later. The old tally would stay on the bill's card, so it is reported as an
+ * error for a person to correct; nothing is removed automatically.
+ *   latestWithoutRoll: from selectSenateVote.
+ */
+export function checkSupersededSenateVote(existing, latestWithoutRoll) {
+  const stored = existing?.vote;
+  if (!latestWithoutRoll || !Number.isInteger(stored?.yeas) || !Number.isInteger(stored?.nays)) return null;
+  if (!existing.date || String(existing.date) >= String(latestWithoutRoll)) return null;
+  return { kind: 'conflict', text: `stored Senate tally ${stored.yeas}-${stored.nays} (${existing.date}) is from an earlier passage; the Senate's latest passage, on ${latestWithoutRoll}, had no recorded vote. Nothing was changed` };
 }

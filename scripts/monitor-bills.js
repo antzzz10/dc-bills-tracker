@@ -14,7 +14,7 @@ import { isProvision } from '../src/lib/measureStatus.js';
 import { fetchFullCosponsorList, nextStoreRecord, sponsorRecord, congressGovBillUrl } from './lib/statehood.js';
 import { redactKey } from './lib/congress-api.js';
 import { collectEvents, composePosts } from './lib/bluesky-posts.js';
-import { fetchSenateVote, reconcileSenateVote, parseActionTally, selectSenateVote, mergeSenateVote, checkLockedSenateVote } from './lib/senate-votes.js';
+import { fetchSenateVote, reconcileSenateVote, parseActionTally, selectSenateVote, mergeSenateVote, checkLockedSenateVote, checkSupersededSenateVote } from './lib/senate-votes.js';
 
 // Every network call gets a deadline. On 2026-11-10 one Congress.gov request never
 // answered, and with no timeout the whole run sat until GitHub cancelled it at 20 minutes:
@@ -426,6 +426,7 @@ async function detectPassage(actions, chamber, expected) {
     const selected = selectSenateVote(senatePassages, senateRolls);
     selected.messages.forEach(m => console.log(`  ❌ ${m}`));
     if (selected.failed) passageInfo.voteFetchFailed = true;
+    passageInfo.senateLatestWithoutRoll = selected.latestWithoutRoll;
     if (selected.vote) {
       passageInfo.senateVote = selected.vote;
       console.log(`  ✓ Senate vote data: ${selected.vote.yeas}-${selected.vote.nays}`);
@@ -822,8 +823,10 @@ function updateBillsJson(section, billId, passageInfo, status) {
       // A locked entry keeps its hand-entered Senate tally, but a disagreement with the
       // official record is still reported (Codex, 2026-11-15). Provisions and verified
       // outcomes are left out: the bill number's vote isn't theirs.
-      if (bill.manualOverride && !bill.outcome && !isProvision(bill) && passageInfo.senateVote && bill.passage?.senate) {
-        senateNote = checkLockedSenateVote(bill.passage.senate, passageInfo.senateVote);
+      if (bill.manualOverride && !bill.outcome && !isProvision(bill) && bill.passage?.senate) {
+        senateNote = passageInfo.senateVote
+          ? checkLockedSenateVote(bill.passage.senate, passageInfo.senateVote)
+          : checkSupersededSenateVote(bill.passage.senate, passageInfo.senateLatestWithoutRoll);
       }
       console.log(`  🔒 Skipping ${billId}: ${bill.manualOverride ? 'manual override is set (preserving manual edits)' : 'provision or verified outcome; its own status is not this bill number\'s'}`);
       if (updated) {
@@ -914,6 +917,11 @@ function updateBillsJson(section, billId, passageInfo, status) {
       }
     }
 
+    if (!passageInfo.senateVote) {
+      // No tally this run. If that's because the Senate's latest passage had no roll
+      // call, a stored tally from an earlier passage is out of date: say so.
+      senateNote = checkSupersededSenateVote(bill.passage.senate, passageInfo.senateLatestWithoutRoll);
+    }
     if (passageInfo.senateVote) {
       // What to store when senate.gov was unreachable and only Congress.gov's totals
       // arrived is decided in scripts/lib/senate-votes.js: a stored record with party

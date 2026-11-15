@@ -5,7 +5,7 @@
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { parseSenateVote, fetchSenateVote, resolveSenateVote, reconcileSenateVote, combineActionVotes, selectSenateVote, mergeSenateVote, checkLockedSenateVote, parseActionTally, senateVoteXmlUrl, normalizeDocumentType } from './lib/senate-votes.js';
+import { parseSenateVote, fetchSenateVote, resolveSenateVote, reconcileSenateVote, combineActionVotes, selectSenateVote, mergeSenateVote, checkLockedSenateVote, checkSupersededSenateVote, parseActionTally, senateVoteXmlUrl, normalizeDocumentType } from './lib/senate-votes.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const fixture = (session, roll) =>
@@ -269,6 +269,15 @@ console.log('\nWhich passage\'s vote is shown');
   check('the later vote failed: no tally, reported, earlier one not used', (r => r.vote === null && r.failed)(selectSenateVote(twoPassages, new Map([['2025:200', roll(200, [], { failed: true })], ['2025:133', roll(133, [march])]]))));
   check('an earlier vote failed: the later one is shown and the failure is still reported', (r => r.vote === april && r.failed)(selectSenateVote(twoPassages, new Map([['2025:200', roll(200, [april])], ['2025:133', roll(133, [], { failed: true })]]))));
   check('same roll number in two sessions: kept apart', selectSenateVote([{ date: '2026-01-30', rollKey: '2026:20' }, { date: '2025-01-30', rollKey: '2025:20' }], new Map([['2026:20', roll(20, [v(71, 29, '2026-01-30')])], ['2025:20', roll(20, [v(60, 40, '2025-01-30')])]])).vote?.yeas === 71);
+  {
+    const r = selectSenateVote([{ date: '2025-04-20', rollKey: null }, { date: '2025-03-14', rollKey: '2025:133' }], new Map([['2025:133', roll(133, [march])]]));
+    const storedMarch = { date: '2025-03-14', vote: { yeas: 54, nays: 46, byParty: {} }, source: 'x' };
+    check('...and a stored tally from the earlier passage is reported as out of date', r.latestWithoutRoll === '2025-04-20' && checkSupersededSenateVote(storedMarch, r.latestWithoutRoll)?.kind === 'conflict');
+    check('a stored tally from the same day is left alone', checkSupersededSenateVote({ ...storedMarch, date: '2025-04-20' }, r.latestWithoutRoll) === null);
+    check('a stored voice-vote entry is left alone', checkSupersededSenateVote({ date: '2025-03-14', vote: null }, r.latestWithoutRoll) === null);
+    check('nothing stored: nothing to report', checkSupersededSenateVote(undefined, r.latestWithoutRoll) === null);
+    check('latest passage has a roll call: nothing to report', checkSupersededSenateVote(storedMarch, selectSenateVote(two, new Map([['2025:133', roll(133, [march, march])]])).latestWithoutRoll) === null);
+  }
   check('a voice vote only: nothing, no failure', (r => r.vote === null && !r.failed)(selectSenateVote([{ date: '2025-03-14', rollKey: null }], new Map())));
   check('no Senate passage: nothing', (r => r.vote === null && !r.failed)(selectSenateVote([], new Map())));
 }
