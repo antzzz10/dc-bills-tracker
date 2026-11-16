@@ -19,8 +19,7 @@ import PassedBillsSection from './components/PassedBillsSection'
 import ArchivedSection from './components/ArchivedSection'
 import RecentActivity from './components/RecentActivity'
 import { countUnits } from './lib/measureCounts'
-import { progressSplit, shortParts } from './lib/progressSplit'
-import { headlineNoun } from './components/pageSummaryFacts'
+import { progressSplit, listHeading } from './lib/progressSplit'
 import { isActive, isPending, hasAdvanced, isArchived } from './lib/measureStatus'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
 
@@ -201,14 +200,14 @@ function App() {
     }
   }, [selectedCategories, searchTerm])
 
-  // What is listed besides the tracked threats. With a search or filter on, `lead` is the
-  // matching threats' split, so the parts add up to the number of matches.
-  const otherParts = lead => [
-    ...lead,
-    archivedCount > 0 && `${archivedCount} archived`,
-    routineCount > 0 && `${routineCount} routine`,
-    barrierCount > 0 && `${barrierCount} ${barrierCount === 1 ? 'barrier' : 'barriers'} to statehood`,
-  ].filter(Boolean)
+  // The heading's words come from one pure function, which the claims gate checks.
+  const heading = listHeading({
+    overall,
+    matching: isFiltering ? split : null,
+    archived: archivedCount,
+    routine: routineCount,
+    barriers: barrierCount,
+  })
 
   const toggleCategory = (categoryId) => {
     setSelectedCategories(prev =>
@@ -314,17 +313,9 @@ function App() {
               filter; what matched is a smaller line beneath it, and its parts add up to
               the number of matches. */}
           <h2>
-            {overall.total} {headlineNoun(overall.total)}
-            {shortParts(overall).length > 0 && (
-              <span className="count-breakdown"> ({shortParts(overall).join(', ')})</span>
-            )}
-            {isFiltering ? (
-              <span className="count-also">
-                {totalCount === 0 ? 'No matches' : `Showing ${totalCount} ${totalCount === 1 ? 'match' : 'matches'}: ${otherParts(shortParts(split)).join(', ')}`}
-              </span>
-            ) : otherParts([]).length > 0 && (
-              <span className="count-also">Also listed: {otherParts([]).join(', ')}</span>
-            )}
+            {heading.headline}
+            {heading.breakdown && <span className="count-breakdown"> ({heading.breakdown})</span>}
+            {heading.also && <span className="count-also">{heading.also}</span>}
           </h2>
           <div className="results-actions">
             {(selectedCategories.length > 0 || searchTerm) && (

@@ -8,7 +8,7 @@
 
 import { countUnits, describeKinds } from '../lib/measureCounts.js';
 import { isActive, hasAdvanced as advancedPerModule } from '../lib/measureStatus.js';
-import { progressSplit, contextParts } from '../lib/progressSplit.js';
+import { progressSplit, contextParts, headlineNoun } from '../lib/progressSplit.js';
 
 // How recent an action must be to count as "latest movement". Congress recesses for
 // weeks, so a short window blanks the sentence out for most of August; a long one dresses
@@ -91,8 +91,8 @@ export function getPageSummaryFacts({ bills = [], riders = [], routineBills = []
   };
 }
 
-/** "threats to D.C. home rule": the one headline label, used with trackedCount everywhere. */
-export const headlineNoun = count => `${count === 1 ? 'threat' : 'threats'} to D.C. home rule`;
+// The one headline label, used with trackedCount everywhere (src/lib/progressSplit.js).
+export { headlineNoun };
 
 /**
  * The sentences after the headline, one per group that has anything in it:

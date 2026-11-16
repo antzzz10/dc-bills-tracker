@@ -100,3 +100,38 @@ export function shortParts({ law, moving, movingWhere, notPassed }) {
     notPassed > 0 && `${notPassed} not passed either chamber`,
   ].filter(Boolean);
 }
+
+/** "threats to D.C. home rule": the one headline label, used with the total everywhere. */
+export const headlineNoun = count => `${count === 1 ? 'threat' : 'threats'} to D.C. home rule`;
+
+/**
+ * The list heading's words, built here so the page and the claims gate use the same
+ * text: App.jsx prints exactly these strings and scripts/check-published-claims.js
+ * compares them with its own count.
+ *   headline  "74 threats to D.C. home rule"      never changes with a search or filter
+ *   breakdown "4 law, 10 passed the House, 60 not passed either chamber"
+ *   also      "Also listed: 18 archived, 1 routine, 1 barrier to statehood"
+ *             or, with a search or filter on, "Showing 18 matches: 2 law, 16 archived",
+ *             whose parts add up to the number of matches.
+ */
+export function listHeading({ overall, matching = null, archived = 0, routine = 0, barriers = 0 }) {
+  const others = [
+    archived > 0 && `${archived} archived`,
+    routine > 0 && `${routine} routine`,
+    barriers > 0 && `${barriers} ${barriers === 1 ? 'barrier' : 'barriers'} to statehood`,
+  ].filter(Boolean);
+  let also = '';
+  if (matching) {
+    const matches = matching.total + archived + routine + barriers;
+    also = matches === 0
+      ? 'No matches'
+      : `Showing ${matches} ${matches === 1 ? 'match' : 'matches'}: ${[...shortParts(matching), ...others].join(', ')}`;
+  } else if (others.length > 0) {
+    also = `Also listed: ${others.join(', ')}`;
+  }
+  return {
+    headline: `${overall.total} ${headlineNoun(overall.total)}`,
+    breakdown: shortParts(overall).join(', '),
+    also,
+  };
+}

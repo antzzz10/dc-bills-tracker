@@ -861,16 +861,19 @@ function updateBillsJson(section, billId, passageInfo, status) {
     // first chamber's passage (see detectPassage), which is true, and this flag records
     // that the other chamber has acted. The site says "passed the House and await the
     // Senate" only for measures without it (2026-11-15).
-    if (typeof passageInfo.hasPassedHouse === 'boolean' && typeof passageInfo.hasPassedSenate === 'boolean') {
-      const bothPassed = passageInfo.hasPassedHouse && passageInfo.hasPassedSenate &&
-        ['passed-house', 'passed-senate'].includes(bill.status.stage);
-      if (bothPassed && !bill.status.bothChambersPassed) {
-        bill.status.bothChambersPassed = true;
-        updated = true;
-      } else if (!bothPassed && bill.status.bothChambersPassed) {
-        delete bill.status.bothChambersPassed;
-        updated = true;
-      }
+    //
+    // Set only on positive evidence, and never cleared because a later check saw less:
+    // an empty or partial action list reports both passages as false, and clearing on
+    // that would bring back "awaits the Senate" for a bill the Senate has passed (Codex
+    // recheck, 2026-11-15). It goes only when the stage itself has moved on.
+    const firstChamberStage = ['passed-house', 'passed-senate'].includes(bill.status.stage);
+    if (firstChamberStage && passageInfo.hasPassedHouse === true && passageInfo.hasPassedSenate === true &&
+        !bill.status.bothChambersPassed) {
+      bill.status.bothChambersPassed = true;
+      updated = true;
+    } else if (!firstChamberStage && bill.status.bothChambersPassed) {
+      delete bill.status.bothChambersPassed;
+      updated = true;
     }
     // Deliberately no automatic downgrade. H.R. 5525 sat at a hand-entered
     // "passed-house" for ten months (it was only marked up in committee) because this

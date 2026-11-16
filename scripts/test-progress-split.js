@@ -1,7 +1,7 @@
 // Checks for the split shown under the headline count (src/lib/progressSplit.js).
 // Run: node scripts/test-progress-split.js
 import assert from 'node:assert/strict';
-import { progressSplit, contextParts, shortParts, movingPhrase } from '../src/lib/progressSplit.js';
+import { progressSplit, contextParts, shortParts, movingPhrase, listHeading } from '../src/lib/progressSplit.js';
 
 let checks = 0;
 const eq = (actual, expected, label) => { assert.deepEqual(actual, expected, label); checks += 1; };
@@ -54,6 +54,22 @@ eq(movingPhrase(1, 'house'), 'passed the House and awaits the Senate', 'singular
 eq(movingPhrase(1, 'mixed'), 'cleared at least one chamber and is not law', 'singular mixed');
 eq(contextParts(progressSplit([bill(1)])), ['1 has not passed either chamber'], 'only one group');
 eq(contextParts(progressSplit([])), [], 'nothing tracked');
+
+// The list heading: the headline never changes with a search; the match line adds up.
+const overall = progressSplit(mix);
+eq(listHeading({ overall, archived: 18, routine: 1, barriers: 1 }), {
+  headline: '5 threats to D.C. home rule',
+  breakdown: '1 law, 2 passed the House, 2 not passed either chamber',
+  also: 'Also listed: 18 archived, 1 routine, 1 barrier to statehood',
+}, 'heading, nothing filtered');
+eq(listHeading({ overall, matching: progressSplit([bill(1, 'enacted'), bill(4)]), archived: 16 }), {
+  headline: '5 threats to D.C. home rule',
+  breakdown: '1 law, 2 passed the House, 2 not passed either chamber',
+  also: 'Showing 18 matches: 1 law, 1 not passed either chamber, 16 archived',
+}, 'heading during a search');
+eq(listHeading({ overall, matching: progressSplit([]) }).also, 'No matches', 'search with no matches');
+eq(listHeading({ overall, matching: progressSplit([bill(4)]) }).also, 'Showing 1 match: 1 not passed either chamber', 'one match');
+eq(listHeading({ overall: progressSplit([bill(1)]) }), { headline: '1 threat to D.C. home rule', breakdown: '1 not passed either chamber', also: '' }, 'singular headline');
 
 // No group is ever called "pending".
 for (const items of [mix, law3, [bill(1, 'passed-senate')], [bill(1)]]) {

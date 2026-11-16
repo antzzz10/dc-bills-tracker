@@ -27,7 +27,7 @@ import {
   headlineNoun,
   splitSentences,
 } from '../src/components/pageSummaryFacts.js';
-import { shortParts } from '../src/lib/progressSplit.js';
+import { listHeading, progressSplit } from '../src/lib/progressSplit.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const data = JSON.parse(readFileSync(join(__dirname, '../src/data/bills.json'), 'utf-8'));
@@ -313,8 +313,21 @@ if (facts) {
   if (printed !== wanted) {
     fail(sentence, `summary prints "${printed}"; the data supports "${wanted}"`);
   }
-  const headingPrinted = `${facts.trackedCount} ${headlineNoun(facts.trackedCount)} (${shortParts(split).join(', ')})`;
-  const headingWanted = `${expectedTracked} ${expectedTracked === 1 ? 'threat' : 'threats'} to D.C. home rule (${expectedShort(expected).join(', ')})`;
+  // The list heading: the same function App.jsx prints from, given what the page gives it
+  // with no search or filter on, compared with words written out from the independent counts.
+  const archivedCount = independentCount(archivedEntries);
+  const routineCount = independentCount(routineBills);
+  const barrierCount = independentCount(statehoodBarriers);
+  const heading = listHeading({
+    overall: progressSplit(all), archived: archivedCount, routine: routineCount, barriers: barrierCount,
+  });
+  const headingPrinted = `${heading.headline} (${heading.breakdown}) ${heading.also}`.trim();
+  const alsoWanted = [
+    archivedCount > 0 && `${archivedCount} archived`,
+    routineCount > 0 && `${routineCount} routine`,
+    barrierCount > 0 && `${barrierCount} ${barrierCount === 1 ? 'barrier' : 'barriers'} to statehood`,
+  ].filter(Boolean).join(', ');
+  const headingWanted = `${expectedTracked} ${expectedTracked === 1 ? 'threat' : 'threats'} to D.C. home rule (${expectedShort(expected).join(', ')})${alsoWanted ? ` Also listed: ${alsoWanted}` : ''}`;
   claims.push(`list heading: "${headingPrinted}"`);
   if (headingPrinted !== headingWanted) {
     fail(headingPrinted, `the data supports "${headingWanted}"`);
