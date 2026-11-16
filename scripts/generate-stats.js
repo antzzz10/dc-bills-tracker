@@ -5,6 +5,7 @@
  * This file is deployed with the site and can be fetched by the main site
  */
 
+import { progressSplit } from '../src/lib/progressSplit.js';
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -69,6 +70,7 @@ const totalOpposeBills = countUnits([...bills, ...riders]).total;
 const pendingOpposeBills = countUnits([...pendingBills, ...pendingRiders]).total;
 const passedUnits = countUnits(passedBills);
 const routineAdvanced = routineBills.filter(hasAdvanced);
+const split = progressSplit([...bills, ...riders]);
 
 const stats = {
   lastUpdated: billsData.lastUpdated,
@@ -84,6 +86,19 @@ const stats = {
   ]).total,
   pendingBills: pendingOpposeBills,
   passedBills: passedUnits.total,
+  // The split shown under the headline (totalBills) on every surface, in words that stay
+  // true (Andria, 2026-11-15): "pending" is not used, because a bill that passed one
+  // chamber is pending too. law + clearedChamber + notPassedEitherChamber = totalBills.
+  // clearedChamberWhere is 'house', 'senate' or 'mixed', so a page can say "passed the
+  // House" only while that is true of every one. pendingBills and passedBills above are
+  // kept for existing readers: pendingBills = notPassedEitherChamber, passedBills = law +
+  // clearedChamber.
+  progress: {
+    law: split.law,
+    clearedChamber: split.moving,
+    clearedChamberWhere: split.movingWhere,
+    notPassedEitherChamber: split.notPassed
+  },
   // How the passed figure splits. Resolutions are counted apart from bills (2026-11-09).
   passedBreakdown: { bills: passedUnits.bills, resolutions: passedUnits.resolutions, riders: passedUnits.riders },
   // Oppose-side only. supportBills is deliberately absent: pro-DC bills are parked

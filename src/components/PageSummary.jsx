@@ -1,10 +1,10 @@
 import './PageSummary.css'
 import Icon from './Icon'
 import { CURRENT_CONGRESS } from '../data/config'
-import { describeKinds } from '../lib/measureCounts'
 import {
   getPageSummaryFacts,
-  advancedDetailText,
+  headlineNoun,
+  splitSentences,
   formatSummaryDate,
 } from './pageSummaryFacts'
 
@@ -19,23 +19,16 @@ function PageSummary({ bills = [], riders = [], routineBills = [] }) {
   const facts = getPageSummaryFacts({ bills, riders, routineBills })
   if (!facts) return null
 
-  const detail = advancedDetailText(facts)
+  const sentences = splitSentences(facts)
 
   return (
     <aside className="page-summary" aria-label="What this tracker covers">
       <Icon name="info" size={18} className="page-summary-icon" />
       <p className="page-summary-text">
-        This tracker follows <strong>{facts.trackedCount} {facts.scopeNoun}</strong> in the{' '}
-        {CURRENT_CONGRESS}th Congress that would override D.C.&rsquo;s local laws or
-        limit its self-government.{' '}
-        {facts.advancedCount > 0 && (
-          <>
-            <strong>{facts.advancedCount} {facts.advancedCount === 1 ? 'has' : 'have'} already
-            cleared at least one chamber</strong>
-            {facts.advancedKinds.resolutions > 0 && <> ({describeKinds(facts.advancedKinds)})</>}
-            {detail && <> &mdash; {detail}</>}.{' '}
-          </>
-        )}
+        <strong>{facts.trackedCount} {headlineNoun(facts.trackedCount)} in the{' '}
+        {CURRENT_CONGRESS}th Congress:</strong> {facts.scopeNoun} that would override
+        D.C.&rsquo;s local laws or limit its self-government.{' '}
+        {sentences.join(' ')}{' '}
         {facts.showMovement && (
           <>
             Latest movement: {facts.latest.billNumbers[0]} on{' '}

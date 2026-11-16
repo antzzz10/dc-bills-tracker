@@ -122,6 +122,15 @@
   letter-spacing: var(--ls-tight);
 }
 
+.count-also {
+  display: block;
+  margin-top: var(--s-1);
+  font-size: var(--fs-sm, 0.875rem);
+  font-weight: 400;
+  color: var(--slate-500);
+  letter-spacing: 0;
+}
+
 .count-breakdown {
   font-size: var(--fs-base);
   font-weight: 400;

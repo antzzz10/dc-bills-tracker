@@ -8,6 +8,7 @@
 
 import { countUnits, describeKinds } from '../lib/measureCounts.js';
 import { isActive, hasAdvanced as advancedPerModule } from '../lib/measureStatus.js';
+import { progressSplit, contextParts } from '../lib/progressSplit.js';
 
 // How recent an action must be to count as "latest movement". Congress recesses for
 // weeks, so a short window blanks the sentence out for most of August; a long one dresses
@@ -81,6 +82,8 @@ export function getPageSummaryFacts({ bills = [], riders = [], routineBills = []
       trackedUnits.resolutions > 0 && 'resolutions',
       trackedUnits.riders > 0 && 'budget riders',
     ].filter(Boolean).join(', ').replace(/, ([^,]+)$/, ' and $1'),
+    // Law / cleared a chamber / not passed either chamber. Adds up to trackedCount.
+    split: progressSplit(tracked),
     routineCount: countUnits((routineBills || []).filter(isActive)).total,
     latest,
     latestAgeDays,
@@ -88,15 +91,19 @@ export function getPageSummaryFacts({ bills = [], riders = [], routineBills = []
   };
 }
 
-/** The advanced-detail clause, or '' when nothing has got that far. */
-//
-// When riders are among the enacted, the kinds are named: two riders enacted in one
-// funding law are two provisions, not two laws, and "4 are now law" alone would read as
-// four laws (Codex, 2026-11-09).
-export function advancedDetailText({ passedBothCount, enactedCount, enactedKinds }) {
-  const kinds = enactedKinds?.riders > 0 ? ` (${describeKinds(enactedKinds)})` : '';
-  return [
-    passedBothCount > 0 && `${passedBothCount} ${passedBothCount === 1 ? 'has' : 'have'} passed both chambers`,
-    enactedCount > 0 && `${enactedCount} ${enactedCount === 1 ? 'is' : 'are'} now law${kinds}`,
-  ].filter(Boolean).join(', and ');
+/** "threats to D.C. home rule": the one headline label, used with trackedCount everywhere. */
+export const headlineNoun = count => `${count === 1 ? 'threat' : 'threats'} to D.C. home rule`;
+
+/**
+ * The sentences after the headline, one per group that has anything in it:
+ * "4 are law (1 bill, 1 resolution and 2 budget riders)." "10 passed the House and await
+ * the Senate." "60 have not passed either chamber."
+ *
+ * When riders are among the enacted, the kinds are named: two riders enacted in one
+ * funding law are two provisions, not two laws (Codex, 2026-11-09).
+ */
+export function splitSentences({ split }) {
+  const kinds = split.lawKinds?.riders > 0 ? ` (${describeKinds(split.lawKinds)})` : '';
+  return contextParts(split).map((part, index) =>
+    `${part}${index === 0 && split.law > 0 ? kinds : ''}.`);
 }

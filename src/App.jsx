@@ -19,6 +19,8 @@ import PassedBillsSection from './components/PassedBillsSection'
 import ArchivedSection from './components/ArchivedSection'
 import RecentActivity from './components/RecentActivity'
 import { countUnits } from './lib/measureCounts'
+import { progressSplit, shortParts } from './lib/progressSplit'
+import { headlineNoun } from './components/pageSummaryFacts'
 import { isActive, isPending, hasAdvanced, isArchived } from './lib/measureStatus'
 // import ContactSection from './components/ContactSection' // Hidden until Google Form is set up
 
@@ -71,7 +73,8 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [showOtherBills, setShowOtherBills] = useState(false)
 
-  const { filteredBills, filteredRiders, passedBills, archivedItems, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, barrierBills, totalCount, archivedCount, pendingCount, passedCount, routineCount, barrierCount } = useMemo(() => {
+  const isFiltering = selectedCategories.length > 0 || Boolean(searchTerm.trim())
+  const { split, filteredBills, filteredRiders, passedBills, archivedItems, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, barrierBills, totalCount, archivedCount, pendingCount, routineCount, barrierCount } = useMemo(() => {
     // Exclude provisional (auto-discovered, not-yet-human-reviewed) entries from
     // the public oppose/routine sections — their `position` is an unverified
     // default, not a reviewed classification. They still surface in Recent
@@ -167,6 +170,8 @@ function App() {
     // Routine measures are counted on their own, never as anti-DC (2026-11-09).
     const pendingCount = countUnits([...filtered, ...filteredRiders]).total
     const passedCount = countUnits(passedBills).total
+    // Law / cleared a chamber / not passed either chamber, for the heading (2026-11-15).
+    const split = progressSplit([...filtered, ...filteredRiders, ...passedBills])
     const routineCount = countUnits(filteredRoutineBills).total
     const barrierCount = countUnits(barrierBills).total
     const archivedCount = countUnits(archivedItems).total
@@ -187,7 +192,7 @@ function App() {
       totalCount,
       archivedCount,
       pendingCount,
-      passedCount,
+      split,
       routineCount,
       barrierCount
     }
@@ -292,16 +297,25 @@ function App() {
             representdc-main repo (2026-09) and this repo's copy was removed 2026-10-14. */}
 
         <div className="results-header">
+          {/* One headline number everywhere: every tracked anti-DC measure, with the split
+              as context (Andria, 2026-11-15). A search or filter changes what the number
+              means, so only then does it read "N items found". */}
           <h2>
-            {totalCount} {totalCount === 1 ? 'item' : 'items'} found
-            {(passedCount > 0 || routineCount > 0 || barrierCount > 0 || archivedCount > 0) && (
-              <span className="count-breakdown"> ({[
-                `${pendingCount} pending`,
-                passedCount > 0 && `${passedCount} passed`,
-                barrierCount > 0 && `${barrierCount} ${barrierCount === 1 ? 'barrier' : 'barriers'} to statehood`,
-                routineCount > 0 && `${routineCount} routine`,
-                archivedCount > 0 && `${archivedCount} archived`,
-              ].filter(Boolean).join(', ')})</span>
+            {isFiltering
+              ? <>{totalCount} {totalCount === 1 ? 'item' : 'items'} found</>
+              : <>{split.total} {headlineNoun(split.total)}</>}
+            {shortParts(split).length > 0 && (
+              <span className="count-breakdown"> ({shortParts(split).join(', ')})</span>
+            )}
+            {(barrierCount > 0 || routineCount > 0 || archivedCount > 0) && (
+              <span className="count-also">
+                {isFiltering ? 'Also found: ' : 'Also listed: '}
+                {[
+                  archivedCount > 0 && `${archivedCount} archived`,
+                  routineCount > 0 && `${routineCount} routine`,
+                  barrierCount > 0 && `${barrierCount} ${barrierCount === 1 ? 'barrier' : 'barriers'} to statehood`,
+                ].filter(Boolean).join(', ')}
+              </span>
             )}
           </h2>
           <div className="results-actions">
@@ -337,7 +351,7 @@ function App() {
                 <div className="pending-bills-header">
                   <div className="pending-bills-title">
                     <Icon name="list" size={20} />
-                    <h2>Pending bills</h2>
+                    <h2>Not yet passed either chamber</h2>
                     <span className="bill-count-pending">{pendingCount}</span>
                   </div>
                 </div>

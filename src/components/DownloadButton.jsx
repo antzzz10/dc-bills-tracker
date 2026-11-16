@@ -393,7 +393,7 @@ function DownloadButton({ filteredBills, filteredRiders, filteredBarriers = [] }
             <div className="download-section">
               <h4>Filtered Items ({countUnits(filteredAttacks).total + countUnits(filteredBarriers).total})</h4>
               <p className="download-description">
-                Download matching pending and passed items ({describeScope(filteredAttacks, filteredBarriers)})
+                Download matching items ({describeScope(filteredAttacks, filteredBarriers)})
               </p>
               <div className="download-buttons">
                 <button
