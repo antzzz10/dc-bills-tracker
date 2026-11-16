@@ -6,44 +6,60 @@
 // "pending" is not used for any group. Each group is named by what is literally true of
 // every measure in it:
 //   law                  — enacted
-//   moving               — cleared at least one chamber, not law
+//   moving               — cleared at least one chamber, not law (never "not yet law": an
+//                          agreed concurrent resolution never becomes one)
 //   notPassed            — has not passed either chamber
 //
 // The words for the middle group are chosen from the data. Today all of them passed the
 // House, so the line says so; if the Senate ever acts first on one, the wording widens by
 // itself instead of going stale.
 
-import { countUnits } from './measureCounts.js';
-import { isActive, hasAdvanced, isEnacted } from './measureStatus.js';
+import { groupUnits, countUnits } from './measureCounts.js';
+import { isActive, isEnacted, measureType, ADVANCED_STAGES } from './measureStatus.js';
 
-const HOUSE_ONLY = new Set(['passed-house', 'agreed-house']);
-const SENATE_ONLY = new Set(['passed-senate', 'agreed-senate']);
+const stageOf = item => item.status?.stage;
+
+// A chamber is named ("passed the House and await the Senate") only when that is the
+// whole truth for the measure (Codex, 2026-11-15):
+//   - a bill or joint resolution, which needs both chambers. A simple resolution agreed
+//     to by the House is finished there and awaits nothing;
+//   - at the plain passed-<chamber> stage in every entry;
+//   - with no record that the other chamber has passed it too. When both have passed
+//     different texts the monitor keeps the first chamber's stage and sets
+//     status.bothChambersPassed, and "awaits the Senate" would be false.
+const NEEDS_BOTH_CHAMBERS = new Set(['bill', 'joint']);
+const awaitsOther = (unit, stage) =>
+  NEEDS_BOTH_CHAMBERS.has(measureType(unit[0])) &&
+  unit.every(item => stageOf(item) === stage && !item.status?.bothChambersPassed);
 
 /** Which chamber the moving measures have cleared: 'house', 'senate' or 'mixed'. */
-function whereMoving(moving) {
-  if (moving.length === 0) return null;
-  if (moving.every(item => HOUSE_ONLY.has(item.status?.stage))) return 'house';
-  if (moving.every(item => SENATE_ONLY.has(item.status?.stage))) return 'senate';
+function whereMoving(movingUnits) {
+  if (movingUnits.length === 0) return null;
+  if (movingUnits.every(unit => awaitsOther(unit, 'passed-house'))) return 'house';
+  if (movingUnits.every(unit => awaitsOther(unit, 'passed-senate'))) return 'senate';
   return 'mixed';
 }
 
 /**
  * Split entries into the three groups. Counts are of measures, not entries
- * (src/lib/measureCounts.js). The three always add up to `total`; the claims gate
- * asserts that against an independent count.
+ * (src/lib/measureCounts.js): entries are grouped into measures first and each measure
+ * goes into exactly one group, by the furthest stage any of its entries records, so the
+ * three always add up to `total`. (Entries of one measure should agree on its stage;
+ * lint-bills.js check 7b and the claims gate fail when they don't.)
  */
 export function progressSplit(items = []) {
-  const active = items.filter(isActive);
-  const law = active.filter(isEnacted);
-  const moving = active.filter(item => hasAdvanced(item) && !isEnacted(item));
-  const notPassed = active.filter(item => !hasAdvanced(item));
+  const units = groupUnits(items.filter(isActive));
+  const law = units.filter(unit => unit.some(isEnacted));
+  const rest = units.filter(unit => !unit.some(isEnacted));
+  const moving = rest.filter(unit => unit.some(item => ADVANCED_STAGES.has(stageOf(item))));
+  const notPassed = rest.filter(unit => !unit.some(item => ADVANCED_STAGES.has(stageOf(item))));
   return {
-    total: countUnits(active).total,
-    law: countUnits(law).total,
-    lawKinds: countUnits(law),
-    moving: countUnits(moving).total,
+    total: units.length,
+    law: law.length,
+    lawKinds: countUnits(law.map(unit => unit[0])),
+    moving: moving.length,
     movingWhere: whereMoving(moving),
-    notPassed: countUnits(notPassed).total,
+    notPassed: notPassed.length,
   };
 }
 
@@ -53,14 +69,14 @@ const one = n => n === 1;
 export function movingPhrase(n, where) {
   if (where === 'house') return `passed the House and ${one(n) ? 'awaits' : 'await'} the Senate`;
   if (where === 'senate') return `passed the Senate and ${one(n) ? 'awaits' : 'await'} the House`;
-  return `cleared at least one chamber and ${one(n) ? 'is' : 'are'} not yet law`;
+  return `cleared at least one chamber and ${one(n) ? 'is' : 'are'} not law`;
 }
 
 /** Short form for a heading: "passed the House". */
 export function movingShort(where) {
   if (where === 'house') return 'passed the House';
   if (where === 'senate') return 'passed the Senate';
-  return 'cleared a chamber, not yet law';
+  return 'cleared a chamber, not law';
 }
 
 /**

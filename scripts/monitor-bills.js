@@ -857,6 +857,21 @@ function updateBillsJson(section, billId, passageInfo, status) {
       stageChanged = true;
       console.log(`  ✓ Updated stage to: ${passageInfo.stage}`);
     }
+    // Both chambers have passed the measure but not the same text: the stage stays at the
+    // first chamber's passage (see detectPassage), which is true, and this flag records
+    // that the other chamber has acted. The site says "passed the House and await the
+    // Senate" only for measures without it (2026-11-15).
+    if (typeof passageInfo.hasPassedHouse === 'boolean' && typeof passageInfo.hasPassedSenate === 'boolean') {
+      const bothPassed = passageInfo.hasPassedHouse && passageInfo.hasPassedSenate &&
+        ['passed-house', 'passed-senate'].includes(bill.status.stage);
+      if (bothPassed && !bill.status.bothChambersPassed) {
+        bill.status.bothChambersPassed = true;
+        updated = true;
+      } else if (!bothPassed && bill.status.bothChambersPassed) {
+        delete bill.status.bothChambersPassed;
+        updated = true;
+      }
+    }
     // Deliberately no automatic downgrade. H.R. 5525 sat at a hand-entered
     // "passed-house" for ten months (it was only marked up in committee) because this
     // guard never moves a stage backwards. Clearing a stage when the detector finds no

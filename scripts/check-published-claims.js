@@ -27,6 +27,7 @@ import {
   headlineNoun,
   splitSentences,
 } from '../src/components/pageSummaryFacts.js';
+import { shortParts } from '../src/lib/progressSplit.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const data = JSON.parse(readFileSync(join(__dirname, '../src/data/bills.json'), 'utf-8'));
@@ -72,6 +73,87 @@ function independentCount(items) {
   return new Set(items.map(item => find(item.type === 'rider'
     ? `rider:${item.id}`
     : String((item.billNumbers?.length ? item.billNumbers : [item.id])[0]).replace(/\s+/g, '').toUpperCase()))).size;
+}
+
+// The three groups under the headline, worked out here apart from src/lib/progressSplit.js
+// (same union-find as independentCount). Each official measure lands in one group, by the
+// furthest stage any of its entries records. `where` names a chamber only when every
+// measure that cleared one is a bill or joint resolution sitting at the plain
+// passed-house (or passed-senate) stage with no record of the other chamber passing it.
+const ADVANCED = ['passed-house', 'passed-senate', 'passed-both', 'enacted', 'agreed-house', 'agreed-senate', 'agreed-both', 'sent-to-states'];
+function independentSplit(items) {
+  const keyOf = n => String(n).replace(/\s+/g, '').toUpperCase();
+  const keysOf = item => item.type === 'rider'
+    ? [`rider:${item.id}`]
+    : (item.billNumbers?.length ? item.billNumbers : [item.id]).map(keyOf);
+  const parent = new Map();
+  const find = x => { while (parent.get(x) !== x) x = parent.get(x); return x; };
+  for (const item of items) {
+    const keys = keysOf(item);
+    keys.forEach(k => { if (!parent.has(k)) parent.set(k, k); });
+    keys.slice(1).forEach(k => parent.set(find(k), find(keys[0])));
+  }
+  const measures = new Map();
+  for (const item of items) {
+    const root = find(keysOf(item)[0]);
+    if (!measures.has(root)) measures.set(root, []);
+    measures.get(root).push(item);
+  }
+  const out = { law: 0, moving: 0, notPassed: 0, where: null, conflicts: [] };
+  const movingOk = { house: true, senate: true };
+  for (const entries of measures.values()) {
+    const stages = [...new Set(entries.map(e => e.status?.stage || ''))];
+    if (stages.length > 1) out.conflicts.push(`${entries[0].billNumbers?.[0] || entries[0].id}: ${stages.map(st => st || 'none').join(' / ')}`);
+    if (stages.includes('enacted')) { out.law += 1; continue; }
+    if (!stages.some(st => ADVANCED.includes(st))) { out.notPassed += 1; continue; }
+    out.moving += 1;
+    const number = keyOf(entries[0].billNumbers?.[0] || '');
+    const needsBoth = /^(H\.R\.|S\.|H\.J\.RES\.|S\.J\.RES\.)\d/.test(number);
+    const flagged = entries.some(e => e.status?.bothChambersPassed);
+    const only = stage => needsBoth && !flagged && stages.length === 1 && stages[0] === stage;
+    if (!only('passed-house')) movingOk.house = false;
+    if (!only('passed-senate')) movingOk.senate = false;
+  }
+  if (out.moving > 0) out.where = movingOk.house ? 'house' : movingOk.senate ? 'senate' : 'mixed';
+  return out;
+}
+
+const is1 = n => n === 1;
+const expectedMovingPhrase = ({ moving, where }) =>
+  where === 'house' ? `passed the House and ${is1(moving) ? 'awaits' : 'await'} the Senate`
+    : where === 'senate' ? `passed the Senate and ${is1(moving) ? 'awaits' : 'await'} the House`
+      : `cleared at least one chamber and ${is1(moving) ? 'is' : 'are'} not law`;
+
+/** The summary's sentences, written out again from the independent counts. */
+function expectedSentences(x, lawKinds) {
+  return [
+    x.law > 0 && `${x.law} ${is1(x.law) ? 'is' : 'are'} law${lawKinds}.`,
+    x.moving > 0 && `${x.moving} ${expectedMovingPhrase(x)}.`,
+    x.notPassed > 0 && `${x.notPassed} ${is1(x.notPassed) ? 'has' : 'have'} not passed either chamber.`,
+  ].filter(Boolean);
+}
+
+/** The list heading's bracket, written out again from the independent counts. */
+function expectedShort(x) {
+  return [
+    x.law > 0 && `${x.law} law`,
+    x.moving > 0 && `${x.moving} ${x.where === 'house' ? 'passed the House' : x.where === 'senate' ? 'passed the Senate' : 'cleared a chamber, not law'}`,
+    x.notPassed > 0 && `${x.notPassed} not passed either chamber`,
+  ].filter(Boolean);
+}
+
+/** "1 bill, 1 resolution and 2 budget riders" for the enacted measures, counted here. */
+function describeKindsIndependently(items) {
+  const law = items.filter(b => b.status?.stage === 'enacted');
+  const riders = law.filter(b => b.type === 'rider').length;
+  const resolutions = independentCount(law.filter(b => b.type !== 'rider' && /RES\./i.test((b.billNumbers || [])[0] || '')));
+  const billCount = independentCount(law) - riders - resolutions;
+  const parts = [
+    billCount && `${billCount} ${is1(billCount) ? 'bill' : 'bills'}`,
+    resolutions && `${resolutions} ${is1(resolutions) ? 'resolution' : 'resolutions'}`,
+    riders && `${riders} ${is1(riders) ? 'budget rider' : 'budget riders'}`,
+  ].filter(Boolean);
+  return parts.length <= 1 ? parts.join('') : `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -210,41 +292,34 @@ if (facts) {
   if (enactedRiders > 0 && !/budget rider/.test(detail)) {
     fail(sentence, `${enactedRiders} enacted budget rider(s) counted in "now law" without naming them as riders`);
   }
-  // The three groups under the headline, counted here apart from src/lib/progressSplit.js.
-  // "Law" is stage enacted; "cleared a chamber" is every other advanced stage; the rest
-  // have not passed either chamber. They must add up to the headline, or one measure is
-  // being shown in two groups or in none.
-  const expectedMoving = independentCount(all.filter(b => hasAdvanced(b) && b.status?.stage !== 'enacted'));
-  const expectedNotPassed = independentCount(all.filter(b => !hasAdvanced(b)));
+  // The three groups under the headline, counted here apart from src/lib/progressSplit.js:
+  // one per official measure, by the furthest stage any of its entries records. Then the
+  // printed sentences and the list heading are rebuilt from these counts and compared
+  // word for word, so a wrong numeral or a wrong chamber fails even when the fields
+  // behind it are right (Codex, 2026-11-15).
+  const expected = independentSplit(all);
   const split = facts.split;
-  if (split.law !== expectedEnacted) {
-    fail(sentence, `says ${split.law} are law, data holds ${expectedEnacted} measures`);
+  if (expected.conflicts.length > 0) {
+    fail(sentence, `entries of one measure record different stages: ${expected.conflicts.join('; ')}`);
   }
-  if (split.moving !== expectedMoving) {
-    fail(sentence, `says ${split.moving} cleared a chamber and are not law, data holds ${expectedMoving} measures`);
-  }
-  if (split.notPassed !== expectedNotPassed) {
-    fail(sentence, `says ${split.notPassed} have not passed either chamber, data holds ${expectedNotPassed} measures`);
+  if (expected.law + expected.moving + expected.notPassed !== expectedTracked) {
+    fail(sentence, `independent groups ${expected.law} + ${expected.moving} + ${expected.notPassed} do not add up to ${expectedTracked} tracked`);
   }
   if (split.law + split.moving + split.notPassed !== facts.trackedCount) {
     fail(sentence, `groups ${split.law} + ${split.moving} + ${split.notPassed} do not add up to the headline ${facts.trackedCount}`);
   }
-  // The words for the middle group name a chamber only when every measure in it is there.
-  const movingStages = new Set(all.filter(b => hasAdvanced(b) && b.status?.stage !== 'enacted').map(b => b.status.stage));
-  const allIn = stages => movingStages.size > 0 && [...movingStages].every(st => stages.includes(st));
-  const expectedWhere = movingStages.size === 0 ? null
-    : allIn(['passed-house', 'agreed-house']) ? 'house'
-    : allIn(['passed-senate', 'agreed-senate']) ? 'senate' : 'mixed';
-  if (split.movingWhere !== expectedWhere) {
-    fail(sentence, `describes the measures that cleared a chamber as "${split.movingWhere}", their stages say "${expectedWhere}" (${[...movingStages].join(', ')})`);
+  const printed = splitSentences(facts).join(' ');
+  const wanted = expectedSentences(expected, enactedRiders > 0 ? ` (${describeKindsIndependently(all)})` : '').join(' ');
+  if (printed !== wanted) {
+    fail(sentence, `summary prints "${printed}"; the data supports "${wanted}"`);
   }
-  if (/passed the House/.test(detail) && expectedWhere !== 'house') {
-    fail(sentence, `says "passed the House" but not every such measure is at a House-only stage`);
+  const headingPrinted = `${facts.trackedCount} ${headlineNoun(facts.trackedCount)} (${shortParts(split).join(', ')})`;
+  const headingWanted = `${expectedTracked} ${expectedTracked === 1 ? 'threat' : 'threats'} to D.C. home rule (${expectedShort(expected).join(', ')})`;
+  claims.push(`list heading: "${headingPrinted}"`);
+  if (headingPrinted !== headingWanted) {
+    fail(headingPrinted, `the data supports "${headingWanted}"`);
   }
-  if (/passed the Senate/.test(detail) && expectedWhere !== 'senate') {
-    fail(sentence, `says "passed the Senate" but not every such measure is at a Senate-only stage`);
-  }
-  if (/\bpending\b/i.test(sentence)) {
+  if (/\bpending\b/i.test(`${sentence} ${headingPrinted}`)) {
     fail(sentence, `uses "pending": a measure that passed one chamber is pending too (2026-11-15)`);
   }
   if (facts.advancedCount > facts.trackedCount) {
@@ -260,11 +335,6 @@ if (facts) {
     }
     if (stats.passedBills !== facts.advancedCount) {
       fail(sentence, `summary says ${facts.advancedCount} advanced but stats.json publishes ${stats.passedBills}`);
-    }
-    const pr = stats.progress || {};
-    if (pr.law !== split.law || pr.clearedChamber !== split.moving ||
-        pr.notPassedEitherChamber !== split.notPassed || pr.clearedChamberWhere !== split.movingWhere) {
-      fail(sentence, `stats.json progress is ${pr.law} law / ${pr.clearedChamber} cleared (${pr.clearedChamberWhere}) / ${pr.notPassedEitherChamber} not passed; summary says ${split.law} / ${split.moving} (${split.movingWhere}) / ${split.notPassed}`);
     }
     if (stats.pendingBills + stats.passedBills !== stats.totalBills) {
       fail(sentence, `stats.json pending (${stats.pendingBills}) + passed (${stats.passedBills}) ≠ total (${stats.totalBills})`);
@@ -327,6 +397,24 @@ if (facts) {
     claims.push(`stats.json: ${expected.totalBills} total, ${expected.pendingBills} pending, ${expected.passedBills} passed`);
     for (const [key, value] of Object.entries(expected)) {
       if (stats[key] !== value) fail(`stats.json ${key}`, `publishes ${stats[key]}; data holds ${value}`);
+    }
+    // The split the main site shows under the headline. Zero is a real expectation: with
+    // nothing tracked, a leftover nonzero block must fail (Codex, 2026-11-15).
+    const wantSplit = independentSplit(all);
+    const wantProgress = {
+      law: wantSplit.law,
+      clearedChamber: wantSplit.moving,
+      clearedChamberWhere: wantSplit.where,
+      notPassedEitherChamber: wantSplit.notPassed
+    };
+    claims.push(`stats.json progress: ${wantProgress.law} law, ${wantProgress.clearedChamber} cleared a chamber (${wantProgress.clearedChamberWhere}), ${wantProgress.notPassedEitherChamber} not passed either chamber`);
+    for (const [key, value] of Object.entries(wantProgress)) {
+      if ((stats.progress || {})[key] !== value) {
+        fail(`stats.json progress.${key}`, `publishes ${(stats.progress || {})[key]}; data holds ${value}`);
+      }
+    }
+    if (wantProgress.law + wantProgress.clearedChamber + wantProgress.notPassedEitherChamber !== expected.totalBills) {
+      fail('stats.json progress', `groups do not add up to totalBills ${expected.totalBills}`);
     }
     if ((stats.routine?.total ?? null) !== independentCount(routineBills)) {
       fail('stats.json routine.total', `publishes ${stats.routine?.total}; data holds ${independentCount(routineBills)}`);

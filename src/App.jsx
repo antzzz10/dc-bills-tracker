@@ -74,7 +74,7 @@ function App() {
   const [showOtherBills, setShowOtherBills] = useState(false)
 
   const isFiltering = selectedCategories.length > 0 || Boolean(searchTerm.trim())
-  const { split, filteredBills, filteredRiders, passedBills, archivedItems, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, barrierBills, totalCount, archivedCount, pendingCount, routineCount, barrierCount } = useMemo(() => {
+  const { split, overall, filteredBills, filteredRiders, passedBills, archivedItems, highPriorityGroups, otherBillsGroups, riderGroups, routineGroups, barrierBills, totalCount, archivedCount, pendingCount, routineCount, barrierCount } = useMemo(() => {
     // Exclude provisional (auto-discovered, not-yet-human-reviewed) entries from
     // the public oppose/routine sections — their `position` is an unverified
     // default, not a reviewed classification. They still surface in Recent
@@ -169,15 +169,17 @@ function App() {
     // Measures, not entries: H.R. 1968 is three entries but one law (src/lib/measureCounts.js).
     // Routine measures are counted on their own, never as anti-DC (2026-11-09).
     const pendingCount = countUnits([...filtered, ...filteredRiders]).total
-    const passedCount = countUnits(passedBills).total
     // Law / cleared a chamber / not passed either chamber, for the heading (2026-11-15).
     const split = progressSplit([...filtered, ...filteredRiders, ...passedBills])
+    // Every tracked anti-DC measure, whatever the search or filter: the headline.
+    const overall = progressSplit([...billsData.bills, ...billsData.riders])
     const routineCount = countUnits(filteredRoutineBills).total
     const barrierCount = countUnits(barrierBills).total
     const archivedCount = countUnits(archivedItems).total
     // Everything the search found, archived matches included, so a search that only
     // matches an archived amendment doesn't say "0 items found" above its card.
-    const totalCount = pendingCount + passedCount + routineCount + barrierCount + archivedCount
+    // split.total counts each matching measure once, whichever group it is in.
+    const totalCount = split.total + routineCount + barrierCount + archivedCount
 
     return {
       filteredBills: filtered,
@@ -193,10 +195,20 @@ function App() {
       archivedCount,
       pendingCount,
       split,
+      overall,
       routineCount,
       barrierCount
     }
   }, [selectedCategories, searchTerm])
+
+  // What is listed besides the tracked threats. With a search or filter on, `lead` is the
+  // matching threats' split, so the parts add up to the number of matches.
+  const otherParts = lead => [
+    ...lead,
+    archivedCount > 0 && `${archivedCount} archived`,
+    routineCount > 0 && `${routineCount} routine`,
+    barrierCount > 0 && `${barrierCount} ${barrierCount === 1 ? 'barrier' : 'barriers'} to statehood`,
+  ].filter(Boolean)
 
   const toggleCategory = (categoryId) => {
     setSelectedCategories(prev =>
@@ -298,24 +310,20 @@ function App() {
 
         <div className="results-header">
           {/* One headline number everywhere: every tracked anti-DC measure, with the split
-              as context (Andria, 2026-11-15). A search or filter changes what the number
-              means, so only then does it read "N items found". */}
+              as context (Andria, 2026-11-15). The headline never changes with a search or
+              filter; what matched is a smaller line beneath it, and its parts add up to
+              the number of matches. */}
           <h2>
-            {isFiltering
-              ? <>{totalCount} {totalCount === 1 ? 'item' : 'items'} found</>
-              : <>{split.total} {headlineNoun(split.total)}</>}
-            {shortParts(split).length > 0 && (
-              <span className="count-breakdown"> ({shortParts(split).join(', ')})</span>
+            {overall.total} {headlineNoun(overall.total)}
+            {shortParts(overall).length > 0 && (
+              <span className="count-breakdown"> ({shortParts(overall).join(', ')})</span>
             )}
-            {(barrierCount > 0 || routineCount > 0 || archivedCount > 0) && (
+            {isFiltering ? (
               <span className="count-also">
-                {isFiltering ? 'Also found: ' : 'Also listed: '}
-                {[
-                  archivedCount > 0 && `${archivedCount} archived`,
-                  routineCount > 0 && `${routineCount} routine`,
-                  barrierCount > 0 && `${barrierCount} ${barrierCount === 1 ? 'barrier' : 'barriers'} to statehood`,
-                ].filter(Boolean).join(', ')}
+                {totalCount === 0 ? 'No matches' : `Showing ${totalCount} ${totalCount === 1 ? 'match' : 'matches'}: ${otherParts(shortParts(split)).join(', ')}`}
               </span>
+            ) : otherParts([]).length > 0 && (
+              <span className="count-also">Also listed: {otherParts([]).join(', ')}</span>
             )}
           </h2>
           <div className="results-actions">

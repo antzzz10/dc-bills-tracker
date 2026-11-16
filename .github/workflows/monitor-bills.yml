@@ -73,6 +73,9 @@ jobs:
       - name: Test Senate vote parsing (offline)
         run: node scripts/test-senate-votes.js
 
+      - name: Test headline count wording (offline)
+        run: node scripts/test-progress-split.js
+
       - name: Lint bill data (consistency + golden-label eval)
         run: node scripts/lint-bills.js
 
