@@ -15,7 +15,7 @@ const ATTACK_TYPE_LABEL = {
 
 const ATTACK_TYPE_DESCRIPTION = {
   direct: "Targeting D.C. is this bill's purpose.",
-  partial: "This bill undermines D.C.'s self-governance, but D.C. is not its primary target — it attacks D.C. along the way.",
+  partial: "This bill undermines D.C.'s self-governance, but D.C. is not its primary target. It attacks D.C. along the way.",
 }
 
 function BillCard({ bill, variant = 'attack' }) {

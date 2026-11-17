@@ -22,7 +22,7 @@ function UrgentAlert() {
         <div className="urgent-alert-laws">
           <p>
             <Icon name="arrow-right" size={17} />
-            <span className="bill-number">H.R. 9720</span> — D.C. Taxing Authority Review Act
+            <span className="bill-number">H.R. 9720</span>: D.C. Taxing Authority Review Act
           </p>
         </div>
         <p className="urgent-alert-chambernote">Passed House Oversight &amp; Government Reform Committee, party-line vote</p>
@@ -39,8 +39,8 @@ function UrgentAlert() {
         {isExpanded && (
           <div className="urgent-alert-details">
             <p className="urgent-alert-summary">
-              H.R. 9720 would require an affirmative resolution of congressional approval — within
-              a 60-day review period — for any D.C. Council act involving Title 47 of the D.C. Code, or
+              H.R. 9720 would require an affirmative resolution of congressional approval, within
+              a 60-day review period, for any D.C. Council act involving Title 47 of the D.C. Code, or
               that imposes or increases a tax or fee. It applies to both increases and decreases,
               with a narrow exception for fee changes under $500 that don't touch any other tax or
               fee.
@@ -52,7 +52,7 @@ function UrgentAlert() {
                   Introduced by Rep. James Comer (R-KY) on July 16 with 21 original Republican
                   cosponsors, including Jim Jordan, Andy Biggs, Paul Gosar, and Lauren Boebert. The
                   House Oversight and Government Reform Committee passed it on a party-line vote on
-                  July 22 — without a public hearing.
+                  July 22, without a public hearing.
                 </p>
               </div>
 
@@ -60,8 +60,8 @@ function UrgentAlert() {
                 <h3>What's at stake</h3>
                 <p>
                   D.C. Council Chairman Phil Mendelson objected in writing before the markup (letter
-                  to Chairman Comer, July 20): the bill would freeze routine D.C. fiscal management —
-                  pension-contribution timing, targeted tax exemptions, CFO bond flexibility — and
+                  to Chairman Comer, July 20): the bill would freeze routine D.C. fiscal management (pension-contribution
+                  timing, targeted tax exemptions, CFO bond flexibility) and
                   also freezes the District's General License Law, since that's under Title 47 too.
                   Mendelson also cited a Moody's rating action (July 10) flagging federal revenue
                   restrictions as a factor that could raise D.C.'s cost of borrowing.

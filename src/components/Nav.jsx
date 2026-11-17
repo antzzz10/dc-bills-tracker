@@ -13,7 +13,7 @@ function Nav() {
         <a
           className="nav-brand"
           href="https://www.representdc.org"
-          aria-label="RepresentDC — main site"
+          aria-label="RepresentDC main site"
         >
           <Logo size={26} />
           <Wordmark size={15} />
@@ -26,7 +26,7 @@ function Nav() {
           <a
             className="nav-link"
             href="https://candidates.representdc.org"
-            title="For D.C. voters — 2026 primary candidate positions on statehood"
+            title="For D.C. voters: 2026 primary candidate positions on statehood"
           >
             Candidates
           </a>

@@ -55,7 +55,7 @@ function SupportBillsSection({ supportBills }) {
         <div className="support-bills-content">
           <p className="support-bills-intro">
             Not every DC bill in Congress is an attack. These bills would expand DC's power to
-            govern itself — from full statehood to control over its own police, courts, and
+            govern itself, from full statehood to control over its own police, courts, and
             clemency. When you contact members of Congress about the bills above, ask them to
             champion these too.
           </p>

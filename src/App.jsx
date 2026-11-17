@@ -266,7 +266,7 @@ function App() {
           IS_DATA_STALE ? (
             <>
               <Icon name="alert-triangle" size={15} />
-              Bill data last verified {formatCheckedInstant(LAST_CHECKED)} — daily monitoring may be stalled
+              Bill data last verified {formatCheckedInstant(LAST_CHECKED)}. Daily monitoring may be stalled
             </>
           ) : (
             <>Bill data last checked: {formatCheckedInstant(LAST_CHECKED)} • Monitoring runs daily</>
@@ -459,7 +459,7 @@ function App() {
                   <div className="section-header routine-header">
                     <h2><Icon name="paperclip" size={18} /> Everyday indignities ({countUnits(routineGroups.flatMap(g => g.bills)).total})</h2>
                     <p className="section-description">
-                      The routine paperwork of not being a state — sign-offs Congress requires from D.C. that no state legislature would ever need to ask for.
+                      The routine paperwork of not being a state: sign-offs Congress requires from D.C. that no state legislature would ever need to ask for.
                     </p>
                   </div>
                   {routineGroups.map(group => (
