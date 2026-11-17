@@ -26,8 +26,8 @@ function PageSummary({ bills = [], riders = [], routineBills = [] }) {
       <Icon name="info" size={18} className="page-summary-icon" />
       <p className="page-summary-text">
         <strong>{facts.trackedCount} {headlineNoun(facts.trackedCount)} in the{' '}
-        {CURRENT_CONGRESS}th Congress:</strong> {facts.scopeNoun} that would override
-        D.C.&rsquo;s local laws or limit its self-government.{' '}
+        {CURRENT_CONGRESS}th Congress:</strong> {facts.scopeNoun} aimed at overriding
+        D.C.&rsquo;s local laws or limiting its self-government.{' '}
         {sentences.join(' ')}{' '}
         {facts.showMovement && (
           <>
