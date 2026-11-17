@@ -14,7 +14,7 @@ Reviewed tracker `89d59ee` and main site `3c5ec3e`, including both HEAD commits 
 | Explainer assigns every measure to three mechanisms — M7/H7 | **FIXED** | `main/src/HowCongressControlsDC.jsx:169` now describes overriding local laws or limiting self-government without claiming those three mechanisms exhaust the population. |
 
 **MATERIAL — incomplete action data clears `bothChambersPassed`.**  
-At [monitor-bills.js:864](/private/tmp/claude-501/-Users-andriathomas-Projects-mervalabs-com/b69ea3cb-6c11-4386-89e1-c841f39c6b37/scratchpad/tracker-74/scripts/monitor-bills.js:864), false detector booleans delete an existing flag, even while retaining the stored `passed-house` stage.
+At [monitor-bills.js:864](scripts/monitor-bills.js:864), false detector booleans delete an existing flag, even while retaining the stored `passed-house` stage.
 
 I reproduced this through the actual fetch/update functions using in-memory fixtures:
 
@@ -26,7 +26,7 @@ I reproduced this through the actual fetch/update functions using in-memory fixt
 Preserve the flag when evidence is incomplete or absent; clear it on positive evidence of a superseding state. Lint accepts the new field: a fixture with `bothChambersPassed: true` passed bill-data lint and golden labels.
 
 **MATERIAL — the gate still checks a reconstructed heading.**  
-[check-published-claims.js:316](/private/tmp/claude-501/-Users-andriathomas-Projects-mervalabs-com/b69ea3cb-6c11-4386-89e1-c841f39c6b37/scratchpad/tracker-74/scripts/check-published-claims.js:316) constructs a heading from summary facts; it does not render `App.jsx`, filtered-match text, or either main-site page.
+[check-published-claims.js:316](scripts/check-published-claims.js:316) constructs a heading from summary facts; it does not render `App.jsx`, filtered-match text, or either main-site page.
 
 An in-memory mutation changing only `App.jsx`’s displayed headline to **999** rendered that false headline while leaving the gate’s passing inputs untouched. Share the actual rendering logic with the gate or add rendered-surface assertions, including search/filter cases.
 
