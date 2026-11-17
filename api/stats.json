@@ -1,10 +1,16 @@
 {
   "lastUpdated": "2026-11-14",
-  "lastChecked": "2026-11-16T23:05:26.093Z",
+  "lastChecked": "2026-11-17T02:41:34.803Z",
   "totalBills": 74,
   "introducedThisCongress": 92,
   "pendingBills": 60,
   "passedBills": 14,
+  "progress": {
+    "law": 4,
+    "clearedChamber": 10,
+    "clearedChamberWhere": "house",
+    "notPassedEitherChamber": 60
+  },
   "passedBreakdown": {
     "bills": 11,
     "resolutions": 1,
