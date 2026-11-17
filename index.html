@@ -28,6 +28,20 @@
          see src/lib/analytics.js and decisions/2026-07-27-analytics.md.
          No key configured (dev, or an unset VITE_POSTHOG_KEY) = no tracking. -->
     <script>
+      // Search text must never sit in the address, where analytics events would read
+      // it. The page does not use a search parameter, so drop one if a link carries it.
+      // This runs before analytics loads.
+      (function () {
+        try {
+          var url = new URL(window.location.href)
+          if (url.searchParams.has('search')) {
+            url.searchParams.delete('search')
+            window.history.replaceState(window.history.state, '', url.pathname + url.search + url.hash)
+          }
+        } catch (e) { /* leave the address as it is */ }
+      })()
+    </script>
+    <script>
       (function () {
         var key = '%VITE_POSTHOG_KEY%'
         if (!key || key.charAt(0) === '%') return
