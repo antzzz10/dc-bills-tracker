@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { filtersFromQuery } from './lib/urlFilters'
 import './App.css'
 import billsData from './data/bills.json'
 import Icon from './components/Icon'
@@ -68,8 +69,11 @@ const formatBuildDate = (dateOnly) => {
 const activeOrUnreviewed = list => (list || []).filter(item => !isArchived(item))
 
 function App() {
-  const [selectedCategories, setSelectedCategories] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
+  // A link can open the page already filtered (src/lib/urlFilters.js). Read once.
+  const [initialFilters] = useState(() =>
+    filtersFromQuery(window.location.search, billsData.categories))
+  const [selectedCategories, setSelectedCategories] = useState(initialFilters.categories)
+  const [searchTerm, setSearchTerm] = useState(initialFilters.search)
   const [showOtherBills, setShowOtherBills] = useState(false)
 
   const isFiltering = selectedCategories.length > 0 || Boolean(searchTerm.trim())

@@ -76,6 +76,9 @@ jobs:
       - name: Test headline count wording (offline)
         run: node scripts/test-progress-split.js
 
+      - name: Test filtered links (offline)
+        run: node scripts/test-url-filters.js
+
       - name: Lint bill data (consistency + golden-label eval)
         run: node scripts/lint-bills.js
 

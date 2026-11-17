@@ -27,6 +27,9 @@ function Footer() {
               <a href="https://candidates.representdc.org">
                 Candidate tracker (for D.C. voters) <Icon name="arrow-right" size={15} />
               </a>
+              <a href="https://www.representdc.org/follow">
+                Stay in the loop <Icon name="arrow-right" size={15} />
+              </a>
             </div>
           </div>
 
