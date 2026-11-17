@@ -180,7 +180,7 @@
    "Congress & D.C." and the tracker's longer button, 2026-11-16). The
    bar keeps the brand, the CTA and a menu button; the menu lists every destination,
    including the "Bill tracker" text link the tablet bar used to drop. */
-@media (max-width: 1159px) {
+@media (max-width: 1159.98px) {
   .nav-links {
     gap: var(--s-3);
   }

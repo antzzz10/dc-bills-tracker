@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react'
-import { filtersFromQuery } from './lib/urlFilters'
+import { useState, useMemo, useEffect } from 'react'
+import { categoriesFromQuery, withoutFilterParams } from './lib/urlFilters'
 import './App.css'
 import billsData from './data/bills.json'
 import Icon from './components/Icon'
@@ -69,11 +69,16 @@ const formatBuildDate = (dateOnly) => {
 const activeOrUnreviewed = list => (list || []).filter(item => !isArchived(item))
 
 function App() {
-  // A link can open the page already filtered (src/lib/urlFilters.js). Read once.
-  const [initialFilters] = useState(() =>
-    filtersFromQuery(window.location.search, billsData.categories))
-  const [selectedCategories, setSelectedCategories] = useState(initialFilters.categories)
-  const [searchTerm, setSearchTerm] = useState(initialFilters.search)
+  // A link can open the page with a category already selected (src/lib/urlFilters.js).
+  // It is read once, then taken out of the address bar.
+  const [selectedCategories, setSelectedCategories] = useState(() =>
+    categoriesFromQuery(window.location.search, billsData.categories))
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).has('category')) {
+      window.history.replaceState(window.history.state, '', withoutFilterParams(window.location.href))
+    }
+  }, [])
+  const [searchTerm, setSearchTerm] = useState('')
   const [showOtherBills, setShowOtherBills] = useState(false)
 
   const isFiltering = selectedCategories.length > 0 || Boolean(searchTerm.trim())
