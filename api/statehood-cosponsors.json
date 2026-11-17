@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T02:41:42.948Z",
+  "generatedAt": "2026-11-17T03:00:53.363Z",
   "source": "Congress.gov API, bill cosponsors endpoint (withdrawn cosponsors excluded), checked daily by the bill tracker",
   "bills": [
     {
@@ -23,7 +23,7 @@
       },
       "congressGovUrl": "https://www.congress.gov/bill/119th-congress/house-bill/51",
       "complete": true,
-      "checkedAt": "2026-11-17T02:40:59.605Z",
+      "checkedAt": "2026-11-17T03:00:26.813Z",
       "cosponsors": [
         {
           "bioguideId": "A000370",
@@ -1979,7 +1979,7 @@
       },
       "congressGovUrl": "https://www.congress.gov/bill/119th-congress/senate-bill/51",
       "complete": true,
-      "checkedAt": "2026-11-17T02:41:08.014Z",
+      "checkedAt": "2026-11-17T03:00:31.421Z",
       "cosponsors": [
         {
           "bioguideId": "A000382",
