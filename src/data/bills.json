@@ -1,6 +1,6 @@
 {
   "lastUpdated": "2026-11-14",
-  "lastChecked": "2026-11-17T03:50:12.708Z",
+  "lastChecked": "2026-11-17T04:28:52.037Z",
   "categories": [
     {
       "id": "abolishing",
@@ -3741,7 +3741,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-abortion",
@@ -3760,7 +3762,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-reprohealth",
@@ -3779,7 +3783,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-deathwithdignity",
@@ -3798,7 +3804,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-emissions",
@@ -3817,7 +3825,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-rightturn",
@@ -3836,7 +3846,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-cameras",
@@ -3855,7 +3867,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-slapp",
@@ -3874,7 +3888,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-noncitizen",
@@ -3893,7 +3909,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-guns",
@@ -3912,7 +3930,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-police",
@@ -3931,7 +3951,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-youth",
@@ -3950,7 +3972,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-covid",
@@ -3969,7 +3993,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-insurance",
@@ -3988,7 +4014,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-oilgas",
@@ -4007,7 +4035,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     },
     {
       "id": "hr8495-shield",
@@ -4026,7 +4056,9 @@
       "prioritySource": "manual",
       "fiscalYear": "2027",
       "attackType": "direct",
-      "congress": 119
+      "congress": 119,
+      "congressValidated": true,
+      "congressValidatedDate": "2026-11-17"
     }
   ],
   "supportBills": [
