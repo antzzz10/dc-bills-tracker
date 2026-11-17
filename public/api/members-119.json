@@ -1,6 +1,6 @@
 {
   "congress": 119,
-  "generatedAt": "2026-11-10T20:08:46.670Z",
+  "generatedAt": "2026-11-17T19:58:00.180Z",
   "source": "Congress.gov API: /member/congress/119?currentMember=true and /member/{bioguideId}",
   "counts": {
     "house": 439,
