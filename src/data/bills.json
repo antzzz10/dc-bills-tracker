@@ -3723,6 +3723,310 @@
         "source": "https://www.govinfo.gov/content/pkg/BILLS-119hr7148enr/html/BILLS-119hr7148enr.htm",
         "verifiedOn": "2026-11-09"
       }
+    },
+    {
+      "id": "hr8495-marijuana",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Marijuana",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit D.C. from using any funds to enact a law that legalizes or reduces penalties for recreational use of any schedule I substance or THC derivative (Sec. 809)",
+      "category": "marijuana",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-abortion",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Abortion",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit D.C. from spending any funds on abortion, except where the life of the mother is endangered or the pregnancy results from rape or incest (Sec. 810)",
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-reprohealth",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Reproductive Health Non-Discrimination",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to carry out the Reproductive Health Non-Discrimination Amendment Act of 2014 (Sec. 819)",
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-deathwithdignity",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Death with Dignity",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would repeal the Death with Dignity Act of 2016 and amend the Home Rule Act to bar the Council from enacting a similar law (Sec. 820)",
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-emissions",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Vehicle Emissions",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to enforce the 2023 rule relating to 'Adoption of California Vehicle Emission Standards' (Sec. 822)",
+      "category": "environment",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-rightturn",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Right Turn on Red",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to enact or carry out any law that prohibits motorists from making right turns on red, including the Safer Streets Amendment Act of 2022 (Sec. 823)",
+      "category": "transportation",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-cameras",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Traffic Cameras",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to carry out D.C.'s automated traffic enforcement law (Sec. 824)",
+      "category": "transportation",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-slapp",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Anti-SLAPP",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would repeal Section 5 of the Corrections Oversight Improvement Omnibus Amendment Act of 2022 (exemptions to anti-Strategic Lawsuits Against Public Participation law) (Sec. 825)",
+      "category": "other",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-noncitizen",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Noncitizen Voting",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to implement the Local Resident Voting Rights Amendment Act of 2022 or any activities related to enrolling or registering noncitizens into voter rolls for local elections (Sec. 826)",
+      "category": "elections",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-guns",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Concealed Carry",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would provide that an individual who has a valid weapons carry permit from any state or territory may possess and carry a concealed handgun, magazine and ammunition in the area governed by D.C. and the Washington Metropolitan Area Transit Authority (Sec. 827)",
+      "category": "other",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-police",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Police Reform",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to carry out the Comprehensive Policing and Justice Reform Amendment Act of 2022 (Sec. 828)",
+      "category": "crime",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-youth",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Youth Rehabilitation",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would repeal provisions of the Youth Rehabilitation Amendment Act of 2018 (Sec. 829)",
+      "category": "crime",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-covid",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - COVID Mandates",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to implement, administer or enforce any COVID-19 mask or vaccine mandate (Sec. 830)",
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-insurance",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Insurance Regulation",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to implement the Insurance Regulation Amendment Act of 2024 (reproductive health care and gender-affirming care) (Sec. 831)",
+      "category": "healthcare",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-oilgas",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Oil & Gas Protection",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to implement or enforce provisions of the Consumer Protection Act against oil and gas companies for environmental claims (Sec. 832)",
+      "category": "environment",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
+    },
+    {
+      "id": "hr8495-shield",
+      "billNumbers": [
+        "H.R. 8495"
+      ],
+      "title": "FY 2027 D.C. Appropriations - Shield Law",
+      "sponsors": [
+        "House"
+      ],
+      "description": "Would prohibit the use of funds to carry out title I or title II of the Human Rights Sanctuary Amendment Act of 2022 (shield law) (Sec. 833)",
+      "category": "other",
+      "position": "oppose",
+      "type": "rider",
+      "priority": "high",
+      "prioritySource": "manual",
+      "fiscalYear": "2027",
+      "attackType": "direct",
+      "congress": 119
     }
   ],
   "supportBills": [

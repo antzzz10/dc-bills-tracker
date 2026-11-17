@@ -1,10 +1,16 @@
 {
-  "lastUpdated": "2026-11-12",
-  "lastChecked": "2026-11-12T21:07:43.643Z",
-  "totalBills": 74,
-  "introducedThisCongress": 92,
-  "pendingBills": 60,
+  "lastUpdated": "2026-11-14",
+  "lastChecked": "2026-11-17T03:50:12.708Z",
+  "totalBills": 90,
+  "introducedThisCongress": 108,
+  "pendingBills": 76,
   "passedBills": 14,
+  "progress": {
+    "law": 4,
+    "clearedChamber": 10,
+    "clearedChamberWhere": "house",
+    "notPassedEitherChamber": 76
+  },
   "passedBreakdown": {
     "bills": 11,
     "resolutions": 1,
@@ -13,7 +19,7 @@
   "breakdown": {
     "bills": 65,
     "resolutions": 7,
-    "riders": 2
+    "riders": 18
   },
   "routine": {
     "total": 1,
